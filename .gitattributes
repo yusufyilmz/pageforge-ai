@@ -1,0 +1,131 @@
+# PageForge - Git Attributes
+# Set default behavior to automatically normalize line endings
+* text=auto eol=lf
+
+# Source code
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.less text eol=lf
+*.html text eol=lf
+*.xml text eol=lf
+*.svg text eol=lf
+*.md text eol=lf
+*.mdx text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Configuration files
+*.config.js text eol=lf
+*.config.mjs text eol=lf
+*.config.ts text eol=lf
+.eslintrc.json text eol=lf
+.prettierrc.json text eol=lf
+package.json text eol=lf
+tsconfig.json text eol=lf
+
+# Shell scripts (always use LF)
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Windows batch files (always use CRLF)
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.eot binary
+*.woff binary
+*.woff2 binary
+*.pyc binary
+*.pdf binary
+*.ez binary
+*.bz2 binary
+*.swp binary
+
+# Font files
+*.otf binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+
+# Archive files
+*.zip binary
+*.tar binary
+*.gz binary
+*.bz2 binary
+*.xz binary
+*.rar binary
+*.7z binary
+
+# Adobe files
+*.ai binary
+*.psd binary
+*.psb binary
+
+# Video files
+*.mov binary
+*.avi binary
+*.mp4 binary
+*.webm binary
+*.flv binary
+
+# Audio files
+*.mp3 binary
+*.ogg binary
+*.wav binary
+*.flac binary
+
+# Document files
+*.pdf binary
+*.doc binary
+*.docx binary
+*.xls binary
+*.xlsx binary
+*.ppt binary
+*.pptx binary
+
+# Lock files - treat as binary to avoid merge conflicts
+package-lock.json binary
+yarn.lock binary
+pnpm-lock.yaml binary
+
+# Treat .gitignore and .gitattributes as text
+.gitignore text
+.gitattributes text
+
+# Linguist vendored paths (excluded from language statistics)
+public/* linguist-vendored
+node_modules/* linguist-vendored
+build/* linguist-vendored
+dist/* linguist-vendored
+*.min.js linguist-vendored
+*.min.css linguist-vendored
+
+# Linguist documentation
+*.md linguist-documentation
+docs/* linguist-documentation
+
+# Mark generated files
+src/generated/* linguist-generated
+types/supabase.ts linguist-generated
+*.d.ts linguist-generated

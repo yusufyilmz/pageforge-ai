@@ -1,12 +1,113 @@
+# PageForge - ESLint Ignore
+
+# Dependencies
 node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
 .next/
 out/
 build/
 dist/
-unused/
-unused/**
+.vercel/
+
+# Cache directories
+.cache/
+.parcel-cache/
+.sass-cache/
+
+# Generated files
 *.d.ts
 **/*.d.ts
-.env*
-.vercel/
+next-env.d.ts
+*.tsbuildinfo
+
+# Configuration files
+*.config.js
+*.config.mjs
+*.config.ts
+postcss.config.js
+next.config.mjs
+tailwind.config.js
+webpack.config.js
+vite.config.js
+vitest.config.js
+
+# Public assets
+public/
+
+# Test coverage
 coverage/
+.nyc_output
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.*
+
+# Database migrations
+migrations/
+supabase/
+
+# Storybook
+.storybook/
+storybook-static/
+
+# Generated documentation
+docs/auto/
+
+# Legacy/unused code
+unused/
+unused/**
+legacy/
+legacy/**
+
+# Temporary files
+tmp/
+temp/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Auto-generated Once UI files
+src/once-ui/generated/
+
+# Supabase generated types
+types/supabase.ts
+types/database.types.ts
+
+# Prisma generated client
+prisma/generated/
+
+# GraphQL generated files
+generated/
+src/generated/
+
+# Test files in specific directories
+**/__tests__/**/*.js
+**/__mocks__/**/*.js
+**/test-utils/**/*.js
+
+# MSW
+public/mockServiceWorker.js
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/

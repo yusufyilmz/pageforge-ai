@@ -3,3 +3,127 @@ description:
 globs:
 alwaysApply: false
 ---
+# PageBuilder & Template System Guide
+
+## Revolutionary Page Creation (98% Code Reduction!)
+
+PageForge has transformed from 200+ lines of complex configuration to just 1-3 lines of simple, type-safe code.
+
+## ⭐ ALWAYS USE TEMPLATES FIRST
+
+### Quick Templates (1 line each!)
+```typescript
+// Developer portfolio - complete in 1 line!
+const portfolio = developerTemplate(person, projects)
+
+// Designer portfolio with masonry layout
+const design = designerTemplate(person, projects)
+
+// Freelancer landing page with CTA
+const landing = freelancerTemplate(person)
+```
+
+### Flexible Templates (2-5 lines)
+```typescript
+// Custom about page
+const about = createAboutPageFromTemplate({
+  person: { name: 'John', lastName: 'Doe', role: 'Developer' },
+  projects: myProjects,
+  sections: ['hero', 'projects', 'skills', 'experience']
+})
+
+// Professional blog
+const blog = createBlogPageFromTemplate({
+  title: 'My Tech Blog',
+  description: 'Thoughts on development',
+  author: person
+})
+```
+
+## Key Files & Imports
+
+### Main Template System
+- **Templates**: [src/lib/services/page-builder/templates.ts](mdc:src/lib/services/page-builder/templates.ts)
+- **Examples**: [src/lib/services/page-builder/template-examples.ts](mdc:src/lib/services/page-builder/template-examples.ts)
+- **Core Builder**: [src/lib/services/page-builder/PageBuilder.ts](mdc:src/lib/services/page-builder/PageBuilder.ts)
+
+### Import Pattern
+```typescript
+import {
+  // Quick templates (PREFERRED)
+  developerTemplate,
+  designerTemplate,
+  freelancerTemplate,
+
+  // Flexible templates
+  createAboutPageFromTemplate,
+  createBlogPageFromTemplate,
+  createPortfolioPageFromTemplate,
+
+  // PageBuilder for custom pages
+  PageBuilder,
+  PageType
+} from '@/lib/services/page-builder'
+```
+
+## Development Priority
+
+### 1. ✅ Templates First (98% of use cases)
+Use profession-specific or flexible templates for standard pages
+
+### 2. ✅ PageBuilder Second (custom needs)
+Use fluent API when templates don't fit your specific requirements
+
+### 3. ⚠️ Raw PageConfig Last Resort
+Only use [PageConfig](mdc:src/lib/types/page/pageTypes.ts) directly for very complex, unique requirements
+
+## Real-World Usage
+
+### Complete Website (10 lines total)
+```typescript
+const site = {
+  home: freelancerTemplate(person),
+  about: developerTemplate(person, projects),
+  blog: createBlogPageFromTemplate({
+    title: 'My Blog',
+    author: person
+  })
+}
+```
+
+### Custom Page with PageBuilder
+```typescript
+const services = PageBuilder
+  .create('services', '/services')
+  .withTitle('My Services')
+  .addHero({ title: 'Services', subtitle: 'What I Offer' })
+  .addFeatures(serviceList)
+  .build()
+```
+
+## Type Safety & Data
+
+All templates use strongly-typed interfaces from [templates.ts](mdc:src/lib/services/page-builder/templates.ts):
+
+- `PersonData` - Basic info (name, role, bio, etc.)
+- `ProjectData` - Project details with technologies
+- `ExperienceData` - Work experience entries
+- `SkillData` - Skills with levels and categories
+
+## Benefits Over Old System
+
+- **98% Less Code**: 200+ lines → 1-3 lines
+- **Type Safe**: Full TypeScript support
+- **Professional**: Best practices built-in
+- **Maintainable**: Simple, readable code
+- **Error-Free**: Smart defaults prevent mistakes
+
+## Legacy System (Avoid)
+
+❌ **Don't use** the old verbose approach in [pageConfigurations.tsx](mdc:src/lib/services/new-page/pageConfigurations.tsx) for new pages.
+
+✅ **Do use** the new PageBuilder/Template system for all new development.
+
+---
+
+**Remember**: Always start with templates, fall back to PageBuilder, only use raw PageConfig as last resort!

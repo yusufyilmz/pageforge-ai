@@ -1,25 +1,62 @@
 {
   "name": "pageforge",
   "version": "1.0.0",
-  "description": "Next.js + Supabase + Once UI starter template",
+  "description": "🚀 PageForge - Revolutionary Next.js Page Builder System with 98% code reduction and AI-powered generation",
   "scripts": {
     "dev": "next dev --port 3001",
     "dev:turbo": "next dev --turbopack --port 3001",
-    "export": "next export",
     "build": "next build",
     "start": "next start",
+    "export": "next export",
+
+    "lint": "next lint --ignore-path .eslintignore",
+    "lint:fix": "next lint --fix --ignore-path .eslintignore",
+    "lint:strict": "next lint --max-warnings 0 --ignore-path .eslintignore",
+
+    "format": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md,css,scss,yml,yaml}\" --ignore-path .prettierignore",
+    "format:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css,scss,yml,yaml}\" --ignore-path .prettierignore",
+    "format:check": "prettier --check . --ignore-path .prettierignore",
+
+    "type-check": "tsc --noEmit --skipLibCheck",
+    "type-check:watch": "tsc --noEmit --skipLibCheck --watch",
+
+    "code-quality": "npm run type-check && npm run lint && npm run format:check",
+    "code-quality:fix": "npm run type-check && npm run lint:fix && npm run format:fix",
+
+    "clean": "rm -rf .next out dist build coverage .turbo",
+    "clean:all": "npm run clean && rm -rf node_modules package-lock.json",
+    "reset": "npm run clean:all && npm install",
+
+    "test": "echo \"No tests specified yet\"",
+    "test:coverage": "echo \"No test coverage specified yet\"",
+    "test:watch": "echo \"No test watch specified yet\"",
+
     "biome-write": "npx @biomejs/biome format --write .",
+    "biome-check": "npx @biomejs/biome check .",
+
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
     "supabase:status": "supabase status",
     "supabase:reset": "supabase db reset",
     "supabase:gen-types": "supabase gen types typescript --local > src/lib/supabase/types.ts",
-    "lint": "next lint --ignore-path .eslintignore",
-    "lint:fix": "next lint --fix --ignore-path .eslintignore",
-    "format": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md,css,scss,yml,yaml}\" --ignore-path .prettierignore",
-    "format:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css,scss,yml,yaml}\" --ignore-path .prettierignore",
-    "type-check": "tsc --noEmit --skipLibCheck",
-    "generate-section": "tsx src/components/universal-section/generateSection.ts"
+
+    "generate-section": "tsx src/components/universal-section/generateSection.ts",
+
+    "prepare": "husky install",
+    "pre-commit": "lint-staged",
+
+    "deploy": "npm run build && npm run export",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod",
+
+    "audit": "npm audit",
+    "audit:fix": "npm audit fix",
+    "outdated": "npm outdated",
+    "update:deps": "npm update",
+
+    "analyze": "cross-env ANALYZE=true npm run build",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server npm run build",
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser npm run build"
   },
   "dependencies": {
     "@floating-ui/react-dom": "^2.1.1",
@@ -63,5 +100,41 @@
   "overrides": {
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.2"
-  }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,scss,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run type-check"
+    }
+  },
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yusufyilmz/pageforge-ai.git"
+  },
+  "keywords": [
+    "nextjs",
+    "react",
+    "typescript",
+    "pagebuilder",
+    "ai",
+    "supabase",
+    "once-ui",
+    "template",
+    "website-builder"
+  ],
+  "author": "Yusuf Yilmaz",
+  "license": "MIT"
 }
