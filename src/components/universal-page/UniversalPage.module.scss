@@ -1,0 +1,31 @@
+.universalPage {
+  width: 100%;
+}
+
+.sectionWrapper {
+  width: 100%;
+}
+
+.blockAlign {
+  text-align: center;
+}
+
+.avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.textAlign {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .blockAlign {
+    text-align: left;
+  }
+
+  .textAlign {
+    text-align: left;
+  }
+}

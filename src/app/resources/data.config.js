@@ -1,15 +1,15 @@
 const chart = {
-  variant: "gradient", // flat | gradient | outline
-  mode: "categorical", // categorical | divergent | sequential
+  variant: 'gradient', // flat | gradient | outline
+  mode: 'categorical', // categorical | divergent | sequential
   height: 24, // default chart height
   axisLine: {
-    stroke: "var(--neutral-alpha-weak)",
+    stroke: 'var(--neutral-alpha-weak)'
   },
   tick: {
-    fill: "var(--neutral-on-background-weak)",
-    fontSize: 11,
+    fill: 'var(--neutral-on-background-weak)',
+    fontSize: 11
   },
-  tickLine: false,
-};
+  tickLine: false
+}
 
-export { chart };
+export { chart }

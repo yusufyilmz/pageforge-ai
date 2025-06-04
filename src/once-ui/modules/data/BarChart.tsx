@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import React, { useState, useEffect, useMemo } from "react";
-import { formatDate } from "./utils/formatDate";
+import React, { useState, useEffect, useMemo } from 'react'
+import { formatDate } from './utils/formatDate'
 import {
   BarChart as RechartsBarChart,
   Bar as RechartsBar,
@@ -10,17 +10,26 @@ import {
   ResponsiveContainer as RechartsResponsiveContainer,
   CartesianGrid as RechartsCartesianGrid,
   Tooltip as RechartsTooltip,
-  Legend as RechartsLegend,
-} from "recharts";
+  Legend as RechartsLegend
+} from 'recharts'
 
-import { Column, Row, DateRange } from "../../components";
-import { getDistributedColor } from "./utils/colorDistribution";
-import { ChartProps, LinearGradient, Tooltip, Legend, ChartStyles, ChartStatus, ChartHeader, barWidth } from ".";
-import { chart } from "../../../app/resources/data.config";
+import { Column, Row, DateRange } from '../../components'
+import { getDistributedColor } from './utils/colorDistribution'
+import {
+  ChartProps,
+  LinearGradient,
+  Tooltip,
+  Legend,
+  ChartStyles,
+  ChartStatus,
+  ChartHeader,
+  barWidth
+} from '.'
+import { chart } from '../../../app/resources/data.config'
 
 interface BarChartProps extends ChartProps {
-  barWidth?: barWidth;
-  hover?: boolean;
+  barWidth?: barWidth
+  hover?: boolean
 }
 
 const BarChart: React.FC<BarChartProps> = ({
@@ -32,83 +41,100 @@ const BarChart: React.FC<BarChartProps> = ({
   emptyState,
   loading = false,
   legend: legendProp = {},
-  axis = "both",
-  border = "neutral-medium",
+  axis = 'both',
+  border = 'neutral-medium',
   variant = chart.variant,
-  barWidth = "l",
+  barWidth = 'l',
   hover = false,
   ...flex
 }) => {
   const legend = {
     display: legendProp.display !== undefined ? legendProp.display : true,
-    position: legendProp.position || "top-left",
+    position: legendProp.position || 'top-left',
     direction: legendProp.direction
-  };
-  const [selectedDateRange, setSelectedDateRange] = useState<DateRange | undefined>(
-    date?.start && date?.end ? {
-      startDate: date.start,
-      endDate: date.end
-    } : undefined
-  );
+  }
+  const [selectedDateRange, setSelectedDateRange] = useState<
+    DateRange | undefined
+  >(
+    date?.start && date?.end
+      ? {
+          startDate: date.start,
+          endDate: date.end
+        }
+      : undefined
+  )
 
   useEffect(() => {
     if (date?.start && date?.end) {
       setSelectedDateRange({
         startDate: date.start,
         endDate: date.end
-      });
+      })
     }
-  }, [date?.start, date?.end]);
+  }, [date?.start, date?.end])
 
   const handleDateRangeChange = (newRange: DateRange) => {
-    setSelectedDateRange(newRange);
+    setSelectedDateRange(newRange)
     if (date?.onChange) {
-      date.onChange(newRange);
+      date.onChange(newRange)
     }
-  };
+  }
 
-  const seriesArray = Array.isArray(series) ? series : (series ? [series] : []);
-  const seriesKeys = seriesArray.map(s => s.key);
-  const chartId = React.useMemo(() => Math.random().toString(36).substring(2, 9), []);
+  const seriesArray = Array.isArray(series) ? series : series ? [series] : []
+  const seriesKeys = seriesArray.map(s => s.key)
+  const chartId = React.useMemo(
+    () => Math.random().toString(36).substring(2, 9),
+    []
+  )
   const coloredSeriesArray = seriesArray.map((s, index) => ({
     ...s,
     color: s.color || getDistributedColor(index, seriesArray.length)
-  }));
-  
-  const xAxisKey = Object.keys(data[0] || {}).find(key => 
-    !seriesKeys.includes(key)
-  ) || 'name';
-  
-  const autoKeys = Object.keys(data[0] || {}).filter(key => key !== xAxisKey);
-  const autoSeries = seriesArray.length > 0 ? coloredSeriesArray : 
-    autoKeys.map((key, index) => ({
-      key,
-      color: getDistributedColor(index, autoKeys.length)
-    }));
-  
-  const barColors = autoSeries.map(s => `var(--data-${s.color})`);
+  }))
+
+  const xAxisKey =
+    Object.keys(data[0] || {}).find(key => !seriesKeys.includes(key)) || 'name'
+
+  const autoKeys = Object.keys(data[0] || {}).filter(key => key !== xAxisKey)
+  const autoSeries =
+    seriesArray.length > 0
+      ? coloredSeriesArray
+      : autoKeys.map((key, index) => ({
+          key,
+          color: getDistributedColor(index, autoKeys.length)
+        }))
+
+  const barColors = autoSeries.map(s => `var(--data-${s.color})`)
 
   const filteredData = React.useMemo(() => {
     if (!selectedDateRange || !data || data.length === 0) {
-      return data;
+      return data
     }
 
     return data.filter(item => {
       try {
-        if (!item[xAxisKey] || !selectedDateRange.startDate || !selectedDateRange.endDate) {
-          return true;
+        if (
+          !item[xAxisKey] ||
+          !selectedDateRange.startDate ||
+          !selectedDateRange.endDate
+        ) {
+          return true
         }
-        
-        const itemDate = typeof item[xAxisKey] === 'string' ? new Date(item[xAxisKey] as string) : item[xAxisKey] as Date;
-        
-        return itemDate >= selectedDateRange.startDate && 
-               itemDate <= selectedDateRange.endDate;
+
+        const itemDate =
+          typeof item[xAxisKey] === 'string'
+            ? new Date(item[xAxisKey] as string)
+            : (item[xAxisKey] as Date)
+
+        return (
+          itemDate >= selectedDateRange.startDate &&
+          itemDate <= selectedDateRange.endDate
+        )
       } catch (e) {
-        return true;
+        return true
       }
-    });
-  }, [data, selectedDateRange, xAxisKey]);
-  
+    })
+  }, [data, selectedDateRange, xAxisKey])
+
   return (
     <Column
       fillWidth
@@ -150,25 +176,50 @@ const BarChart: React.FC<BarChartProps> = ({
                     const customPayload = autoSeries.map((series, index) => ({
                       value: series.key,
                       color: barColors[index]
-                    }));
-                    
+                    }))
+
                     return (
-                      <Legend 
+                      <Legend
                         variant={variant as ChartStyles}
                         payload={customPayload}
-                        labels={axis} 
-                        position={legend.position} 
+                        labels={axis}
+                        position={legend.position}
                         direction={legend.direction}
                       />
-                    );
+                    )
                   }}
                   wrapperStyle={{
                     position: 'absolute',
-                    top: (legend.position === "top-center" || legend.position === "top-left" || legend.position === "top-right") ? 0 : undefined,
-                    bottom: (legend.position === "bottom-center" || legend.position === "bottom-left" || legend.position === "bottom-right") ? 0 : undefined,
-                    paddingBottom: (legend.position === "bottom-center" || legend.position === "bottom-left" || legend.position === "bottom-right") ? "var(--static-space-40)" : undefined,
-                    left: (axis === "y" || axis === "both") && (legend.position === "top-center" || legend.position === "bottom-center") ? "var(--static-space-64)" : 0,
-                    width: (axis === "y" || axis === "both") && (legend.position === "top-center" || legend.position === "bottom-center") ? "calc(100% - var(--static-space-64))" : "100%",
+                    top:
+                      legend.position === 'top-center' ||
+                      legend.position === 'top-left' ||
+                      legend.position === 'top-right'
+                        ? 0
+                        : undefined,
+                    bottom:
+                      legend.position === 'bottom-center' ||
+                      legend.position === 'bottom-left' ||
+                      legend.position === 'bottom-right'
+                        ? 0
+                        : undefined,
+                    paddingBottom:
+                      legend.position === 'bottom-center' ||
+                      legend.position === 'bottom-left' ||
+                      legend.position === 'bottom-right'
+                        ? 'var(--static-space-40)'
+                        : undefined,
+                    left:
+                      (axis === 'y' || axis === 'both') &&
+                      (legend.position === 'top-center' ||
+                        legend.position === 'bottom-center')
+                        ? 'var(--static-space-64)'
+                        : 0,
+                    width:
+                      (axis === 'y' || axis === 'both') &&
+                      (legend.position === 'top-center' ||
+                        legend.position === 'bottom-center')
+                        ? 'calc(100% - var(--static-space-64))'
+                        : '100%',
                     right: 0,
                     margin: 0
                   }}
@@ -178,17 +229,21 @@ const BarChart: React.FC<BarChartProps> = ({
                 dataKey={xAxisKey}
                 axisLine={false}
                 tickLine={false}
-                tick={(axis === "x" || axis === "both") ? {
-                  fill: chart.tick.fill,
-                  fontSize: chart.tick.fontSize,
-                } : false}
-                tickFormatter={(value) => {
-                  const dataPoint = data.find(item => item[xAxisKey] === value);
-                  return formatDate(value, date, dataPoint);
+                tick={
+                  axis === 'x' || axis === 'both'
+                    ? {
+                        fill: chart.tick.fill,
+                        fontSize: chart.tick.fontSize
+                      }
+                    : false
+                }
+                tickFormatter={value => {
+                  const dataPoint = data.find(item => item[xAxisKey] === value)
+                  return formatDate(value, date, dataPoint)
                 }}
-                hide={!(axis === "x" || axis === "both")}
+                hide={!(axis === 'x' || axis === 'both')}
               />
-              {(axis === "y" || axis === "both") && (
+              {(axis === 'y' || axis === 'both') && (
                 <RechartsYAxis
                   allowDataOverflow
                   width={64}
@@ -196,22 +251,26 @@ const BarChart: React.FC<BarChartProps> = ({
                   tickLine={false}
                   tick={{
                     fill: chart.tick.fill,
-                    fontSize: chart.tick.fontSize,
+                    fontSize: chart.tick.fontSize
                   }}
                   axisLine={{
-                    stroke: chart.axisLine.stroke,
+                    stroke: chart.axisLine.stroke
                   }}
                 />
               )}
               <RechartsTooltip
-                cursor={{ fill: hover ? "var(--neutral-alpha-weak)" : "var(--static-transparent)" }}
-                content={props => 
+                cursor={{
+                  fill: hover
+                    ? 'var(--neutral-alpha-weak)'
+                    : 'var(--static-transparent)'
+                }}
+                content={props => (
                   <Tooltip
                     {...props}
                     date={date}
                     variant={variant as ChartStyles}
                   />
-                }
+                )}
               />
               <defs>
                 {barColors.map((color, index) => (
@@ -233,21 +292,26 @@ const BarChart: React.FC<BarChartProps> = ({
                   strokeWidth={1}
                   transform="translate(0, -1)"
                   barSize={
-                    typeof barWidth === "string" && barWidth === "fill"
-                      ? "100%"
-                      : typeof barWidth === "string" && barWidth === "xs"
-                      ? 12
-                      : typeof barWidth === "string" && barWidth === "s"
-                      ? 16
-                      : typeof barWidth === "string" && barWidth === "m"
-                      ? 24
-                      : typeof barWidth === "string" && barWidth === "l"
-                      ? 40
-                      : typeof barWidth === "string" && barWidth === "xl"
-                      ? 64
-                      : barWidth
+                    typeof barWidth === 'string' && barWidth === 'fill'
+                      ? '100%'
+                      : typeof barWidth === 'string' && barWidth === 'xs'
+                        ? 12
+                        : typeof barWidth === 'string' && barWidth === 's'
+                          ? 16
+                          : typeof barWidth === 'string' && barWidth === 'm'
+                            ? 24
+                            : typeof barWidth === 'string' && barWidth === 'l'
+                              ? 40
+                              : typeof barWidth === 'string' &&
+                                  barWidth === 'xl'
+                                ? 64
+                                : barWidth
                   }
-                  radius={(barWidth === "fill" || barWidth === "xl") ? [10, 10, 10, 10] : [6, 6, 6, 6]}
+                  radius={
+                    barWidth === 'fill' || barWidth === 'xl'
+                      ? [10, 10, 10, 10]
+                      : [6, 6, 6, 6]
+                  }
                 />
               ))}
             </RechartsBarChart>
@@ -255,10 +319,10 @@ const BarChart: React.FC<BarChartProps> = ({
         )}
       </Row>
     </Column>
-  );
-};
+  )
+}
 
-BarChart.displayName = "BarChart";
+BarChart.displayName = 'BarChart'
 
-export { BarChart };
-export type { BarChartProps };
+export { BarChart }
+export type { BarChartProps }

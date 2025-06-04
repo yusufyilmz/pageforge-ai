@@ -1,0 +1,263 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# PageForge Coding Patterns & Best Practices
+
+## 🚀 Development Hierarchy (ALWAYS Follow This Order)
+
+### 1. ✅ Templates First (98% of cases)
+**Most Preferred** - Use for standard pages
+
+```typescript
+// ✅ BEST: Complete professional pages in 1-3 lines
+import { developerTemplate, createAboutPageFromTemplate } from '@/lib/services/page-builder'
+
+// Developer portfolio (1 line!)
+const portfolio = developerTemplate(person, projects)
+
+// Custom about page (3 lines)
+const about = createAboutPageFromTemplate({
+  person: { name: 'John', lastName: 'Doe', role: 'Developer' },
+  projects: myProjects,
+  sections: ['hero', 'projects', 'skills']
+})
+```
+
+### 2. ✅ PageBuilder Second (custom needs)
+**Good Alternative** - Use for unique requirements
+
+```typescript
+// ✅ GOOD: Custom pages with fluent API
+import { PageBuilder, PageType } from '@/lib/services/page-builder'
+
+const customPage = PageBuilder
+  .create(PageType.ABOUT, '/about')
+  .withTitle('About Me')
+  .addHero({ title: "Hi, I'm John", subtitle: 'Developer' })
+  .addExperience(experiences)
+  .build()
+```
+
+### 3. ⚠️ Raw PageConfig Last Resort
+**Avoid Unless Necessary** - Only for very specific requirements
+
+```typescript
+// ⚠️ ONLY when templates/builder don't work
+import { PageConfig, PageType } from '@/lib/types/page/pageTypes'
+
+const config: PageConfig = {
+  pageType: PageType.ABOUT,
+  metadata: { /* complex custom metadata */ }
+}
+```
+
+## 🎨 UI Component Patterns
+
+### ✅ DO: Use Once UI Components
+```typescript
+// Import from Once UI design system
+import { Flex, Column, Text, Button, Heading } from '@pageforge/once-ui/components'
+
+const MyComponent = () => (
+  <Flex direction="column" gap="l">
+    <Heading variant="display-strong-m">Title</Heading>
+    <Text variant="body-default-l">Content</Text>
+  </Flex>
+)
+```
+
+### ❌ DON'T: Create Custom Basic Components
+```typescript
+// ❌ Avoid creating basic UI components
+import { CustomFlex } from '../ui/CustomFlex'
+import { MyButton } from '../ui/MyButton'
+```
+
+## 🎭 Context Usage Patterns
+
+### Theme Management
+```typescript
+// ✅ Use theme context for dynamic styling
+import { useTheme, useThemeUtils } from '@/contexts/ThemeContext'
+
+const MyComponent = () => {
+  const { currentTheme, setPageTheme } = useTheme()
+  const { getThemeClass } = useThemeUtils()
+
+  return <div className={getThemeClass()}>Themed content</div>
+}
+```
+
+### User Data Access
+```typescript
+// ✅ Access user data through context
+import { useUser, useUserProfile, useUserProjects } from '@/contexts/UserContext'
+
+const MyComponent = () => {
+  const { userInfo, updateProfile } = useUser()
+  const profile = useUserProfile()
+  const featuredProjects = useUserProjects(true) // featured only
+
+  return <div>{profile.name}</div>
+}
+```
+
+## 📦 Import Patterns
+
+### PageBuilder System
+```typescript
+// ✅ Preferred import pattern
+import {
+  // Quick templates (use first!)
+  developerTemplate,
+  designerTemplate,
+  freelancerTemplate,
+
+  // Flexible templates
+  createAboutPageFromTemplate,
+  createBlogPageFromTemplate,
+
+  // PageBuilder for custom
+  PageBuilder,
+  PageType,
+
+  // Type definitions
+  type PersonData,
+  type ProjectData
+} from '@/lib/services/page-builder'
+```
+
+### Page Utilities
+```typescript
+// ✅ Use utility functions
+import { PageMeta, PageSchema } from '@/components/utils'
+
+const metadata = PageMeta.fromConfig(pageConfig, siteURL)
+const schema = PageSchema.fromConfig(pageConfig, siteURL)
+```
+
+### Types
+```typescript
+// ✅ Import types when needed
+import {
+  PageConfig,
+  ContentBlock,
+  PageType,
+  SchemaType
+} from '@/lib/types/page/pageTypes'
+```
+
+## 🛡️ Content Safety Patterns
+
+### Example Data Detection
+```typescript
+// ✅ Always use real data, detect examples
+import { createContentConfig } from '@/lib/services/new-page/content'
+
+const content = createContentConfig(userContent)
+// This warns if example data like "Selene Yu" is detected
+```
+
+### Real Data Templates
+```typescript
+// ✅ Provide real user data to templates
+const person: PersonData = {
+  name: 'John',           // ✅ Real name
+  lastName: 'Smith',      // ✅ Real surname
+  role: 'Developer',      // ✅ Real role
+  bio: 'Actual bio...',   // ✅ Real bio
+  // NOT: name: 'Selene Yu' ❌ (example data)
+}
+
+const page = developerTemplate(person, realProjects)
+```
+
+## 🎯 File Organization Patterns
+
+### Creating New Sections
+```typescript
+// ✅ Add new content blocks to types
+// File: src/lib/types/page/pageTypes.ts
+export type ContentBlock =
+  | { type: 'hero', content: HeroSectionContent }
+  | { type: 'my-new-section', content: MyNewSectionContent } // Add here
+```
+
+### Creating Components
+```typescript
+// ✅ Use Once UI primitives in components
+// File: src/components/sections/MySection.tsx
+import { Flex, Text } from '@pageforge/once-ui/components'
+
+export const MySection = ({ content }: { content: MySectionContent }) => (
+  <Flex direction="column" gap="m">
+    <Text>{content.title}</Text>
+  </Flex>
+)
+```
+
+## 🚫 Anti-Patterns (Don't Do These)
+
+### ❌ Using Legacy Page Configs for New Pages
+```typescript
+// ❌ DON'T: Use old verbose approach for new pages
+import { createComprehensiveAboutPageConfig } from '@/lib/services/new-page/pageConfigurations'
+```
+
+### ❌ Ignoring Templates
+```typescript
+// ❌ DON'T: Jump straight to PageBuilder without trying templates
+const page = PageBuilder.create(...) // Check templates first!
+```
+
+### ❌ Creating Custom Basic UI
+```typescript
+// ❌ DON'T: Reinvent basic components
+const MyButton = ({ children }) => <button>{children}</button>
+// ✅ DO: Use Once UI Button instead
+```
+
+### ❌ Hardcoding Example Data
+```typescript
+// ❌ DON'T: Ship with example data
+const person = { name: 'Selene Yu', role: 'Design Engineer' }
+// ✅ DO: Use real user data
+const person = { name: actualUser.name, role: actualUser.role }
+```
+
+## 🎪 Template Selection Guide
+
+Choose templates based on your needs:
+
+### Developer/Engineer
+```typescript
+const page = developerTemplate(person, projects)
+// Includes: React, Node.js, TypeScript skills
+```
+
+### Designer/Creative
+```typescript
+const page = designerTemplate(person, projects)
+// Includes: Figma, Adobe tools, masonry layout
+```
+
+### Freelancer/Service Provider
+```typescript
+const page = freelancerTemplate(person)
+// Includes: CTA, services, testimonials
+```
+
+### Custom Requirements
+```typescript
+const page = createAboutPageFromTemplate({
+  person,
+  projects,
+  sections: ['hero', 'projects', 'skills'] // Choose sections
+})
+```
+
+---
+
+**Remember**: Templates → PageBuilder → Raw PageConfig (in that order!)

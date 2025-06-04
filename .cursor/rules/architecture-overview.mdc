@@ -1,0 +1,111 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# PageForge Architecture Overview
+
+## Project Structure & Navigation
+
+PageForge is a Next.js-based page generation system with a revolutionary PageBuilder architecture.
+
+## 🎯 Core Systems
+
+### 1. PageBuilder System (NEW - Use This!)
+**Location**: `src/lib/services/page-builder/`
+
+- **[PageBuilder.ts](mdc:src/lib/services/page-builder/PageBuilder.ts)** - Fluent API for custom pages
+- **[templates.ts](mdc:src/lib/services/page-builder/templates.ts)** - Ultra-simple 1-line templates
+- **[examples.ts](mdc:src/lib/services/page-builder/examples.ts)** - PageBuilder usage examples
+- **[template-examples.ts](mdc:src/lib/services/page-builder/template-examples.ts)** - Template usage examples
+- **[README.md](mdc:src/lib/services/page-builder/README.md)** - Complete documentation
+
+### 2. Type System
+**Location**: `src/lib/types/page/`
+
+- **[pageTypes.ts](mdc:src/lib/types/page/pageTypes.ts)** - Core types with 30+ content blocks
+  - `PageConfig<T>` - Main page interface
+  - `ContentBlock` - Discriminated union for sections
+  - `PageMetadataConfig` - Nested metadata structure
+
+### 3. Theme System
+**Location**: `src/lib/types/site/`
+
+- **[siteThemes.ts](mdc:src/lib/types/site/siteThemes.ts)** - 11 predefined themes
+- **[themeConfigs.ts](mdc:src/lib/types/site/themeConfigs.ts)** - Theme configurations
+
+## 🎨 UI & Components
+
+### Once UI Integration
+**Location**: `@pageforge/once-ui/components`
+- Core design system components (import these!)
+
+### Custom Components
+**Location**: `src/components/`
+- Section components for content blocks
+- Layout components
+- Page-level components
+
+### Layout System
+- **[Layout.tsx](mdc:src/components/layout/Layout.tsx)** - Main GenericLayout component
+
+## 🔧 Utilities & Services
+
+### Page Utilities
+**Location**: `src/components/utils/`
+- **[page-metadata.ts](mdc:src/components/utils/page-metadata.ts)** - Next.js metadata generation
+- **[page-schema.tsx](mdc:src/components/utils/page-schema.tsx)** - JSON-LD structured data
+
+### Legacy Content System
+**Location**: `src/lib/services/new-page/`
+- **[pageConfigurations.tsx](mdc:src/lib/services/new-page/pageConfigurations.tsx)** - Legacy page factories (avoid for new pages)
+- **[content.tsx](mdc:src/lib/services/new-page/content.tsx)** - Content management with example detection
+
+## 🎭 Context System
+
+### Theme Management
+- **[ThemeContext.tsx](mdc:src/contexts/ThemeContext.tsx)** - Theme state management
+  - Priority: Page > User > System themes
+  - Hooks: `useTheme()`, `usePageTheme()`, `useUserTheme()`
+
+### User Management
+- **[UserContext.tsx](mdc:src/contexts/UserContext.tsx)** - User profile and preferences
+  - Hooks: `useUser()`, `useUserProfile()`, `useUserProjects()`
+
+## 📁 Key Configuration Files
+
+- **[.cursorrules](mdc:.cursorrules)** - Comprehensive project context for AI
+- **[package.json](mdc:package.json)** - Dependencies and scripts
+- **[tsconfig.json](mdc:tsconfig.json)** - TypeScript configuration
+
+## 🚀 Development Workflow
+
+### For New Pages
+1. **Try templates first** → [templates.ts](mdc:src/lib/services/page-builder/templates.ts)
+2. **Use PageBuilder for custom** → [PageBuilder.ts](mdc:src/lib/services/page-builder/PageBuilder.ts)
+3. **Raw PageConfig only if necessary** → [pageTypes.ts](mdc:src/lib/types/page/pageTypes.ts)
+
+### For Components
+1. **Use Once UI components** → `@pageforge/once-ui/components`
+2. **Create sections in** → `src/components/`
+3. **Add to ContentBlock union** → [pageTypes.ts](mdc:src/lib/types/page/pageTypes.ts)
+
+### For Styling
+1. **Use theme context** → [ThemeContext.tsx](mdc:src/contexts/ThemeContext.tsx)
+2. **Reference theme configs** → [themeConfigs.ts](mdc:src/lib/types/site/themeConfigs.ts)
+
+## 📊 Current Status
+
+✅ **PageBuilder & Templates** - Revolutionary 98% code reduction system
+✅ **Type System** - Comprehensive with 30+ content blocks
+✅ **Theme System** - 11 predefined themes with context management
+✅ **Once UI Integration** - Modern design system
+✅ **Legacy Compatibility** - Backward compatible with old PageConfig
+
+## 🎯 Common Tasks Navigation
+
+- **Create page** → Start with [templates.ts](mdc:src/lib/services/page-builder/templates.ts)
+- **Add content type** → Extend [pageTypes.ts](mdc:src/lib/types/page/pageTypes.ts)
+- **Theme customization** → Use [ThemeContext.tsx](mdc:src/contexts/ThemeContext.tsx)
+- **See examples** → Check [template-examples.ts](mdc:src/lib/services/page-builder/template-examples.ts)
+- **Full documentation** → Read [README.md](mdc:src/lib/services/page-builder/README.md)

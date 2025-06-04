@@ -1,10 +1,13 @@
-"use client";
+'use client'
 
-import React, { forwardRef } from "react";
-import { Row, useTheme, IconButton } from ".";
+import React, { forwardRef } from 'react'
+import { Row, useTheme, IconButton } from '.'
 
-const ThemeSwitcher = forwardRef<HTMLDivElement, React.ComponentProps<typeof Row>>((flex, ref) => {
-  const { theme, setTheme } = useTheme();
+const ThemeSwitcher = forwardRef<
+  HTMLDivElement,
+  React.ComponentProps<typeof Row>
+>((flex, ref) => {
+  const { theme, setTheme } = useTheme()
 
   return (
     <Row
@@ -17,22 +20,22 @@ const ThemeSwitcher = forwardRef<HTMLDivElement, React.ComponentProps<typeof Row
     >
       <IconButton
         icon="computer"
-        variant={theme === "system" ? "primary" : "tertiary"}
-        onClick={() => setTheme("system")}
+        variant={theme === 'system' ? 'primary' : 'tertiary'}
+        onClick={() => setTheme('system')}
       />
       <IconButton
         icon="dark"
-        variant={theme === "dark" ? "primary" : "tertiary"}
-        onClick={() => setTheme("dark")}
+        variant={theme === 'dark' ? 'primary' : 'tertiary'}
+        onClick={() => setTheme('dark')}
       />
       <IconButton
         icon="light"
-        variant={theme === "light" ? "primary" : "tertiary"}
-        onClick={() => setTheme("light")}
+        variant={theme === 'light' ? 'primary' : 'tertiary'}
+        onClick={() => setTheme('light')}
       />
     </Row>
-  );
-});
+  )
+})
 
-ThemeSwitcher.displayName = "ThemeSwitcher";
-export { ThemeSwitcher };
+ThemeSwitcher.displayName = 'ThemeSwitcher'
+export { ThemeSwitcher }

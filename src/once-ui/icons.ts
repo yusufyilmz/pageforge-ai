@@ -1,4 +1,4 @@
-import { IconType } from "react-icons";
+import { IconType } from 'react-icons'
 
 import {
   HiChevronUp,
@@ -29,8 +29,8 @@ import {
   HiOutlineMinus,
   HiOutlinePlus,
   HiOutlineCalendar,
-  HiOutlineDocumentDuplicate,
-} from "react-icons/hi2";
+  HiOutlineDocumentDuplicate
+} from 'react-icons/hi2'
 
 export const iconLibrary: Record<string, IconType> = {
   chevronUp: HiChevronUp,
@@ -62,7 +62,7 @@ export const iconLibrary: Record<string, IconType> = {
   security: HiOutlineShieldCheck,
   sparkle: HiOutlineSparkles,
   computer: HiOutlineComputerDesktop
-};
+}
 
-export type IconLibrary = typeof iconLibrary;
-export type IconName = keyof IconLibrary;
+export type IconLibrary = typeof iconLibrary
+export type IconName = keyof IconLibrary

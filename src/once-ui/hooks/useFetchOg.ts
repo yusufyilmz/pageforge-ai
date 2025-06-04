@@ -1,48 +1,50 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 interface OgData {
-  title: string;
-  description: string;
-  image: string;
-  url: string;
-  faviconUrl?: string;
+  title: string
+  description: string
+  image: string
+  url: string
+  faviconUrl?: string
 }
 
 export function useOgData(url: string | null) {
-  const [ogData, setOgData] = useState<Partial<OgData> | null>(null);
-  const [loading, setLoading] = useState(!!url);
+  const [ogData, setOgData] = useState<Partial<OgData> | null>(null)
+  const [loading, setLoading] = useState(!!url)
 
   useEffect(() => {
     const fetchOgData = async () => {
       try {
-        const response = await fetch(`/api/og/fetch?url=${encodeURIComponent(url!)}`);
-        const data = await response.json();
-        
+        const response = await fetch(
+          `/api/og/fetch?url=${encodeURIComponent(url!)}`
+        )
+        const data = await response.json()
+
         if (data.error) {
-          throw new Error(data.message || data.error);
+          throw new Error(data.message || data.error)
         }
-        
-        setOgData(data);
+
+        setOgData(data)
       } catch (error) {
-        console.error('Error fetching og data:', error);
-        setOgData(null);
+        console.error('Error fetching og data:', error)
+        setOgData(null)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
     if (url) {
-      fetchOgData();
+      fetchOgData()
     } else {
-      setLoading(false);
-      setOgData(null);
+      setLoading(false)
+      setOgData(null)
     }
-  }, [url]);
+  }, [url])
 
-  return { ogData, loading };
+  return { ogData, loading }
 }
 
 export function useOgImage(url: string | null) {
-  const { ogData, loading } = useOgData(url);
-  return { ogImage: ogData?.image || null, loading };
+  const { ogData, loading } = useOgData(url)
+  return { ogImage: ogData?.image || null, loading }
 }

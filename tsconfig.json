@@ -1,7 +1,14 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./types", "./node_modules/@types"],
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,10 +26,47 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@pageforge/once-ui/*": [
+        "./src/once-ui/*"
+      ],
+      "@pageforge/types/*": [
+        "./src/lib/types/*"
+      ],
+      "@pageforge/ui/*": [
+        "./src/ui/*"
+      ],
+      "@pageforge/lib/*": [
+        "./src/lib/*"
+      ],
+      "@pageforge/hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@pageforge/utils/*": [
+        "./src/utils/*"
+      ],
+      "@pageforge/components/*": [
+        "./src/components/*"
+      ],
+      "@pageforge/pages/*": [
+        "./src/pages/*"
+      ]
     },
     "target": "ES2017"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "unused/pageold/generatePage.ts",
+    "unused",
+    "unused/**/**.ts",
+    "unused/**/*.ts",
+    "unused/**/*.tsx",
+    "unused/*.ts",
+    "unused/*.tsx"
+  ]
 }

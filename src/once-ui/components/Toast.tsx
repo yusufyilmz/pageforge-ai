@@ -1,39 +1,39 @@
-"use client";
+'use client'
 
-import React, { useEffect, useState, forwardRef } from "react";
-import { IconButton, Icon, Flex, Row } from ".";
-import classNames from "classnames";
-import styles from "./Toast.module.scss";
-import { IconName } from "../icons";
+import React, { useEffect, useState, forwardRef } from 'react'
+import { IconButton, Icon, Flex, Row } from '.'
+import classNames from 'classnames'
+import styles from './Toast.module.scss'
+import { IconName } from '../icons'
 
 interface ToastProps {
-  className?: string;
-  variant: "success" | "danger";
-  icon?: boolean;
-  onClose?: () => void;
-  action?: React.ReactNode;
-  children: React.ReactNode;
+  className?: string
+  variant: 'success' | 'danger'
+  icon?: boolean
+  onClose?: () => void
+  action?: React.ReactNode
+  children: React.ReactNode
 }
 
-const iconMap: { [key in ToastProps["variant"]]: IconName } = {
-  success: "check",
-  danger: "danger",
-};
+const iconMap: { [key in ToastProps['variant']]: IconName } = {
+  success: 'check',
+  danger: 'danger'
+}
 
 const Toast = forwardRef<HTMLDivElement, ToastProps>(
   ({ variant, className, icon = true, onClose, action, children }, ref) => {
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(true)
 
     useEffect(() => {
-      const timer = setTimeout(() => setVisible(false), 6000);
-      return () => clearTimeout(timer);
-    }, []);
+      const timer = setTimeout(() => setVisible(false), 6000)
+      return () => clearTimeout(timer)
+    }, [])
 
     useEffect(() => {
       if (!visible && onClose) {
-        onClose();
+        onClose()
       }
-    }, [visible, onClose]);
+    }, [visible, onClose])
 
     return (
       <Flex
@@ -48,11 +48,17 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
         aria-live="assertive"
         className={classNames(className, styles.toast, styles[variant], {
           [styles.visible]: visible,
-          [styles.hidden]: !visible,
+          [styles.hidden]: !visible
         })}
       >
         <Flex fillWidth vertical="center" gap="8">
-          {icon && <Icon size="s" onBackground={`${variant}-medium`} name={iconMap[variant]} />}
+          {icon && (
+            <Icon
+              size="s"
+              onBackground={`${variant}-medium`}
+              name={iconMap[variant]}
+            />
+          )}
           <Row fillWidth textVariant="body-default-s">
             {children}
           </Row>
@@ -69,10 +75,10 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
           )}
         </Flex>
       </Flex>
-    );
-  },
-);
+    )
+  }
+)
 
-Toast.displayName = "Toast";
+Toast.displayName = 'Toast'
 
-export { Toast };
+export { Toast }

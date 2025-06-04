@@ -1,6 +1,8 @@
 .inputs {
   font-size: var(--font-size-heading-xl);
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   min-width: var(--static-space-48);
   max-width: var(--static-space-48);
 
@@ -12,7 +14,7 @@
     animation: focusAnimation 0.3s forwards;
   }
 }
-  
+
 @keyframes focusAnimation {
   0% {
     transform: scale(1);

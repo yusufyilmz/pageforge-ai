@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+unused/
+unused/**
+*.d.ts
+**/*.d.ts
+.env*
+.vercel/
+coverage/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

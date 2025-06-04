@@ -1,32 +1,37 @@
-"use client";
+'use client'
 
-import { useState, useEffect } from "react";
-import { Flex } from ".";
-import styles from "./ScrollToTop.module.scss";
-import classNames from "classnames";
+import { useState, useEffect } from 'react'
+import { Flex } from '.'
+import styles from './ScrollToTop.module.scss'
+import classNames from 'classnames'
 
 interface ScrollToTopProps extends React.ComponentProps<typeof Flex> {
-  offset?: number;
+  offset?: number
 }
 
-export const ScrollToTop = ({ children, offset = 300, className, ...rest }: ScrollToTopProps) => {
-  const [isVisible, setIsVisible] = useState(false);
+export const ScrollToTop = ({
+  children,
+  offset = 300,
+  className,
+  ...rest
+}: ScrollToTopProps) => {
+  const [isVisible, setIsVisible] = useState(false)
 
   const handleScroll = () => {
-    setIsVisible(window.scrollY > offset);
-  };
+    setIsVisible(window.scrollY > offset)
+  }
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
-    });
-  };
+      behavior: 'smooth'
+    })
+  }
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <Flex
@@ -44,5 +49,5 @@ export const ScrollToTop = ({ children, offset = 300, className, ...rest }: Scro
     >
       {children}
     </Flex>
-  );
-};
+  )
+}
