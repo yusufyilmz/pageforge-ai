@@ -1,0 +1,233 @@
+# PageForge - Type-Safe Page Generation System
+
+## Project Overview
+PageForge is a Next.js TypeScript application for generating professional pages with a revolutionary template system that reduces page creation from 200+ lines to just 1-3 lines of code.
+
+## 🚀 Development Hierarchy (ALWAYS Follow This Order)
+
+### 1. ✅ Templates First (98% of cases - PREFERRED)
+```typescript
+// ✅ BEST: Complete professional pages in 1-3 lines
+import { developerTemplate, createAboutPageFromTemplate } from '@/lib/services/page-builder'
+
+// Developer portfolio (1 line!)
+const portfolio = developerTemplate(person, projects)
+
+// Custom about page (3 lines)
+const about = createAboutPageFromTemplate({
+  person: { name: 'John', lastName: 'Doe', role: 'Developer' },
+  projects: myProjects,
+  sections: ['hero', 'projects', 'skills']
+})
+```
+
+### 2. ✅ PageBuilder Second (custom needs)
+```typescript
+// ✅ GOOD: Custom pages with fluent API
+import { PageBuilder, PageType } from '@/lib/services/page-builder'
+
+const customPage = PageBuilder
+  .create(PageType.ABOUT, '/about')
+  .withTitle('About Me')
+  .addHero({ title: "Hi, I'm John", subtitle: 'Developer' })
+  .addExperience(experiences)
+  .build()
+```
+
+### 3. ⚠️ Raw PageConfig Last Resort
+```typescript
+// ⚠️ ONLY when templates/builder don't work
+import { PageConfig, PageType } from '@/lib/types/page/pageTypes'
+const config: PageConfig = { pageType: PageType.ABOUT, metadata: { /* complex */ } }
+```
+
+## 🎨 UI Component Patterns
+
+### ✅ DO: Use Once UI Components
+```typescript
+// Import from Once UI design system
+import { Flex, Column, Text, Button, Heading } from '@pageforge/once-ui/components'
+
+const MyComponent = () => (
+  <Flex direction="column" gap="l">
+    <Heading variant="display-strong-m">Title</Heading>
+    <Text variant="body-default-l">Content</Text>
+  </Flex>
+)
+```
+
+### ❌ DON'T: Create Custom Basic Components
+```typescript
+// ❌ Avoid creating basic UI components
+import { CustomFlex } from '../ui/CustomFlex'
+```
+
+## 🎭 Context Usage Patterns
+
+### Theme Management
+```typescript
+import { useTheme, useThemeUtils } from '@/contexts/ThemeContext'
+const { currentTheme, setPageTheme } = useTheme()
+const { getThemeClass } = useThemeUtils()
+```
+
+### User Data Access
+```typescript
+import { useUser, useUserProfile, useUserProjects } from '@/contexts/UserContext'
+const { userInfo, updateProfile } = useUser()
+const profile = useUserProfile()
+const featuredProjects = useUserProjects(true) // featured only
+```
+
+## 📦 Import Patterns
+
+### PageBuilder System (PREFERRED)
+```typescript
+import {
+  // Quick templates (use first!)
+  developerTemplate, designerTemplate, freelancerTemplate,
+  // Flexible templates
+  createAboutPageFromTemplate, createBlogPageFromTemplate,
+  // PageBuilder for custom
+  PageBuilder, PageType,
+  // Types
+  type PersonData, type ProjectData
+} from '@/lib/services/page-builder'
+```
+
+### Page Utilities
+```typescript
+import { PageMeta, PageSchema } from '@/components/utils'
+```
+
+### Types (when needed)
+```typescript
+import { PageConfig, ContentBlock, PageType, SchemaType } from '@/lib/types/page/pageTypes'
+```
+
+## 🛡️ Type System (Current Architecture)
+
+### ✅ NEW System (Use This)
+```typescript
+// Main interface with nested metadata
+PageConfig<T> - { pageType, metadata: { basic, openGraph, twitter } }
+PageMetadataConfig - Nested metadata structure
+ContentBlock - Discriminated union for content sections
+
+// Enums
+PageType, SchemaType, OpenGraphType
+```
+
+### 🔄 Legacy (Compatibility Only)
+```typescript
+// Still supported but avoid in new code
+ContentPageConfig<T> - Old flat structure
+```
+
+## 📁 Key File Locations
+
+### PageBuilder System (PRIMARY)
+- `src/lib/services/page-builder/templates.ts` - Ultra-simple 1-line templates
+- `src/lib/services/page-builder/PageBuilder.ts` - Fluent API for custom pages
+- `src/lib/services/page-builder/template-examples.ts` - Usage examples
+
+### Type System
+- `src/lib/types/page/pageTypes.ts` - Core types with 30+ content blocks
+- `src/lib/types/site/siteThemes.ts` - 12 predefined themes
+- `src/lib/types/site/themeConfigs.ts` - Theme configurations
+
+### Context System
+- `src/contexts/ThemeContext.tsx` - Theme management with hierarchy
+- `src/contexts/UserContext.tsx` - User profile and preferences
+
+### Components & UI
+- `src/components/utils/` - Page utilities (metadata, schema)
+- `src/components/` - Section components using Once UI
+- `@pageforge/once-ui/components` - Design system (ALWAYS use this)
+
+### Legacy (Avoid for New Pages)
+- `src/lib/services/new-page/pageConfigurations.tsx` - Old verbose approach
+
+## 🎯 Theme System
+
+### 12 Predefined Themes
+minimal, bold, dark, playful, elegant, classic, futuristic, natural, luxury, vintage, creative
+
+### Theme Hierarchy
+Page Theme > User Theme > System Theme
+
+### Theme Application
+```typescript
+// Themes applied via data attributes in GenericLayout
+<div data-theme={currentTheme} data-style={themeConfig.style}>
+```
+
+## 🚫 Anti-Patterns (Don't Do These)
+
+### ❌ Using Legacy Approach for New Pages
+```typescript
+// ❌ DON'T: Use old verbose pageConfigurations.tsx for new pages
+const config = createComprehensiveAboutPageConfig(/* 50+ lines */)
+```
+
+### ❌ Creating Basic UI Components
+```typescript
+// ❌ DON'T: Create when Once UI has equivalent
+const MyButton = () => <button>Custom Button</button>
+```
+
+### ❌ Hardcoding Example Data
+```typescript
+// ❌ DON'T: Use example data like "Selene Yu"
+// ✅ DO: Use real user data, system detects examples automatically
+```
+
+## 🛠️ Content Safety
+
+### Example Data Detection
+The system automatically detects and warns about example data like "Selene Yu", "FLY company". Always use real user data - the content system will handle examples gracefully.
+
+### Real Data Templates
+```typescript
+const person: PersonData = {
+  name: 'John',           // ✅ Real name
+  lastName: 'Smith',      // ✅ Real surname
+  role: 'Developer',      // ✅ Real role
+  // NOT: name: 'Selene Yu' ❌ (example data)
+}
+```
+
+## 🔧 Development Workflow
+
+### For New Pages
+1. Try templates first (`templates.ts`)
+2. Use PageBuilder for custom needs
+3. Raw PageConfig only as last resort
+
+### For Components
+1. Use Once UI components
+2. Create sections in `src/components/`
+3. Add to ContentBlock union in `pageTypes.ts`
+
+### For Styling
+1. Use theme context
+2. Reference theme configs
+3. Apply via data attributes
+
+## 🎯 Current Project Status
+
+✅ **PageBuilder & Templates** - Revolutionary 98% code reduction
+✅ **Type System** - Comprehensive with 30+ content blocks
+✅ **Theme System** - 12 predefined themes with context management
+✅ **Once UI Integration** - Modern design system
+✅ **Legacy Compatibility** - Backward compatible
+
+## 🚀 Key Benefits
+
+- **98% Less Code**: 200+ lines → 1-3 lines for page creation
+- **Type Safe**: Full TypeScript support with discriminated unions
+- **Professional**: Best practices and smart defaults built-in
+- **Theme Aware**: Dynamic theming with user/page/system hierarchy
+- **Example Safe**: Automatic detection of placeholder data
+
+Remember: Always start with templates, fall back to PageBuilder, only use raw PageConfig as absolute last resort!
