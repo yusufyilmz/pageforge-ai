@@ -63,7 +63,7 @@ const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
                 opacity: value ? "1" : "0",
                 transition: "0.2s ease-in-out all",
               }}
-            ></Flex>
+            />
           </Flex>
         }
         hasSuffix={

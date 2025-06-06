@@ -141,7 +141,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
                 }}
               >
                 <IconButton variant="ghost" size="m">
-                  <div className={classNames(styles.neutral, styles.swatch)}></div>
+                  <div className={classNames(styles.neutral, styles.swatch)} />
                 </IconButton>
               </Flex>
             ))}
@@ -181,7 +181,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
                 }}
               >
                 <IconButton variant="ghost" size="m">
-                  <div className={`${styles[color]} ${styles.swatch}`}></div>
+                  <div className={`${styles[color]} ${styles.swatch}`} />
                 </IconButton>
               </Flex>
             ))}
@@ -213,7 +213,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
                 }}
               >
                 <IconButton variant="ghost" size="m">
-                  <div className={`${styles[color]} ${styles.swatch}`}></div>
+                  <div className={`${styles[color]} ${styles.swatch}`} />
                 </IconButton>
               </Flex>
             ))}
@@ -244,7 +244,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
                 }}
               >
                 <IconButton variant="ghost" size="m">
-                  <div className={`${styles[color]} ${styles.swatch}`}></div>
+                  <div className={`${styles[color]} ${styles.swatch}`} />
                 </IconButton>
               </Flex>
             ))}
@@ -284,7 +284,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
                       width="24"
                       height="24"
                       radius="s"
-                    ></Flex>
+                    />
                     Color
                   </Flex>
                 ),
@@ -301,7 +301,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
                       width="24"
                       height="24"
                       radius="s"
-                    ></Flex>
+                    />
                     Inverse
                   </Flex>
                 ),
@@ -318,7 +318,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
                       width="24"
                       height="24"
                       radius="s"
-                    ></Flex>
+                    />
                     Contrast
                   </Flex>
                 ),
@@ -352,7 +352,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
                       width="24"
                       height="24"
                       radius="s"
-                    ></Flex>
+                    />
                     Flat
                   </Flex>
                 ),
@@ -372,7 +372,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
                       width="24"
                       height="24"
                       radius="s"
-                    ></Flex>
+                    />
                     Plastic
                   </Flex>
                 ),

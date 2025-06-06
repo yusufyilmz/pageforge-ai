@@ -13,9 +13,6 @@ export interface CacheClient {
 }
 
 class Redis {
-  constructor(_config: { url?: string; token?: string }) {
-    // Initialize Redis client with provided config
-  }
   set(_key: string, _value: CacheValue, _options?: { ex?: number }): Promise<void> {
     // Set value in Redis with optional TTL
     return Promise.resolve();

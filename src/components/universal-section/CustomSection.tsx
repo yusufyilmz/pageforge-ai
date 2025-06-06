@@ -141,6 +141,7 @@ export default function CustomSection({ block, index }: CustomSectionProps) {
           {error}
         </Text>
         <button
+          type="button"
           onClick={generateCustomSection}
           style={{
             padding: "8px 16px",

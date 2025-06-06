@@ -48,7 +48,6 @@ export function Schema({
 
   const schemaType = schemaTypeMap[as];
 
-  // biome-ignore lint/suspicious/noExplicitAny: <cause why not, we love any in typescript..>
   const schema: Record<string, any> = {
     "@context": "https://schema.org",
     "@type": schemaType,

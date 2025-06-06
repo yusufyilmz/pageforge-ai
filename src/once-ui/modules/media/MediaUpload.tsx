@@ -153,26 +153,23 @@ const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
         onDrop={handleDrop}
         {...rest}
       >
-        {!loading && (
-          <>
-            {previewImage ? (
-              <Media
-                style={{
-                  cursor: "pointer",
-                  filter: uploading ? "grayscale(1)" : "",
-                }}
-                sizes={sizes}
-                fill
-                src={previewImage ? previewImage : ""}
-                alt="Preview of uploaded image"
-              />
-            ) : (
-              <Flex fill center>
-                <Icon name="plus" size="l" />
-              </Flex>
-            )}
-          </>
-        )}
+        {!loading &&
+          (previewImage ? (
+            <Media
+              style={{
+                cursor: "pointer",
+                filter: uploading ? "grayscale(1)" : "",
+              }}
+              sizes={sizes}
+              fill
+              src={previewImage ? previewImage : ""}
+              alt="Preview of uploaded image"
+            />
+          ) : (
+            <Flex fill center>
+              <Icon name="plus" size="l" />
+            </Flex>
+          ))}
         {children}
         <Flex
           className={styles.upload}

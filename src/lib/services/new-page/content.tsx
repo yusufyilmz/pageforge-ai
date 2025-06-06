@@ -259,17 +259,17 @@ export const createContentConfig = (props: Partial<ContentConfig> = {}): Content
       ),
     },
     work: {
-      display: isUsingExampleData ? false : true, // Hide example work experience by default
+      display: !isUsingExampleData, // Hide example work experience by default
       title: "Work Experience",
       experiences: isUsingExampleData ? [] : [], // Empty by default, user should add their own
     },
     studies: {
-      display: isUsingExampleData ? false : true, // Hide example studies by default
+      display: !isUsingExampleData, // Hide example studies by default
       title: "Education",
       institutions: isUsingExampleData ? [] : [], // Empty by default, user should add their own
     },
     technical: {
-      display: isUsingExampleData ? false : true, // Hide example skills by default
+      display: !isUsingExampleData, // Hide example skills by default
       title: "Technical Skills",
       skills: isUsingExampleData ? [] : [], // Empty by default, user should add their own
     },

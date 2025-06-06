@@ -142,6 +142,7 @@ export function StructuredData({
     <Script
       id={`structured-data-${schemaType.toLowerCase()}-${slug.replace(/\//g, "-")}`}
       type="application/ld+json"
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
       dangerouslySetInnerHTML={{
         __html: JSON.stringify(baseSchema, null, 2),
       }}

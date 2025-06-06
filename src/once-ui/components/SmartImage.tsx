@@ -140,6 +140,7 @@ const SmartImage: React.FC<SmartImageProps> = ({
           />
         )}
         {!isLoading && isYouTube && (
+          // biome-ignore lint/a11y/useIframeTitle: <explanation>
           <iframe
             width="100%"
             height="100%"

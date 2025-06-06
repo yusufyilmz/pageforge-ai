@@ -58,7 +58,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
               vertical="center"
               onClick={() => scrollTo(section.title, 80)}
             >
-              <Flex height="1" minWidth="16" background="neutral-strong"></Flex>
+              <Flex height="1" minWidth="16" background="neutral-strong" />
               <Text>{section.title}</Text>
             </Flex>
           </Column>

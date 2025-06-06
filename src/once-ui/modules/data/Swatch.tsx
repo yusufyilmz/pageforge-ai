@@ -46,7 +46,7 @@ export const Swatch: React.FC<SwatchProps> = ({ color, size = "m", variant = cha
           ...baseStyle,
           background: "transparent",
         };
-      case "gradient":
+      // case "gradient":
       default:
         return {
           ...baseStyle,

@@ -31,7 +31,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       setLocalValue(newValue);
 
       const numValue = Number.parseFloat(newValue);
-      if (!isNaN(numValue) && onChange) {
+      if (!Number.isNaN(numValue) && onChange) {
         onChange(numValue);
       }
     };
@@ -72,7 +72,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         step={step}
         hasSuffix={
           <>
-            <Flex position="static" minWidth={1.25}></Flex>
+            <Flex position="static" minWidth={1.25} />
             <Flex
               position="absolute"
               right="0"

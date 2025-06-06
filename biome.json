@@ -38,8 +38,38 @@
       "suspicious": {
         "noExplicitAny": "off",
         "noArrayIndexKey": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off",
+        "noUselessElse": "off"
+      },
+      "complexity": {
+        "noForEach": "off",
+        "noUselessTypeConstraint": "off",
+        "noUselessSwitchCase": "off",
+        "noUselessCatch": "off",
+        "noThisInStatic": "off",
+        "useLiteralKeys": "off"
+      },
+      "correctness": {
+        "noUnsafeOptionalChaining": "off",
+        "useExhaustiveDependencies": "off"
+      },
+      "a11y": {
+        "noAriaUnsupportedElements": "off",
+        "useSemanticElements": "off",
+        "useKeyWithMouseEvents": "off",
+        "useKeyWithClickEvents": "off"
       }
-    }
+    },
+    "ignore": [
+      "noConsole",
+      "noDebugger",
+      "noEmpty",
+      "noUnreachable",
+      "noUnusedVariables",
+      "noUnusedLabels"
+    ]
   },
   "javascript": {
     "formatter": {

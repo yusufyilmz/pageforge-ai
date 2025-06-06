@@ -495,6 +495,7 @@ const QuickGenerator = () => {
             <Button variant="secondary" size="m" onClick={() => setStep("input")}>
               ← Generate New Templates
             </Button>
+            {/* biome-ignore lint/suspicious/noAssignInExpressions: <explanation> */}
             <Button variant="primary" size="m" onClick={() => (window.location.href = "/preview")}>
               Explore More Features
             </Button>

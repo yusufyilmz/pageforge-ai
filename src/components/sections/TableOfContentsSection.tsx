@@ -65,7 +65,7 @@ export const TableOfContentsSection = ({ block, index }: TableOfContentsSectionP
               vertical="center"
               onClick={() => scrollTo(item.title, 80)}
             >
-              <Flex height="1" minWidth="16" background="neutral-strong"></Flex>
+              <Flex height="1" minWidth="16" background="neutral-strong" />
               <Text variant="body-default-s">{item.title}</Text>
             </Flex>
           </Column>

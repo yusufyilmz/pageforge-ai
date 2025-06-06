@@ -60,7 +60,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
     (range: DateRange) => {
       setInputValue(formatDateRange(range));
       onChange?.(range);
-      if (range.endDate != undefined) {
+      if (range.endDate !== undefined) {
         setIsOpen(false);
       }
     },

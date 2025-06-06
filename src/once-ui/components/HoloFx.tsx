@@ -157,7 +157,7 @@ const HoloFx: React.FC<HoloFxProps> = ({ children, shine, burn, texture, ...rest
           mixBlendMode: textureDefaults.blending,
           maskImage: textureDefaults.mask as string,
         }}
-      ></Flex>
+      />
     </Flex>
   );
 };

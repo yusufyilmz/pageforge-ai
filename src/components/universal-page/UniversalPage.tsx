@@ -60,6 +60,7 @@ export function UniversalPage({ config }: UniversalPageProps) {
     <script
       type="application/ld+json"
       suppressHydrationWarning
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
       dangerouslySetInnerHTML={{
         __html: JSON.stringify(config.structuredData),
       }}

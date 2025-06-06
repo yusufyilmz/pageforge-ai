@@ -1,15 +1,15 @@
 import type { ContentBlock, ContentSection } from "@pageforge/types/page/pageTypes";
 
-export class ContentRenderer {
-  private static blockRenderers: Map<string, (content: any, variant?: string) => any> = new Map();
+export const ContentRenderer = {
+  blockRenderers: new Map<string, (content: any, variant?: string) => any>(),
 
   // Register a renderer for a specific content block type
-  static registerBlockRenderer(type: string, renderer: (content: any, variant?: string) => any) {
+  registerBlockRenderer(type: string, renderer: (content: any, variant?: string) => any) {
     this.blockRenderers.set(type, renderer);
-  }
+  },
 
   // Render a single content block
-  static renderBlock(block: ContentBlock): any {
+  renderBlock(block: ContentBlock): any {
     if (!block.display && block.display !== undefined) {
       return null;
     }
@@ -21,10 +21,10 @@ export class ContentRenderer {
     }
 
     return renderer(block.content, block.variant);
-  }
+  },
 
   // Render a content section with all its blocks
-  static renderSection(section: ContentSection): any {
+  renderSection(section: ContentSection): any {
     if (!section.display && section.display !== undefined) {
       return null;
     }
@@ -38,13 +38,13 @@ export class ContentRenderer {
       blocks: renderedBlocks,
       layout: section.layout,
     };
-  }
+  },
 
   // Get available block types
-  static getAvailableBlockTypes(): string[] {
+  getAvailableBlockTypes(): string[] {
     return Array.from(this.blockRenderers.keys());
-  }
-}
+  },
+};
 
 // Default block renderers
 ContentRenderer.registerBlockRenderer("text", (content, variant) => ({
