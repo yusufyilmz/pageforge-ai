@@ -36,6 +36,7 @@
     "quick-merge": "./scripts/quick-merge.sh",
     "merge": "git checkout main && git pull origin main && git merge develop && git push origin main",
     "git-workflow": "./scripts/git-workflow.sh",
+    "setup-branch-protection": "./scripts/setup-branch-protection.sh",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "deploy": "npm run build && npm run export",
