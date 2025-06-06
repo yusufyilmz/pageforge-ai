@@ -2,19 +2,19 @@
 'use client'
 
 import React, { useState } from 'react'
+
 import {
   Flex,
   Heading,
   Text,
   Card,
   Button,
-  Input,
   Textarea,
   Badge,
   Grid
 } from '@pageforge/once-ui/components'
+
 import { aiSectionFactory } from './AISectionFactory'
-import { autoSectionRegistry } from './AutoSectionRegistry'
 
 // Example requests that go beyond predefined patterns
 const EXAMPLE_CUSTOM_REQUESTS = [
@@ -84,7 +84,6 @@ export const CustomSectionDemo = () => {
   const [userInput, setUserInput] = useState('')
   const [generatedSection, setGeneratedSection] = useState<any>(null)
   const [isGenerating, setIsGenerating] = useState(false)
-  const [selectedExample, setSelectedExample] = useState<any>(null)
 
   const handleGenerateSection = async (description: string) => {
     setIsGenerating(true)
@@ -123,7 +122,7 @@ export const CustomSectionDemo = () => {
     requirements.elements.forEach((element: any) => {
       switch (element.type) {
         case 'card':
-          data.items = generateSampleCards(element)
+          data.items = generateSampleCards()
           break
         case 'form':
           data.formFields = element.properties?.fields || ['name', 'email']
@@ -170,7 +169,7 @@ export const CustomSectionDemo = () => {
     return 'Custom Section'
   }
 
-  const generateSampleCards = (element: any) => [
+  const generateSampleCards = () => [
     {
       name: 'John Doe',
       role: 'Senior Developer',
@@ -246,15 +245,15 @@ export const CustomSectionDemo = () => {
   ]
 
   return (
-    <Flex direction="column" gap="xl" padding="xl">
+    <Flex direction='column' gap='xl' padding='xl'>
       {/* Header */}
-      <Flex direction="column" vertical="center" gap="m">
+      <Flex direction='column' vertical='center' gap='m'>
         <Badge>AI-Powered Section Generator</Badge>
-        <Heading variant="display-strong-xl" align="center">
+        <Heading variant='display-strong-xl' align='center'>
           Request Any Custom Section
         </Heading>
         <Text
-          variant="body-default-l"
+          variant='body-default-l'
           style={{ textAlign: 'center', maxWidth: '40rem' }}
         >
           Describe any type of section you need - our AI will analyze your
@@ -264,36 +263,35 @@ export const CustomSectionDemo = () => {
       </Flex>
 
       {/* Example Requests */}
-      <Card padding="l">
-        <Flex direction="column" gap="m">
-          <Heading variant="heading-strong-m">Popular Custom Requests</Heading>
-          <Text variant="body-default-s" onBackground="neutral-weak">
+      <Card padding='l'>
+        <Flex direction='column' gap='m'>
+          <Heading variant='heading-strong-m'>Popular Custom Requests</Heading>
+          <Text variant='body-default-s' onBackground='neutral-weak'>
             Click any example to see how our AI handles complex, specific
             requests
           </Text>
-          <Grid columns={2} gap="m">
+          <Grid columns={2} gap='m'>
             {EXAMPLE_CUSTOM_REQUESTS.map((example, index) => (
               <Card
                 key={index}
-                padding="m"
-                border="neutral-medium"
+                padding='m'
+                border='neutral-medium'
                 style={{
                   cursor: 'pointer',
                   transition: 'all 0.2s ease'
                 }}
                 onClick={() => {
-                  setSelectedExample(example)
                   setUserInput(example.description)
                 }}
               >
-                <Flex direction="column" gap="s">
-                  <Flex horizontal="space-between" vertical="start">
-                    <Heading variant="heading-strong-s">
+                <Flex direction='column' gap='s'>
+                  <Flex horizontal='space-between' vertical='start'>
+                    <Heading variant='heading-strong-s'>
                       {example.title}
                     </Heading>
                     <Badge>{example.category}</Badge>
                   </Flex>
-                  <Text variant="body-default-s" onBackground="neutral-weak">
+                  <Text variant='body-default-s' onBackground='neutral-weak'>
                     {example.description}
                   </Text>
                 </Flex>
@@ -304,25 +302,25 @@ export const CustomSectionDemo = () => {
       </Card>
 
       {/* Input Section */}
-      <Card padding="l">
-        <Flex direction="column" gap="m">
-          <Heading variant="heading-strong-m">
+      <Card padding='l'>
+        <Flex direction='column' gap='m'>
+          <Heading variant='heading-strong-m'>
             Describe Your Custom Section
           </Heading>
-          <Text variant="body-default-s" onBackground="neutral-weak">
+          <Text variant='body-default-s' onBackground='neutral-weak'>
             Be as specific as possible. Include functionality, layout
             preferences, interactions, and any special requirements.
           </Text>
           <Textarea
-            id="section-input"
-            placeholder="Example: I need an interactive pricing calculator where users can select different service packages, adjust project timeline with a slider, and see real-time price updates. Include options for rush delivery and premium support with tooltips explaining each option..."
+            id='section-input'
+            placeholder='Example: I need an interactive pricing calculator where users can select different service packages, adjust project timeline with a slider, and see real-time price updates. Include options for rush delivery and premium support with tooltips explaining each option...'
             value={userInput}
             onChange={e => setUserInput(e.target.value)}
             rows={5}
           />
           <Button
-            variant="primary"
-            size="l"
+            variant='primary'
+            size='l'
             onClick={() => handleGenerateSection(userInput)}
             disabled={!userInput.trim() || isGenerating}
             loading={isGenerating}
@@ -336,40 +334,40 @@ export const CustomSectionDemo = () => {
 
       {/* Generated Section Preview */}
       {generatedSection && (
-        <Card padding="l" border="accent-medium">
-          <Flex direction="column" gap="l">
-            <Flex direction="column" gap="s">
+        <Card padding='l' border='accent-medium'>
+          <Flex direction='column' gap='l'>
+            <Flex direction='column' gap='s'>
               <Badge>Generated Section</Badge>
-              <Heading variant="heading-strong-l">Analysis & Preview</Heading>
-              <Text variant="body-default-m" onBackground="neutral-weak">
+              <Heading variant='heading-strong-l'>Analysis & Preview</Heading>
+              <Text variant='body-default-m' onBackground='neutral-weak'>
                 Based on: &quot;{generatedSection.description}&quot;
               </Text>
             </Flex>
 
             {/* Requirements Analysis */}
-            <Card padding="m" border="neutral-medium">
-              <Flex direction="column" gap="m">
-                <Heading variant="heading-strong-s">
+            <Card padding='m' border='neutral-medium'>
+              <Flex direction='column' gap='m'>
+                <Heading variant='heading-strong-s'>
                   Detected Requirements
                 </Heading>
-                <Grid columns={3} gap="m">
-                  <Flex direction="column" gap="s">
-                    <Text variant="body-default-s" weight="strong">
+                <Grid columns={3} gap='m'>
+                  <Flex direction='column' gap='s'>
+                    <Text variant='body-default-s' weight='strong'>
                       Layout
                     </Text>
                     <Badge>{generatedSection.requirements.layout}</Badge>
                   </Flex>
-                  <Flex direction="column" gap="s">
-                    <Text variant="body-default-s" weight="strong">
+                  <Flex direction='column' gap='s'>
+                    <Text variant='body-default-s' weight='strong'>
                       Style
                     </Text>
                     <Badge>{generatedSection.requirements.style}</Badge>
                   </Flex>
-                  <Flex direction="column" gap="s">
-                    <Text variant="body-default-s" weight="strong">
+                  <Flex direction='column' gap='s'>
+                    <Text variant='body-default-s' weight='strong'>
                       Elements
                     </Text>
-                    <Flex gap="xs" wrap>
+                    <Flex gap='xs' wrap>
                       {generatedSection.requirements.elements.map(
                         (element: any, index: number) => (
                           <Badge key={index}>{element.type}</Badge>
@@ -379,11 +377,11 @@ export const CustomSectionDemo = () => {
                   </Flex>
                 </Grid>
                 {generatedSection.requirements.customRequirements && (
-                  <Flex direction="column" gap="s">
-                    <Text variant="body-default-s" weight="strong">
+                  <Flex direction='column' gap='s'>
+                    <Text variant='body-default-s' weight='strong'>
                       Custom Requirements
                     </Text>
-                    <Text variant="body-default-s" onBackground="neutral-weak">
+                    <Text variant='body-default-s' onBackground='neutral-weak'>
                       {generatedSection.requirements.customRequirements}
                     </Text>
                   </Flex>
@@ -392,9 +390,9 @@ export const CustomSectionDemo = () => {
             </Card>
 
             {/* Generated Code Preview */}
-            <Card padding="m" border="neutral-medium">
-              <Flex direction="column" gap="s">
-                <Text variant="body-default-s" weight="strong">
+            <Card padding='m' border='neutral-medium'>
+              <Flex direction='column' gap='s'>
+                <Text variant='body-default-s' weight='strong'>
                   Generated React Component
                 </Text>
                 <div
@@ -414,43 +412,43 @@ export const CustomSectionDemo = () => {
             </Card>
 
             {/* Action Buttons */}
-            <Flex gap="m">
-              <Button variant="primary">Add to Page</Button>
-              <Button variant="secondary">Customize Further</Button>
-              <Button variant="tertiary">Export Code</Button>
+            <Flex gap='m'>
+              <Button variant='primary'>Add to Page</Button>
+              <Button variant='secondary'>Customize Further</Button>
+              <Button variant='tertiary'>Export Code</Button>
             </Flex>
           </Flex>
         </Card>
       )}
 
       {/* Features */}
-      <Card padding="l">
-        <Flex direction="column" gap="m">
-          <Heading variant="heading-strong-m">Advanced AI Capabilities</Heading>
-          <Grid columns={3} gap="m">
-            <Flex direction="column" gap="s">
-              <Text variant="body-default-s" weight="strong">
+      <Card padding='l'>
+        <Flex direction='column' gap='m'>
+          <Heading variant='heading-strong-m'>Advanced AI Capabilities</Heading>
+          <Grid columns={3} gap='m'>
+            <Flex direction='column' gap='s'>
+              <Text variant='body-default-s' weight='strong'>
                 🧠 Smart Pattern Detection
               </Text>
-              <Text variant="body-default-s" onBackground="neutral-weak">
+              <Text variant='body-default-s' onBackground='neutral-weak'>
                 Understands complex requirements and maps them to appropriate
                 layouts and components
               </Text>
             </Flex>
-            <Flex direction="column" gap="s">
-              <Text variant="body-default-s" weight="strong">
+            <Flex direction='column' gap='s'>
+              <Text variant='body-default-s' weight='strong'>
                 ⚡ Dynamic Code Generation
               </Text>
-              <Text variant="body-default-s" onBackground="neutral-weak">
+              <Text variant='body-default-s' onBackground='neutral-weak'>
                 Creates production-ready React components with proper TypeScript
                 types and styling
               </Text>
             </Flex>
-            <Flex direction="column" gap="s">
-              <Text variant="body-default-s" weight="strong">
+            <Flex direction='column' gap='s'>
+              <Text variant='body-default-s' weight='strong'>
                 🎨 Contextual Styling
               </Text>
-              <Text variant="body-default-s" onBackground="neutral-weak">
+              <Text variant='body-default-s' onBackground='neutral-weak'>
                 Applies appropriate styles and interactions based on the
                 described use case
               </Text>

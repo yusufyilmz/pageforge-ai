@@ -1,6 +1,3 @@
-import { InlineCode } from '@pageforge/once-ui/components'
-import React from 'react'
-
 // ============================================================================
 // CONTENT CONFIGURATION TYPES
 // ============================================================================

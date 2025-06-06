@@ -1,6 +1,7 @@
 'use client'
 
 import React, { ReactNode, forwardRef, SyntheticEvent } from 'react'
+
 import { Flex } from '.'
 
 interface DropdownProps
@@ -26,15 +27,15 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     return (
       <Flex
         ref={ref}
-        role="listbox"
+        role='listbox'
         onClick={handleSelect}
         flex={1}
-        border="neutral-medium"
-        background="surface"
-        overflow="hidden"
+        border='neutral-medium'
+        background='surface'
+        overflow='hidden'
         {...rest}
       >
-        <Flex flex={1} overflowY="auto" direction="column" gap="2">
+        <Flex flex={1} overflowY='auto' direction='column' gap='2'>
           {children}
         </Flex>
       </Flex>

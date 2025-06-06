@@ -1,5 +1,6 @@
 'use client'
 
+import classNames from 'classnames'
 import React, {
   CSSProperties,
   forwardRef,
@@ -7,11 +8,13 @@ import React, {
   useRef,
   useState
 } from 'react'
-import { SpacingToken } from '../types'
-import { Flex } from '.'
+
 import { DisplayProps } from '../interfaces'
+import { SpacingToken } from '../types'
+
 import styles from './Background.module.scss'
-import classNames from 'classnames'
+
+import { Flex } from '.'
 
 function setRef<T>(ref: React.Ref<T> | undefined, value: T | null) {
   if (typeof ref === 'function') {
@@ -91,7 +94,7 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
     forwardedRef
   ) => {
     const dotsColor = dots.color ?? 'brand-on-background-weak'
-    const dotsSize = 'var(--static-space-' + (dots.size ?? '24') + ')'
+    const dotsSize = `var(--static-space-${dots.size ?? '24'})`
 
     const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
     const [smoothPosition, setSmoothPosition] = useState({ x: 0, y: 0 })
@@ -146,7 +149,9 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
     }, [cursorPosition, mask])
 
     const maskStyle = (): CSSProperties => {
-      if (!mask) return {}
+      if (!mask) {
+        return {}
+      }
 
       if (mask.cursor) {
         return {
@@ -190,10 +195,10 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
         ref={backgroundRef}
         fill
         className={classNames(mask && styles.mask, className)}
-        top="0"
-        left="0"
+        top='0'
+        left='0'
         zIndex={0}
-        overflow="hidden"
+        overflow='hidden'
         style={{
           ...maskStyle(),
           ...style
@@ -202,10 +207,10 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
       >
         {gradient.display && (
           <Flex
-            position="absolute"
+            position='absolute'
             className={styles.gradient}
             opacity={gradient.opacity}
-            pointerEvents="none"
+            pointerEvents='none'
             style={{
               ['--gradient-position-x' as string]: `${adjustedX}%`,
               ['--gradient-position-y' as string]: `${adjustedY}%`,
@@ -226,11 +231,11 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
         )}
         {dots.display && (
           <Flex
-            position="absolute"
-            top="0"
-            left="0"
+            position='absolute'
+            top='0'
+            left='0'
             fill
-            pointerEvents="none"
+            pointerEvents='none'
             className={styles.dots}
             opacity={dots.opacity}
             style={
@@ -243,11 +248,11 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
         )}
         {lines.display && (
           <Flex
-            position="absolute"
-            top="0"
-            left="0"
+            position='absolute'
+            top='0'
+            left='0'
             fill
-            pointerEvents="none"
+            pointerEvents='none'
             className={styles.lines}
             opacity={lines.opacity}
             style={
@@ -271,11 +276,11 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
         )}
         {grid.display && (
           <Flex
-            position="absolute"
-            top="0"
-            left="0"
+            position='absolute'
+            top='0'
+            left='0'
             fill
-            pointerEvents="none"
+            pointerEvents='none'
             className={styles.grid}
             opacity={grid.opacity}
             style={{

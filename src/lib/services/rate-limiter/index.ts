@@ -1,3 +1,5 @@
+// eslint-disable
+
 // import { RedisCacheClient } from '@shared/cache';
 
 // import { Redis } from '@upstash/redis';
@@ -13,26 +15,26 @@ export interface CacheClient {
 }
 
 class Redis {
-  constructor(config: { url?: string; token?: string }) {
+  constructor(_config: { url?: string; token?: string }) {
     // Initialize Redis client with provided config
   }
   set(
-    key: string,
-    value: CacheValue,
-    options?: { ex?: number }
+    _key: string,
+    _value: CacheValue,
+    _options?: { ex?: number }
   ): Promise<void> {
     // Set value in Redis with optional TTL
     return Promise.resolve()
   }
-  get(key: string): Promise<string | null> {
+  get(_key: string): Promise<string | null> {
     // Get value from Redis
     return Promise.resolve(null)
   }
-  expire(key: string, ttl: number): Promise<void> {
+  expire(_key: string, _ttl: number): Promise<void> {
     // Set expiration for a key in Redis
     return Promise.resolve()
   }
-  incr(key: string): Promise<number> {
+  incr(_key: string): Promise<number> {
     // Increment a key in Redis
     return Promise.resolve(0)
   }

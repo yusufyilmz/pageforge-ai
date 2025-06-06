@@ -1,6 +1,10 @@
 'use client'
 
-import React from 'react'
+import type {
+  PersonData,
+  ProjectData,
+  AboutPageTemplate
+} from '@pageforge/lib/services/page-builder'
 import {
   Flex,
   Text,
@@ -9,14 +13,10 @@ import {
   Input,
   Grid
 } from '@pageforge/once-ui/components'
-import {
-  PersonData,
-  ProjectData,
-  AboutPageTemplate
-} from '@/lib/services/page-builder'
+import type { PageType } from '@pageforge/types/page/pageTypes'
 
 interface ContentEditorProps {
-  selectedTemplate: 'developer' | 'designer' | 'freelancer' | 'custom' | null
+  selectedTemplate: PageType | null
   personData: PersonData
   projects: ProjectData[]
   customConfig?: Partial<AboutPageTemplate>
@@ -27,15 +27,15 @@ export const ContentEditor: React.FC<ContentEditorProps> = ({
   selectedTemplate,
   personData,
   projects,
-  customConfig,
   onUpdate
 }) => {
   const handlePersonDataChange =
-    (field: keyof PersonData) => (value: string) => {
+    (field: keyof PersonData) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
       onUpdate({
         personData: {
           ...personData,
-          [field]: value
+          [field]: event.target.value
         }
       })
     }
@@ -64,98 +64,106 @@ export const ContentEditor: React.FC<ContentEditorProps> = ({
   }
 
   return (
-    <Flex direction="column" gap="xl">
-      <Flex direction="column" gap="m" style={{ textAlign: 'center' }}>
-        <Heading variant="display-strong-m">Tell Us About Yourself</Heading>
-        <Text variant="body-default-l" onBackground="neutral-weak">
+    <Flex direction='column' gap='xl'>
+      <Flex direction='column' gap='m' style={{ textAlign: 'center' }}>
+        <Heading variant='display-strong-m'>Tell Us About Yourself</Heading>
+        <Text variant='body-default-l' onBackground='neutral-weak'>
           Fill in your information to generate your professional page
         </Text>
       </Flex>
 
       {/* Personal Information */}
       <Flex
-        direction="column"
-        gap="l"
-        padding="l"
-        radius="m"
-        background="neutral-weak"
+        direction='column'
+        gap='l'
+        padding='l'
+        radius='m'
+        background='neutral-weak'
       >
-        <Heading variant="heading-strong-m">Personal Information</Heading>
+        <Heading variant='heading-strong-m'>Personal Information</Heading>
 
-        <Grid columns="2" gap="m">
-          <Flex direction="column" gap="xs">
-            <Text variant="label-default-s">First Name *</Text>
+        <Grid columns='2' gap='m'>
+          <Flex direction='column' gap='xs'>
+            <Text variant='label-default-s'>First Name *</Text>
             <Input
               value={personData.name}
               onChange={handlePersonDataChange('name')}
-              placeholder="John"
+              placeholder='John'
+              id={''}
             />
           </Flex>
 
-          <Flex direction="column" gap="xs">
-            <Text variant="label-default-s">Last Name *</Text>
+          <Flex direction='column' gap='xs'>
+            <Text variant='label-default-s'>Last Name *</Text>
             <Input
               value={personData.lastName}
               onChange={handlePersonDataChange('lastName')}
-              placeholder="Doe"
+              placeholder='Doe'
+              id={''}
             />
           </Flex>
         </Grid>
 
-        <Flex direction="column" gap="xs">
-          <Text variant="label-default-s">Professional Role *</Text>
+        <Flex direction='column' gap='xs'>
+          <Text variant='label-default-s'>Professional Role *</Text>
           <Input
             value={personData.role}
             onChange={handlePersonDataChange('role')}
-            placeholder="Full Stack Developer"
+            placeholder='Full Stack Developer'
+            id={''}
           />
         </Flex>
 
-        <Grid columns="2" gap="m">
-          <Flex direction="column" gap="xs">
-            <Text variant="label-default-s">Email</Text>
+        <Grid columns='2' gap='m'>
+          <Flex direction='column' gap='xs'>
+            <Text variant='label-default-s'>Email</Text>
             <Input
               value={personData.email || ''}
               onChange={handlePersonDataChange('email')}
-              placeholder="john@example.com"
+              placeholder='john@example.com'
+              id={''}
             />
           </Flex>
 
-          <Flex direction="column" gap="xs">
-            <Text variant="label-default-s">Location</Text>
+          <Flex direction='column' gap='xs'>
+            <Text variant='label-default-s'>Location</Text>
             <Input
               value={personData.location || ''}
               onChange={handlePersonDataChange('location')}
-              placeholder="San Francisco, CA"
+              placeholder='San Francisco, CA'
+              id={''}
             />
           </Flex>
         </Grid>
 
-        <Flex direction="column" gap="xs">
-          <Text variant="label-default-s">Bio/Description</Text>
+        <Flex direction='column' gap='xs'>
+          <Text variant='label-default-s'>Bio/Description</Text>
           <Input
             value={personData.bio || ''}
             onChange={handlePersonDataChange('bio')}
-            placeholder="Tell us about yourself..."
+            placeholder='Tell us about yourself...'
+            id={''}
           />
         </Flex>
 
-        <Grid columns="2" gap="m">
-          <Flex direction="column" gap="xs">
-            <Text variant="label-default-s">Website</Text>
+        <Grid columns='2' gap='m'>
+          <Flex direction='column' gap='xs'>
+            <Text variant='label-default-s'>Website</Text>
             <Input
               value={personData.website || ''}
               onChange={handlePersonDataChange('website')}
-              placeholder="https://johndoe.dev"
+              placeholder='https://johndoe.dev'
+              id={''}
             />
           </Flex>
 
-          <Flex direction="column" gap="xs">
-            <Text variant="label-default-s">Avatar URL</Text>
+          <Flex direction='column' gap='xs'>
+            <Text variant='label-default-s'>Avatar URL</Text>
             <Input
               value={personData.avatar || ''}
               onChange={handlePersonDataChange('avatar')}
-              placeholder="/images/avatar.jpg"
+              placeholder='/images/avatar.jpg'
+              id={''}
             />
           </Flex>
         </Grid>
@@ -163,53 +171,52 @@ export const ContentEditor: React.FC<ContentEditorProps> = ({
 
       {/* Projects Section - Only show for relevant templates */}
       {(selectedTemplate === 'developer' ||
-        selectedTemplate === 'designer' ||
-        selectedTemplate === 'custom') && (
+        selectedTemplate === 'designer') && (
         <Flex
-          direction="column"
-          gap="l"
-          padding="l"
-          radius="m"
-          background="neutral-weak"
+          direction='column'
+          gap='l'
+          padding='l'
+          radius='m'
+          background='neutral-weak'
         >
           <Flex
             style={{ justifyContent: 'space-between', alignItems: 'center' }}
           >
-            <Heading variant="heading-strong-m">Projects</Heading>
-            <Button variant="secondary" onClick={addProject}>
+            <Heading variant='heading-strong-m'>Projects</Heading>
+            <Button variant='secondary' onClick={addProject}>
               Add Project
             </Button>
           </Flex>
 
           {projects.length === 0 ? (
             <Flex
-              direction="column"
-              gap="m"
-              padding="xl"
+              direction='column'
+              gap='m'
+              padding='xl'
               style={{
                 textAlign: 'center',
                 border: '2px dashed var(--neutral-medium)',
                 borderRadius: '8px'
               }}
             >
-              <Text variant="body-default-m" onBackground="neutral-medium">
+              <Text variant='body-default-m' onBackground='neutral-medium'>
                 No projects added yet
               </Text>
-              <Button variant="primary" onClick={addProject}>
+              <Button variant='primary' onClick={addProject}>
                 Add Your First Project
               </Button>
             </Flex>
           ) : (
-            <Flex direction="column" gap="m">
+            <Flex direction='column' gap='m'>
               {projects.map((project, index) => (
                 <Flex
                   key={index}
-                  direction="column"
-                  gap="m"
-                  padding="m"
-                  radius="s"
-                  border="neutral-medium"
-                  background="surface-medium"
+                  direction='column'
+                  gap='m'
+                  padding='m'
+                  radius='s'
+                  border='neutral-medium'
+                  background='surface'
                 >
                   <Flex
                     style={{
@@ -217,76 +224,87 @@ export const ContentEditor: React.FC<ContentEditorProps> = ({
                       alignItems: 'center'
                     }}
                   >
-                    <Text variant="label-default-m">Project {index + 1}</Text>
+                    <Text variant='label-default-m'>Project {index + 1}</Text>
                     <Button
-                      variant="tertiary"
-                      size="s"
+                      variant='tertiary'
+                      size='s'
                       onClick={() => removeProject(index)}
                     >
                       Remove
                     </Button>
                   </Flex>
 
-                  <Grid columns="2" gap="m">
-                    <Flex direction="column" gap="xs">
-                      <Text variant="label-default-s">Project Title</Text>
+                  <Grid columns='2' gap='m'>
+                    <Flex direction='column' gap='xs'>
+                      <Text variant='label-default-s'>Project Title</Text>
                       <Input
                         value={project.title}
-                        onChange={value =>
-                          updateProject(index, { title: value })
+                        onChange={event =>
+                          updateProject(index, { title: event.target.value })
                         }
-                        placeholder="E-commerce Platform"
+                        placeholder='E-commerce Platform'
+                        id={''}
                       />
                     </Flex>
 
-                    <Flex direction="column" gap="xs">
-                      <Text variant="label-default-s">Project URL</Text>
+                    <Flex direction='column' gap='xs'>
+                      <Text variant='label-default-s'>Project URL</Text>
                       <Input
                         value={project.url || ''}
-                        onChange={value => updateProject(index, { url: value })}
-                        placeholder="https://project.com"
+                        onChange={event =>
+                          updateProject(index, { url: event.target.value })
+                        }
+                        placeholder='https://project.com'
+                        id={''}
                       />
                     </Flex>
                   </Grid>
 
-                  <Flex direction="column" gap="xs">
-                    <Text variant="label-default-s">Description</Text>
+                  <Flex direction='column' gap='xs'>
+                    <Text variant='label-default-s'>Description</Text>
                     <Input
                       value={project.description}
-                      onChange={value =>
-                        updateProject(index, { description: value })
+                      onChange={event =>
+                        updateProject(index, {
+                          description: event.target.value
+                        })
                       }
-                      placeholder="Describe your project..."
+                      placeholder='Describe your project...'
+                      id={''}
                     />
                   </Flex>
 
-                  <Grid columns="2" gap="m">
-                    <Flex direction="column" gap="xs">
-                      <Text variant="label-default-s">
+                  <Grid columns='2' gap='m'>
+                    <Flex direction='column' gap='xs'>
+                      <Text variant='label-default-s'>
                         Technologies (comma-separated)
                       </Text>
                       <Input
                         value={project.technologies.join(', ')}
-                        onChange={value =>
+                        onChange={event =>
                           updateProject(index, {
-                            technologies: value
+                            technologies: event.target.value
                               .split(',')
                               .map(t => t.trim())
                               .filter(Boolean)
                           })
                         }
-                        placeholder="React, Node.js, PostgreSQL"
+                        placeholder='React, Node.js, PostgreSQL'
+                        id={''}
                       />
                     </Flex>
 
-                    <Flex direction="column" gap="xs">
-                      <Text variant="label-default-s">GitHub URL</Text>
+                    <Flex direction='column' gap='xs'>
+                      <Text variant='label-default-s'>GitHub URL</Text>
                       <Input
                         value={project.githubUrl || ''}
-                        onChange={value =>
-                          updateProject(index, { githubUrl: value })
+                        onChange={event =>
+                          updateProject(index, {
+                            githubUrl: event.target.value
+                          })
                         }
-                        placeholder="https://github.com/user/repo"
+                        placeholder='https://github.com/user/repo'
+                        id={''}
                       />
                     </Flex>
                   </Grid>
@@ -299,20 +317,20 @@ export const ContentEditor: React.FC<ContentEditorProps> = ({
 
       {/* Template-specific information */}
       <Flex
-        direction="column"
-        gap="m"
-        padding="l"
-        radius="m"
-        background="brand-weak"
+        direction='column'
+        gap='m'
+        padding='l'
+        radius='m'
+        background='brand-weak'
         style={{ textAlign: 'center' }}
       >
-        <Heading variant="heading-strong-m">✨ Almost Ready!</Heading>
-        <Text variant="body-default-m" onBackground="brand-medium">
+        <Heading variant='heading-strong-m'>✨ Almost Ready!</Heading>
+        <Text variant='body-default-m' onBackground='brand-medium'>
           Your {selectedTemplate} template will be generated with the
           information above
         </Text>
         {selectedTemplate === 'freelancer' && (
-          <Text variant="body-default-s" onBackground="neutral-medium">
+          <Text variant='body-default-s' onBackground='neutral-medium'>
             Freelancer template includes service highlights and call-to-action
             sections
           </Text>

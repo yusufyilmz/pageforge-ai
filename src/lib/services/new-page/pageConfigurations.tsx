@@ -7,14 +7,15 @@
 // import createContentConfig, { ContentConfig } from './content'
 
 import {
-  AboutPageConfig,
+  OpenGraphType,
   PageType,
   SchemaType,
-  OpenGraphType
+  type AboutPageConfig
 } from '@pageforge/types/page/pageTypes'
-import createContentConfig, {
+
+import {
+  createContentConfig,
   ContentConfig,
-  gallery,
   createContentTemplate
 } from './content'
 
@@ -261,10 +262,10 @@ import createContentConfig, {
 // //           display: about.calendar.display,
 // //         },
 // //         {
-// //           id: 'social-links',
+// //           id: 'socials',
 // //           blocks: [
 // //             {
-// //               type: 'social-links',
+// //               type: 'socials',
 // //               content: {
 // //                 links: social,
 // //               },
@@ -314,11 +315,11 @@ import createContentConfig, {
 // //           display: about.studies.display,
 // //         },
 // //         {
-// //           id: 'technical-skills',
+// //           id: 'skills',
 // //           title: about.technical.title,
 // //           blocks: [
 // //             {
-// //               type: 'technical-skills',
+// //               type: 'skills',
 // //               content: {
 // //                 title: about.technical.title,
 // //                 skills: about.technical.skills,
@@ -815,7 +816,7 @@ export const createComprehensiveAboutPageConfig = (
         description: about.description,
         image: person.avatar,
         alt: `${person.name} ${person.lastName}`,
-        url: `/about`
+        url: '/about'
       },
       twitter: {
         card: 'summary_large_image',
@@ -894,7 +895,7 @@ export const createComprehensiveAboutPageConfig = (
               content: {
                 avatar: {
                   display: about.avatar?.display || true,
-                  src: `/images/avatar.jpg`
+                  src: '/images/avatar.jpg'
                 },
                 intro: {
                   display: about.intro.display,
@@ -976,7 +977,7 @@ export const createComprehensiveAboutPageConfig = (
           display: about.studies?.display || true
         },
         {
-          id: 'technical-skills',
+          id: 'skills',
           title: about.technical?.title || 'Technical Skills',
           description: 'Technologies and tools I work with',
           blocks: [

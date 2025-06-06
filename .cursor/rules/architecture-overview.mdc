@@ -24,7 +24,7 @@ PageForge is a Next.js-based page generation system with a revolutionary PageBui
 **Location**: `src/lib/types/page/`
 
 - **[pageTypes.ts](mdc:src/lib/types/page/pageTypes.ts)** - Core types with 30+ content blocks
-  - `PageConfig<T>` - Main page interface
+  - `PageConfig` - Main page interface
   - `ContentBlock` - Discriminated union for sections
   - `PageMetadataConfig` - Nested metadata structure
 

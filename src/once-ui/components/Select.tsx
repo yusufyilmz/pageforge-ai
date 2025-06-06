@@ -1,5 +1,7 @@
 'use client'
 
+import { Placement } from '@floating-ui/react-dom'
+import classNames from 'classnames'
 import React, {
   useState,
   useRef,
@@ -7,7 +9,9 @@ import React, {
   forwardRef,
   ReactNode
 } from 'react'
-import classNames from 'classnames'
+
+import inputStyles from './Input.module.scss'
+
 import {
   DropdownWrapper,
   Flex,
@@ -19,8 +23,6 @@ import {
   OptionProps,
   DropdownWrapperProps
 } from '.'
-import inputStyles from './Input.module.scss'
-import { Placement } from '@floating-ui/react-dom'
 
 type SelectOptionType = Omit<OptionProps, 'selected'>
 
@@ -60,7 +62,9 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [highlightedIndex, setHighlightedIndex] = useState<number | null>(
       () => {
-        if (!options?.length || !value) return null
+        if (!options?.length || !value) {
+          return null
+        }
         return options.findIndex(option => option.value === value)
       }
     )
@@ -83,13 +87,17 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     }
 
     const handleSelect = (value: string) => {
-      if (onSelect) onSelect(value)
+      if (onSelect) {
+        onSelect(value)
+      }
       setIsDropdownOpen(false)
       setIsFilled(true)
     }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (!isFocused && event.key !== 'Enter') return
+      if (!isFocused && event.key !== 'Enter') {
+        return
+      }
 
       switch (event.key) {
         case 'Escape':
@@ -179,8 +187,11 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
         fillWidth
         ref={node => {
           selectRef.current = node
-          if (typeof ref === 'function') ref(node)
-          else if (ref) ref.current = node
+          if (typeof ref === 'function') {
+            ref(node)
+          } else if (ref) {
+            ref.current = node
+          }
         }}
         isOpen={isDropdownOpen}
         onOpenChange={setIsDropdownOpen}
@@ -193,7 +204,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
               textOverflow: 'ellipsis',
               ...style
             }}
-            cursor="interactive"
+            cursor='interactive'
             value={
               typeof selectedOption?.label === 'string'
                 ? selectedOption.label
@@ -207,7 +218,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
               [inputStyles.focused]: isFocused,
               className
             })}
-            aria-haspopup="listbox"
+            aria-haspopup='listbox'
             aria-expanded={isDropdownOpen}
           />
         }
@@ -216,29 +227,29 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             {searchable && (
               <Flex fillWidth>
                 <Input
-                  data-scaling="90"
+                  data-scaling='90'
                   style={{
                     marginTop: '-1px',
                     marginLeft: '-1px',
                     width: 'calc(100% + 2px)'
                   }}
-                  id="search"
-                  placeholder="Search"
-                  height="s"
-                  radius="none"
+                  id='search'
+                  placeholder='Search'
+                  height='s'
+                  radius='none'
                   hasSuffix={
                     searchQuery ? (
                       <IconButton
-                        tooltip="Clear"
-                        tooltipPosition="left"
-                        icon="close"
-                        variant="ghost"
-                        size="s"
+                        tooltip='Clear'
+                        tooltipPosition='left'
+                        icon='close'
+                        variant='ghost'
+                        size='s'
                         onClick={handleClearSearch}
                       />
                     ) : undefined
                   }
-                  hasPrefix={<Icon name="search" size="xs" />}
+                  hasPrefix={<Icon name='search' size='xs' />}
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                   onClick={e => e.stopPropagation()}
@@ -246,7 +257,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                 />
               </Flex>
             )}
-            <Flex fillWidth padding="4" direction="column" gap="2">
+            <Flex fillWidth padding='4' direction='column' gap='2'>
               {options
                 .filter(option =>
                   option.label
@@ -276,10 +287,10 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                 ).length === 0 && (
                   <Flex
                     fillWidth
-                    vertical="center"
-                    horizontal="center"
-                    paddingX="16"
-                    paddingY="32"
+                    vertical='center'
+                    horizontal='center'
+                    paddingX='16'
+                    paddingY='32'
                   >
                     {emptyState}
                   </Flex>

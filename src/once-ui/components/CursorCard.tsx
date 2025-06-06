@@ -1,5 +1,6 @@
 'use client'
 
+import { Placement } from '@floating-ui/react-dom'
 import React, {
   useState,
   useRef,
@@ -10,9 +11,10 @@ import React, {
   useCallback
 } from 'react'
 import { createPortal } from 'react-dom'
-import { Placement } from '@floating-ui/react-dom'
-import { Flex } from '.'
+
 import styles from './CursorCard.module.scss'
+
+import { Flex } from '.'
 
 export interface CursorCardProps extends React.ComponentProps<typeof Flex> {
   trigger?: ReactNode
@@ -100,10 +102,10 @@ const CursorCard = forwardRef<HTMLDivElement, CursorCardProps>(
           createPortal(
             <Flex
               zIndex={10}
-              position="fixed"
-              top="0"
-              left="0"
-              pointerEvents="none"
+              position='fixed'
+              top='0'
+              left='0'
+              pointerEvents='none'
               ref={cardRef}
               className={`${styles.fadeIn} ${className || ''}`}
               style={{

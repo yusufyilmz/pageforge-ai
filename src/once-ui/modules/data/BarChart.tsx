@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useEffect, useMemo } from 'react'
-import { formatDate } from './utils/formatDate'
 import {
   BarChart as RechartsBarChart,
   Bar as RechartsBar,
@@ -13,8 +12,12 @@ import {
   Legend as RechartsLegend
 } from 'recharts'
 
+import { chart } from '../../../app/resources/data.config'
 import { Column, Row, DateRange } from '../../components'
+
 import { getDistributedColor } from './utils/colorDistribution'
+import { formatDate } from './utils/formatDate'
+
 import {
   ChartProps,
   LinearGradient,
@@ -25,7 +28,6 @@ import {
   ChartHeader,
   barWidth
 } from '.'
-import { chart } from '../../../app/resources/data.config'
 
 interface BarChartProps extends ChartProps {
   barWidth?: barWidth
@@ -140,7 +142,7 @@ const BarChart: React.FC<BarChartProps> = ({
       fillWidth
       height={chart.height}
       border={border}
-      radius="l"
+      radius='l'
       {...flex}
     >
       <ChartHeader
@@ -159,7 +161,7 @@ const BarChart: React.FC<BarChartProps> = ({
           emptyState={emptyState}
         />
         {!loading && filteredData && filteredData.length > 0 && (
-          <RechartsResponsiveContainer width="100%" height="100%">
+          <RechartsResponsiveContainer width='100%' height='100%'>
             <RechartsBarChart
               data={filteredData}
               margin={{ left: 0, bottom: 0, top: 0, right: 0 }}
@@ -168,7 +170,7 @@ const BarChart: React.FC<BarChartProps> = ({
               <RechartsCartesianGrid
                 horizontal
                 vertical={false}
-                stroke="var(--neutral-alpha-weak)"
+                stroke='var(--neutral-alpha-weak)'
               />
               {legend.display && (
                 <RechartsLegend
@@ -290,7 +292,7 @@ const BarChart: React.FC<BarChartProps> = ({
                   fill={`url(#barGradient${chartId}${index})`}
                   stroke={barColors[index]}
                   strokeWidth={1}
-                  transform="translate(0, -1)"
+                  transform='translate(0, -1)'
                   barSize={
                     typeof barWidth === 'string' && barWidth === 'fill'
                       ? '100%'

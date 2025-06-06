@@ -1,10 +1,12 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
-import styles from './HoloFx.module.scss'
-import { Flex } from '.'
-import { CSSProperties } from 'react'
 import classNames from 'classnames'
+import React, { useEffect, useRef } from 'react'
+import { CSSProperties } from 'react'
+
+import styles from './HoloFx.module.scss'
+
+import { Flex } from '.'
 
 interface MaskOptions {
   maskPosition?: string
@@ -81,11 +83,15 @@ const HoloFx: React.FC<HoloFxProps> = ({
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       const now = Date.now()
-      if (now - lastCallRef.current < 16) return
+      if (now - lastCallRef.current < 16) {
+        return
+      }
       lastCallRef.current = now
 
       const element = ref.current
-      if (!element) return
+      if (!element) {
+        return
+      }
 
       const rect = element.getBoundingClientRect()
       const offsetX = event.clientX - rect.left
@@ -109,18 +115,18 @@ const HoloFx: React.FC<HoloFxProps> = ({
   }, [])
 
   return (
-    <Flex overflow="hidden" className={styles.holoFx} ref={ref} {...rest}>
+    <Flex overflow='hidden' className={styles.holoFx} ref={ref} {...rest}>
       <Flex fill className={styles.base}>
         {children}
       </Flex>
       <Flex
-        hide="m"
-        position="absolute"
+        hide='m'
+        position='absolute'
         fill
-        pointerEvents="none"
+        pointerEvents='none'
         className={classNames(styles.overlay, styles.burn)}
         style={{
-          ['--burn-opacity' as any]: burnDefaults.opacity + '%',
+          ['--burn-opacity' as any]: `${burnDefaults.opacity}%`,
           filter: burnDefaults.filter,
           mixBlendMode: burnDefaults.blending,
           maskImage: burnDefaults.mask as string
@@ -129,13 +135,13 @@ const HoloFx: React.FC<HoloFxProps> = ({
         {children}
       </Flex>
       <Flex
-        hide="m"
-        position="absolute"
+        hide='m'
+        position='absolute'
         fill
-        pointerEvents="none"
+        pointerEvents='none'
         className={classNames(styles.overlay, styles.shine)}
         style={{
-          ['--shine-opacity' as any]: shineDefaults.opacity + '%',
+          ['--shine-opacity' as any]: `${shineDefaults.opacity}%`,
           filter: shineDefaults.filter,
           mixBlendMode: shineDefaults.blending,
           maskImage: shineDefaults.mask as string
@@ -144,13 +150,13 @@ const HoloFx: React.FC<HoloFxProps> = ({
         {children}
       </Flex>
       <Flex
-        hide="m"
-        position="absolute"
+        hide='m'
+        position='absolute'
         fill
-        pointerEvents="none"
+        pointerEvents='none'
         className={classNames(styles.overlay, styles.texture)}
         style={{
-          ['--texture-opacity' as any]: textureDefaults.opacity + '%',
+          ['--texture-opacity' as any]: `${textureDefaults.opacity}%`,
           backgroundImage: textureDefaults.image,
           filter: textureDefaults.filter,
           mixBlendMode: textureDefaults.blending,

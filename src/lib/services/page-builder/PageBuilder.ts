@@ -1,15 +1,14 @@
 import {
   PageConfig,
-  PageType,
-  OpenGraphType,
   SchemaType,
   ContentBlock,
   PageMetadataConfig,
-  PageContent,
   PageLayout,
   PageNavigation,
   PageSEO,
-  VisualEffects
+  VisualEffects,
+  OpenGraphType,
+  PageType
 } from '../../types/page/pageTypes'
 
 export class PageBuilder {
@@ -19,7 +18,7 @@ export class PageBuilder {
     this.config = {
       pageType,
       slug,
-      metadata: this.createDefaultMetadata(),
+      metadata: this.createDefaultMetadata(slug),
       content: { main: [] },
       layout: this.createDefaultLayout(),
       navigation: this.createDefaultNavigation(slug),
@@ -58,17 +57,22 @@ export class PageBuilder {
 
   withImage(image: string, alt?: string): this {
     this.config.metadata!.openGraph.image = image
-    this.config.metadata!.openGraph.alt = alt || this.config.metadata!.basic.title
+    this.config.metadata!.openGraph.alt =
+      alt || this.config.metadata!.basic.title
     this.config.metadata!.twitter.image = image
     return this
   }
 
   // Content methods
-  addSection(type: ContentBlock['type'], content: any, options?: {
-    display?: boolean
-    variant?: string
-    className?: string
-  }): this {
+  addSection(
+    type: ContentBlock['type'],
+    content: any,
+    options?: {
+      display?: boolean
+      variant?: string
+      className?: string
+    }
+  ): this {
     const section: ContentBlock = {
       type,
       content,
@@ -85,11 +89,17 @@ export class PageBuilder {
     return this
   }
 
-  addHero(content: { title: string; subtitle?: string; description?: string }): this {
+  addHero(content: {
+    title: string
+    subtitle?: string
+    description?: string
+  }): this {
     return this.addSection('hero', content)
   }
 
-  addFeatures(features: Array<{ title: string; description: string; icon?: string }>): this {
+  addFeatures(
+    features: Array<{ title: string; description: string; icon?: string }>
+  ): this {
     return this.addSection('features', { features })
   }
 
@@ -101,8 +111,76 @@ export class PageBuilder {
     return this.addSection('skills', { skills, categories })
   }
 
+  addShowcase(
+    items: Array<{
+      title: string
+      description: string
+      image: { src: string; alt: string; width?: number; height?: number }
+      category?: string
+      tags?: string[]
+      link?: { href: string; label?: string; external?: boolean }
+      stats?: Array<{ label: string; value: string }>
+      featured?: boolean
+    }>,
+    options?: {
+      title?: string
+      subtitle?: string
+      description?: string
+      layout?: 'grid' | 'masonry' | 'carousel' | 'featured'
+      columns?: 2 | 3 | 4
+      categories?: string[]
+      showFilter?: boolean
+      showCategories?: boolean
+      showStats?: boolean
+    }
+  ): this {
+    return this.addSection('showcase', {
+      items,
+      ...options
+    })
+  }
+
+  addQuickstart(
+    steps: Array<{
+      step: number
+      title: string
+      description: string
+      code?: { language: string; content: string }
+      image?: { src: string; alt: string }
+      icon?: string
+      duration?: string
+      complexity?: 'easy' | 'medium' | 'hard'
+      prerequisites?: string[]
+    }>,
+    options?: {
+      title?: string
+      subtitle?: string
+      description?: string
+      layout?: 'steps' | 'tabs' | 'cards'
+      cta?: {
+        title: string
+        description?: string
+        button: {
+          label: string
+          href: string
+          variant?: 'primary' | 'secondary'
+        }
+      }
+      showStepNumbers?: boolean
+      showDuration?: boolean
+      showComplexity?: boolean
+    }
+  ): this {
+    return this.addSection('quickstart', {
+      steps,
+      ...options
+    })
+  }
+
   // Layout methods
-  withLayout(template: 'standard' | 'with-sidebar' | 'full-width' | 'minimal'): this {
+  withLayout(
+    template: 'standard' | 'with-sidebar' | 'full-width' | 'minimal'
+  ): this {
     this.config.layout!.template = template
     return this
   }
@@ -150,7 +228,10 @@ export class PageBuilder {
   }
 
   // Structured data methods
-  withStructuredData(type: SchemaType | string, data: Record<string, any>): this {
+  withStructuredData(
+    type: SchemaType | string,
+    data: Record<string, any>
+  ): this {
     this.config.structuredData = {
       '@context': 'https://schema.org',
       '@type': type,
@@ -179,7 +260,7 @@ export class PageBuilder {
   }
 
   // Default creators
-  private createDefaultMetadata(): PageMetadataConfig {
+  private createDefaultMetadata(slug: string): PageMetadataConfig {
     return {
       basic: {
         title: '',
@@ -193,7 +274,7 @@ export class PageBuilder {
         description: '',
         image: '/og-default.jpg',
         alt: '',
-        url: this.config.slug
+        url: slug
       },
       twitter: {
         card: 'summary_large_image',
@@ -215,7 +296,8 @@ export class PageBuilder {
   }
 
   private createDefaultNavigation(slug: string): PageNavigation {
-    const label = slug.replace('/', '').replace(/^\w/, c => c.toUpperCase()) || 'Page'
+    const label =
+      slug.replace('/', '').replace(/^\w/, c => c.toUpperCase()) || 'Page'
     return {
       label,
       icon: 'page',

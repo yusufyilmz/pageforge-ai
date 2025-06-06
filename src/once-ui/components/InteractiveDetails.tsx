@@ -1,6 +1,7 @@
 'use client'
 
 import React, { forwardRef } from 'react'
+
 import { Text, Column, IconButton, IconButtonProps, Row } from '.'
 
 interface InteractiveDetailsProps {
@@ -29,10 +30,10 @@ const InteractiveDetails: React.FC<InteractiveDetailsProps> = forwardRef<
         onClick={onClick}
         id={id}
       >
-        <Row gap="4" vertical="center">
+        <Row gap='4' vertical='center'>
           <Text
-            as="span"
-            variant="label-default-m"
+            as='span'
+            variant='label-default-m'
             onBackground={disabled ? 'neutral-weak' : 'neutral-strong'}
           >
             {label}
@@ -40,16 +41,16 @@ const InteractiveDetails: React.FC<InteractiveDetailsProps> = forwardRef<
           {iconButtonProps?.tooltip && (
             <div onClick={e => e.stopPropagation()}>
               <IconButton
-                size="s"
-                variant="ghost"
-                icon="help"
+                size='s'
+                variant='ghost'
+                icon='help'
                 {...iconButtonProps}
               />
             </div>
           )}
         </Row>
         {description && (
-          <Text as="span" variant="body-default-s" onBackground="neutral-weak">
+          <Text as='span' variant='body-default-s' onBackground='neutral-weak'>
             {description}
           </Text>
         )}

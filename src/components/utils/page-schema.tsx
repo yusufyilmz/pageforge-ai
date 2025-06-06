@@ -1,6 +1,6 @@
-import React from 'react'
 import Script from 'next/script'
-import { PageConfig } from '../../lib/types/page/pageTypes'
+
+import type { PageConfig } from '../../lib/types/page/pageTypes'
 
 export interface StructuredDataProps {
   schemaType:
@@ -143,7 +143,7 @@ export function StructuredData({
   return (
     <Script
       id={`structured-data-${schemaType.toLowerCase()}-${slug.replace(/\//g, '-')}`}
-      type="application/ld+json"
+      type='application/ld+json'
       dangerouslySetInnerHTML={{
         __html: JSON.stringify(baseSchema, null, 2)
       }}
@@ -152,12 +152,14 @@ export function StructuredData({
 }
 
 // Helper function to extract structured data from page configuration using new type structure
-export function extractStructuredDataFromPageConfig<T>(
-  pageConfig: PageConfig<T>,
+export function extractStructuredDataFromPageConfig(
+  pageConfig: PageConfig,
   siteURL: string,
   socialLinks?: string[]
 ): React.ReactElement | null {
-  if (!pageConfig.structuredData) return null
+  if (!pageConfig.structuredData) {
+    return null
+  }
 
   const { structuredData, metadata, slug } = pageConfig
 
@@ -166,7 +168,9 @@ export function extractStructuredDataFromPageConfig<T>(
     '@type'
   ] as StructuredDataProps['schemaType']
 
-  if (!schemaType) return null
+  if (!schemaType) {
+    return null
+  }
 
   return (
     <StructuredData

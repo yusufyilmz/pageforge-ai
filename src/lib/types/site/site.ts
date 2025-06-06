@@ -1,4 +1,3 @@
-
 export type Site = {
   id: string
   userId: string
@@ -10,7 +9,6 @@ export type Site = {
   createdAt: string
   updatedAt: string
 }
-
 
 export const SITE_TYPES = [
   'portfolio',

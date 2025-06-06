@@ -1,6 +1,7 @@
 'use client'
 
 import React, { forwardRef } from 'react'
+
 import { Flex } from '.'
 
 interface LineProps extends React.ComponentProps<typeof Flex> {
@@ -19,7 +20,7 @@ const Line = forwardRef<HTMLDivElement, LineProps>(
         height={(!vert && '1') || undefined}
         fillWidth={!vert}
         fillHeight={vert}
-        background="neutral-strong"
+        background='neutral-strong'
         direction={vert ? 'column' : 'row'}
         className={className}
         style={style}

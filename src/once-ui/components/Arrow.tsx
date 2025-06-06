@@ -1,8 +1,10 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import classNames from 'classnames'
+import { useEffect, useRef } from 'react'
+
 import styles from './Arrow.module.scss'
+
 import { Flex } from '.'
 
 interface ArrowProps extends React.ComponentProps<typeof Flex> {
@@ -57,14 +59,14 @@ const Arrow: React.FC<ArrowProps> = ({
       {...flex}
     >
       <Flex
-        radius="full"
-        position="absolute"
+        radius='full'
+        position='absolute'
         className={classNames(styles.arrowHead, styles[color])}
         height={0.0875}
       />
       <Flex
-        radius="full"
-        position="absolute"
+        radius='full'
+        position='absolute'
         className={classNames(styles.arrowHead, styles[color])}
         height={0.0875}
       />

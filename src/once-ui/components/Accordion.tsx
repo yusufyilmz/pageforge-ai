@@ -1,5 +1,6 @@
 'use client'
 
+import classNames from 'classnames'
 import React, {
   useState,
   forwardRef,
@@ -7,9 +8,10 @@ import React, {
   useEffect,
   useCallback
 } from 'react'
-import { Flex, Icon, Text, Column, Grid } from '.'
+
 import styles from './Accordion.module.scss'
-import classNames from 'classnames'
+
+import { Flex, Icon, Text, Column, Grid } from '.'
 
 export interface AccordionHandle extends HTMLDivElement {
   toggle: () => void
@@ -75,12 +77,12 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>(
           tabIndex={0}
           className={classNames(styles.accordion, className)}
           style={style}
-          cursor="pointer"
-          transition="macro-medium"
+          cursor='pointer'
+          transition='macro-medium'
           paddingY={size === 's' ? '8' : size === 'm' ? '12' : '16'}
           paddingX={size === 's' ? '12' : size === 'm' ? '16' : '20'}
-          vertical="center"
-          horizontal="space-between"
+          vertical='center'
+          horizontal='space-between'
           onClick={toggleAccordion}
           onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -89,11 +91,11 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>(
             }
           }}
           aria-expanded={isOpen}
-          aria-controls="accordion-content"
+          aria-controls='accordion-content'
           radius={radius}
-          role="button"
+          role='button'
         >
-          <Text variant="heading-strong-s">{title}</Text>
+          <Text variant='heading-strong-s'>{title}</Text>
           <Icon
             name={icon}
             size={size === 's' ? 'xs' : 's'}
@@ -106,7 +108,7 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>(
           />
         </Flex>
         <Grid
-          id="accordion-content"
+          id='accordion-content'
           fillWidth
           style={{
             gridTemplateRows: isOpen ? '1fr' : '0fr',
@@ -115,12 +117,12 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>(
           }}
           aria-hidden={!isOpen}
         >
-          <Flex fillWidth minHeight={0} overflow="hidden">
+          <Flex fillWidth minHeight={0} overflow='hidden'>
             <Column
               fillWidth
               paddingX={size === 's' ? '12' : size === 'm' ? '16' : '20'}
-              paddingTop="8"
-              paddingBottom="16"
+              paddingTop='8'
+              paddingBottom='16'
               {...rest}
             >
               {children}

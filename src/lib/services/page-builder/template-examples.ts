@@ -62,7 +62,7 @@ export const aboutPage = createAboutPageFromTemplate({
 // ============================================================================
 
 export const blogPage = createBlogPageFromTemplate({
-  title: 'John\'s Tech Blog',
+  title: "John's Tech Blog",
   description: 'Thoughts on modern web development',
   author: johnDoe,
   withSidebar: true
@@ -139,7 +139,8 @@ export const productLanding = createLandingPageFromTemplate({
   hero: {
     title: 'Build Amazing Websites',
     subtitle: 'The Ultimate Page Builder',
-    description: 'Create professional websites with our powerful, easy-to-use page builder.',
+    description:
+      'Create professional websites with our powerful, easy-to-use page builder.',
     ctaText: 'Start Free Trial',
     ctaLink: '/signup'
   },
@@ -178,7 +179,12 @@ export const productLanding = createLandingPageFromTemplate({
     {
       name: 'Professional',
       price: '$29/month',
-      features: ['Unlimited websites', 'Premium templates', 'Priority support', 'Advanced SEO'],
+      features: [
+        'Unlimited websites',
+        'Premium templates',
+        'Priority support',
+        'Advanced SEO'
+      ],
       popular: true
     }
   ]

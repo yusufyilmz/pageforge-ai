@@ -1,10 +1,12 @@
 'use client'
 
+import classNames from 'classnames'
 import React, { forwardRef } from 'react'
-import { Flex } from '.'
+
 import styles from './Card.module.scss'
 import { ElementType } from './ElementType'
-import classNames from 'classnames'
+
+import { Flex } from '.'
 
 interface CardProps extends React.ComponentProps<typeof Flex> {
   children?: React.ReactNode
@@ -26,16 +28,16 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         )}
         href={href}
         onClick={onClick ? onClick : () => {}}
-        role="button"
+        role='button'
         ref={ref}
       >
         <Flex
-          background="surface"
-          onBackground="neutral-strong"
-          transition="macro-medium"
-          border="neutral-medium"
-          cursor="interactive"
-          align="left"
+          background='surface'
+          onBackground='neutral-strong'
+          transition='macro-medium'
+          border='neutral-medium'
+          cursor='interactive'
+          align='left'
           className={styles.card}
           onClick={onClick}
           {...rest}

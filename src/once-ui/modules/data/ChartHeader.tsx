@@ -1,6 +1,5 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
 import {
   startOfYear,
   endOfYear,
@@ -13,6 +12,8 @@ import {
   subWeeks,
   isSameDay
 } from 'date-fns'
+import React, { useState, useEffect } from 'react'
+
 import {
   Column,
   Text,
@@ -23,6 +24,7 @@ import {
   IconButton,
   ToggleButton
 } from '../../components'
+
 import { DateConfig, PresetsConfig } from './interfaces'
 
 interface ChartHeaderProps
@@ -159,12 +161,12 @@ export const ChartHeader: React.FC<ChartHeaderProps> = ({
   }
 
   return (
-    <Column fillWidth paddingX="20" paddingY="12" gap="4" {...flex}>
-      <Row fillWidth vertical="center">
-        <Column fillWidth gap="4">
-          {title && <Text variant="heading-strong-xs">{title}</Text>}
+    <Column fillWidth paddingX='20' paddingY='12' gap='4' {...flex}>
+      <Row fillWidth vertical='center'>
+        <Column fillWidth gap='4'>
+          {title && <Text variant='heading-strong-xs'>{title}</Text>}
           {description && (
-            <Text variant="label-default-s" onBackground="neutral-weak">
+            <Text variant='label-default-s' onBackground='neutral-weak'>
               {description}
             </Text>
           )}
@@ -173,26 +175,26 @@ export const ChartHeader: React.FC<ChartHeaderProps> = ({
           <DropdownWrapper
             isOpen={dateRangeOpen}
             onOpenChange={isOpen => setDateRangeOpen(isOpen)}
-            floatingPlacement="bottom-end"
+            floatingPlacement='bottom-end'
             trigger={
               <IconButton
-                icon="calendar"
+                icon='calendar'
                 onClick={() => setDateRangeOpen(!dateRangeOpen)}
-                variant="secondary"
-                size="m"
+                variant='secondary'
+                size='m'
               />
             }
             dropdown={
-              <Row padding="4" mobileDirection="column">
+              <Row padding='4' mobileDirection='column'>
                 {presets.display && (
                   <Column
-                    mobileDirection="row"
-                    padding="4"
-                    gap="2"
+                    mobileDirection='row'
+                    padding='4'
+                    gap='2'
                     minWidth={8}
-                    border="neutral-alpha-weak"
-                    radius="m"
-                    overflowX="scroll"
+                    border='neutral-alpha-weak'
+                    radius='m'
+                    overflowX='scroll'
                   >
                     {(Object.keys(dateRangePresets) as PresetName[])
                       .filter(presetName => {
@@ -212,7 +214,7 @@ export const ChartHeader: React.FC<ChartHeaderProps> = ({
                           key={presetName}
                           style={{ paddingLeft: '0.25rem' }}
                           fillWidth
-                          horizontal="start"
+                          horizontal='start'
                           selected={selectedPreset === presetName}
                           onClick={() => handlePresetClick(presetName)}
                         >
@@ -222,10 +224,10 @@ export const ChartHeader: React.FC<ChartHeaderProps> = ({
                   </Column>
                 )}
                 <DateRangePicker
-                  size="s"
-                  padding="16"
-                  gap="24"
-                  id="chart-date-range"
+                  size='s'
+                  padding='16'
+                  gap='24'
+                  id='chart-date-range'
                   maxDate={date?.max}
                   minDate={date?.min}
                   dual={date?.dual}

@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useState, useEffect, forwardRef } from 'react'
 import classNames from 'classnames'
-import { Flex, InteractiveDetails, InteractiveDetailsProps } from '.'
+import React, { useState, useEffect, forwardRef } from 'react'
+
 import styles from './SharedInteractiveStyles.module.scss'
+
+import { Flex, InteractiveDetails, InteractiveDetailsProps } from '.'
 
 interface RadioButtonProps
   extends Omit<InteractiveDetailsProps, 'onClick'>,
@@ -46,7 +48,9 @@ const RadioButton: React.FC<RadioButtonProps> = forwardRef<
     }, [controlledIsChecked])
 
     const toggleItem = () => {
-      if (disabled) return
+      if (disabled) {
+        return
+      }
       if (onToggle) {
         onToggle()
       } else {
@@ -55,7 +59,9 @@ const RadioButton: React.FC<RadioButtonProps> = forwardRef<
     }
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
-      if (disabled) return
+      if (disabled) {
+        return
+      }
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault()
         toggleItem()
@@ -64,8 +70,8 @@ const RadioButton: React.FC<RadioButtonProps> = forwardRef<
 
     return (
       <Flex
-        vertical="center"
-        gap="16"
+        vertical='center'
+        gap='16'
         zIndex={1}
         className={classNames(styles.container, className, {
           [styles.disabled]: disabled
@@ -73,7 +79,7 @@ const RadioButton: React.FC<RadioButtonProps> = forwardRef<
         style={style}
       >
         <input
-          type="radio"
+          type='radio'
           ref={ref}
           name={name}
           value={value}
@@ -86,15 +92,15 @@ const RadioButton: React.FC<RadioButtonProps> = forwardRef<
           tabIndex={-1}
         />
         <Flex
-          role="radio"
+          role='radio'
           aria-checked={
             controlledIsChecked !== undefined ? controlledIsChecked : isChecked
           }
           aria-labelledby={radioId}
           aria-disabled={disabled}
-          horizontal="center"
-          vertical="center"
-          radius="full"
+          horizontal='center'
+          vertical='center'
+          radius='full'
           onClick={toggleItem}
           onKeyDown={handleKeyDown}
           tabIndex={disabled ? -1 : 0}
@@ -114,9 +120,9 @@ const RadioButton: React.FC<RadioButtonProps> = forwardRef<
               style={{
                 backgroundColor: 'var(--neutral-on-solid-strong)'
               }}
-              radius="full"
-              width="12"
-              height="12"
+              radius='full'
+              width='12'
+              height='12'
               className={styles.icon}
             />
           )}

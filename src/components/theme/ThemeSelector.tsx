@@ -1,19 +1,14 @@
 'use client'
 
-import React from 'react'
 import {
   Column,
   Row,
   Text,
   Heading,
-  Button,
-  Dropdown
+  Button
 } from '@pageforge/once-ui/components'
-import {
-  useTheme,
-  usePageTheme,
-  useUserTheme
-} from '../../contexts/ThemeContext'
+
+import { useTheme, usePageTheme } from '../../contexts/ThemeContext'
 import { useUser } from '../../contexts/UserContext'
 
 interface ThemeSelectorProps {
@@ -31,7 +26,7 @@ export function ThemeSelector({
 }: ThemeSelectorProps) {
   const { currentTheme, availableThemes, currentSiteTheme } = useTheme()
   const { pageTheme, setTheme: setPageTheme, resetTheme } = usePageTheme()
-  const { userTheme, updateUserTheme } = useUserTheme()
+  // const { userTheme, updateUserTheme } = useUserTheme()
   const { updateProfile } = useUser()
 
   const isPageMode = variant === 'page'
@@ -66,7 +61,7 @@ export function ThemeSelector({
       updateProfile({
         preferences: {
           themeOverrides: {
-            ...userTheme?.customOverrides,
+            // ...userTheme?.customOverrides,
             [key]: value
           }
         }
@@ -115,64 +110,65 @@ export function ThemeSelector({
     { value: 'slate', label: 'Slate' }
   ]
 
-  const currentOverrides = isPageMode
-    ? pageTheme?.customOverrides
-    : userTheme?.customOverrides
+  // const currentOverrides = isPageMode
+  //   ? pageTheme?.customOverrides
+  //   : userTheme?.customOverrides
 
+  const currentOverrides = pageTheme?.customOverrides
   return (
-    <Column gap="l" className={className}>
+    <Column gap='l' className={className}>
       {/* Header */}
-      <Column gap="xs">
-        <Heading variant="heading-strong-m">{title}</Heading>
-        <Text variant="body-default-s" onBackground="neutral-weak">
+      <Column gap='xs'>
+        <Heading variant='heading-strong-m'>{title}</Heading>
+        <Text variant='body-default-s' onBackground='neutral-weak'>
           {description}
         </Text>
         {isPageMode && (
-          <Text variant="label-default-xs" onBackground="neutral-weak">
+          <Text variant='label-default-xs' onBackground='neutral-weak'>
             Page theme overrides user preferences
           </Text>
         )}
       </Column>
 
       {/* Current Theme Display */}
-      <Column gap="s" padding="m" border="neutral-alpha-weak" radius="m">
-        <Text variant="heading-strong-s">Current Theme</Text>
-        <Row gap="m" wrap>
-          <Column gap="xs">
-            <Text variant="label-default-s" onBackground="neutral-weak">
+      <Column gap='s' padding='m' border='neutral-alpha-weak' radius='m'>
+        <Text variant='heading-strong-s'>Current Theme</Text>
+        <Row gap='m' wrap>
+          <Column gap='xs'>
+            <Text variant='label-default-s' onBackground='neutral-weak'>
               Site Theme
             </Text>
-            <Text variant="body-default-s">
+            <Text variant='body-default-s'>
               {themeDisplayNames[currentSiteTheme] || currentSiteTheme}
             </Text>
           </Column>
-          <Column gap="xs">
-            <Text variant="label-default-s" onBackground="neutral-weak">
+          <Column gap='xs'>
+            <Text variant='label-default-s' onBackground='neutral-weak'>
               Mode
             </Text>
-            <Text variant="body-default-s">{currentTheme.style.theme}</Text>
+            <Text variant='body-default-s'>{currentTheme.style.theme}</Text>
           </Column>
-          <Column gap="xs">
-            <Text variant="label-default-s" onBackground="neutral-weak">
+          <Column gap='xs'>
+            <Text variant='label-default-s' onBackground='neutral-weak'>
               Brand Color
             </Text>
-            <Text variant="body-default-s">{currentTheme.style.brand}</Text>
+            <Text variant='body-default-s'>{currentTheme.style.brand}</Text>
           </Column>
         </Row>
       </Column>
 
       {/* Site Theme Selection */}
-      <Column gap="s">
-        <Text variant="heading-strong-s">Site Theme</Text>
-        <Text variant="body-default-s" onBackground="neutral-weak">
+      <Column gap='s'>
+        <Text variant='heading-strong-s'>Site Theme</Text>
+        <Text variant='body-default-s' onBackground='neutral-weak'>
           Choose from predefined theme combinations
         </Text>
-        <Row gap="s" wrap>
+        <Row gap='s' wrap>
           {availableThemes.map(theme => (
             <Button
               key={theme}
               variant={currentSiteTheme === theme ? 'primary' : 'secondary'}
-              size="s"
+              size='s'
               onClick={() => handleSiteThemeChange(theme)}
             >
               {themeDisplayNames[theme] || theme}
@@ -182,16 +178,16 @@ export function ThemeSelector({
       </Column>
 
       {/* Style Overrides */}
-      <Column gap="m">
-        <Text variant="heading-strong-s">Style Overrides</Text>
-        <Text variant="body-default-s" onBackground="neutral-weak">
+      <Column gap='m'>
+        <Text variant='heading-strong-s'>Style Overrides</Text>
+        <Text variant='body-default-s' onBackground='neutral-weak'>
           Customize specific aspects of the selected theme
         </Text>
 
         {/* Theme Mode Override */}
-        <Column gap="s">
-          <Text variant="heading-strong-s">Theme Mode</Text>
-          <Row gap="s" wrap>
+        <Column gap='s'>
+          <Text variant='heading-strong-s'>Theme Mode</Text>
+          <Row gap='s' wrap>
             {themeModes.map(mode => (
               <Button
                 key={mode.value}
@@ -200,15 +196,15 @@ export function ThemeSelector({
                     ? 'primary'
                     : 'secondary'
                 }
-                size="s"
+                size='s'
                 onClick={() => handleStyleOverride('mode', mode.value)}
               >
                 {mode.label}
               </Button>
             ))}
             <Button
-              variant="tertiary"
-              size="s"
+              variant='tertiary'
+              size='s'
               onClick={() => handleStyleOverride('mode', undefined)}
             >
               Use Theme Default
@@ -217,9 +213,9 @@ export function ThemeSelector({
         </Column>
 
         {/* Brand Color Override */}
-        <Column gap="s">
-          <Text variant="heading-strong-s">Brand Color</Text>
-          <Row gap="s" wrap>
+        <Column gap='s'>
+          <Text variant='heading-strong-s'>Brand Color</Text>
+          <Row gap='s' wrap>
             {brandColors.map(color => (
               <Button
                 key={color.value}
@@ -228,7 +224,7 @@ export function ThemeSelector({
                     ? 'primary'
                     : 'secondary'
                 }
-                size="s"
+                size='s'
                 onClick={() => handleStyleOverride('brand', color.value)}
                 style={
                   {
@@ -236,7 +232,7 @@ export function ThemeSelector({
                   } as React.CSSProperties
                 }
               >
-                <Row gap="xs" vertical="center">
+                <Row gap='xs' vertical='center'>
                   <div
                     style={{
                       width: '12px',
@@ -250,8 +246,8 @@ export function ThemeSelector({
               </Button>
             ))}
             <Button
-              variant="tertiary"
-              size="s"
+              variant='tertiary'
+              size='s'
               onClick={() => handleStyleOverride('brand', undefined)}
             >
               Use Theme Default
@@ -260,9 +256,9 @@ export function ThemeSelector({
         </Column>
 
         {/* Neutral Color Override */}
-        <Column gap="s">
-          <Text variant="heading-strong-s">Neutral Color</Text>
-          <Row gap="s" wrap>
+        <Column gap='s'>
+          <Text variant='heading-strong-s'>Neutral Color</Text>
+          <Row gap='s' wrap>
             {neutralColors.map(neutral => (
               <Button
                 key={neutral.value}
@@ -271,15 +267,15 @@ export function ThemeSelector({
                     ? 'primary'
                     : 'secondary'
                 }
-                size="s"
+                size='s'
                 onClick={() => handleStyleOverride('neutral', neutral.value)}
               >
                 {neutral.label}
               </Button>
             ))}
             <Button
-              variant="tertiary"
-              size="s"
+              variant='tertiary'
+              size='s'
               onClick={() => handleStyleOverride('neutral', undefined)}
             >
               Use Theme Default
@@ -289,35 +285,35 @@ export function ThemeSelector({
       </Column>
 
       {/* Actions */}
-      <Row gap="s">
+      <Row gap='s'>
         {isPageMode && (
-          <Button variant="tertiary" size="s" onClick={resetTheme}>
+          <Button variant='tertiary' size='s' onClick={resetTheme}>
             Reset to User Theme
           </Button>
         )}
-        <Text variant="label-default-xs" onBackground="neutral-weak">
+        <Text variant='label-default-xs' onBackground='neutral-weak'>
           {isPageMode ? 'Page theme active' : 'User preferences saved'}
         </Text>
       </Row>
 
       {/* Preview */}
-      <Column gap="s" padding="m" border="neutral-alpha-weak" radius="m">
-        <Text variant="heading-strong-s">Preview</Text>
-        <Text variant="body-default-s">
+      <Column gap='s' padding='m' border='neutral-alpha-weak' radius='m'>
+        <Text variant='heading-strong-s'>Preview</Text>
+        <Text variant='body-default-s'>
           This is how your content will look with the selected theme.
         </Text>
-        <Row gap="s">
-          <Button variant="primary" size="s">
+        <Row gap='s'>
+          <Button variant='primary' size='s'>
             Primary Button
           </Button>
-          <Button variant="secondary" size="s">
+          <Button variant='secondary' size='s'>
             Secondary Button
           </Button>
-          <Button variant="tertiary" size="s">
+          <Button variant='tertiary' size='s'>
             Tertiary Button
           </Button>
         </Row>
-        <Text variant="body-default-s" onBackground="neutral-weak">
+        <Text variant='body-default-s' onBackground='neutral-weak'>
           Font: {currentTheme.font.primary.style.fontFamily}
         </Text>
       </Column>

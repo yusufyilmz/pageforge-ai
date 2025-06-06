@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+
 import { Flex, DatePicker } from '.'
 
 export interface DateRange {
@@ -102,8 +103,9 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
   }
 
   const getPreviewRange = () => {
-    if (!internalValue.startDate || internalValue.endDate || !hoveredDate)
+    if (!internalValue.startDate || internalValue.endDate || !hoveredDate) {
       return null
+    }
     return {
       startDate: internalValue.startDate,
       endDate:
@@ -115,7 +117,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
   }
 
   return (
-    <Flex gap="24" {...rest}>
+    <Flex gap='24' {...rest}>
       <DatePicker
         value={internalValue.startDate}
         onChange={handleDateChange}

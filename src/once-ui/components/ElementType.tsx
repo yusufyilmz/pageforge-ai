@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React, { ReactNode, forwardRef } from 'react'
+
 import { Flex } from './Flex'
 
 interface ElementTypeProps {
@@ -25,8 +26,8 @@ const ElementType = forwardRef<HTMLElement, ElementTypeProps>(
         return (
           <a
             href={href}
-            target="_blank"
-            rel="noreferrer"
+            target='_blank'
+            rel='noreferrer'
             ref={ref as React.Ref<HTMLAnchorElement>}
             className={className}
             style={style}

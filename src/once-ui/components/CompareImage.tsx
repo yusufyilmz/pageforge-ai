@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Flex, Media, IconButton } from '.'
+
 import styles from './CompareImage.module.scss'
+
+import { Flex, Media, IconButton } from '.'
 
 interface SideContent {
   src: string | React.ReactNode
@@ -21,14 +23,14 @@ const renderContent = (content: SideContent, clipPath: string) => {
         src={content.src}
         alt={content.alt || ''}
         fill
-        position="absolute"
+        position='absolute'
         style={{ clipPath }}
       />
     )
   }
 
   return (
-    <Flex fill position="absolute" style={{ clipPath }}>
+    <Flex fill position='absolute' style={{ clipPath }}>
       {content.src}
     </Flex>
   )
@@ -52,7 +54,9 @@ const CompareImage = ({
   }
 
   const updatePosition = (clientX: number) => {
-    if (!isDragging.current || !containerRef.current) return
+    if (!isDragging.current || !containerRef.current) {
+      return
+    }
 
     const rect = containerRef.current.getBoundingClientRect()
     const x = clientX - rect.left
@@ -88,7 +92,7 @@ const CompareImage = ({
   return (
     <Flex
       ref={containerRef}
-      aspectRatio="16/9"
+      aspectRatio='16/9'
       fillWidth
       style={{ touchAction: 'none' }}
       {...rest}
@@ -98,23 +102,23 @@ const CompareImage = ({
 
       {/* Hit area and visible line */}
       <Flex
-        position="absolute"
-        horizontal="center"
+        position='absolute'
+        horizontal='center'
         width={3}
         className={styles.hitArea}
-        top="0"
-        bottom="0"
+        top='0'
+        bottom='0'
         style={{
           left: `${position}%`
         }}
         onMouseDown={handleMouseDown}
         onTouchStart={handleMouseDown}
       >
-        <Flex width="1" fillHeight background="neutral-strong" zIndex={2} />
+        <Flex width='1' fillHeight background='neutral-strong' zIndex={2} />
       </Flex>
       <IconButton
-        icon="chevronsLeftRight"
-        variant="secondary"
+        icon='chevronsLeftRight'
+        variant='secondary'
         className={styles.dragIcon}
         style={{
           left: `${position}%`

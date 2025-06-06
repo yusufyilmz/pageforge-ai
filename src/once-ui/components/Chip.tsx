@@ -1,10 +1,13 @@
 'use client'
 
-import React, { ReactNode, MouseEventHandler, forwardRef } from 'react'
 import classNames from 'classnames'
-import { Text, Icon, IconButton, IconButtonProps, Flex } from '.'
-import styles from './Chip.module.scss'
+import React, { ReactNode, MouseEventHandler, forwardRef } from 'react'
+
 import { IconName } from '../icons'
+
+import styles from './Chip.module.scss'
+
+import { Text, Icon, IconButton, IconButtonProps, Flex } from '.'
 
 interface ChipProps extends React.ComponentProps<typeof Flex> {
   label: string
@@ -39,7 +42,9 @@ const Chip: React.FC<ChipProps> = forwardRef<HTMLDivElement, ChipProps>(
       tooltip: 'Remove',
       onClick: e => {
         e.stopPropagation()
-        if (onRemove) onRemove()
+        if (onRemove) {
+          onRemove()
+        }
       }
     }
 
@@ -55,7 +60,9 @@ const Chip: React.FC<ChipProps> = forwardRef<HTMLDivElement, ChipProps>(
     const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault()
-        if (onClick) onClick(e as unknown as React.MouseEvent<HTMLDivElement>)
+        if (onClick) {
+          onClick(e as unknown as React.MouseEvent<HTMLDivElement>)
+        }
       }
     }
 
@@ -63,26 +70,26 @@ const Chip: React.FC<ChipProps> = forwardRef<HTMLDivElement, ChipProps>(
       <Flex
         ref={ref}
         fit
-        vertical="center"
-        radius="full"
-        paddingX="8"
-        paddingY="4"
-        role="button"
+        vertical='center'
+        radius='full'
+        paddingX='8'
+        paddingY='4'
+        role='button'
         tabIndex={0}
         onClick={onClick}
         onKeyDown={handleKeyDown}
         aria-pressed={selected}
-        cursor="interactive"
-        transition="micro-medium"
+        cursor='interactive'
+        transition='micro-medium'
         className={classNames(styles.chip, {
           [styles.selected]: selected,
           [styles.unselected]: !selected
         })}
         {...rest}
       >
-        {prefixIcon && <Icon name={prefixIcon} size="s" />}
-        <Flex paddingX="8" paddingY="2">
-          <Text variant="body-default-s">{label || children}</Text>
+        {prefixIcon && <Icon name={prefixIcon} size='s' />}
+        <Flex paddingX='8' paddingY='2'>
+          <Text variant='body-default-s'>{label || children}</Text>
         </Flex>
         {onRemove && (
           <IconButton

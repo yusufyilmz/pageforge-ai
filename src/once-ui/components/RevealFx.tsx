@@ -1,8 +1,11 @@
 'use client'
 
 import React, { useState, useEffect, forwardRef } from 'react'
+
 import { SpacingToken } from '../types'
+
 import styles from './RevealFx.module.scss'
+
 import { Flex } from '.'
 
 interface RevealFxProps extends React.ComponentProps<typeof Flex> {

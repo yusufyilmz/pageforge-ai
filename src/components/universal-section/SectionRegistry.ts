@@ -1,5 +1,6 @@
-import { ComponentType } from 'react'
-import { ContentBlock } from '@pageforge/types/page/pageTypes'
+import type { ComponentType } from 'react'
+
+import type { ContentBlock } from '@pageforge/types/page/pageTypes'
 
 interface SectionProps {
   block: ContentBlock
@@ -19,7 +20,9 @@ class SectionRegistry {
 
   async getSection(type: string): Promise<SectionComponent | null> {
     const importFn = this.sections.get(type)
-    if (!importFn) return null
+    if (!importFn) {
+      return null
+    }
 
     try {
       const moduleExports = await importFn()
@@ -34,12 +37,10 @@ class SectionRegistry {
 
   private getComponentName(type: string): string {
     // Convert type to component name (e.g., 'hero' -> 'HeroSection')
-    return (
-      type
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join('') + 'Section'
-    )
+    return `${type
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('')}Section`
   }
 
   getRegisteredTypes(): string[] {
@@ -51,131 +52,92 @@ class SectionRegistry {
 export const sectionRegistry = new SectionRegistry()
 
 // Auto-register all sections
-sectionRegistry.register(
-  'hero',
-  () => import('../sections/universal/HeroSection')
-)
+sectionRegistry.register('hero', () => import('../sections/HeroSection'))
 sectionRegistry.register(
   'features',
-  () => import('../sections/universal/FeaturesSection')
+  () => import('../sections/FeaturesSection')
 )
 sectionRegistry.register(
   'experience',
-  () => import('../sections/universal/WorkExperienceSection')
+  () => import('../sections/WorkExperienceSection')
 )
-sectionRegistry.register(
-  'studies',
-  () => import('../sections/universal/StudiesSection')
-)
+sectionRegistry.register('studies', () => import('../sections/StudiesSection'))
 sectionRegistry.register(
   'skills',
-  () => import('../sections/universal/TechnicalSkillsSection')
+  () => import('../sections/TechnicalSkillsSection')
 )
 sectionRegistry.register(
   'socials',
-  () => import('../sections/universal/SocialLinksSection')
+  () => import('../sections/SocialLinksSection')
 )
 sectionRegistry.register(
   'gallery',
-  () => import('../sections/universal/GalleryGridSection')
+  () => import('../sections/GalleryGridSection')
 )
 sectionRegistry.register(
   'newsletter',
-  () => import('../sections/universal/NewsletterSection')
+  () => import('../sections/NewsletterSection')
 )
 sectionRegistry.register(
   'table-of-contents',
-  () => import('../sections/universal/TableOfContentsSection')
+  () => import('../sections/TableOfContentsSection')
 )
 sectionRegistry.register(
   'calendar-link',
-  () => import('../sections/universal/CalendarLinkSection')
+  () => import('../sections/CalendarLinkSection')
 )
 sectionRegistry.register(
   'projects',
-  () => import('../sections/universal/ProjectsSection')
+  () => import('../sections/ProjectsSection')
 )
 sectionRegistry.register(
   'posts-grid',
-  () => import('../sections/universal/PostsGridSection')
+  () => import('../sections/PostsGridSection')
 )
 sectionRegistry.register(
   'about-hero',
-  () => import('../sections/universal/AboutHeroSection')
+  () => import('../sections/AboutHeroSection')
 )
-sectionRegistry.register(
-  'heading',
-  () => import('../sections/universal/HeadingSection')
-)
-sectionRegistry.register(
-  'text',
-  () => import('../sections/universal/TextSection')
-)
+sectionRegistry.register('heading', () => import('../sections/HeadingSection'))
+sectionRegistry.register('text', () => import('../sections/TextSection'))
 sectionRegistry.register(
   'contact-form',
-  () => import('../sections/universal/ContactFormSection')
+  () => import('../sections/ContactFormSection')
 )
 sectionRegistry.register(
   'testimonials',
-  () => import('../sections/universal/TestimonialsSection')
+  () => import('../sections/TestimonialsSection')
 )
-sectionRegistry.register(
-  'pricing',
-  () => import('../sections/universal/PricingSection')
-)
-sectionRegistry.register(
-  'faq',
-  () => import('../sections/universal/FAQSection')
-)
-sectionRegistry.register(
-  'profile',
-  () => import('../sections/universal/ProfileSection')
-)
+sectionRegistry.register('pricing', () => import('../sections/PricingSection'))
+sectionRegistry.register('faq', () => import('../sections/FAQSection'))
+sectionRegistry.register('profile', () => import('../sections/ProfileSection'))
 sectionRegistry.register(
   'timeline',
-  () => import('../sections/universal/TimelineSection')
+  () => import('../sections/TimelineSection')
 )
 sectionRegistry.register(
   'contact-info',
-  () => import('../sections/universal/ContactInfoSection')
+  () => import('../sections/ContactInfoSection')
 )
-sectionRegistry.register(
-  'about',
-  () => import('../sections/universal/AboutSection')
-)
-sectionRegistry.register(
-  'map',
-  () => import('../sections/universal/MapSection')
-)
+sectionRegistry.register('about', () => import('../sections/AboutSection'))
+sectionRegistry.register('map', () => import('../sections/MapSection'))
 sectionRegistry.register(
   'blog-page',
-  () => import('../sections/universal/BlogPageSection')
+  () => import('../sections/BlogPageSection')
 )
 sectionRegistry.register(
   'shop-items',
-  () => import('../sections/universal/ShopItemsSection')
+  () => import('../sections/ShopItemsSection')
 )
-sectionRegistry.register(
-  'plans',
-  () => import('../sections/universal/PlansSection')
-)
-sectionRegistry.register(
-  'how-to',
-  () => import('../sections/universal/HowToSection')
-)
-sectionRegistry.register(
-  'menu',
-  () => import('../sections/universal/MenuSection')
-)
+sectionRegistry.register('plans', () => import('../sections/PlansSection'))
+sectionRegistry.register('how-to', () => import('../sections/HowToSection'))
+sectionRegistry.register('menu', () => import('../sections/MenuSection'))
 sectionRegistry.register(
   'property',
-  () => import('../sections/universal/PropertySection')
+  () => import('../sections/PropertySection')
 )
 sectionRegistry.register(
   'legal-text',
-  () => import('../sections/universal/LegalTextSection')
+  () => import('../sections/LegalTextSection')
 )
-sectionRegistry.register(
-  'careers',
-  () => import('../sections/universal/CareersSection')
-)
+sectionRegistry.register('careers', () => import('../sections/CareersSection'))

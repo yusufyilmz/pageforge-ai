@@ -1,9 +1,9 @@
 'use client'
 
-import React from 'react'
+import { chart } from '../../../app/resources/data.config'
 import { Row } from '../../components'
 import { RadiusSize, SpacingToken } from '../../types'
-import { chart } from '../../../app/resources/data.config'
+
 import { ChartStyles } from './interfaces'
 
 export interface SwatchProps {

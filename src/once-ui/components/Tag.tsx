@@ -1,11 +1,13 @@
 'use client'
 
-import React, { forwardRef, ReactNode } from 'react'
 import classNames from 'classnames'
+import React, { forwardRef, ReactNode } from 'react'
+
+import { IconName } from '../icons'
+
+import styles from './Tag.module.scss'
 
 import { Flex, Text, Icon } from '.'
-import styles from './Tag.module.scss'
-import { IconName } from '../icons'
 
 interface TagProps extends React.ComponentProps<typeof Flex> {
   variant?:
@@ -44,10 +46,10 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
       <Flex
         fitWidth
         borderWidth={1}
-        borderStyle="solid"
-        vertical="center"
-        radius="l"
-        gap="4"
+        borderStyle='solid'
+        vertical='center'
+        radius='l'
+        gap='4'
         ref={ref}
         className={classNames(
           styles.tag,
@@ -57,17 +59,17 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
         )}
         {...rest}
       >
-        {prefixIcon && <Icon name={prefixIcon} size="xs" />}
+        {prefixIcon && <Icon name={prefixIcon} size='xs' />}
         <Flex
           style={{ userSelect: 'none' }}
           paddingX={paddingSize}
-          vertical="center"
+          vertical='center'
         >
-          <Text as="span" variant="label-default-s">
+          <Text as='span' variant='label-default-s'>
             {label || children}
           </Text>
         </Flex>
-        {suffixIcon && <Icon name={suffixIcon} size="xs" />}
+        {suffixIcon && <Icon name={suffixIcon} size='xs' />}
       </Flex>
     )
   }

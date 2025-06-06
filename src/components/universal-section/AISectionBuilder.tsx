@@ -1,12 +1,7 @@
 'use client'
 
-import React, { useState, ChangeEvent } from 'react'
-import {
-  aiSectionGenerator,
-  UserRequirement,
-  SectionIntent,
-  GeneratedSectionSpec
-} from './AISectionGenerator'
+import React, { useState } from 'react'
+
 import {
   Flex,
   Heading,
@@ -16,6 +11,13 @@ import {
   Input,
   Textarea
 } from '@pageforge/once-ui/components'
+
+import {
+  UserRequirement,
+  SectionIntent,
+  GeneratedSectionSpec,
+  aiSectionGenerator
+} from './AISectionGenerator'
 
 interface AISectionBuilderProps {
   onSectionsGenerated: (sections: GeneratedSectionSpec[]) => void
@@ -43,7 +45,9 @@ export const AISectionBuilder = ({
   const [step, setStep] = useState<'input' | 'review' | 'generate'>('input')
 
   const handleAnalyze = async () => {
-    if (!userInput.trim()) return
+    if (!userInput.trim()) {
+      return
+    }
 
     setIsGenerating(true)
     try {
@@ -110,28 +114,28 @@ export const AISectionBuilder = ({
 
   if (step === 'input') {
     return (
-      <Flex direction="column" gap="l" fillWidth>
-        <Heading variant="heading-strong-l">AI Section Builder</Heading>
-        <Text variant="body-default-m">
+      <Flex direction='column' gap='l' fillWidth>
+        <Heading variant='heading-strong-l'>AI Section Builder</Heading>
+        <Text variant='body-default-m'>
           Describe what you want on your webpage, and I&apos;ll automatically
           generate the appropriate sections for you.
         </Text>
 
-        <Column fillWidth gap="m">
+        <Column fillWidth gap='m'>
           <Textarea
-            placeholder="Example: I want a landing page for my Italian restaurant. I need to show our menu, location, contact form, and customer reviews. The main focus should be on our authentic cuisine and cozy atmosphere."
+            placeholder='Example: I want a landing page for my Italian restaurant. I need to show our menu, location, contact form, and customer reviews. The main focus should be on our authentic cuisine and cozy atmosphere.'
             value={userInput}
             onChange={e => setUserInput(e.target.value)}
             rows={4}
-            label="Describe your webpage requirements"
+            label='Describe your webpage requirements'
             id={''}
           />
 
           <Input
-            placeholder="e.g., restaurant, agency, ecommerce, saas"
+            placeholder='e.g., restaurant, agency, ecommerce, saas'
             value={industry}
             onChange={e => setIndustry(e.target.value)}
-            label="Industry (optional)"
+            label='Industry (optional)'
             id={''}
           />
 
@@ -144,27 +148,27 @@ export const AISectionBuilder = ({
               borderRadius: '4px'
             }}
           >
-            <option value="landing">Landing Page</option>
-            <option value="about">About Page</option>
-            <option value="product">Product Page</option>
-            <option value="service">Service Page</option>
-            <option value="portfolio">Portfolio Page</option>
-            <option value="blog">Blog Page</option>
-            <option value="contact">Contact Page</option>
-            <option value="custom">Custom Page</option>
+            <option value='landing'>Landing Page</option>
+            <option value='about'>About Page</option>
+            <option value='product'>Product Page</option>
+            <option value='service'>Service Page</option>
+            <option value='portfolio'>Portfolio Page</option>
+            <option value='blog'>Blog Page</option>
+            <option value='contact'>Contact Page</option>
+            <option value='custom'>Custom Page</option>
           </select>
         </Column>
 
-        <Flex gap="m">
+        <Flex gap='m'>
           <Button
-            variant="primary"
-            size="m"
+            variant='primary'
+            size='m'
             onClick={handleAnalyze}
             disabled={!userInput.trim() || isGenerating}
           >
             {isGenerating ? 'Analyzing...' : 'Analyze Requirements'}
           </Button>
-          <Button variant="secondary" size="m" onClick={onClose}>
+          <Button variant='secondary' size='m' onClick={onClose}>
             Cancel
           </Button>
         </Flex>
@@ -174,43 +178,43 @@ export const AISectionBuilder = ({
 
   if (step === 'review') {
     return (
-      <Flex direction="column" gap="l" fillWidth>
-        <Heading variant="heading-strong-l">Review Generated Sections</Heading>
-        <Text variant="body-default-m">
+      <Flex direction='column' gap='l' fillWidth>
+        <Heading variant='heading-strong-l'>Review Generated Sections</Heading>
+        <Text variant='body-default-m'>
           I&apos;ve analyzed your requirements and suggest these sections. You
           can remove or reorder them before generating.
         </Text>
 
-        <Column fillWidth gap="s">
+        <Column fillWidth gap='s'>
           {generatedIntents.map((intent, index) => (
             <Flex
               key={index}
-              padding="m"
-              gap="m"
-              align="center"
+              padding='m'
+              gap='m'
+              align='center'
               style={{
                 border: '1px solid #e0e0e0',
                 borderRadius: '8px',
                 backgroundColor: '#f9f9f9'
               }}
             >
-              <Flex direction="column" fillWidth gap="xs">
-                <Heading variant="heading-strong-s">
+              <Flex direction='column' fillWidth gap='xs'>
+                <Heading variant='heading-strong-s'>
                   {intent.type
                     .replace(/-/g, ' ')
                     .replace(/\b\w/g, l => l.toUpperCase())}
                 </Heading>
-                <Text variant="body-default-s" style={{ color: '#666' }}>
+                <Text variant='body-default-s' style={{ color: '#666' }}>
                   {intent.purpose}
                 </Text>
-                <Text variant="label-default-xs">
+                <Text variant='label-default-xs'>
                   Priority: {intent.priority} | Layout: {intent.layout}
                 </Text>
               </Flex>
 
-              <Flex gap="s" align="center">
+              <Flex gap='s' align='center'>
                 <input
-                  type="number"
+                  type='number'
                   value={intent.priority}
                   onChange={e =>
                     updateIntentPriority(index, parseInt(e.target.value))
@@ -223,8 +227,8 @@ export const AISectionBuilder = ({
                   }}
                 />
                 <Button
-                  variant="tertiary"
-                  size="s"
+                  variant='tertiary'
+                  size='s'
                   onClick={() => removeIntent(index)}
                   style={{ color: '#ff4444' }}
                 >
@@ -235,10 +239,10 @@ export const AISectionBuilder = ({
           ))}
         </Column>
 
-        <Flex gap="m">
+        <Flex gap='m'>
           <Button
-            variant="primary"
-            size="m"
+            variant='primary'
+            size='m'
             onClick={handleGenerateSections}
             disabled={generatedIntents.length === 0 || isGenerating}
           >
@@ -246,7 +250,7 @@ export const AISectionBuilder = ({
               ? 'Generating...'
               : `Generate ${generatedIntents.length} Sections`}
           </Button>
-          <Button variant="secondary" size="m" onClick={() => setStep('input')}>
+          <Button variant='secondary' size='m' onClick={() => setStep('input')}>
             Back to Edit
           </Button>
         </Flex>
@@ -255,13 +259,13 @@ export const AISectionBuilder = ({
   }
 
   return (
-    <Flex direction="column" gap="l" fillWidth align="center">
-      <Heading variant="heading-strong-l">✅ Sections Generated!</Heading>
-      <Text variant="body-default-m" style={{ textAlign: 'center' }}>
+    <Flex direction='column' gap='l' fillWidth align='center'>
+      <Heading variant='heading-strong-l'>✅ Sections Generated!</Heading>
+      <Text variant='body-default-m' style={{ textAlign: 'center' }}>
         Your custom sections have been generated and are ready to use.
         They&apos;ve been automatically added to your page.
       </Text>
-      <Button variant="primary" size="m" onClick={onClose}>
+      <Button variant='primary' size='m' onClick={onClose}>
         Done
       </Button>
     </Flex>
@@ -383,19 +387,28 @@ const extractPageTypeFromMessage = (
   | 'custom' => {
   const lowerMessage = message.toLowerCase()
 
-  if (lowerMessage.includes('about') || lowerMessage.includes('who we are'))
+  if (lowerMessage.includes('about') || lowerMessage.includes('who we are')) {
     return 'about'
-  if (lowerMessage.includes('product')) return 'product'
-  if (lowerMessage.includes('service')) return 'service'
+  }
+  if (lowerMessage.includes('product')) {
+    return 'product'
+  }
+  if (lowerMessage.includes('service')) {
+    return 'service'
+  }
   if (
     lowerMessage.includes('portfolio') ||
     lowerMessage.includes('work') ||
     lowerMessage.includes('gallery')
-  )
+  ) {
     return 'portfolio'
-  if (lowerMessage.includes('blog') || lowerMessage.includes('articles'))
+  }
+  if (lowerMessage.includes('blog') || lowerMessage.includes('articles')) {
     return 'blog'
-  if (lowerMessage.includes('contact')) return 'contact'
+  }
+  if (lowerMessage.includes('contact')) {
+    return 'contact'
+  }
 
   return 'landing' // Default
 }

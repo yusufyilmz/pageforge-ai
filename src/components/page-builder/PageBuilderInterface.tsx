@@ -1,14 +1,7 @@
 'use client'
 
 import React, { useState, useCallback } from 'react'
-import {
-  Flex,
-  Column,
-  Text,
-  Button,
-  Heading,
-  Grid
-} from '@pageforge/once-ui/components'
+
 import {
   developerTemplate,
   designerTemplate,
@@ -17,14 +10,23 @@ import {
   type PersonData,
   type ProjectData,
   type AboutPageTemplate
-} from '@/lib/services/page-builder'
-import { TemplateSelector } from './TemplateSelector'
+} from '@pageforge/lib/services/page-builder'
+import {
+  Flex,
+  Text,
+  Button,
+  Heading,
+  Grid
+} from '@pageforge/once-ui/components'
+import type { PageConfig, PageType } from '@pageforge/types/page/pageTypes'
+
+import { AIWebsiteGenerator } from './AIWebsiteGenerator'
 import { ContentEditor } from './ContentEditor'
 import { PagePreview } from './PagePreview'
-import { AIWebsiteGenerator } from './AIWebsiteGenerator'
+import { TemplateSelector } from './TemplateSelector'
 
 export interface PageBuilderState {
-  selectedTemplate: 'developer' | 'designer' | 'freelancer' | 'custom' | null
+  selectedTemplate: PageType | null
   personData: PersonData
   projects: ProjectData[]
   customConfig?: Partial<AboutPageTemplate>
@@ -73,7 +75,7 @@ export const PageBuilderInterface: React.FC = () => {
       return
     }
 
-    let config: any
+    let config: PageConfig
     try {
       switch (currentState.selectedTemplate) {
         case 'developer':
@@ -91,7 +93,7 @@ export const PageBuilderInterface: React.FC = () => {
         case 'freelancer':
           config = freelancerTemplate(currentState.personData)
           break
-        case 'custom':
+        case 'about':
           config = createAboutPageFromTemplate({
             person: currentState.personData,
             projects: currentState.projects,
@@ -158,29 +160,29 @@ export const PageBuilderInterface: React.FC = () => {
 
   return (
     <Flex
-      direction="column"
-      padding="xl"
-      gap="xl"
-      className="page-builder-interface"
+      direction='column'
+      padding='xl'
+      gap='xl'
+      className='page-builder-interface'
     >
       {/* Header */}
-      <Flex direction="column" gap="m" alignItems="center" textAlign="center">
-        <Heading variant="display-strong-l">PageForge Visual Builder</Heading>
-        <Text variant="body-default-l" onBackground="neutral-weak">
+      <Flex direction='column' gap='m' align='center'>
+        <Heading variant='display-strong-l'>PageForge Visual Builder</Heading>
+        <Text variant='body-default-l' onBackground='neutral-weak'>
           Create professional pages in minutes with our revolutionary template
           system
         </Text>
 
         {/* Progress Indicator */}
-        <Flex gap="s" alignItems="center">
+        <Flex gap='s' horizontal='center'>
           {steps.map((step, index) => (
-            <Flex key={step} alignItems="center" gap="xs">
+            <Flex key={step} horizontal='center' gap='xs'>
               <Flex
-                width="32"
-                height="32"
-                radius="full"
-                justifyContent="center"
-                alignItems="center"
+                width='32'
+                height='32'
+                radius='full'
+                vertical='center'
+                horizontal='center'
                 background={
                   currentStep === step
                     ? 'brand-strong'
@@ -190,7 +192,7 @@ export const PageBuilderInterface: React.FC = () => {
                 }
               >
                 <Text
-                  variant="label-default-s"
+                  variant='label-default-s'
                   style={{
                     color:
                       currentStep === step || index < steps.indexOf(currentStep)
@@ -202,13 +204,13 @@ export const PageBuilderInterface: React.FC = () => {
                 </Text>
               </Flex>
               <Text
-                variant="label-default-s"
+                variant='label-default-s'
                 style={{ textTransform: 'capitalize' }}
               >
                 {step}
               </Text>
               {index < 3 && (
-                <Text variant="body-default-s" onBackground="neutral-weak">
+                <Text variant='body-default-s' onBackground='neutral-weak'>
                   →
                 </Text>
               )}
@@ -218,7 +220,7 @@ export const PageBuilderInterface: React.FC = () => {
       </Flex>
 
       {/* Main Content */}
-      <Grid columns="1" gap="xl">
+      <Grid columns='1' gap='xl'>
         {currentStep === 'template' && (
           <TemplateSelector
             selectedTemplate={state.selectedTemplate}
@@ -253,25 +255,24 @@ export const PageBuilderInterface: React.FC = () => {
           />
         )}
       </Grid>
-
       {/* Navigation */}
-      <Flex justifyContent="space-between" paddingTop="l">
+      <Flex vertical='space-between' paddingTop='l'>
         <Button
-          variant="secondary"
+          variant='secondary'
           onClick={handlePrevStep}
           disabled={currentStep === 'template'}
         >
           Previous
         </Button>
 
-        <Flex gap="s">
-          <Text variant="body-default-s" onBackground="neutral-weak">
+        <Flex gap='s'>
+          <Text variant='body-default-s' onBackground='neutral-weak'>
             Step {steps.indexOf(currentStep) + 1} of 4
           </Text>
         </Flex>
 
         <Button
-          variant="primary"
+          variant='primary'
           onClick={handleNextStep}
           disabled={!canProceed() || currentStep === 'export'}
         >

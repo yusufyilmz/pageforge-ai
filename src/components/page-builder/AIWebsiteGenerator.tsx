@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+
 import {
   Flex,
   Text,
@@ -55,7 +56,9 @@ Just answer naturally - I'll understand! 😊`,
   const [websiteGenerated, setWebsiteGenerated] = useState(false)
 
   const handleSendMessage = async () => {
-    if (!currentMessage.trim()) return
+    if (!currentMessage.trim()) {
+      return
+    }
 
     // Add user message
     const userMessage: ChatMessage = {
@@ -146,14 +149,14 @@ Would you like me to:
   ]
 
   return (
-    <Flex direction="column" gap="l">
-      <Flex direction="column" gap="m" style={{ textAlign: 'center' }}>
-        <Heading variant="display-strong-m">
+    <Flex direction='column' gap='l'>
+      <Flex direction='column' gap='m' style={{ textAlign: 'center' }}>
+        <Heading variant='display-strong-m'>
           {websiteGenerated
             ? '🎉 Your Website is Live!'
             : '🤖 AI Website Generator'}
         </Heading>
-        <Text variant="body-default-l" onBackground="neutral-weak">
+        <Text variant='body-default-l' onBackground='neutral-weak'>
           {websiteGenerated
             ? 'Your professional website has been created and deployed!'
             : "I'll ask you questions to understand exactly what you need"}
@@ -162,30 +165,30 @@ Would you like me to:
 
       {/* Chat Interface */}
       <Flex
-        direction="column"
-        gap="m"
-        padding="l"
-        radius="m"
-        background="neutral-weak"
+        direction='column'
+        gap='m'
+        padding='l'
+        radius='m'
+        background='neutral-weak'
         style={{ maxHeight: '500px', overflowY: 'auto' }}
       >
         {messages.map(message => (
           <Flex
             key={message.id}
-            direction="column"
-            gap="xs"
-            padding="m"
-            radius="s"
+            direction='column'
+            gap='xs'
+            padding='m'
+            radius='s'
             background={message.role === 'user' ? 'brand-weak' : 'neutral-weak'}
             style={{
               alignSelf: message.role === 'user' ? 'flex-end' : 'flex-start',
               maxWidth: '85%'
             }}
           >
-            <Text variant="label-default-xs" onBackground="neutral-medium">
+            <Text variant='label-default-xs' onBackground='neutral-medium'>
               {message.role === 'user' ? 'You' : 'AI Assistant'}
             </Text>
-            <Text variant="body-default-s" style={{ whiteSpace: 'pre-line' }}>
+            <Text variant='body-default-s' style={{ whiteSpace: 'pre-line' }}>
               {message.content}
             </Text>
           </Flex>
@@ -193,17 +196,17 @@ Would you like me to:
 
         {isGenerating && (
           <Flex
-            direction="column"
-            gap="xs"
-            padding="m"
-            radius="s"
-            background="neutral-weak"
+            direction='column'
+            gap='xs'
+            padding='m'
+            radius='s'
+            background='neutral-weak'
             style={{ alignSelf: 'flex-start', maxWidth: '85%' }}
           >
-            <Text variant="label-default-xs" onBackground="neutral-medium">
+            <Text variant='label-default-xs' onBackground='neutral-medium'>
               AI Assistant
             </Text>
-            <Text variant="body-default-s">
+            <Text variant='body-default-s'>
               🤔 Thinking... Let me analyze your requirements
             </Text>
           </Flex>
@@ -212,12 +215,13 @@ Would you like me to:
 
       {/* Input Area */}
       {!websiteGenerated && (
-        <Flex direction="column" gap="m">
-          <Flex gap="s">
+        <Flex direction='column' gap='m'>
+          <Flex gap='s'>
             <Input
+              id='chat-input'
               value={currentMessage}
               onChange={e => setCurrentMessage(e.target.value)}
-              placeholder="Tell me about your goals, audience, or what you need..."
+              placeholder='Tell me about your goals, audience, or what you need...'
               onKeyDown={e => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault()
@@ -226,7 +230,7 @@ Would you like me to:
               }}
             />
             <Button
-              variant="primary"
+              variant='primary'
               onClick={handleSendMessage}
               disabled={!currentMessage.trim() || isGenerating}
             >
@@ -235,16 +239,16 @@ Would you like me to:
           </Flex>
 
           {/* Quick Answers */}
-          <Flex direction="column" gap="s">
-            <Text variant="label-default-s" onBackground="neutral-medium">
+          <Flex direction='column' gap='s'>
+            <Text variant='label-default-s' onBackground='neutral-medium'>
               💡 Quick answers:
             </Text>
-            <Flex direction="column" gap="xs">
+            <Flex direction='column' gap='xs'>
               {quickQuestions.map((question, index) => (
                 <Button
                   key={index}
-                  variant="tertiary"
-                  size="s"
+                  variant='tertiary'
+                  size='s'
                   onClick={() => setCurrentMessage(question)}
                   style={{ justifyContent: 'flex-start', textAlign: 'left' }}
                 >
@@ -259,21 +263,21 @@ Would you like me to:
       {/* Website Generated - Next Steps */}
       {websiteGenerated && (
         <Flex
-          direction="column"
-          gap="m"
-          padding="l"
-          radius="m"
-          background="brand-weak"
+          direction='column'
+          gap='m'
+          padding='l'
+          radius='m'
+          background='brand-weak'
         >
-          <Heading variant="heading-strong-m">🚀 What's Next?</Heading>
-          <Flex direction="column" gap="s">
-            <Button variant="primary" size="m">
+          <Heading variant='heading-strong-m'>🚀 What's Next?</Heading>
+          <Flex direction='column' gap='s'>
+            <Button variant='primary' size='m'>
               🌐 Visit Your Website
             </Button>
-            <Button variant="secondary" size="m">
+            <Button variant='secondary' size='m'>
               📱 Share on Social Media
             </Button>
-            <Button variant="tertiary" size="m">
+            <Button variant='tertiary' size='m'>
               ⚙️ Customize Further
             </Button>
           </Flex>
@@ -329,6 +333,7 @@ Generating your website now... ⚡`,
 
 // Extract customizations from chat
 function extractCustomizationsFromChat(messages: ChatMessage[]) {
+  console.log(messages)
   // Analyze chat messages to extract preferences
   // This would use ChatGPT to understand user preferences
   return {

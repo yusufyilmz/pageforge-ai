@@ -7,8 +7,9 @@ import React, {
   useEffect,
   ReactNode
 } from 'react'
-import { SiteThemeType } from '../lib/types/site/siteThemes'
-import {
+
+import type { SiteThemeType } from '../lib/types/site/siteThemes'
+import type {
   ThemeMode,
   NeutralColor,
   BrandColor,

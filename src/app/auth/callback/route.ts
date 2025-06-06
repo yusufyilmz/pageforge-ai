@@ -1,5 +1,6 @@
+import { NextResponse, NextRequest } from 'next/server'
+
 import { createClient } from '@pageforge/lib/supabase/server'
-import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)

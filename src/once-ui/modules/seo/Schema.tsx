@@ -1,6 +1,5 @@
-import React from 'react'
-import Script from 'next/script'
 import { social } from '@pageforge/types/site/onceUIConfig'
+import Script from 'next/script'
 
 export interface SchemaProps {
   as:
@@ -102,7 +101,7 @@ export function Schema({
   return (
     <Script
       id={`schema-${as}-${path}`}
-      type="application/ld+json"
+      type='application/ld+json'
       // biome-ignore lint/security/noDangerouslySetInnerHtml: <It's not dynamic nor a security issue.>
       dangerouslySetInnerHTML={{
         __html: JSON.stringify(schema)

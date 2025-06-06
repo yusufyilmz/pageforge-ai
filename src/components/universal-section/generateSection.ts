@@ -34,7 +34,7 @@ class SectionGenerator {
 
     return `'use client'
 
-import React from 'react'
+
 import {
   Flex,
   Heading,
@@ -112,7 +112,9 @@ ${config.fields
   .map(field => {
     const optional = field.required ? '' : '?'
     let typeString: string = field.type
-    if (field.type === 'array') typeString = 'Array<any>' // Can be made more specific
+    if (field.type === 'array') {
+      typeString = 'Array<any>'
+    } // Can be made more specific
     return `  ${field.name}${optional}: ${typeString}${field.description ? ` // ${field.description}` : ''}`
   })
   .join('\n')}
@@ -129,7 +131,7 @@ ${config.fields
       const content = fs.readFileSync(typesFilePath, 'utf-8')
       const updatedContent = content + typeDefinition
       fs.writeFileSync(typesFilePath, updatedContent)
-      console.log(`✓ Added type definition to pageTypes.ts`)
+      console.log('✓ Added type definition to pageTypes.ts')
     }
   }
 
@@ -141,9 +143,9 @@ ${config.fields
 
     if (fs.existsSync(indexPath)) {
       const content = fs.readFileSync(indexPath, 'utf-8')
-      const updatedContent = content + '\n' + exportLine
+      const updatedContent = `${content}\n${exportLine}`
       fs.writeFileSync(indexPath, updatedContent)
-      console.log(`✓ Added export to index.ts`)
+      console.log('✓ Added export to index.ts')
     }
   }
 
@@ -164,7 +166,7 @@ ${config.fields
         content = content.replace(currentArray, newArray)
 
         fs.writeFileSync(registryPath, content)
-        console.log(`✓ Added section type to AutoSectionRegistry`)
+        console.log('✓ Added section type to AutoSectionRegistry')
       }
     }
   }
@@ -189,10 +191,10 @@ ${config.fields
     this.updateAutoRegistry(config)
 
     console.log(`\n🎉 Section '${config.name}' generated successfully!`)
-    console.log(`\nTo use your new section:`)
+    console.log('\nTo use your new section:')
     console.log(`1. Add content blocks with type: '${config.type}'`)
     console.log(
-      `2. The section will be automatically loaded by AutoUniversalSections`
+      '2. The section will be automatically loaded by AutoUniversalSections'
     )
     console.log(`3. Customize the component at: ${componentPath}`)
   }

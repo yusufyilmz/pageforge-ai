@@ -14,7 +14,6 @@ import {
   Row,
   StyleOverlay
 } from '@pageforge/once-ui/components'
-
 import Prism from 'prismjs'
 import 'prismjs/plugins/line-highlight/prism-line-highlight'
 import 'prismjs/plugins/line-numbers/prism-line-numbers'
@@ -147,12 +146,12 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
     <Flex
       position={isFullscreen ? 'fixed' : 'relative'}
       zIndex={0}
-      background="surface"
-      radius="l"
-      overflow="hidden"
-      border="neutral-medium"
-      direction="column"
-      vertical="center"
+      background='surface'
+      radius='l'
+      overflow='hidden'
+      border='neutral-medium'
+      direction='column'
+      vertical='center'
       fillWidth
       minHeight={3}
       className={classNames(className, {
@@ -163,21 +162,21 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
     >
       {(codes.length > 1 || (copyButton && !compact)) && (
         <Flex
-          borderBottom="neutral-medium"
+          borderBottom='neutral-medium'
           zIndex={2}
-          position="static"
+          position='static'
           fillWidth
-          horizontal="space-between"
-          gap="16"
+          horizontal='space-between'
+          gap='16'
         >
           {codes.length > 1 ? (
-            <Scroller paddingX="4">
+            <Scroller paddingX='4'>
               {codes.map((instance, index) => (
-                <Row paddingY="4" paddingRight="2" key={index}>
+                <Row paddingY='4' paddingRight='2' key={index}>
                   <Button
-                    className="mr-2"
-                    weight="default"
-                    size="s"
+                    className='mr-2'
+                    weight='default'
+                    size='s'
                     variant={
                       selectedInstance === index ? 'secondary' : 'tertiary'
                     }
@@ -193,32 +192,32 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
             </Scroller>
           ) : (
             <Row
-              paddingY="12"
-              paddingX="16"
-              textVariant="label-default-s"
-              onBackground="neutral-strong"
+              paddingY='12'
+              paddingX='16'
+              textVariant='label-default-s'
+              onBackground='neutral-strong'
             >
               {codes[0].label}
             </Row>
           )}
           {!compact && (
-            <Flex padding="4" gap="2" position="static">
+            <Flex padding='4' gap='2' position='static'>
               {reloadButton && (
                 <IconButton
-                  size="m"
-                  tooltip="Reload"
-                  tooltipPosition="left"
-                  variant="tertiary"
+                  size='m'
+                  tooltip='Reload'
+                  tooltipPosition='left'
+                  variant='tertiary'
                   onClick={handleRefresh}
-                  icon="refresh"
+                  icon='refresh'
                 />
               )}
               {fullscreenButton && (
                 <IconButton
-                  size="m"
+                  size='m'
                   tooltip={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
-                  tooltipPosition="left"
-                  variant="tertiary"
+                  tooltipPosition='left'
+                  variant='tertiary'
                   icon={isFullscreen ? 'minimize' : 'maximize'}
                   onClick={toggleFullscreen}
                 />
@@ -230,15 +229,15 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
                     variant: 'tertiary'
                   }}
                 >
-                  <IconButton icon="sparkle" />
+                  <IconButton icon='sparkle' />
                 </StyleOverlay>
               )}
               {copyButton && (
                 <IconButton
-                  size="m"
-                  tooltip="Copy"
-                  tooltipPosition="left"
-                  variant="tertiary"
+                  size='m'
+                  tooltip='Copy'
+                  tooltipPosition='left'
+                  variant='tertiary'
                   onClick={handleCopy}
                   icon={copyIcon}
                 />
@@ -252,8 +251,8 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
           key={refreshKey}
           padding={previewPadding}
           fillHeight
-          horizontal="center"
-          overflowY="auto"
+          horizontal='center'
+          overflowY='auto'
         >
           {Array.isArray(preview)
             ? preview.map((item, index) => (
@@ -268,7 +267,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
           fillWidth
           fillHeight={fillHeight}
         >
-          <Flex overflowX="auto" fillWidth>
+          <Flex overflowX='auto' fillWidth>
             <pre
               style={{ maxHeight: `${codeHeight}rem` }}
               data-line={highlight}
@@ -293,19 +292,19 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
           </Flex>
           {compact && copyButton && (
             <Flex
-              paddingX="8"
-              paddingY="4"
+              paddingX='8'
+              paddingY='4'
               className={styles.compactCopy}
               zIndex={1}
             >
               <IconButton
-                tooltip="Copy"
-                tooltipPosition="left"
-                aria-label="Copy code"
+                tooltip='Copy'
+                tooltipPosition='left'
+                aria-label='Copy code'
                 onClick={handleCopy}
                 icon={copyIcon}
-                size="m"
-                variant="tertiary"
+                size='m'
+                variant='tertiary'
               />
             </Flex>
           )}

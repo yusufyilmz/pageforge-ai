@@ -1,0 +1,75 @@
+// Avatar styles
+.avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 160px;
+  flex: 3;
+  position: sticky;
+  height: fit-content;
+  top: var(--static-space-64);
+}
+
+// Block and text alignment
+.blockAlign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  text-align: center;
+}
+
+.textAlign {
+  text-align: center;
+}
+
+// Universal page wrapper
+.universalPage {
+  width: 100%;
+}
+
+.sectionWrapper {
+  width: 100%;
+}
+
+// Interactive elements
+.hover {
+  transition: var(--transition-micro-medium);
+
+  &:hover {
+    transform: translateX(var(--static-space-4));
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .avatar {
+    padding-bottom: var(--static-space-xl);
+    top: auto;
+  }
+
+  .blockAlign {
+    width: 100%;
+    text-align: left;
+    align-self: center;
+  }
+
+  .textAlign {
+    text-align: left;
+  }
+}
+
+// Small screen media query (using CSS custom media query)
+@media (--s) {
+  .avatar {
+    top: auto;
+  }
+
+  .textAlign {
+    text-align: center;
+  }
+
+  .blockAlign {
+    align-self: center;
+  }
+}

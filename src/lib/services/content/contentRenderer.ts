@@ -1,4 +1,7 @@
-import { ContentBlock, ContentSection } from '@pageforge/types/page/pageTypes'
+import type {
+  ContentBlock,
+  ContentSection
+} from '@pageforge/types/page/pageTypes'
 
 export class ContentRenderer {
   private static blockRenderers: Map<

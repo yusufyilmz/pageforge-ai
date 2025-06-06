@@ -1,7 +1,9 @@
 'use client'
 
 import React, { useRef } from 'react'
+
 import styles from './TiltFx.module.scss'
+
 import { Flex } from '.'
 
 interface TiltFxProps extends React.ComponentProps<typeof Flex> {
@@ -14,16 +16,22 @@ const TiltFx: React.FC<TiltFxProps> = ({ children, ...rest }) => {
   let resetTimeout: NodeJS.Timeout
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if ('ontouchstart' in window) return
+    if ('ontouchstart' in window) {
+      return
+    }
 
     clearTimeout(resetTimeout)
 
     const now = Date.now()
-    if (now - lastCall < 16) return
+    if (now - lastCall < 16) {
+      return
+    }
     lastCall = now
 
     const element = ref.current
-    if (!element) return
+    if (!element) {
+      return
+    }
 
     const rect = element.getBoundingClientRect()
     const offsetX = e.clientX - rect.left
@@ -44,7 +52,9 @@ const TiltFx: React.FC<TiltFxProps> = ({ children, ...rest }) => {
   }
 
   const handleMouseLeave = () => {
-    if ('ontouchstart' in window) return
+    if ('ontouchstart' in window) {
+      return
+    }
 
     const element = ref.current
     if (element) {
@@ -58,7 +68,7 @@ const TiltFx: React.FC<TiltFxProps> = ({ children, ...rest }) => {
   return (
     <Flex
       ref={ref}
-      overflow="hidden"
+      overflow='hidden'
       className={styles.tiltFx}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}

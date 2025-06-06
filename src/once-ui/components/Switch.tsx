@@ -1,11 +1,12 @@
 'use client'
 
-import React, { forwardRef } from 'react'
 import classNames from 'classnames'
+import React, { forwardRef } from 'react'
+
+import commonStyles from './SharedInteractiveStyles.module.scss'
+import styles from './Switch.module.scss'
 
 import { Flex, InteractiveDetails, InteractiveDetailsProps, Spinner } from '.'
-import styles from './Switch.module.scss'
-import commonStyles from './SharedInteractiveStyles.module.scss'
 
 interface SwitchProps
   extends Omit<InteractiveDetailsProps, 'onClick'>,
@@ -53,8 +54,8 @@ const Switch: React.FC<SwitchProps> = forwardRef<HTMLInputElement, SwitchProps>(
 
     return (
       <Flex
-        gap="16"
-        vertical="center"
+        gap='16'
+        vertical='center'
         horizontal={reverse ? 'space-between' : undefined}
         fillWidth={reverse}
         className={classNames(styles.container, className, {
@@ -62,7 +63,7 @@ const Switch: React.FC<SwitchProps> = forwardRef<HTMLInputElement, SwitchProps>(
           [styles.disabled]: disabled
         })}
         onClick={handleClick}
-        role="switch"
+        role='switch'
         aria-checked={isChecked}
         aria-label={ariaLabel}
         aria-disabled={disabled}
@@ -70,7 +71,7 @@ const Switch: React.FC<SwitchProps> = forwardRef<HTMLInputElement, SwitchProps>(
       >
         <input
           ref={ref}
-          type="checkbox"
+          type='checkbox'
           name={name}
           value={value}
           checked={isChecked}
@@ -93,7 +94,7 @@ const Switch: React.FC<SwitchProps> = forwardRef<HTMLInputElement, SwitchProps>(
               [styles.disabled]: disabled
             })}
           >
-            {loading && <Spinner size="xs" />}
+            {loading && <Spinner size='xs' />}
           </div>
         </Flex>
         {props.label && (

@@ -1,6 +1,8 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+
 import { createClient } from '@pageforge/lib/supabase/client'
 import {
   Button,
@@ -9,7 +11,6 @@ import {
   Heading,
   Text
 } from '@pageforge/once-ui/components'
-import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -32,14 +33,18 @@ export default function LoginPage() {
           email,
           password
         })
-        if (error) throw error
+        if (error) {
+          throw error
+        }
         setError('Check your email for the confirmation link!')
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email,
           password
         })
-        if (error) throw error
+        if (error) {
+          throw error
+        }
         router.push('/')
       }
     } catch (error: any) {
@@ -62,58 +67,58 @@ export default function LoginPage() {
   }
 
   return (
-    <Column fill center padding="l">
+    <Column fill center padding='l'>
       <Column
-        maxWidth="s"
-        gap="l"
-        align="center"
-        background="surface"
-        padding="xl"
-        radius="l"
-        border="neutral-weak"
+        maxWidth='s'
+        gap='l'
+        align='center'
+        background='surface'
+        padding='xl'
+        radius='l'
+        border='neutral-weak'
       >
         <Heading
-          variant="heading-strong-l"
-          onBackground="neutral-strong"
-          align="center"
+          variant='heading-strong-l'
+          onBackground='neutral-strong'
+          align='center'
         >
           {isSignUp ? 'Sign Up' : 'Sign In'}
         </Heading>
 
         {error && (
           <Text
-            variant="body-default-s"
-            onBackground="danger-strong"
-            align="center"
+            variant='body-default-s'
+            onBackground='danger-strong'
+            align='center'
           >
             {error}
           </Text>
         )}
 
         <form onSubmit={handleAuth} style={{ width: '100%' }}>
-          <Column gap="m">
+          <Column gap='m'>
             <Input
-              id="email"
-              type="email"
-              placeholder="Enter your email"
+              id='email'
+              type='email'
+              placeholder='Enter your email'
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
             />
 
             <Input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
+              id='password'
+              type='password'
+              placeholder='Enter your password'
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
             />
 
             <Button
-              type="submit"
-              variant="primary"
-              size="m"
+              type='submit'
+              variant='primary'
+              size='m'
               loading={isLoading}
               fillWidth
             >
@@ -124,22 +129,22 @@ export default function LoginPage() {
 
         <Button
           onClick={handleGoogleAuth}
-          variant="secondary"
-          size="m"
+          variant='secondary'
+          size='m'
           fillWidth
         >
           Continue with Google
         </Button>
 
         <Text
-          variant="body-default-s"
-          onBackground="neutral-weak"
-          align="center"
+          variant='body-default-s'
+          onBackground='neutral-weak'
+          align='center'
         >
           {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
           <Button
-            variant="tertiary"
-            size="s"
+            variant='tertiary'
+            size='s'
             onClick={() => setIsSignUp(!isSignUp)}
           >
             {isSignUp ? 'Sign In' : 'Sign Up'}

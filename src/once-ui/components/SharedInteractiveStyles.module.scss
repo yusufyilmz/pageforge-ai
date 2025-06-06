@@ -24,8 +24,7 @@
   outline: none;
 
   &.checked {
-    box-shadow: inset 0 var(--solid-inset-distance) var(--solid-inset-size)
-      var(--solid-inset-color-brand);
+    box-shadow: inset 0 var(--solid-inset-distance) var(--solid-inset-size) var(--solid-inset-color-brand);
     background-color: var(--brand-solid-medium);
     border-color: var(--solid-border-color-brand);
   }
@@ -43,7 +42,7 @@
 
 .container:hover .element::before,
 .element:focus-within::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 50%;

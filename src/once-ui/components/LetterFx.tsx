@@ -1,5 +1,6 @@
 'use client'
 
+import classNames from 'classnames'
 import React, {
   useState,
   useRef,
@@ -8,7 +9,6 @@ import React, {
   forwardRef,
   ReactNode
 } from 'react'
-import classNames from 'classnames'
 
 const defaultCharset = [
   'X',
@@ -70,7 +70,9 @@ function createEventHandler(
       .join('')
 
   return async () => {
-    if (inProgress) return
+    if (inProgress) {
+      return
+    }
 
     setInProgress(true)
 

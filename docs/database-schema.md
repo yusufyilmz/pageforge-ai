@@ -1,10 +1,13 @@
 # PageForge Database Schema Documentation
 
-This document outlines the enhanced database schema for PageForge, designed to support the rich page type system defined in your TypeScript interfaces.
+This document outlines the enhanced database schema for PageForge, designed to support the rich page
+type system defined in your TypeScript interfaces.
 
 ## Overview
 
-The database schema has been designed to support a flexible, content-driven architecture that can handle various page types including blogs, portfolios, galleries, and more. The schema maintains backward compatibility with your existing structure while adding powerful new capabilities.
+The database schema has been designed to support a flexible, content-driven architecture that can
+handle various page types including blogs, portfolios, galleries, and more. The schema maintains
+backward compatibility with your existing structure while adding powerful new capabilities.
 
 ## Database Schema
 
@@ -12,7 +15,8 @@ The database schema has been designed to support a flexible, content-driven arch
 
 #### 1. Enhanced `pages` Table
 
-The existing `pages` table has been extended with additional columns to support rich page configurations:
+The existing `pages` table has been extended with additional columns to support rich page
+configurations:
 
 ```sql
 ALTER TABLE pages
@@ -224,7 +228,7 @@ The schema uses several PostgreSQL enums for type safety:
 CREATE TYPE page_type_enum AS ENUM ('blog', 'about', 'gallery', 'work', 'post');
 CREATE TYPE content_block_type_enum AS ENUM (
   'posts-grid', 'about-hero', 'experience', 'studies',
-  'technical-skills', 'social-links', 'gallery-grid', 'newsletter',
+  'skills', 'socials', 'gallery-grid', 'newsletter',
   'table-of-contents', 'calendar-link', 'text', 'heading', 'projects', 'posts'
 );
 CREATE TYPE orientation_enum AS ENUM ('vertical', 'horizontal');
@@ -265,15 +269,13 @@ Utility functions convert between frontend types and database types:
 // Convert frontend types to database format
 export function toDBPost(post: PostType, siteId: string): InsertPost
 export function toDBPageMetadata(
-  metadata: ContentPageConfig<any>['metadata'],
+  metadata: ContentPageConfig['metadata'],
   pageId: string
 ): InsertPageMetadata
 
 // Convert database types to frontend format
 export function fromDBPost(post: PostDB): PostType
-export function fromDBPageMetadata(
-  metadata: PageMetadataDB
-): ContentPageConfig<any>['metadata']
+export function fromDBPageMetadata(metadata: PageMetadataDB): ContentPageConfig['metadata']
 ```
 
 ### Database Services
@@ -289,10 +291,7 @@ const posts = await postService.getBySiteId(siteId, { published: true })
 const pageWithContent = await pageService.getWithContent(pageId)
 
 // Content operations
-const { section, blocks } = await contentService.createSectionWithBlocks(
-  sectionData,
-  blocksData
-)
+const { section, blocks } = await contentService.createSectionWithBlocks(sectionData, blocksData)
 
 // Site content operations
 const siteContent = await siteContentService.getSiteContent(siteId)
@@ -347,10 +346,7 @@ const blocksData = [
   }
 ]
 
-const result = await contentService.createSectionWithBlocks(
-  sectionData,
-  blocksData
-)
+const result = await contentService.createSectionWithBlocks(sectionData, blocksData)
 ```
 
 ### Querying Site Content
@@ -380,11 +376,13 @@ To apply this schema to your existing database:
 
 2. Update your application code to use the new types and services.
 
-3. Migrate existing data if necessary (write custom migration scripts based on your current data structure).
+3. Migrate existing data if necessary (write custom migration scripts based on your current data
+   structure).
 
 ## Security (Row Level Security)
 
-All tables include comprehensive RLS policies that ensure users can only access content for sites they own:
+All tables include comprehensive RLS policies that ensure users can only access content for sites
+they own:
 
 ```sql
 -- Example RLS policy for posts
@@ -420,4 +418,5 @@ CREATE INDEX idx_posts_publish_date ON posts(publish_date);
 4. **Test the implementation** with your existing page configurations
 5. **Extend as needed** for your specific use cases
 
-This schema provides a solid foundation for your PageForge application while maintaining flexibility for future enhancements.
+This schema provides a solid foundation for your PageForge application while maintaining flexibility
+for future enhancements.

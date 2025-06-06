@@ -1,7 +1,7 @@
 'use client'
 
-import React, { forwardRef } from 'react'
 import classNames from 'classnames'
+import React, { forwardRef } from 'react'
 
 import { Flex, Text, Skeleton, Tag, TagProps, Avatar, AvatarProps } from '.'
 
@@ -35,12 +35,12 @@ const User = forwardRef<HTMLDivElement, UserProps>(
     return (
       <Flex
         ref={ref}
-        vertical="center"
-        gap="8"
+        vertical='center'
+        gap='8'
         className={classNames(className)}
       >
         <Avatar
-          size="m"
+          size='m'
           src={src}
           value={value}
           empty={isEmpty}
@@ -49,42 +49,42 @@ const User = forwardRef<HTMLDivElement, UserProps>(
         />
         {children}
         {name && (
-          <Flex direction="column" paddingLeft="4" paddingRight="12">
+          <Flex direction='column' paddingLeft='4' paddingRight='12'>
             {loading ? (
-              <Flex minWidth={6} paddingY="4">
+              <Flex minWidth={6} paddingY='4'>
                 <Skeleton
-                  width="xl"
-                  height="m"
-                  shape="line"
-                  aria-label="Loading name"
+                  width='xl'
+                  height='m'
+                  shape='line'
+                  aria-label='Loading name'
                 />
               </Flex>
             ) : (
-              <Flex gap="8" vertical="center">
-                <Text variant="heading-strong-xs" onBackground="neutral-strong">
+              <Flex gap='8' vertical='center'>
+                <Text variant='heading-strong-xs' onBackground='neutral-strong'>
                   {name}
                 </Text>
                 {tagProps.label && (
-                  <Tag size="s" {...tagProps}>
+                  <Tag size='s' {...tagProps}>
                     {tagProps.label}
                   </Tag>
                 )}
               </Flex>
             )}
             {loading ? (
-              <Flex paddingY="2">
+              <Flex paddingY='2'>
                 <Skeleton
-                  width="l"
-                  height="xs"
-                  shape="line"
-                  aria-label="Loading subline"
+                  width='l'
+                  height='xs'
+                  shape='line'
+                  aria-label='Loading subline'
                 />
               </Flex>
             ) : (
               <Text
-                wrap="nowrap"
-                variant="body-default-xs"
-                onBackground="neutral-weak"
+                wrap='nowrap'
+                variant='body-default-xs'
+                onBackground='neutral-weak'
               >
                 {subline}
               </Text>

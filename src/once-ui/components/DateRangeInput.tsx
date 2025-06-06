@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useCallback, useEffect } from 'react'
+
 import {
   Input,
   DropdownWrapper,
@@ -80,9 +81,9 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   }, [])
 
   const trigger = (
-    <Row fillWidth horizontal="center" gap="-1">
+    <Row fillWidth horizontal='center' gap='-1'>
       <Input
-        className="cursor-interactive"
+        className='cursor-interactive'
         style={{
           textOverflow: 'ellipsis'
         }}
@@ -96,7 +97,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         {...rest}
       />
       <Input
-        className="cursor-interactive"
+        className='cursor-interactive'
         style={{
           textOverflow: 'ellipsis'
         }}
@@ -113,7 +114,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   )
 
   const dropdown = (
-    <Flex padding="20" center={true}>
+    <Flex padding='20' center={true}>
       <DateRangePicker value={value} onChange={handleDateChange} />
     </Flex>
   )

@@ -1,9 +1,11 @@
 'use client'
 
-import React, { forwardRef, useState } from 'react'
-import { Input, Flex, IconButton } from '.'
-import styles from './NumberInput.module.scss'
 import classNames from 'classnames'
+import React, { forwardRef, useState } from 'react'
+
+import styles from './NumberInput.module.scss'
+
+import { Input, Flex, IconButton } from '.'
 
 interface NumberInputProps
   extends Omit<
@@ -64,7 +66,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       <Input
         {...props}
         ref={ref}
-        type="number"
+        type='number'
         value={localValue}
         onChange={handleChange}
         min={min}
@@ -72,49 +74,49 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         step={step}
         hasSuffix={
           <>
-            <Flex position="static" minWidth={1.25}></Flex>
+            <Flex position='static' minWidth={1.25}></Flex>
             <Flex
-              position="absolute"
-              right="0"
-              top="0"
-              direction="column"
-              borderLeft="neutral-medium"
+              position='absolute'
+              right='0'
+              top='0'
+              direction='column'
+              borderLeft='neutral-medium'
               fillHeight
-              background="neutral-alpha-weak"
+              background='neutral-alpha-weak'
             >
               <Flex
                 fillHeight
-                position="static"
-                borderBottom="neutral-medium"
-                paddingX="4"
+                position='static'
+                borderBottom='neutral-medium'
+                paddingX='4'
                 className={classNames(
                   styles.stepper,
                   'transition-micro-medium'
                 )}
               >
                 <IconButton
-                  icon="chevronUp"
-                  variant="ghost"
-                  size="s"
+                  icon='chevronUp'
+                  variant='ghost'
+                  size='s'
                   onClick={increment}
-                  aria-label="Increment value"
+                  aria-label='Increment value'
                 />
               </Flex>
               <Flex
                 fillHeight
-                position="static"
-                paddingX="4"
+                position='static'
+                paddingX='4'
                 className={classNames(
                   styles.stepper,
                   'transition-micro-medium'
                 )}
               >
                 <IconButton
-                  icon="chevronDown"
-                  variant="ghost"
-                  size="s"
+                  icon='chevronDown'
+                  variant='ghost'
+                  size='s'
                   onClick={decrement}
-                  aria-label="Decrement value"
+                  aria-label='Decrement value'
                 />
               </Flex>
             </Flex>

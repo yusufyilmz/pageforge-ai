@@ -1,12 +1,5 @@
 'use client'
 
-import React, {
-  forwardRef,
-  useEffect,
-  useState,
-  useRef,
-  useCallback
-} from 'react'
 import {
   Column,
   Flex,
@@ -15,6 +8,13 @@ import {
   Text
 } from '@pageforge/once-ui/components'
 import { useHeadingLinks } from '@pageforge/once-ui/hooks/generateHeadingLinks'
+import React, {
+  forwardRef,
+  useEffect,
+  useState,
+  useRef,
+  useCallback
+} from 'react'
 
 interface props extends React.ComponentProps<typeof Flex> {}
 
@@ -49,7 +49,9 @@ const HeadingNav = forwardRef<HTMLDivElement, props>(
     )
 
     useEffect(() => {
-      if (headings.length === 0) return
+      if (headings.length === 0) {
+        return
+      }
 
       setActiveHeadingId(headings[0]?.id || null)
 
@@ -170,7 +172,9 @@ const HeadingNav = forwardRef<HTMLDivElement, props>(
       return () => {
         if (observerRef.current) {
           headingElements.forEach(element => {
-            if (element) observerRef.current?.unobserve(element)
+            if (element) {
+              observerRef.current?.unobserve(element)
+            }
           })
         }
         window.removeEventListener('scroll', handleScroll)
@@ -195,31 +199,31 @@ const HeadingNav = forwardRef<HTMLDivElement, props>(
 
     return (
       <Row
-        paddingLeft="8"
-        gap="12"
+        paddingLeft='8'
+        gap='12'
         className={className}
         style={style}
         ref={ref}
         {...rest}
       >
         <Row
-          width="2"
-          background="neutral-alpha-medium"
-          radius="full"
-          overflow="hidden"
+          width='2'
+          background='neutral-alpha-medium'
+          radius='full'
+          overflow='hidden'
         >
           <Row
             ref={indicatorRef}
-            height="32"
-            paddingY="4"
+            height='32'
+            paddingY='4'
             fillWidth
-            position="absolute"
+            position='absolute'
             style={{
               top: `calc(${activeIndex} * var(--static-space-32))`,
               transition: 'top 0.3s ease'
             }}
           >
-            <Row fillWidth solid="brand-strong" radius="full" />
+            <Row fillWidth solid='brand-strong' radius='full' />
           </Row>
         </Row>
         <Column fillWidth>
@@ -228,10 +232,10 @@ const HeadingNav = forwardRef<HTMLDivElement, props>(
             const isActive = heading.id === activeHeadingId
 
             return (
-              <Flex key={heading.id} fillWidth height="32" paddingX="4">
+              <Flex key={heading.id} fillWidth height='32' paddingX='4'>
                 <SmartLink
                   fillWidth
-                  href={'#' + heading.id}
+                  href={`#${heading.id}`}
                   onClick={e => {
                     e.preventDefault()
                     const target = document.getElementById(heading.id)

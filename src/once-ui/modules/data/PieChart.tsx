@@ -1,5 +1,6 @@
 'use client'
 
+import { schemes } from '@pageforge/once-ui/types'
 import React, { useState, useEffect } from 'react'
 import {
   PieChart as RechartsPieChart,
@@ -9,7 +10,11 @@ import {
   ResponsiveContainer as RechartsResponsiveContainer,
   Legend as RechartsLegend
 } from 'recharts'
+
 import { Column, Row, DateRange } from '../../components'
+
+import { getDistributedColor } from './utils/colorDistribution'
+
 import {
   ChartProps,
   ChartStyles,
@@ -19,8 +24,6 @@ import {
   Legend,
   ChartHeader
 } from '.'
-import { getDistributedColor } from './utils/colorDistribution'
-import { schemes } from '@pageforge/once-ui/types'
 
 const chart = {
   variant: 'gradient', // flat | gradient | outline
@@ -95,7 +98,9 @@ export const PieChart: React.FC<PieChartProps> = ({
   }
 
   const colorPalette = React.useMemo(() => {
-    if (!data || data.length === 0) return schemes.map(c => `var(--data-${c})`)
+    if (!data || data.length === 0) {
+      return schemes.map(c => `var(--data-${c})`)
+    }
 
     return Array.from({ length: data.length }, (_, index) => {
       const colorKey = getDistributedColor(index, data.length)
@@ -144,7 +149,7 @@ export const PieChart: React.FC<PieChartProps> = ({
       height={chart.height}
       data-viz={dataViz || chart.mode}
       border={border}
-      radius="l"
+      radius='l'
       {...flex}
     >
       <ChartHeader
@@ -163,31 +168,31 @@ export const PieChart: React.FC<PieChartProps> = ({
           emptyState={emptyState}
         />
         {!loading && filteredData && filteredData.length > 0 && (
-          <RechartsResponsiveContainer width="100%" height="100%">
+          <RechartsResponsiveContainer width='100%' height='100%'>
             <RechartsPieChart>
               <defs>
                 <pattern
-                  id="pieChartMasterPattern"
-                  patternUnits="userSpaceOnUse"
-                  width="100%"
-                  height="100%"
+                  id='pieChartMasterPattern'
+                  patternUnits='userSpaceOnUse'
+                  width='100%'
+                  height='100%'
                 >
                   <RadialGradient
-                    id="pieChartMasterGradient"
-                    color="var(--page-background)"
-                    cx="50%"
-                    cy="50%"
-                    r="50%"
-                    fx="50%"
-                    fy="50%"
+                    id='pieChartMasterGradient'
+                    color='var(--page-background)'
+                    cx='50%'
+                    cy='50%'
+                    r='50%'
+                    fx='50%'
+                    fy='50%'
                     variant={variant as ChartStyles}
                   />
                   <rect
-                    x="0"
-                    y="0"
-                    width="100%"
-                    height="100%"
-                    fill="url(#pieChartMasterGradient)"
+                    x='0'
+                    y='0'
+                    width='100%'
+                    height='100%'
+                    fill='url(#pieChartMasterGradient)'
                   />
                 </pattern>
 
@@ -207,26 +212,26 @@ export const PieChart: React.FC<PieChartProps> = ({
                     <pattern
                       id={patternId}
                       key={`pattern-${colorKey}`}
-                      patternUnits="userSpaceOnUse"
-                      width="100%"
-                      height="100%"
+                      patternUnits='userSpaceOnUse'
+                      width='100%'
+                      height='100%'
                     >
                       {variant !== 'outline' && (
                         <rect
-                          x="0"
-                          y="0"
-                          width="100%"
-                          height="100%"
+                          x='0'
+                          y='0'
+                          width='100%'
+                          height='100%'
                           fill={baseColor}
                         />
                       )}
                       {variant === 'gradient' && (
                         <rect
-                          x="0"
-                          y="0"
-                          width="100%"
-                          height="100%"
-                          fill="url(#pieChartMasterPattern)"
+                          x='0'
+                          y='0'
+                          width='100%'
+                          height='100%'
+                          fill='url(#pieChartMasterPattern)'
                         />
                       )}
                     </pattern>
@@ -241,7 +246,7 @@ export const PieChart: React.FC<PieChartProps> = ({
                       variant={variant as ChartStyles}
                       position={legend.position}
                       direction={legend.direction}
-                      labels="none"
+                      labels='none'
                       colors={colorPalette}
                     />
                   )}
@@ -267,11 +272,11 @@ export const PieChart: React.FC<PieChartProps> = ({
               )}
               <RechartsPie
                 data={filteredData}
-                cx={origo.x + '%'}
-                cy={origo.y + '%'}
+                cx={`${origo.x}%`}
+                cy={`${origo.y}%`}
                 labelLine={false}
-                innerRadius={ring.inner + '%'}
-                outerRadius={ring.outer + '%'}
+                innerRadius={`${ring.inner}%`}
+                outerRadius={`${ring.outer}%`}
                 dataKey={dataKey}
                 nameKey={nameKey}
                 stroke={variant === 'outline' ? undefined : 'none'}

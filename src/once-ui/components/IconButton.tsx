@@ -1,12 +1,15 @@
 'use client'
 
-import React, { forwardRef, useState, useEffect, ReactNode } from 'react'
-import { ElementType } from './ElementType'
-import { Flex, Icon, Tooltip } from '.'
-import buttonStyles from './Button.module.scss'
-import iconStyles from './IconButton.module.scss'
 import classNames from 'classnames'
+import React, { forwardRef, useState, useEffect, ReactNode } from 'react'
+
 import { IconName } from '../icons'
+
+import buttonStyles from './Button.module.scss'
+import { ElementType } from './ElementType'
+import iconStyles from './IconButton.module.scss'
+
+import { Flex, Icon, Tooltip } from '.'
 
 interface CommonProps {
   icon?: IconName
@@ -71,10 +74,10 @@ const IconButton = forwardRef<HTMLButtonElement, IconButtonProps | AnchorProps>(
 
     const content = (
       <>
-        {children ? children : <Icon name={icon} size="s" />}
+        {children ? children : <Icon name={icon} size='s' />}
         {tooltip && isTooltipVisible && (
           <Flex
-            position="absolute"
+            position='absolute'
             zIndex={1}
             className={iconStyles[tooltipPosition]}
           >

@@ -1,5 +1,6 @@
 'use client'
 
+import classNames from 'classnames'
 import React, {
   ReactNode,
   useEffect,
@@ -10,9 +11,10 @@ import React, {
   useContext
 } from 'react'
 import ReactDOM from 'react-dom'
-import classNames from 'classnames'
-import { Flex, Heading, IconButton, Text } from '.'
+
 import styles from './Dialog.module.scss'
+
+import { Flex, Heading, IconButton, Text } from '.'
 
 interface DialogProps extends Omit<React.ComponentProps<typeof Flex>, 'title'> {
   isOpen: boolean
@@ -217,38 +219,40 @@ const Dialog: React.FC<DialogProps> = forwardRef<HTMLDivElement, DialogProps>(
       }
     }, [isVisible, onClose, stack, base])
 
-    if (!isVisible) return null
+    if (!isVisible) {
+      return null
+    }
 
     return ReactDOM.createPortal(
       <Flex
         ref={ref}
-        transition="macro-medium"
-        background="overlay"
-        position="fixed"
+        transition='macro-medium'
+        background='overlay'
+        position='fixed'
         zIndex={base ? 8 : 9}
-        top="0"
-        left="0"
-        right="0"
-        bottom="0"
+        top='0'
+        left='0'
+        right='0'
+        bottom='0'
         className={classNames(styles.overlay, {
           [styles.open]: isAnimating
         })}
         center
-        padding="l"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="dialog-title"
+        padding='l'
+        role='dialog'
+        aria-modal='true'
+        aria-labelledby='dialog-title'
       >
         <Flex
           fill
           center
-          transition="macro-medium"
+          transition='macro-medium'
           style={{
             transform: base ? 'scale(0.94) translateY(-1.25rem)' : ''
           }}
         >
           <Flex
-            position="unset"
+            position='unset'
             className={classNames(styles.dialog, {
               [styles.open]: isAnimating
             })}
@@ -257,12 +261,12 @@ const Dialog: React.FC<DialogProps> = forwardRef<HTMLDivElement, DialogProps>(
             }}
             ref={dialogRef}
             fillWidth
-            transition="macro-medium"
-            shadow="xl"
-            radius="xl"
-            border="neutral-medium"
-            background="neutral-weak"
-            direction="column"
+            transition='macro-medium'
+            shadow='xl'
+            radius='xl'
+            border='neutral-medium'
+            background='neutral-weak'
+            direction='column'
             tabIndex={-1}
             onKeyDown={e => {
               if (e.key === 'Tab') {
@@ -272,7 +276,9 @@ const Dialog: React.FC<DialogProps> = forwardRef<HTMLDivElement, DialogProps>(
                   ) || []
                 )
 
-                if (focusableElements.length === 0) return
+                if (focusableElements.length === 0) {
+                  return
+                }
 
                 const firstElement = focusableElements[0] as HTMLElement
                 const lastElement = focusableElements[
@@ -294,52 +300,52 @@ const Dialog: React.FC<DialogProps> = forwardRef<HTMLDivElement, DialogProps>(
             {...rest}
           >
             <Flex
-              as="header"
-              direction="column"
-              paddingX="24"
-              paddingTop="24"
-              paddingBottom="s"
-              gap="4"
+              as='header'
+              direction='column'
+              paddingX='24'
+              paddingTop='24'
+              paddingBottom='s'
+              gap='4'
             >
-              <Flex fillWidth horizontal="space-between" gap="8">
+              <Flex fillWidth horizontal='space-between' gap='8'>
                 {typeof title === 'string' ? (
-                  <Heading id="dialog-title" variant="heading-strong-l">
+                  <Heading id='dialog-title' variant='heading-strong-l'>
                     {title}
                   </Heading>
                 ) : (
                   title
                 )}
                 <IconButton
-                  icon="close"
-                  size="m"
-                  variant="tertiary"
-                  tooltip="Close"
+                  icon='close'
+                  size='m'
+                  variant='tertiary'
+                  tooltip='Close'
                   onClick={onClose}
                 />
               </Flex>
               {description && (
-                <Text variant="body-default-s" onBackground="neutral-weak">
+                <Text variant='body-default-s' onBackground='neutral-weak'>
                   {description}
                 </Text>
               )}
             </Flex>
             <Flex
-              as="section"
-              paddingX="24"
-              paddingBottom="24"
+              as='section'
+              paddingX='24'
+              paddingBottom='24'
               flex={1}
-              overflowY="auto"
-              direction="column"
+              overflowY='auto'
+              direction='column'
             >
               {children}
             </Flex>
             {footer && (
               <Flex
-                borderTop="neutral-medium"
-                as="footer"
-                horizontal="end"
-                padding="12"
-                gap="8"
+                borderTop='neutral-medium'
+                as='footer'
+                horizontal='end'
+                padding='12'
+                gap='8'
               >
                 {footer}
               </Flex>

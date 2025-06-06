@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useRef, forwardRef } from 'react'
+
 import { Flex, Input, InputProps, IconButton, Icon } from '.'
 
 interface ColorInputProps extends Omit<InputProps, 'onChange' | 'value'> {
@@ -30,7 +31,7 @@ const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         id={id}
         ref={colorInputRef}
         label={label}
-        type="color"
+        type='color'
         value={value}
         {...props}
         hasPrefix={
@@ -45,20 +46,20 @@ const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
                 transition: '0.2s ease-in-out all'
               }}
             >
-              <Flex padding="2">
+              <Flex padding='2'>
                 <Icon
-                  size="xs"
-                  name="eyeDropper"
-                  onBackground="neutral-medium"
+                  size='xs'
+                  name='eyeDropper'
+                  onBackground='neutral-medium'
                 />
               </Flex>
             </Flex>
             <Flex
-              border="neutral-strong"
+              border='neutral-strong'
               className={`prefix ${value ? '' : 'hidden'}`}
               onClick={handleHexClick}
-              height="20"
-              radius="xs"
+              height='20'
+              radius='xs'
               style={{
                 backgroundColor: value,
                 cursor: 'pointer',
@@ -75,7 +76,7 @@ const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         hasSuffix={
           <Flex
             className={`suffix ${value ? '' : 'hidden'}`}
-            position="absolute"
+            position='absolute'
             style={{
               left: 'var(--static-space-48)',
               cursor: 'pointer',
@@ -95,10 +96,10 @@ const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
             {value && (
               <IconButton
                 onClick={handleReset}
-                variant="secondary"
-                tooltip="Remove"
-                tooltipPosition="left"
-                icon="close"
+                variant='secondary'
+                tooltip='Remove'
+                tooltipPosition='left'
+                icon='close'
                 style={{
                   position: 'absolute',
                   right: 'var(--static-space-12)',

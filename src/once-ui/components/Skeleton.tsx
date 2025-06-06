@@ -1,9 +1,10 @@
 'use client'
 
-import React, { forwardRef } from 'react'
 import classNames from 'classnames'
+import React, { forwardRef } from 'react'
 
 import styles from './Skeleton.module.scss'
+
 import { Flex } from '.'
 
 interface SkeletonProps extends React.ComponentProps<typeof Flex> {
@@ -41,9 +42,9 @@ const Skeleton: React.FC<SkeletonProps> = forwardRef<
         className={classNames(
           styles.skeleton,
           styles[shape],
-          width && styles['w-' + width],
-          height && styles['h-' + height],
-          delay && styles['delay-' + delay],
+          width && styles[`w-${width}`],
+          height && styles[`h-${height}`],
+          delay && styles[`delay-${delay}`],
           className
         )}
       />

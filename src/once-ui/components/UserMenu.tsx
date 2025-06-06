@@ -1,10 +1,11 @@
 'use client'
 
-import React from 'react'
-import classNames from 'classnames'
-import { Flex, DropdownWrapper, User, UserProps, DropdownWrapperProps } from '.'
-import styles from './UserMenu.module.scss'
 import { Placement } from '@floating-ui/react-dom'
+import classNames from 'classnames'
+
+import styles from './UserMenu.module.scss'
+
+import { Flex, DropdownWrapper, User, UserProps, DropdownWrapperProps } from '.'
 
 interface UserMenuProps
   extends UserProps,
@@ -39,10 +40,10 @@ const UserMenu: React.FC<UserMenuProps> = ({
       trigger={
         <Flex
           tabIndex={0}
-          direction="column"
-          padding="4"
-          radius="full"
-          cursor="interactive"
+          direction='column'
+          padding='4'
+          radius='full'
+          cursor='interactive'
           border={selected ? 'neutral-medium' : 'transparent'}
           background={selected ? 'neutral-strong' : 'transparent'}
           className={classNames(

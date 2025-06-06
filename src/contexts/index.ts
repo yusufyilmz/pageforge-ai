@@ -48,7 +48,4 @@ export type {
   TransitionStyle
 } from './ThemeContext'
 
-export type {
-  PageThemeOverride,
-  UserThemePreferences
-} from './ThemeContext'
+export type { PageThemeOverride, UserThemePreferences } from './ThemeContext'

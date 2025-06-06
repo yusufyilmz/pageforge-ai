@@ -1,12 +1,15 @@
 'use client'
 
-import React, { useEffect } from 'react'
-import Link from 'next/link'
 import classNames from 'classnames'
-import styles from './Logo.module.scss'
-import { SpacingToken } from '../types'
-import { Flex } from '.'
 import Image from 'next/image'
+import Link from 'next/link'
+import React, { useEffect } from 'react'
+
+import { SpacingToken } from '../types'
+
+import styles from './Logo.module.scss'
+
+import { Flex } from '.'
 
 const sizeMap: Record<string, SpacingToken> = {
   xs: '20',
@@ -63,7 +66,7 @@ const Logo: React.FC<LogoProps> = ({
             height: `var(--static-space-${sizeMap[size]})`,
             width: 'auto'
           }}
-          alt="Trademark"
+          alt='Trademark'
           src={iconSrc}
         />
       )}
@@ -82,7 +85,7 @@ const Logo: React.FC<LogoProps> = ({
             height: `var(--static-space-${sizeMap[size]})`,
             width: 'auto'
           }}
-          alt="Trademark"
+          alt='Trademark'
           src={wordmarkSrc}
         />
       )}
@@ -99,7 +102,7 @@ const Logo: React.FC<LogoProps> = ({
       )}
       style={style}
       href={href}
-      aria-label="Trademark"
+      aria-label='Trademark'
       {...props}
     >
       {content}
@@ -107,10 +110,10 @@ const Logo: React.FC<LogoProps> = ({
   ) : (
     <Flex
       className={classNames(className)}
-      radius="l"
+      radius='l'
       fitHeight
       style={style}
-      aria-label="Trademark"
+      aria-label='Trademark'
     >
       {content}
     </Flex>

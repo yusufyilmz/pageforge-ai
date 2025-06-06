@@ -1,4 +1,4 @@
-import { Question } from '@pageforge/types/chat'
+import type { Question } from '@pageforge/types/chat'
 
 export const heroQuestions: Question[] = [
   {

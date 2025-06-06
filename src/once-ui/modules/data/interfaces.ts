@@ -1,7 +1,8 @@
 import { DateRange } from '@pageforge/once-ui/components'
-import { Flex } from '../../components'
 import { TShirtSizes } from '@pageforge/once-ui/types'
 import { CurveType } from 'recharts/types/shape/Curve'
+
+import { Flex } from '../../components'
 
 type ChartStyles = 'flat' | 'gradient' | 'outline'
 type barWidth = TShirtSizes | 'fill' | number

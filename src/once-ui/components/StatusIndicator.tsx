@@ -1,8 +1,10 @@
 'use client'
 
-import React, { forwardRef } from 'react'
 import classNames from 'classnames'
+import React, { forwardRef } from 'react'
+
 import styles from './StatusIndicator.module.scss'
+
 import { Flex } from '.'
 
 interface StatusIndicatorProps extends React.ComponentProps<typeof Flex> {
@@ -50,7 +52,7 @@ const StatusIndicator = forwardRef<HTMLDivElement, StatusIndicatorProps>(
           className
         )}
         aria-label={ariaLabel}
-        radius="full"
+        radius='full'
         {...rest}
       />
     )

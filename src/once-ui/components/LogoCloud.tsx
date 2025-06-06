@@ -1,10 +1,12 @@
 'use client'
 
-import React, { forwardRef, useState, useEffect } from 'react'
 import classNames from 'classnames'
-import { Grid, Flex, Logo } from '.'
-import styles from './LogoCloud.module.scss'
+import React, { forwardRef, useState, useEffect } from 'react'
 import type { ComponentProps } from 'react'
+
+import styles from './LogoCloud.module.scss'
+
+import { Grid, Flex, Logo } from '.'
 
 type LogoProps = ComponentProps<typeof Logo>
 
@@ -75,11 +77,11 @@ const LogoCloud = forwardRef<HTMLDivElement, LogoCloudProps>(
         {visibleLogos.map((logo, index) => (
           <Flex
             key={`${key}-${index}`}
-            vertical="center"
-            horizontal="center"
-            paddingX="24"
-            paddingY="20"
-            radius="l"
+            vertical='center'
+            horizontal='center'
+            paddingX='24'
+            paddingY='20'
+            radius='l'
           >
             <Logo
               className={shouldRotate ? styles.logo : styles.staticLogo}

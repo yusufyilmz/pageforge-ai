@@ -1,10 +1,13 @@
 'use client'
 
-import React, { forwardRef, ReactNode } from 'react'
 import classNames from 'classnames'
-import { Flex, Icon, ElementType } from '.'
-import styles from './ToggleButton.module.scss'
+import React, { forwardRef, ReactNode } from 'react'
+
 import { IconName } from '../icons'
+
+import styles from './ToggleButton.module.scss'
+
+import { Flex, Icon, ElementType } from '.'
 
 interface CommonProps {
   label?: ReactNode
@@ -78,7 +81,7 @@ const ToggleButton = forwardRef<HTMLElement, ToggleButtonProps>(
           {
             ['fill-width']: fillWidth,
             ['fit-width']: !fillWidth,
-            ['justify-' + horizontal]: horizontal
+            [`justify-${horizontal}`]: horizontal
           },
           className
         )}
@@ -95,8 +98,8 @@ const ToggleButton = forwardRef<HTMLElement, ToggleButtonProps>(
             padding={size === 's' ? '2' : '4'}
             textWeight={weight}
             textSize={size === 'l' ? 'm' : 's'}
-            className="font-label"
-            position="static"
+            className='font-label'
+            position='static'
           >
             {label || children}
           </Flex>

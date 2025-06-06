@@ -1,10 +1,10 @@
 'use client'
 
-import React from 'react'
-import { Row, Text } from '../../components'
-import { Swatch } from './Swatch'
 import { chart } from '../../../app/resources/data.config'
+import { Row, Text } from '../../components'
+
 import { ChartStyles } from './interfaces'
+import { Swatch } from './Swatch'
 
 interface LegendProps {
   payload?: any[]
@@ -97,10 +97,10 @@ const Legend: React.FC<LegendProps> = ({
           ? 'start'
           : 'center'
       }
-      vertical="center"
-      position="absolute"
-      gap="16"
-      pointerEvents="none"
+      vertical='center'
+      position='absolute'
+      gap='16'
+      pointerEvents='none'
       direction={direction}
       style={positionStyle}
     >
@@ -108,9 +108,9 @@ const Legend: React.FC<LegendProps> = ({
         const color =
           colors && colors[index] ? colors[index] : entry.stroke || entry.color
         return (
-          <Row key={index} vertical="center" gap="8">
-            <Swatch color={color} size="m" variant={variant as ChartStyles} />
-            <Text variant="label-default-s" wrap="nowrap">
+          <Row key={index} vertical='center' gap='8'>
+            <Swatch color={color} size='m' variant={variant as ChartStyles} />
+            <Text variant='label-default-s' wrap='nowrap'>
               {entry.value}
             </Text>
           </Row>

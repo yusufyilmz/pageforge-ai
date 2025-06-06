@@ -7,13 +7,19 @@ export {
 } from './PageBuilder'
 
 export {
+  // Template creation functions
   createAboutPageFromTemplate,
   createBlogPageFromTemplate,
   createPortfolioPageFromTemplate,
   createLandingPageFromTemplate,
+
+  // Main template functions (enhanced versions)
   developerTemplate,
   designerTemplate,
   freelancerTemplate,
+  profileTemplate,
+
+  // Types
   type PersonData,
   type ExperienceData,
   type ProjectData,

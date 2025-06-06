@@ -1,8 +1,10 @@
 'use client'
 
 import React, { useState, useRef, forwardRef, useEffect } from 'react'
-import { Column, Flex, Input, Text } from '.'
+
 import styles from './OTPInput.module.scss'
+
+import { Column, Flex, Input, Text } from '.'
 
 interface OTPInputProps extends React.HTMLAttributes<HTMLDivElement> {
   length?: number
@@ -37,7 +39,9 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
     }, [autoFocus])
 
     const handleChange = (index: number, value: string) => {
-      if (disabled) return
+      if (disabled) {
+        return
+      }
 
       if (value === '' || /^[0-9]$/.test(value)) {
         const newValues = [...values]
@@ -58,7 +62,9 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
       index: number,
       event: React.KeyboardEvent<HTMLInputElement>
     ) => {
-      if (disabled) return
+      if (disabled) {
+        return
+      }
 
       if (event.key === 'Backspace') {
         event.preventDefault()
@@ -82,9 +88,13 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
     }
 
     const handleContainerClick = () => {
-      if (disabled) return
+      if (disabled) {
+        return
+      }
 
-      if (values.every(val => val !== '')) return
+      if (values.every(val => val !== '')) {
+        return
+      }
 
       const firstEmptyIndex = values.findIndex(val => val === '')
       if (firstEmptyIndex >= 0) {
@@ -93,8 +103,8 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
     }
 
     return (
-      <Column gap="8" ref={ref}>
-        <Flex gap="8" center onClick={handleContainerClick}>
+      <Column gap='8' ref={ref}>
+        <Flex gap='8' center onClick={handleContainerClick}>
           {Array.from({ length }, (_, index) => (
             <Input
               key={index}
@@ -102,9 +112,9 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
                 inputsRef.current[index] = el
               }}
               id={`otp-${index}`}
-              type="text"
-              placeholder=" "
-              inputMode="numeric"
+              type='text'
+              placeholder=' '
+              inputMode='numeric'
               maxLength={1}
               error={error}
               value={values[index]}
@@ -117,8 +127,8 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
           ))}
         </Flex>
         {error && errorMessage && (
-          <Flex paddingX="8">
-            <Text variant="body-default-s" onBackground="danger-weak">
+          <Flex paddingX='8'>
+            <Text variant='body-default-s' onBackground='danger-weak'>
               {errorMessage}
             </Text>
           </Flex>

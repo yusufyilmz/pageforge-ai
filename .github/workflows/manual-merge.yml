@@ -1,0 +1,95 @@
+name: Manual Merge Develop to Main
+
+on:
+  workflow_dispatch:
+    inputs:
+      merge_type:
+        description: 'Choose merge type'
+        required: true
+        default: 'safe'
+        type: choice
+        options:
+          - safe
+          - quick
+      run_tests:
+        description: 'Run tests before merging'
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛒 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔧 Setup Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: 📦 Setup Node.js
+        if: ${{ inputs.run_tests }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📥 Install dependencies
+        if: ${{ inputs.run_tests }}
+        run: npm ci
+
+      - name: 🧪 Run quality checks
+        if: ${{ inputs.run_tests }}
+        run: npm run code-quality
+
+      - name: 🔄 Merge develop to main
+        run: |
+          echo "🔄 Starting merge process..."
+
+          # Fetch latest changes
+          git fetch origin
+
+          # Switch to main and update
+          git checkout main
+          git pull origin main
+
+          # Switch to develop and update
+          git checkout develop
+          git pull origin develop
+
+          # Check for differences
+          if git diff --quiet main..develop; then
+            echo "⚠️ No changes to merge"
+            exit 0
+          fi
+
+          # Perform merge
+          git checkout main
+
+          if [ "${{ inputs.merge_type }}" = "safe" ]; then
+            echo "🔒 Safe merge with merge commit"
+            git merge develop --no-ff -m "🔄 Merge develop to main (via GitHub Actions)"
+          else
+            echo "⚡ Quick merge"
+            git merge develop -m "⚡ Quick merge develop to main"
+          fi
+
+          # Push changes
+          git push origin main
+
+          echo "✅ Merge completed successfully!"
+
+      - name: 📊 Summary
+        if: always()
+        run: |
+          echo "## 🔄 Merge Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Merge Type:** ${{ inputs.merge_type }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Tests Run:** ${{ inputs.run_tests }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Completed:** $(date)" >> $GITHUB_STEP_SUMMARY

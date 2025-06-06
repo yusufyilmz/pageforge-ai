@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useRef, useState, forwardRef, useEffect } from 'react'
-import Compressor from 'compressorjs'
 import { Flex, Icon, Media, Spinner, Text } from '@pageforge/once-ui/components'
+import Compressor from 'compressorjs'
+import React, { useRef, useState, forwardRef, useEffect } from 'react'
+
 import styles from './MediaUpload.module.scss'
 
 interface MediaUploadProps extends React.ComponentProps<typeof Flex> {
@@ -90,7 +91,9 @@ const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
 
     const handleFiles = (files: FileList) => {
       const file = files[0]
-      if (!file) return
+      if (!file) {
+        return
+      }
 
       if (file.type.startsWith('image/')) {
         setPreviewImage(URL.createObjectURL(file))
@@ -107,8 +110,8 @@ const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
 
     const compressImage = (file: File) => {
       new Compressor(file, {
-        convertTypes: convertTypes,
-        quality: quality,
+        convertTypes,
+        quality,
         maxWidth: resizeMaxWidth,
         maxHeight: resizeMaxHeight,
         convertSize: 400 * 1024,
@@ -135,16 +138,16 @@ const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
     return (
       <Flex
         style={{ isolation: 'isolate' }}
-        transition="micro-medium"
-        overflow="hidden"
-        cursor="interactive"
+        transition='micro-medium'
+        overflow='hidden'
+        cursor='interactive'
         className={styles.container}
         aspectRatio={aspectRatio}
         fillWidth
-        horizontal="center"
-        vertical="center"
-        border="neutral-medium"
-        radius="l"
+        horizontal='center'
+        vertical='center'
+        border='neutral-medium'
+        radius='l'
         onClick={handleFileSelection}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -162,11 +165,11 @@ const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
                 sizes={sizes}
                 fill
                 src={previewImage ? previewImage : ''}
-                alt="Preview of uploaded image"
+                alt='Preview of uploaded image'
               />
             ) : (
               <Flex fill center>
-                <Icon name="plus" size="l" />
+                <Icon name='plus' size='l' />
               </Flex>
             )}
           </>
@@ -175,23 +178,23 @@ const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
         <Flex
           className={styles.upload}
           zIndex={1}
-          transition="micro-medium"
-          position="absolute"
+          transition='micro-medium'
+          position='absolute'
           fill
-          padding="m"
-          horizontal="center"
-          vertical="center"
+          padding='m'
+          horizontal='center'
+          vertical='center'
         >
           {uploading || loading ? (
-            <Spinner size="l" />
+            <Spinner size='l' />
           ) : (
-            <Text className={styles.text} align="center">
+            <Text className={styles.text} align='center'>
               {emptyState}
             </Text>
           )}
         </Flex>
         <input
-          type="file"
+          type='file'
           ref={inputRef}
           accept={accept}
           style={{ display: 'none' }}

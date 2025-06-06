@@ -1,0 +1,297 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# PageForge Section Components Guide
+
+## 🎨 Section Component Architecture
+
+### Core Structure
+**Location**: `src/components/sections/`
+
+All section components follow a consistent pattern:
+```typescript
+// ✅ Standard section component structure
+import { Flex, Text } from '@pageforge/once-ui/components'
+
+interface MySectionProps {
+  block: Extract<ContentBlock, { type: 'my-section' }>
+  index: number
+}
+
+export const MySection = ({ block, index }: MySectionProps) => {
+  const { content, display, className } = block
+
+  if (!display) return null
+
+  return (
+    <Flex direction="column" gap="m" className={className}>
+      <Text>{content.title}</Text>
+    </Flex>
+  )
+}
+```
+
+## 📦 Available Section Types
+
+### Core Content Sections
+- **[HeroSection](mdc:src/components/sections/HeroSection.tsx)** - Landing page hero
+- **[FeaturesSection](mdc:src/components/sections/FeaturesSection.tsx)** - Feature showcase
+- **[AboutSection](mdc:src/components/sections/AboutSection.tsx)** - Company/personal about
+- **[TextSection](mdc:src/components/sections/TextSection.tsx)** - Simple text content
+- **[HeadingSection](mdc:src/components/sections/HeadingSection.tsx)** - Standalone headings
+
+### Professional & Portfolio Sections
+- **[ProjectsSection](mdc:src/components/sections/ProjectsSection.tsx)** - Project showcase
+- **[WorkExperienceSection](mdc:src/components/sections/WorkExperienceSection.tsx)** - Career timeline
+- **[TechnicalSkillsSection](mdc:src/components/sections/TechnicalSkillsSection.tsx)** - Skills display
+- **[StudiesSection](mdc:src/components/sections/StudiesSection.tsx)** - Education background
+- **[ProfileSection](mdc:src/components/sections/ProfileSection.tsx)** - Personal profile
+- **[TimelineSection](mdc:src/components/sections/TimelineSection.tsx)** - Chronological events
+- **[AwardsSection](mdc:src/components/sections/AwardsSection.tsx)** - Achievement showcase
+
+### Business & Service Sections
+- **[PricingSection](mdc:src/components/sections/PricingSection.tsx)** - Pricing plans
+- **[TestimonialsSection](mdc:src/components/sections/TestimonialsSection.tsx)** - Customer reviews
+- **[ClientsSection](mdc:src/components/sections/ClientsSection.tsx)** - Client logos
+- **[TeamSection](mdc:src/components/sections/TeamSection.tsx)** - Team member profiles
+- **[CareersSection](mdc:src/components/sections/CareersSection.tsx)** - Job listings
+- **[PlansSection](mdc:src/components/sections/PlansSection.tsx)** - Service plans
+
+### Interactive & Engagement Sections
+- **[ContactFormSection](mdc:src/components/sections/ContactFormSection.tsx)** - Contact forms
+- **[ContactInfoSection](mdc:src/components/sections/ContactInfoSection.tsx)** - Contact details
+- **[NewsletterSection](mdc:src/components/sections/NewsletterSection.tsx)** - Email subscription
+- **[CalendarLinkSection](mdc:src/components/sections/CalendarLinkSection.tsx)** - Meeting scheduling
+- **[MapSection](mdc:src/components/sections/MapSection.tsx)** - Interactive maps
+- **[CTASection](mdc:src/components/sections/CTASection.tsx)** - Call-to-action banners
+
+### Content & Media Sections
+- **[BlogPageSection](mdc:src/components/sections/BlogPageSection.tsx)** - Blog post content
+- **[PostsGridSection](mdc:src/components/sections/PostsGridSection.tsx)** - Blog post listings
+- **[GalleryGridSection](mdc:src/components/sections/GalleryGridSection.tsx)** - Image galleries
+- **[VideoSection](mdc:src/components/sections/VideoSection.tsx)** - Video embeds
+- **[ShowcaseSection](mdc:src/components/sections/ShowcaseSection.tsx)** - Feature showcases
+- **[QuickstartSection](mdc:src/components/sections/QuickstartSection.tsx)** - Getting started guides
+
+### Navigation & Information Sections
+- **[TableOfContentsSection](mdc:src/components/sections/TableOfContentsSection.tsx)** - Page navigation
+- **[TabsSection](mdc:src/components/sections/TabsSection.tsx)** - Tabbed content
+- **[AccordionSection](mdc:src/components/sections/AccordionSection.tsx)** - Collapsible content
+- **[FAQSection](mdc:src/components/sections/FAQSection.tsx)** - Frequently asked questions
+- **[MenuSection](mdc:src/components/sections/MenuSection.tsx)** - Navigation menus
+- **[StatsSection](mdc:src/components/sections/StatsSection.tsx)** - Key metrics display
+
+### Specialized Sections
+- **[ShopItemsSection](mdc:src/components/sections/ShopItemsSection.tsx)** - E-commerce listings
+- **[PropertySection](mdc:src/components/sections/PropertySection.tsx)** - Real estate listings
+- **[SocialLinksSection](mdc:src/components/sections/SocialLinksSection.tsx)** - Social media links
+- **[LegalTextSection](mdc:src/components/sections/LegalTextSection.tsx)** - Legal content
+- **[HowToSection](mdc:src/components/sections/HowToSection.tsx)** - Tutorial content
+- **[AboutHeroSection](mdc:src/components/sections/AboutHeroSection.tsx)** - About page hero
+
+## 🎯 Section Usage Patterns
+
+### 1. Basic Section Usage
+```typescript
+// ✅ Standard section usage
+const block: ContentBlock = {
+  type: 'hero',
+  content: {
+    title: "Welcome",
+    subtitle: "Get Started",
+    description: "Start your journey with our platform.",
+    buttons: [
+      { label: "Get Started", href: "/start", variant: "primary" },
+      { label: "Learn More", href: "/about", variant: "secondary" }
+    ]
+  },
+  display: true,
+  className: "custom-hero"
+}
+```
+
+### 2. Section Combinations
+```typescript
+// ✅ Common section combinations
+const landingPageSections: ContentBlock[] = [
+  { type: 'hero', content: {...}, display: true },
+  { type: 'features', content: {...}, display: true },
+  { type: 'testimonials', content: {...}, display: true },
+  { type: 'pricing', content: {...}, display: true },
+  { type: 'cta', content: {...}, display: true }
+]
+
+const portfolioSections: ContentBlock[] = [
+  { type: 'about-hero', content: {...}, display: true },
+  { type: 'projects', content: {...}, display: true },
+  { type: 'skills', content: {...}, display: true },
+  { type: 'experience', content: {...}, display: true },
+  { type: 'contact-form', content: {...}, display: true }
+]
+```
+
+### 3. Section Content Structure
+```typescript
+// ✅ Hero Section Content
+interface HeroSectionContent {
+  title: string
+  subtitle?: string
+  description?: string
+  buttons?: Array<{
+    label: string
+    href: string
+    variant?: 'primary' | 'secondary' | 'tertiary'
+    icon?: string
+    showArrow?: boolean
+  }>
+  badge?: {
+    label: string
+    icon?: string
+    href?: string
+    arrow?: boolean
+  }
+  backgroundImage?: string
+  alignment?: 'left' | 'center' | 'right'
+  height?: 'small' | 'medium' | 'large' | 'full'
+}
+
+// ✅ Features Section Content
+interface FeaturesSectionContent {
+  title?: string
+  subtitle?: string
+  description?: string
+  layout?: 'grid' | 'list'
+  columns?: 2 | 3 | 4
+  features: Array<{
+    icon?: string
+    image?: {
+      src: string
+      alt: string
+      width?: number
+      height?: number
+    }
+    title: string
+    description: string
+    link?: {
+      href: string
+      label?: string
+    }
+  }>
+}
+```
+
+## 🛡️ Section Best Practices
+
+### 1. Performance Optimization
+```typescript
+// ✅ Use display flag for conditional rendering
+if (!block.display) return null
+
+// ✅ Implement lazy loading for media
+const image = block.content.image
+if (image) {
+  return <Image {...image} loading="lazy" />
+}
+```
+
+### 2. Accessibility
+```typescript
+// ✅ Include ARIA labels
+<button
+  aria-label={button.label}
+  onClick={handleClick}
+  onKeyDown={handleKeyDown}
+>
+  {button.label}
+</button>
+
+// ✅ Use semantic HTML
+<section aria-labelledby="section-title">
+  <h2 id="section-title">{content.title}</h2>
+</section>
+```
+
+### 3. Responsive Design
+```typescript
+// ✅ Use Once UI responsive components
+<Flex
+  direction={{ base: 'column', md: 'row' }}
+  gap={{ base: 'm', md: 'l' }}
+>
+  <Column width={{ base: 'full', md: '1/2' }}>
+    {content.left}
+  </Column>
+  <Column width={{ base: 'full', md: '1/2' }}>
+    {content.right}
+  </Column>
+</Flex>
+```
+
+## 🎨 Section Styling
+
+### 1. Theme Integration
+```typescript
+// ✅ Use theme context for styling
+const { currentTheme } = useTheme()
+const { getThemeClass } = useThemeUtils()
+
+return (
+  <div className={getThemeClass()}>
+    {content}
+  </div>
+)
+```
+
+### 2. Custom Styling
+```typescript
+// ✅ Use className for custom styles
+const block: ContentBlock = {
+  type: 'hero',
+  content: { title: "Custom Hero" },
+  display: true,
+  className: "custom-hero-styling"
+}
+```
+
+## 🚫 Section Anti-Patterns
+
+### ❌ Don't Create Custom Basic UI
+```typescript
+// ❌ Avoid creating basic components
+const MyButton = ({ children }) => <button>{children}</button>
+
+// ✅ Use Once UI components instead
+import { Button } from '@pageforge/once-ui/components'
+```
+
+### ❌ Don't Ignore Type Safety
+```typescript
+// ❌ Avoid loose typing
+const MySection = ({ content }: any) => (
+  <div>{content.title}</div>
+)
+
+// ✅ Use proper types
+const MySection = ({ block }: MySectionProps) => (
+  <div>{block.content.title}</div>
+)
+```
+
+### ❌ Don't Skip Accessibility
+```typescript
+// ❌ Avoid missing accessibility
+<div onClick={handleClick}>{content}</div>
+
+// ✅ Include proper accessibility
+<div
+  role="button"
+  tabIndex={0}
+  onClick={handleClick}
+  onKeyDown={handleKeyDown}
+  aria-label={content}
+>
+  {content}
+</div>
+```

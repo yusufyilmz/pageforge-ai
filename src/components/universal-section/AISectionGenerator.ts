@@ -1,5 +1,3 @@
-import { ContentBlock } from '@pageforge/types/page/pageTypes'
-
 // Types for AI-driven section generation
 export interface UserRequirement {
   description: string
@@ -387,7 +385,9 @@ export class AISectionGenerator {
 
   // Get industry-specific section intents
   private getIndustryIntents(industry?: string): SectionIntent[] {
-    if (!industry) return []
+    if (!industry) {
+      return []
+    }
 
     const patterns = this.industryPatterns.get(industry.toLowerCase()) || []
     return patterns.map((pattern, index) => ({
@@ -478,12 +478,10 @@ export class AISectionGenerator {
   }
 
   private generateSectionName(type: string): string {
-    return (
-      type
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join('') + 'Section'
-    )
+    return `${type
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('')}Section`
   }
 
   private async generateReactComponent(
@@ -495,7 +493,7 @@ export class AISectionGenerator {
 
     return `'use client'
 
-import React from 'react'
+
 import {
   Flex,
   Heading,
@@ -546,6 +544,7 @@ export const ${sectionName} = ({ block, index }: ${sectionName}Props) => {
   }
 
   private generateSectionContent(intent: SectionIntent, template: any): string {
+    console.log(template)
     switch (intent.type) {
       case 'menu-showcase':
         return `
@@ -634,7 +633,9 @@ export const ${sectionName} = ({ block, index }: ${sectionName}Props) => {
 
   private generateContentSchema(intent: SectionIntent): Record<string, any> {
     const template = this.sectionTemplates.get(intent.type)
-    if (!template) return {}
+    if (!template) {
+      return {}
+    }
 
     const schema: Record<string, any> = {}
 

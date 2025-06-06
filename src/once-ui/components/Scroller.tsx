@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
-import { Flex, IconButton, BaseColor, Fade } from '.'
+import React, { useEffect, useRef, useState } from 'react'
+
 import styles from './Scroller.module.scss'
+
+import { Flex, IconButton, BaseColor, Fade } from '.'
 
 interface ScrollerProps extends React.ComponentProps<typeof Flex> {
   children?: React.ReactNode
@@ -140,8 +142,8 @@ const Scroller: React.FC<ScrollerProps> = ({
       {showPrevButton && (
         <Fade
           base={fadeColor}
-          position="absolute"
-          padding="4"
+          position='absolute'
+          padding='4'
           horizontal={direction === 'column' ? 'center' : undefined}
           vertical={direction === 'column' ? 'start' : 'center'}
           to={direction === 'row' ? 'right' : 'bottom'}
@@ -162,16 +164,16 @@ const Scroller: React.FC<ScrollerProps> = ({
                 handleScrollPrev()
               }
             }}
-            size="s"
-            variant="secondary"
-            aria-label="Scroll Previous"
+            size='s'
+            variant='secondary'
+            aria-label='Scroll Previous'
           />
         </Fade>
       )}
       <Flex
         fillWidth
         zIndex={0}
-        radius="m"
+        radius='m'
         direction={direction}
         className={classNames(styles.scroller, styles[direction])}
         ref={scrollerRef}
@@ -181,8 +183,8 @@ const Scroller: React.FC<ScrollerProps> = ({
       {showNextButton && (
         <Fade
           base={fadeColor}
-          padding="4"
-          position="absolute"
+          padding='4'
+          position='absolute'
           horizontal={direction === 'column' ? 'center' : 'end'}
           vertical={direction === 'column' ? 'end' : 'center'}
           to={direction === 'row' ? 'left' : 'top'}
@@ -203,9 +205,9 @@ const Scroller: React.FC<ScrollerProps> = ({
                 handleScrollNext()
               }
             }}
-            size="s"
-            variant="secondary"
-            aria-label="Scroll Next"
+            size='s'
+            variant='secondary'
+            aria-label='Scroll Next'
           />
         </Fade>
       )}

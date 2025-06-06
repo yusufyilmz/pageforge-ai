@@ -1,11 +1,13 @@
 'use client'
 
+import classNames from 'classnames'
 import React, { forwardRef } from 'react'
-import { Arrow, Flex, Icon, SmartLink } from '.'
+
+import { IconName } from '../icons'
 
 import styles from './Badge.module.scss'
-import { IconName } from '../icons'
-import classNames from 'classnames'
+
+import { Arrow, Flex, Icon, SmartLink } from '.'
 
 interface BadgeProps extends React.ComponentProps<typeof Flex> {
   title?: string
@@ -38,26 +40,26 @@ const Badge = forwardRef<HTMLDivElement | HTMLAnchorElement, BadgeProps>(
     const content = (
       <Flex
         id={id || 'badge'}
-        paddingX="20"
-        paddingY="12"
+        paddingX='20'
+        paddingY='12'
         fitWidth
         className={classNames(effect ? styles.animation : undefined, className)}
         style={style}
-        vertical="center"
-        radius="full"
-        background="neutral-weak"
-        onBackground="brand-strong"
-        border="brand-alpha-medium"
-        textVariant="label-strong-s"
-        shadow="l"
+        vertical='center'
+        radius='full'
+        background='neutral-weak'
+        onBackground='brand-strong'
+        border='brand-alpha-medium'
+        textVariant='label-strong-s'
+        shadow='l'
         {...rest}
       >
         {icon && (
           <Icon
-            marginRight="8"
-            size="s"
+            marginRight='8'
+            size='s'
             name={icon}
-            onBackground="brand-medium"
+            onBackground='brand-medium'
           />
         )}
         {title}

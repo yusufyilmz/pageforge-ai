@@ -1,5 +1,5 @@
 // packages/ui/src/components/site-builder/constants/contactQuestions.ts
-import { Question } from '@pageforge/types/chat'
+import type { Question } from '@pageforge/types/chat'
 
 export const contactQuestions: Question[] = [
   {

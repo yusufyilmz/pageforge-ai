@@ -1,5 +1,4 @@
 import { IconType } from 'react-icons'
-
 import {
   HiChevronUp,
   HiChevronDown,
@@ -14,6 +13,7 @@ import {
   HiOutlineMagnifyingGlass,
   HiOutlineLink,
   HiArrowUpRight,
+  HiArrowLeft,
   HiOutlineShieldCheck,
   HiOutlineSparkles,
   HiOutlineComputerDesktop,
@@ -53,6 +53,7 @@ export const iconLibrary: Record<string, IconType> = {
   close: HiOutlineXMark,
   openLink: HiOutlineLink,
   arrowUpRight: HiArrowUpRight,
+  arrowLeft: HiArrowLeft,
   minus: HiOutlineMinus,
   plus: HiOutlinePlus,
   calendar: HiOutlineCalendar,

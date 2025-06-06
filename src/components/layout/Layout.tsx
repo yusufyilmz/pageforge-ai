@@ -1,4 +1,7 @@
+import classNames from 'classnames'
+import Head from 'next/head'
 import { type ReactNode } from 'react'
+
 import {
   Flex,
   Column,
@@ -7,11 +10,9 @@ import {
   ThemeProvider
 } from '@pageforge/once-ui/components'
 // import { Header } from '@pageforge/ui/components/ui/header';
-import classNames from 'classnames'
+import { type opacity, type SpacingToken } from '@pageforge/once-ui/types'
 import { type SiteThemeType } from '@pageforge/types/site/siteThemes'
 import { getThemeConfig } from '@pageforge/types/site/themeConfigs'
-import { type opacity, type SpacingToken } from '@pageforge/once-ui/types'
-import Head from 'next/head'
 
 export interface LayoutProps {
   children: ReactNode
@@ -25,10 +26,10 @@ export const GenericLayout = ({ children, theme }: LayoutProps) => {
   return (
     <Flex
       suppressHydrationWarning
-      as="html"
-      lang="en"
+      as='html'
+      lang='en'
       fillHeight
-      background="page"
+      background='page'
       data-theme={style.theme}
       data-neutral={style.neutral}
       data-brand={style.brand}
@@ -72,14 +73,14 @@ export const GenericLayout = ({ children, theme }: LayoutProps) => {
       <ThemeProvider initial={style.theme}>
         <ToastProvider>
           <Column
-            as="body"
+            as='body'
             fillWidth
-            margin="0"
-            padding="0"
+            margin='0'
+            padding='0'
             style={{ minHeight: '100vh' }}
           >
             <Background
-              position="absolute"
+              position='absolute'
               mask={{
                 x: effects.mask.x,
                 y: effects.mask.y,
@@ -119,18 +120,18 @@ export const GenericLayout = ({ children, theme }: LayoutProps) => {
                 color: effects.lines.color
               }}
             />
-            <Flex fillWidth minHeight="16" />
+            <Flex fillWidth minHeight='16' />
             {/* <Header /> */}
             <Flex
-              position="relative"
+              position='relative'
               zIndex={0}
               fillWidth
-              paddingY="l"
-              paddingX="l"
-              horizontal="center"
+              paddingY='l'
+              paddingX='l'
+              horizontal='center'
               flex={1}
             >
-              <Flex horizontal="center" fillWidth minHeight="0">
+              <Flex horizontal='center' fillWidth minHeight='0'>
                 {children}
               </Flex>
             </Flex>

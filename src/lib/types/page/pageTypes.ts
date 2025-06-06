@@ -1,6 +1,5 @@
-import { Post } from '../site'
+import type { Post } from '../site'
 
-// Section Content Type Definitions
 export interface HeroSectionContent {
   title?: string
   subtitle?: string
@@ -87,7 +86,7 @@ export interface ContactFormSectionContent {
   }>
   submitButton?: {
     label?: string
-    variant?: 'primary' | 'secondary'
+    variant?: 'primary' | 'secondary' | 'tertiary'
   }
   endpoint?: string
   successMessage?: string
@@ -568,10 +567,87 @@ export interface AboutGeneralSectionContent {
   alignment?: 'left' | 'center' | 'right'
 }
 
+export interface ShowcaseSectionContent {
+  title?: string
+  subtitle?: string
+  description?: string
+  layout?: 'grid' | 'masonry' | 'carousel' | 'featured'
+  columns?: 2 | 3 | 4
+  items: Array<{
+    title: string
+    description: string
+    image: {
+      src: string
+      alt: string
+      width?: number
+      height?: number
+    }
+    category?: string
+    tags?: string[]
+    link?: {
+      href: string
+      label?: string
+      external?: boolean
+    }
+    stats?: Array<{
+      label: string
+      value: string
+    }>
+    featured?: boolean
+  }>
+  categories?: string[]
+  showFilter?: boolean
+  showCategories?: boolean
+  showStats?: boolean
+}
+
+export interface QuickstartSectionContent {
+  title?: string
+  subtitle?: string
+  description?: string
+  layout?: 'steps' | 'tabs' | 'cards'
+  steps: Array<{
+    step: number
+    title: string
+    description: string
+    code?: {
+      language: string
+      content: string
+    }
+    image?: {
+      src: string
+      alt: string
+    }
+    icon?: string
+    duration?: string
+    complexity?: 'easy' | 'medium' | 'hard'
+    prerequisites?: string[]
+  }>
+  cta?: {
+    title: string
+    description?: string
+    button: {
+      label: string
+      href: string
+      variant?: 'primary' | 'secondary'
+    }
+  }
+  showStepNumbers?: boolean
+  showDuration?: boolean
+  showComplexity?: boolean
+}
+
 // Content-driven interfaces for better maintainability - DISCRIMINATED UNION
 export type ContentBlock =
   | {
       type: 'hero'
+      content: HeroSectionContent
+      variant?: string
+      display?: boolean
+      className?: string
+    }
+  | {
+      type: 'cta'
       content: HeroSectionContent
       variant?: string
       display?: boolean
@@ -794,15 +870,29 @@ export type ContentBlock =
       display?: boolean
       className?: string
     }
-    // |  {
-    //   type: 'custom',
-    //   content: any
-    //   variant?: string
-    //   description: string
-    //   display?: boolean
-    //   id?: string
-    //   className?: string
-    // }
+  | {
+      type: 'showcase'
+      content: ShowcaseSectionContent
+      variant?: string
+      display?: boolean
+      className?: string
+    }
+  | {
+      type: 'quickstart'
+      content: QuickstartSectionContent
+      variant?: string
+      display?: boolean
+      className?: string
+    }
+// |  {
+//   type: 'custom',
+//   content: any
+//   variant?: string
+//   description: string
+//   display?: boolean
+//   id?: string
+//   className?: string
+// }
 
 // Custom section interface for AI-generated sections
 export interface CustomContentBlock {
@@ -898,6 +988,26 @@ export const createHeadingBlock = (
   ...options
 })
 
+export const createShowcaseBlock = (
+  content: ShowcaseSectionContent,
+  options?: { variant?: string; display?: boolean; className?: string }
+): ContentBlock => ({
+  type: 'showcase',
+  content,
+  display: true,
+  ...options
+})
+
+export const createQuickstartBlock = (
+  content: QuickstartSectionContent,
+  options?: { variant?: string; display?: boolean; className?: string }
+): ContentBlock => ({
+  type: 'quickstart',
+  content,
+  display: true,
+  ...options
+})
+
 export interface ContentSection {
   id: string
   title?: string
@@ -915,7 +1025,7 @@ export interface ContentSection {
   display?: boolean
 }
 
-export interface MainContentSection<T> {
+export interface MainContentSection {
   id: string
   title?: string
   description?: string
@@ -972,7 +1082,7 @@ export interface PageMetadataConfig {
 export interface PageContent {
   header?: ContentSection
   hero?: ContentSection
-  main: MainContentSection<any>[]
+  main: MainContentSection[]
   sidebar?: ContentSection
   footer?: ContentSection
 }
@@ -1007,7 +1117,14 @@ export interface PageSEO {
   noFollow?: boolean
   sitemap?: {
     priority: number
-    changeFreq: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never'
+    changeFreq:
+      | 'always'
+      | 'hourly'
+      | 'daily'
+      | 'weekly'
+      | 'monthly'
+      | 'yearly'
+      | 'never'
   }
 }
 
@@ -1019,7 +1136,7 @@ export interface PageStructuredData {
 }
 
 // Main page configuration interface
-export interface PageConfig<TContent = any> {
+export interface PageConfig {
   pageType: PageType | string
   slug: string
   metadata: PageMetadataConfig
@@ -1036,19 +1153,19 @@ export interface AboutPageConfig extends PageConfig {
   pageType: PageType.ABOUT
 }
 
-export interface BlogPageConfig extends PageConfig<BlogPageContent> {
+export interface BlogPageConfig extends PageConfig {
   pageType: PageType.BLOG
 }
 
-export interface GalleryPageConfig extends PageConfig<GalleryImage> {
+export interface GalleryPageConfig extends PageConfig {
   pageType: PageType.GALLERY
 }
 
-export interface WorkPageConfig extends PageConfig<WorkExperience> {
+export interface WorkPageConfig extends PageConfig {
   pageType: PageType.WORK
 }
 
-export interface PostPageConfig extends PageConfig<PostType> {
+export interface PostPageConfig extends PageConfig {
   pageType: 'post'
   data: {
     post: PostType
@@ -1081,7 +1198,10 @@ export enum PageType {
   WORK = 'work',
   HOME = 'home',
   CONTACT = 'contact',
-  PORTFOLIO = 'portfolio'
+  PORTFOLIO = 'portfolio',
+  FREELANCER = 'freelancer',
+  DEVELOPER = 'developer',
+  DESIGNER = 'designer'
 }
 
 // Schema type enumeration

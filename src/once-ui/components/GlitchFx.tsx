@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useEffect, useState, forwardRef, useCallback } from 'react'
-import styles from './GlitchFx.module.scss'
-import { Flex } from '.'
 import classNames from 'classnames'
+import React, { useEffect, useState, forwardRef, useCallback } from 'react'
+
+import styles from './GlitchFx.module.scss'
+
+import { Flex } from '.'
 
 interface GlitchFxProps extends React.ComponentProps<typeof Flex> {
   children: React.ReactNode
@@ -79,9 +81,9 @@ const GlitchFx = forwardRef<HTMLDivElement, GlitchFxProps>(
 
         <Flex
           inline
-          position="absolute"
-          top="0"
-          left="0"
+          position='absolute'
+          top='0'
+          left='0'
           fill
           zIndex={0}
           opacity={50}
@@ -92,9 +94,9 @@ const GlitchFx = forwardRef<HTMLDivElement, GlitchFxProps>(
 
         <Flex
           inline
-          position="absolute"
-          top="0"
-          left="0"
+          position='absolute'
+          top='0'
+          left='0'
           fill
           zIndex={0}
           opacity={50}

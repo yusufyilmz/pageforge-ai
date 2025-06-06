@@ -1,5 +1,6 @@
 'use client'
 
+import classNames from 'classnames'
 import React, {
   useState,
   useEffect,
@@ -8,10 +9,12 @@ import React, {
   useCallback,
   ReactNode
 } from 'react'
-import classNames from 'classnames'
-import { Column, Flex, Text } from '.'
-import styles from './Input.module.scss'
+
 import useDebounce from '../hooks/useDebounce'
+
+import styles from './Input.module.scss'
+
+import { Column, Flex, Text } from '.'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string
@@ -72,7 +75,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(true)
-      if (onFocus) onFocus(event)
+      if (onFocus) {
+        onFocus(event)
+      }
     }
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -82,7 +87,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       } else {
         setIsFilled(false)
       }
-      if (onBlur) onBlur(event)
+      if (onBlur) {
+        onBlur(event)
+      }
     }
 
     useEffect(() => {
@@ -132,7 +139,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <Column
-        gap="8"
+        gap='8'
         style={style}
         fillWidth
         fitHeight
@@ -143,11 +150,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         })}
       >
         <Flex
-          transition="micro-medium"
-          border="neutral-medium"
-          background="neutral-alpha-weak"
-          overflow="hidden"
-          vertical="stretch"
+          transition='micro-medium'
+          border='neutral-medium'
+          background='neutral-alpha-weak'
+          overflow='hidden'
+          vertical='stretch'
           className={classNames(
             styles.base,
             {
@@ -164,7 +171,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
         >
           {hasPrefix && (
-            <Flex paddingLeft="12" className={styles.prefix} position="static">
+            <Flex paddingLeft='12' className={styles.prefix} position='static'>
               {hasPrefix}
             </Flex>
           )}
@@ -182,8 +189,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             />
             {label && (
               <Text
-                as="label"
-                variant="label-default-m"
+                as='label'
+                variant='label-default-m'
                 htmlFor={id}
                 className={classNames(styles.label, styles.inputLabel, {
                   [styles.floating]: isFocused || isFilled || placeholder
@@ -195,18 +202,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             {children}
           </Column>
           {hasSuffix && (
-            <Flex paddingRight="12" className={styles.suffix} position="static">
+            <Flex paddingRight='12' className={styles.suffix} position='static'>
               {hasSuffix}
             </Flex>
           )}
         </Flex>
         {displayError && errorMessage !== false && (
-          <Flex paddingX="16">
+          <Flex paddingX='16'>
             <Text
-              as="span"
+              as='span'
               id={`${id}-error`}
-              variant="body-default-s"
-              onBackground="danger-weak"
+              variant='body-default-s'
+              onBackground='danger-weak'
             >
               {validationError || errorMessage}
             </Text>
@@ -214,11 +221,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         {description && (
           <Flex
-            paddingX="16"
+            paddingX='16'
             fillWidth
             id={`${id}-description`}
-            textVariant="body-default-s"
-            onBackground="neutral-weak"
+            textVariant='body-default-s'
+            onBackground='neutral-weak'
           >
             {description}
           </Flex>

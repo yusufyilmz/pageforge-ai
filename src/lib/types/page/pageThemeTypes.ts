@@ -1,4 +1,4 @@
-import { PageThemeOverride } from '../../../contexts/ThemeContext'
+import type { PageThemeOverride } from '../../../contexts/ThemeContext'
 
 export interface PageThemeConfig extends PageThemeOverride {
   enabled?: boolean
@@ -16,9 +16,14 @@ export interface PageConfigWithTheme {
 }
 
 // Helper function to apply page theme
-export function applyPageTheme(themeConfig?: PageThemeConfig): PageThemeOverride | null {
-  if (!themeConfig?.enabled) return null
+export function applyPageTheme(
+  themeConfig?: PageThemeConfig
+): PageThemeOverride | null {
+  if (!themeConfig?.enabled) {
+    return null
+  }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { enabled, priority, responsive, ...themeProps } = themeConfig
   return themeProps
 }
@@ -28,7 +33,9 @@ export function getResponsiveTheme(
   baseTheme: PageThemeConfig,
   breakpoint: 'mobile' | 'tablet' | 'desktop'
 ): PageThemeOverride | null {
-  if (!baseTheme.enabled || !baseTheme.responsive?.[breakpoint]) return null
+  if (!baseTheme.enabled || !baseTheme.responsive?.[breakpoint]) {
+    return null
+  }
 
   return {
     ...baseTheme,

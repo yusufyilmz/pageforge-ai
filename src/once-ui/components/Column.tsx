@@ -1,6 +1,7 @@
 'use client'
 
 import { forwardRef } from 'react'
+
 import { Flex } from '.'
 
 interface ColumnProps extends React.ComponentProps<typeof Flex> {
@@ -10,7 +11,7 @@ interface ColumnProps extends React.ComponentProps<typeof Flex> {
 const Column = forwardRef<HTMLDivElement, ColumnProps>(
   ({ children, ...rest }, ref) => {
     return (
-      <Flex direction="column" ref={ref} {...rest}>
+      <Flex direction='column' ref={ref} {...rest}>
         {children}
       </Flex>
     )

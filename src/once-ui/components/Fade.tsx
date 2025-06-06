@@ -1,10 +1,12 @@
 'use client'
 
 import React, { forwardRef, ReactNode } from 'react'
+
+import { ColorScheme, ColorWeight, SpacingToken } from '../types'
+
 import styles from './Fade.module.scss'
 
 import { Flex } from '.'
-import { ColorScheme, ColorWeight, SpacingToken } from '../types'
 
 export type BaseColor =
   | `${ColorScheme}-${ColorWeight}`
@@ -43,10 +45,18 @@ const Fade = forwardRef<HTMLDivElement, FadeProps>(
     ref
   ) => {
     const getBaseVar = (base: BaseColor) => {
-      if (base === 'page') return 'var(--page-background)'
-      if (base === 'surface') return 'var(--surface-background)'
-      if (base === 'overlay') return 'var(--backdrop)'
-      if (base === 'transparent') return 'var(--static-transparent)'
+      if (base === 'page') {
+        return 'var(--page-background)'
+      }
+      if (base === 'surface') {
+        return 'var(--surface-background)'
+      }
+      if (base === 'overlay') {
+        return 'var(--backdrop)'
+      }
+      if (base === 'transparent') {
+        return 'var(--static-transparent)'
+      }
 
       const [scheme, weight] = base.includes('alpha')
         ? base.split('-alpha-')
@@ -73,7 +83,8 @@ const Fade = forwardRef<HTMLDivElement, FadeProps>(
                     ? '180deg'
                     : '270deg',
             ...(pattern.display && {
-              backgroundImage: `linear-gradient(var(--gradient-direction), var(--base-color), transparent), radial-gradient(transparent 1px, var(--base-color) 1px)`,
+              backgroundImage:
+                'linear-gradient(var(--gradient-direction), var(--base-color), transparent), radial-gradient(transparent 1px, var(--base-color) 1px)',
               backgroundSize: `100% 100%, var(--static-space-${pattern.size}) var(--static-space-${pattern.size})`,
               backdropFilter: `blur(${blur}rem)`
             })

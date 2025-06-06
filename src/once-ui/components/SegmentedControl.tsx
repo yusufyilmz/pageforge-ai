@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+
 import { ToggleButton, Scroller, Flex, ToggleButtonProps } from '.'
 
 interface ButtonOption extends Omit<ToggleButtonProps, 'selected'> {
@@ -29,8 +30,12 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({
   ...scrollerProps
 }) => {
   const [internalSelected, setInternalSelected] = useState<string>(() => {
-    if (selected !== undefined) return selected
-    if (defaultSelected !== undefined) return defaultSelected
+    if (selected !== undefined) {
+      return selected
+    }
+    if (defaultSelected !== undefined) {
+      return defaultSelected
+    }
     return buttons[0]?.value || ''
   })
 
@@ -90,7 +95,6 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({
         }
         break
       default:
-        return
     }
   }
 
@@ -100,22 +104,22 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({
 
   return (
     <Scroller
-      direction="row"
+      direction='row'
       fillWidth={fillWidth}
       minWidth={0}
       {...scrollerProps}
-      role="tablist"
-      aria-orientation="horizontal"
+      role='tablist'
+      aria-orientation='horizontal'
       onKeyDown={handleKeyDown}
     >
-      <Flex fillWidth={fillWidth} gap="-1">
+      <Flex fillWidth={fillWidth} gap='-1'>
         {buttons.map((button, index) => {
           return (
             <ToggleButton
               ref={el => {
                 buttonRefs.current[index] = el as HTMLButtonElement
               }}
-              variant="outline"
+              variant='outline'
               radius={
                 index === 0
                   ? 'left'
@@ -126,7 +130,7 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({
               key={button.value}
               selected={index === selectedIndex}
               onClick={event => handleButtonClick(button, event)}
-              role="tab"
+              role='tab'
               className={className}
               style={style}
               aria-selected={index === selectedIndex}

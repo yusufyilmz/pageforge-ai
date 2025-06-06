@@ -1,6 +1,10 @@
 'use client'
 
-import React from 'react'
+import type {
+  ContentBlock,
+  CustomContentBlock
+} from '@pageforge/types/page/pageTypes'
+
 import {
   HeadingSection,
   TextSection,
@@ -11,7 +15,6 @@ import {
   SocialLinksSection,
   GalleryGridSection,
   NewsletterSection,
-  TableOfContentsSection,
   CalendarLinkSection,
   ProjectsSection,
   HeroSection,
@@ -33,14 +36,12 @@ import {
   MenuSection,
   PropertySection,
   LegalTextSection,
-  CareersSection
-} from '../sections/universal'
+  CareersSection,
+  ShowcaseSection,
+  QuickstartSection
+} from '../sections'
+
 import CustomSection from './CustomSection'
-import {
-  ContentBlock,
-  AnyContentBlock,
-  CustomContentBlock
-} from '@pageforge/types/page/pageTypes'
 
 interface SectionProps {
   block: ContentBlock
@@ -49,17 +50,7 @@ interface SectionProps {
   data?: any
 }
 
-// Type guard to check if a block is a custom section
-const isCustomBlock = (block: AnyContentBlock): block is CustomContentBlock => {
-  return 'isCustom' in block && block.isCustom === true
-}
-
-export const UniversalSections = ({
-  block,
-  index,
-  posts,
-  data
-}: SectionProps) => {
+export const UniversalSections = ({ block, index, data }: SectionProps) => {
   // // Check if this is a custom section type first
   // if (block.type === 'custom') {
   //   return <CustomSection block={block} index={index} data={data} />
@@ -101,7 +92,9 @@ export const UniversalSections = ({
     'menu',
     'property',
     'legal-text',
-    'careers'
+    'careers',
+    'showcase',
+    'quickstart'
   ]
 
   // Check if this is a known section type
@@ -248,6 +241,14 @@ export const UniversalSections = ({
 
   if (contentBlock.type === 'careers') {
     return <CareersSection block={contentBlock} index={index} />
+  }
+
+  if (contentBlock.type === 'showcase') {
+    return <ShowcaseSection block={contentBlock} index={index} />
+  }
+
+  if (contentBlock.type === 'quickstart') {
+    return <QuickstartSection block={contentBlock} index={index} />
   }
 
   // This shouldn't happen due to the check above, but fallback to custom section

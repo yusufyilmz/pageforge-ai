@@ -65,7 +65,7 @@ async function extractMetadata(html: string) {
   return {
     title: decodeHTMLEntities(title),
     description: decodeHTMLEntities(description),
-    image: image
+    image
   }
 }
 

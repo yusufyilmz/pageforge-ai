@@ -1,5 +1,6 @@
-import { Metadata as NextMetadata } from 'next'
-import { PageConfig, PageMetadataConfig } from '../../lib/types/page/pageTypes'
+import type { Metadata as NextMetadata } from 'next'
+
+import type { PageConfig } from '../../lib/types/page/pageTypes'
 
 export interface PageMetaProps {
   title: string
@@ -28,7 +29,9 @@ export function generatePageMetadata({
   modifiedAt,
   canonical
 }: PageMetaProps): NextMetadata {
-  const normalizedSiteURL = siteURL.endsWith('/') ? siteURL.slice(0, -1) : siteURL
+  const normalizedSiteURL = siteURL.endsWith('/')
+    ? siteURL.slice(0, -1)
+    : siteURL
   const normalizedSlug = slug.startsWith('/') ? slug : `/${slug}`
 
   const isAbsoluteUrl = (url: string) => /^https?:\/\//.test(url)
@@ -61,8 +64,12 @@ export function generatePageMetadata({
           alt: title
         }
       ],
-      ...(publishedAt && pageType === 'article' ? { publishedTime: publishedAt } : {}),
-      ...(modifiedAt && pageType === 'article' ? { modifiedTime: modifiedAt } : {})
+      ...(publishedAt && pageType === 'article'
+        ? { publishedTime: publishedAt }
+        : {}),
+      ...(modifiedAt && pageType === 'article'
+        ? { modifiedTime: modifiedAt }
+        : {})
     },
     twitter: {
       card: 'summary_large_image',
@@ -76,8 +83,8 @@ export function generatePageMetadata({
 }
 
 // Helper function to extract metadata from page configuration using new type structure
-export function extractMetadataFromPageConfig<T>(
-  pageConfig: PageConfig<T>,
+export function extractMetadataFromPageConfig(
+  pageConfig: PageConfig,
   siteURL: string
 ): NextMetadata {
   const { metadata } = pageConfig

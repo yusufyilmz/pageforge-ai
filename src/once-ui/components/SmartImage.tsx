@@ -1,7 +1,8 @@
 'use client'
 
-import React, { CSSProperties, useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
+import React, { CSSProperties, useState, useRef, useEffect } from 'react'
+
 import { Flex, Skeleton } from '..'
 
 export interface SmartImageProps extends React.ComponentProps<typeof Flex> {
@@ -63,7 +64,9 @@ const SmartImage: React.FC<SmartImageProps> = ({
   }, [isEnlarged])
 
   const calculateTransform = () => {
-    if (!imageRef.current) return {}
+    if (!imageRef.current) {
+      return {}
+    }
 
     const rect = imageRef.current.getBoundingClientRect()
     const scaleX = window.innerWidth / rect.width
@@ -105,8 +108,8 @@ const SmartImage: React.FC<SmartImageProps> = ({
       <Flex
         ref={imageRef}
         fillWidth
-        overflow="hidden"
-        position="relative"
+        overflow='hidden'
+        position='relative'
         zIndex={0}
         cursor={enlarge ? 'interactive' : ''}
         style={{
@@ -120,7 +123,7 @@ const SmartImage: React.FC<SmartImageProps> = ({
         onClick={handleClick}
         {...rest}
       >
-        {isLoading && <Skeleton shape="block" />}
+        {isLoading && <Skeleton shape='block' />}
         {!isLoading && isVideo && (
           <video
             src={src}
@@ -131,20 +134,20 @@ const SmartImage: React.FC<SmartImageProps> = ({
             style={{
               width: '100%',
               height: '100%',
-              objectFit: objectFit
+              objectFit
             }}
           />
         )}
         {!isLoading && isYouTube && (
           <iframe
-            width="100%"
-            height="100%"
+            width='100%'
+            height='100%'
             src={getYouTubeEmbedUrl(src)}
-            frameBorder="0"
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            frameBorder='0'
+            allow='accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
             allowFullScreen
             style={{
-              objectFit: objectFit
+              objectFit
             }}
           />
         )}
@@ -157,7 +160,7 @@ const SmartImage: React.FC<SmartImageProps> = ({
             unoptimized={unoptimized}
             fill
             style={{
-              objectFit: objectFit
+              objectFit
             }}
           />
         )}
@@ -165,23 +168,23 @@ const SmartImage: React.FC<SmartImageProps> = ({
 
       {isEnlarged && enlarge && (
         <Flex
-          horizontal="center"
-          vertical="center"
-          position="fixed"
-          background="overlay"
+          horizontal='center'
+          vertical='center'
+          position='fixed'
+          background='overlay'
           onClick={handleClick}
-          top="0"
-          left="0"
+          top='0'
+          left='0'
           opacity={isEnlarged ? 100 : 0}
-          cursor="interactive"
-          transition="macro-medium"
+          cursor='interactive'
+          transition='macro-medium'
           style={{
             width: '100vw',
             height: '100vh'
           }}
         >
           <Flex
-            position="relative"
+            position='relative'
             style={{
               height: '100vh',
               transform: 'translate(-50%, -50%)'
@@ -206,7 +209,7 @@ const SmartImage: React.FC<SmartImageProps> = ({
                 src={src}
                 alt={alt}
                 fill
-                sizes="90vw"
+                sizes='90vw'
                 unoptimized={unoptimized}
                 style={{
                   objectFit: 'contain'

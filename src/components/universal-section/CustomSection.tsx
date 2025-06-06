@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useState, useEffect, ComponentType } from 'react'
+import React, { useState, useEffect, type ComponentType } from 'react'
+
 import { Flex, Text, Column, Icon } from '@pageforge/once-ui/components'
+import type { AnyContentBlock } from '@pageforge/types/page/pageTypes'
+
 import { aiSectionFactory } from './AISectionFactory'
-import { AnyContentBlock } from '@pageforge/types/page/pageTypes'
 
 interface CustomSectionProps {
   block: AnyContentBlock
@@ -11,11 +13,7 @@ interface CustomSectionProps {
   data?: any
 }
 
-export default function CustomSection({
-  block,
-  index,
-  data
-}: CustomSectionProps) {
+export default function CustomSection({ block, index }: CustomSectionProps) {
   const [GeneratedComponent, setGeneratedComponent] =
     useState<ComponentType<any> | null>(null)
   const [isGenerating, setIsGenerating] = useState(true)
@@ -124,14 +122,14 @@ export default function CustomSection({
 
   if (isGenerating) {
     return (
-      <Column gap="m" padding="l">
-        <Flex direction="row" align="center">
-          <Icon name="refresh" size="l" />
+      <Column gap='m' padding='l'>
+        <Flex direction='row' align='center'>
+          <Icon name='refresh' size='l' />
         </Flex>
         <Text
-          variant="body-default-m"
-          onBackground="neutral-weak"
-          align="center"
+          variant='body-default-m'
+          onBackground='neutral-weak'
+          align='center'
         >
           Generating custom section for &quot;{block.type}&quot;...
         </Text>
@@ -141,14 +139,14 @@ export default function CustomSection({
 
   if (error) {
     return (
-      <Column gap="m" padding="l">
-        <Flex direction="row" align="center">
-          <Icon name="warning" size="l" />
+      <Column gap='m' padding='l'>
+        <Flex direction='row' align='center'>
+          <Icon name='warning' size='l' />
         </Flex>
         <Text
-          variant="body-default-m"
-          onBackground="neutral-weak"
-          align="center"
+          variant='body-default-m'
+          onBackground='neutral-weak'
+          align='center'
         >
           {error}
         </Text>
@@ -198,11 +196,11 @@ export default function CustomSection({
 
   // Fallback if no component was generated
   return (
-    <Column gap="l" id={`section-${index}`}>
-      <Text variant="heading-strong-l" align="center">
+    <Column gap='l' id={`section-${index}`}>
+      <Text variant='heading-strong-l' align='center'>
         Custom Section ({block.type})
       </Text>
-      <Text variant="body-default-m" align="center" onBackground="neutral-weak">
+      <Text variant='body-default-m' align='center' onBackground='neutral-weak'>
         Failed to generate component for this section type.
       </Text>
     </Column>

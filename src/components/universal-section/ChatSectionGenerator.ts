@@ -311,9 +311,11 @@ class ChatSectionGenerator {
 
   // Chat response for successful section creation
   generateSuccessResponse(result: SectionGenerationResult): string {
-    if (!result.success) return result.message
+    if (!result.success) {
+      return result.message
+    }
 
-    let response = result.message + '\n\n'
+    let response = `${result.message}\n\n`
 
     response += '📝 **What you can do next:**\n'
     response += `• Add content to your ${result.sectionName} section\n`
@@ -347,7 +349,9 @@ export const handleChatMessage = async (message: string): Promise<string> => {
 export const integrateSectionGeneration = (chatMessages: ChatMessage[]) => {
   const lastUserMessage = chatMessages.filter(msg => msg.role === 'user').pop()
 
-  if (!lastUserMessage) return null
+  if (!lastUserMessage) {
+    return null
+  }
 
   return chatSectionGenerator.detectSectionRequest(lastUserMessage.content)
 }

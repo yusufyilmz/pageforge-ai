@@ -27,9 +27,9 @@ const AccordionGroup: React.FC<AccordionGroupProps> = ({
   return (
     <Column
       fillWidth
-      radius="m"
-      border="neutral-alpha-medium"
-      overflow="hidden"
+      radius='m'
+      border='neutral-alpha-medium'
+      overflow='hidden'
       style={style}
       className={className || ''}
       {...rest}
@@ -40,7 +40,7 @@ const AccordionGroup: React.FC<AccordionGroupProps> = ({
             {item.content}
           </Accordion>
           {index < items.length - 1 && (
-            <Line background="neutral-alpha-medium" />
+            <Line background='neutral-alpha-medium' />
           )}
         </React.Fragment>
       ))}

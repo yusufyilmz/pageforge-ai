@@ -66,30 +66,20 @@
 //   );
 // }
 
-import {
-  Heading,
-  Text,
-  Button,
-  Column,
-  Badge,
-  Logo,
-  Line,
-  LetterFx,
-  Flex
-} from '@pageforge/once-ui/components'
+import { Heading, Column, Flex } from '@pageforge/once-ui/components'
 
 export default function Home() {
   return (
-    <Column fill center padding="l">
-      <Column maxWidth="s" horizontal="center" gap="l" align="center">
-        <Column maxWidth="m" gap="xl" horizontal="center">
-          <Flex fillWidth gap="24" mobileDirection="column">
-            <Flex flex={1} paddingLeft="l">
-              <Heading as="h2" variant="display-strong-xs" wrap="balance">
+    <Column fill center padding='l'>
+      <Column maxWidth='s' horizontal='center' gap='l' align='center'>
+        <Column maxWidth='m' gap='xl' horizontal='center'>
+          <Flex fillWidth gap='24' mobileDirection='column'>
+            <Flex flex={1} paddingLeft='l'>
+              <Heading as='h2' variant='display-strong-xs' wrap='balance'>
                 Latest from the blog
               </Heading>
             </Flex>
-            <Flex flex={3} paddingX="20"></Flex>
+            <Flex flex={3} paddingX='20'></Flex>
           </Flex>
         </Column>
       </Column>

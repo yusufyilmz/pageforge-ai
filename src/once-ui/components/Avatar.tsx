@@ -2,8 +2,9 @@
 
 import React, { forwardRef } from 'react'
 
-import { Skeleton, Icon, Text, StatusIndicator, Flex, Media } from '.'
 import styles from './Avatar.module.scss'
+
+import { Skeleton, Icon, Text, StatusIndicator, Flex, Media } from '.'
 
 interface AvatarProps extends React.ComponentProps<typeof Flex> {
   size?: 'xs' | 's' | 'm' | 'l' | 'xl' | number
@@ -74,13 +75,13 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
       return (
         <Skeleton
           {...rest}
-          border="neutral-medium"
-          shape="circle"
+          border='neutral-medium'
+          shape='circle'
           width={typeof size === 'number' ? 'm' : size}
           height={typeof size === 'number' ? 'm' : size}
           className={`${styles.avatar} ${className}`}
-          aria-busy="true"
-          aria-label="Loading avatar"
+          aria-busy='true'
+          aria-label='Loading avatar'
         />
       )
     }
@@ -89,16 +90,16 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
       if (isEmpty) {
         return (
           <Icon
-            onBackground="neutral-medium"
-            name="person"
-            size="m"
+            onBackground='neutral-medium'
+            name='person'
+            size='m'
             style={
               typeof size === 'number'
                 ? { fontSize: `${size / 3}rem` }
                 : undefined
             }
             className={styles.icon}
-            aria-label="Empty avatar"
+            aria-label='Empty avatar'
           />
         )
       }
@@ -106,7 +107,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
       if (src) {
         return (
           <Media
-            radius="full"
+            radius='full'
             src={src}
             fill
             alt={alt ?? 'Avatar'}
@@ -123,8 +124,8 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
       if (value) {
         return (
           <Text
-            as="span"
-            onBackground="neutral-weak"
+            as='span'
+            onBackground='neutral-weak'
             variant={`body-default-${typeof size === 'string' ? size : 'm'}`}
             className={styles.value}
             aria-label={`Avatar with initials ${value}`}
@@ -140,12 +141,12 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     return (
       <Flex
         ref={ref}
-        role="img"
-        horizontal="center"
-        vertical="center"
-        radius="full"
-        border="neutral-strong"
-        background="surface"
+        role='img'
+        horizontal='center'
+        vertical='center'
+        radius='full'
+        border='neutral-strong'
+        background='surface'
         style={sizeStyle}
         className={`${styles.avatar} ${typeof size === 'string' ? styles[size] : ''} ${className || ''}`}
         {...rest}
@@ -153,7 +154,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
         {renderContent()}
         {statusIndicator && (
           <StatusIndicator
-            position="absolute"
+            position='absolute'
             size={
               typeof size === 'string' ? statusIndicatorSizeMapping[size] : 'l'
             }

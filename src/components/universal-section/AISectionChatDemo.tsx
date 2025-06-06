@@ -1,10 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import {
-  useSectionGenerator,
-  useSectionDetection
-} from './hooks/useSectionGenerator'
+
 import {
   Flex,
   Button,
@@ -12,6 +9,11 @@ import {
   Heading,
   Card
 } from '@pageforge/once-ui/components'
+
+import {
+  useSectionGenerator,
+  useSectionDetection
+} from './hooks/useSectionGenerator'
 
 interface ChatMessage {
   id: string
@@ -43,7 +45,9 @@ export const AISectionChatDemo = ({
   const { detectSectionRequest } = useSectionDetection()
 
   const handleSendMessage = async () => {
-    if (!currentMessage.trim()) return
+    if (!currentMessage.trim()) {
+      return
+    }
 
     // Add user message
     const userMessage: ChatMessage = {
@@ -105,9 +109,9 @@ export const AISectionChatDemo = ({
   ]
 
   return (
-    <Card padding="l" fillWidth>
-      <Flex direction="column" gap="m" fillWidth>
-        <Heading variant="heading-strong-m">AI Section Generator Chat</Heading>
+    <Card padding='l' fillWidth>
+      <Flex direction='column' gap='m' fillWidth>
+        <Heading variant='heading-strong-m'>AI Section Generator Chat</Heading>
 
         {/* Chat Messages */}
         <div
@@ -119,7 +123,7 @@ export const AISectionChatDemo = ({
             padding: '1rem'
           }}
         >
-          <Flex direction="column" gap="m">
+          <Flex direction='column' gap='m'>
             {messages.map(message => (
               <div
                 key={message.id}
@@ -133,11 +137,11 @@ export const AISectionChatDemo = ({
                   maxWidth: '80%'
                 }}
               >
-                <Text variant="body-default-s" style={{ fontWeight: 'bold' }}>
+                <Text variant='body-default-s' style={{ fontWeight: 'bold' }}>
                   {message.role === 'user' ? 'You' : 'AI Assistant'}
                 </Text>
                 <Text
-                  variant="body-default-m"
+                  variant='body-default-m'
                   style={{ whiteSpace: 'pre-line' }}
                 >
                   {message.content}
@@ -148,11 +152,11 @@ export const AISectionChatDemo = ({
         </div>
 
         {/* Input Area */}
-        <Flex gap="s" align="end">
+        <Flex gap='s' align='end'>
           <textarea
             value={currentMessage}
             onChange={e => setCurrentMessage(e.target.value)}
-            placeholder="Ask me to create a section for your webpage..."
+            placeholder='Ask me to create a section for your webpage...'
             style={{
               flex: 1,
               padding: '0.75rem',
@@ -171,7 +175,7 @@ export const AISectionChatDemo = ({
           <Button
             onClick={handleSendMessage}
             disabled={!currentMessage.trim() || isGenerating}
-            variant="primary"
+            variant='primary'
           >
             {isGenerating ? '⏳' : 'Send'}
           </Button>
@@ -180,17 +184,17 @@ export const AISectionChatDemo = ({
         {/* Quick Examples */}
         <div>
           <Text
-            variant="body-default-s"
+            variant='body-default-s'
             style={{ marginBottom: '0.5rem', fontWeight: 'bold' }}
           >
             💡 Try these examples:
           </Text>
-          <Flex direction="column" gap="xs">
+          <Flex direction='column' gap='xs'>
             {exampleRequests.map((example, index) => (
               <Button
                 key={index}
-                variant="tertiary"
-                size="s"
+                variant='tertiary'
+                size='s'
                 onClick={() => setCurrentMessage(example)}
                 style={{ justifyContent: 'flex-start', textAlign: 'left' }}
               >
@@ -211,12 +215,12 @@ export const AISectionChatDemo = ({
             }}
           >
             <Text
-              variant="body-default-s"
+              variant='body-default-s'
               style={{ fontWeight: 'bold', color: '#2e7d32' }}
             >
               ✅ Section Generated Successfully!
             </Text>
-            <Text variant="body-default-xs">
+            <Text variant='body-default-xs'>
               Type: {lastGenerated.sectionType} | Name:{' '}
               {lastGenerated.sectionName}
             </Text>
@@ -233,7 +237,7 @@ export const AISectionChatDemo = ({
             }}
           >
             <Text
-              variant="body-default-s"
+              variant='body-default-s'
               style={{ fontWeight: 'bold', color: '#c62828' }}
             >
               ❌ Error: {error}

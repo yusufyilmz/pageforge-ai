@@ -1,5 +1,7 @@
 import OpenAI from 'openai'
-import { ChatMessage, ChatRole } from '@pageforge/types/chat'
+
+import { ChatRole, type ChatMessage } from '@pageforge/types/chat'
+
 import { GPT_PROMPT_CHAT } from './constants'
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? ''

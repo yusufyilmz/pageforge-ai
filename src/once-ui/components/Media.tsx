@@ -1,7 +1,7 @@
 'use client'
 
-import React, { CSSProperties, useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
+import React, { CSSProperties, useState, useRef, useEffect } from 'react'
 
 import { Flex, Skeleton } from '.'
 
@@ -75,7 +75,9 @@ const Media: React.FC<MediaProps> = ({
   }, [isEnlarged])
 
   const calculateTransform = () => {
-    if (!imageRef.current) return {}
+    if (!imageRef.current) {
+      return {}
+    }
 
     const rect = imageRef.current.getBoundingClientRect()
     const scaleX = window.innerWidth / rect.width
@@ -117,7 +119,7 @@ const Media: React.FC<MediaProps> = ({
       <Flex
         ref={imageRef}
         fillWidth
-        overflow="hidden"
+        overflow='hidden'
         zIndex={0}
         cursor={enlarge ? 'interactive' : ''}
         style={{
@@ -131,7 +133,7 @@ const Media: React.FC<MediaProps> = ({
         onClick={handleClick}
         {...rest}
       >
-        {loading && <Skeleton shape="block" />}
+        {loading && <Skeleton shape='block' />}
         {!loading && isVideo && (
           <video
             src={src}
@@ -142,20 +144,20 @@ const Media: React.FC<MediaProps> = ({
             style={{
               width: '100%',
               height: '100%',
-              objectFit: objectFit
+              objectFit
             }}
           />
         )}
         {!loading && isYouTube && (
           <iframe
-            width="100%"
-            height="100%"
+            width='100%'
+            height='100%'
             src={getYouTubeEmbedUrl(src)}
-            frameBorder="0"
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            frameBorder='0'
+            allow='accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
             allowFullScreen
             style={{
-              objectFit: objectFit
+              objectFit
             }}
           />
         )}
@@ -168,7 +170,7 @@ const Media: React.FC<MediaProps> = ({
             unoptimized={unoptimized}
             fill
             style={{
-              objectFit: objectFit
+              objectFit
             }}
           />
         )}
@@ -176,18 +178,18 @@ const Media: React.FC<MediaProps> = ({
 
       {isEnlarged && enlarge && (
         <Flex
-          horizontal="center"
-          vertical="center"
-          position="fixed"
-          background="overlay"
-          pointerEvents="none"
+          horizontal='center'
+          vertical='center'
+          position='fixed'
+          background='overlay'
+          pointerEvents='none'
           onClick={handleClick}
-          top="0"
-          left="0"
+          top='0'
+          left='0'
           zIndex={isEnlarged ? 9 : undefined}
           opacity={isEnlarged ? 100 : 0}
-          cursor="interactive"
-          transition="macro-medium"
+          cursor='interactive'
+          transition='macro-medium'
           style={{
             backdropFilter: isEnlarged ? 'var(--backdrop-filter)' : '0px',
             width: '100vw',
@@ -219,7 +221,7 @@ const Media: React.FC<MediaProps> = ({
                 src={src}
                 alt={alt}
                 fill
-                sizes="90vw"
+                sizes='90vw'
                 unoptimized={unoptimized}
                 style={{
                   objectFit: 'contain'

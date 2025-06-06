@@ -1,8 +1,9 @@
+import classNames from 'classnames'
 import React, { forwardRef } from 'react'
 
 import styles from './Spinner.module.scss'
+
 import { Flex } from '.'
-import classNames from 'classnames'
 
 interface SpinnerProps extends React.ComponentProps<typeof Flex> {
   size?: 'xs' | 's' | 'm' | 'l' | 'xl'
@@ -19,23 +20,23 @@ const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
           ref={ref}
           center
           className={styles[size]}
-          role="status"
+          role='status'
           aria-label={ariaLabel}
         >
           <Flex fill>
             <Flex
               className={classNames(styles.size)}
-              borderStyle="solid"
+              borderStyle='solid'
               fill
-              radius="full"
-              border="neutral-alpha-medium"
-              position="absolute"
+              radius='full'
+              border='neutral-alpha-medium'
+              position='absolute'
             />
             <Flex
               className={classNames(styles.spinner, styles.size)}
-              borderStyle="solid"
+              borderStyle='solid'
               fill
-              radius="full"
+              radius='full'
             />
           </Flex>
         </Flex>

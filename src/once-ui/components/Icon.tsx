@@ -1,13 +1,16 @@
 'use client'
 
-import React, { forwardRef, useState, useEffect, ReactNode } from 'react'
 import classNames from 'classnames'
+import React, { forwardRef, useState, useEffect, ReactNode } from 'react'
 import { IconType } from 'react-icons'
+
 import { iconLibrary, IconName } from '../icons'
 import { ColorScheme, ColorWeight } from '../types'
-import { Flex, Tooltip } from '.'
+
 import styles from './Icon.module.scss'
 import iconStyles from './IconButton.module.scss'
+
+import { Flex, Tooltip } from '.'
 
 interface IconProps extends React.ComponentProps<typeof Flex> {
   name: IconName
@@ -82,7 +85,7 @@ const Icon = forwardRef<HTMLDivElement, IconProps>(
       <Flex
         inline
         fit
-        as="span"
+        as='span'
         ref={ref}
         className={classNames(colorClass, styles.icon, styles[size], className)}
         aria-hidden={decorative ? 'true' : undefined}
@@ -95,7 +98,7 @@ const Icon = forwardRef<HTMLDivElement, IconProps>(
         <IconComponent />
         {tooltip && isTooltipVisible && (
           <Flex
-            position="absolute"
+            position='absolute'
             zIndex={1}
             className={iconStyles[tooltipPosition]}
           >

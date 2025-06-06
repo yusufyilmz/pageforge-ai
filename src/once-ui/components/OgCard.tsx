@@ -1,8 +1,10 @@
 'use client'
 
-import { Column, Media, Text, Row, Card } from '.'
-import { useOgData } from '../hooks/useFetchOg'
 import { useMemo } from 'react'
+
+import { useOgData } from '../hooks/useFetchOg'
+
+import { Column, Media, Text, Row, Card } from '.'
 
 export interface OgData {
   title: string
@@ -19,7 +21,9 @@ interface OgCardProps extends React.ComponentProps<typeof Card> {
 }
 
 const getProxiedImageUrl = (imageUrl: string | undefined): string => {
-  if (!imageUrl) return ''
+  if (!imageUrl) {
+    return ''
+  }
 
   if (imageUrl.startsWith('/')) {
     return imageUrl
@@ -29,7 +33,9 @@ const getProxiedImageUrl = (imageUrl: string | undefined): string => {
 }
 
 const formatDisplayUrl = (url: string | undefined): string => {
-  if (!url) return ''
+  if (!url) {
+    return ''
+  }
 
   try {
     const urlObj = new URL(url)
@@ -50,7 +56,9 @@ const formatDisplayUrl = (url: string | undefined): string => {
 }
 
 const getFaviconUrl = (url: string | undefined): string => {
-  if (!url) return ''
+  if (!url) {
+    return ''
+  }
 
   try {
     const urlObj = new URL(url)
@@ -95,10 +103,10 @@ const OgCard = ({
           ? 'center'
           : undefined
       }
-      gap="4"
-      radius="l"
-      background="surface"
-      border="neutral-alpha-medium"
+      gap='4'
+      radius='l'
+      background='surface'
+      border='neutral-alpha-medium'
       {...card}
     >
       {(proxiedImageUrl || loading) && (
@@ -110,37 +118,37 @@ const OgCard = ({
             direction === 'row' || direction === 'row-reverse' ? 24 : undefined
           }
           loading={loading}
-          radius="l"
-          sizes="320px"
-          aspectRatio="16/9"
-          border="neutral-alpha-weak"
+          radius='l'
+          sizes='320px'
+          aspectRatio='16/9'
+          border='neutral-alpha-weak'
           src={proxiedImageUrl}
         />
       )}
-      <Column fillWidth paddingX="12" paddingY="12" gap="12">
-        <Row fillWidth gap="8" vertical="center">
+      <Column fillWidth paddingX='12' paddingY='12' gap='12'>
+        <Row fillWidth gap='8' vertical='center'>
           {(faviconUrl || loading) && (
             <Media
-              aspectRatio="1/1"
+              aspectRatio='1/1'
               src={faviconUrl}
               loading={loading}
-              minWidth="16"
-              maxWidth="16"
-              radius="xs"
-              border="neutral-alpha-weak"
+              minWidth='16'
+              maxWidth='16'
+              radius='xs'
+              border='neutral-alpha-weak'
               unoptimized={true}
             />
           )}
           {data.url && (
-            <Text variant="label-default-s" onBackground="neutral-weak">
+            <Text variant='label-default-s' onBackground='neutral-weak'>
               {formatDisplayUrl(data.url)}
             </Text>
           )}
         </Row>
-        <Column fillWidth gap="2" paddingX="4">
-          {data.title && <Text variant="label-strong-m">{data.title}</Text>}
+        <Column fillWidth gap='2' paddingX='4'>
+          {data.title && <Text variant='label-strong-m'>{data.title}</Text>}
           {data.description && (
-            <Text variant="label-default-s" onBackground="neutral-weak">
+            <Text variant='label-default-s' onBackground='neutral-weak'>
               {data.description}
             </Text>
           )}

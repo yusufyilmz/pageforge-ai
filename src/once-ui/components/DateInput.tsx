@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useCallback, useEffect } from 'react'
+
 import { Input, DropdownWrapper, Flex, DatePicker } from '.'
 
 interface DateInputProps
@@ -87,7 +88,7 @@ export const DateInput: React.FC<DateInputProps> = ({
   )
 
   const dropdown = (
-    <Flex padding="20">
+    <Flex padding='20'>
       <DatePicker
         value={value}
         onChange={handleDateChange}

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, forwardRef } from 'react'
+
 import { Input, InputProps, IconButton } from '.'
 
 export const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
@@ -17,10 +18,10 @@ export const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
             onClick={() => {
               setShowPassword(!showPassword)
             }}
-            variant="ghost"
+            variant='ghost'
             icon={showPassword ? 'eyeOff' : 'eye'}
-            size="s"
-            type="button"
+            size='s'
+            type='button'
           />
         }
       />

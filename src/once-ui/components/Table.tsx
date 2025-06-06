@@ -1,8 +1,10 @@
 'use client'
 
-import { Flex, Row, IconButton } from '.'
 import { useState, ReactNode } from 'react'
+
 import styles from './Table.module.scss'
+
+import { Flex, Row, IconButton } from '.'
 
 type TableProps = React.ComponentProps<typeof Flex> & {
   data: {
@@ -34,12 +36,16 @@ function Table({ data, onRowClick, ...flex }: TableProps) {
   }
 
   const sortedRows = [...data.rows].sort((a, b) => {
-    if (!sortConfig) return 0
+    if (!sortConfig) {
+      return 0
+    }
 
     const headerIndex = data.headers.findIndex(
       header => header.key === sortConfig.key
     )
-    if (headerIndex === -1) return 0
+    if (headerIndex === -1) {
+      return 0
+    }
 
     const aValue = String(a[headerIndex])
     const bValue = String(b[headerIndex])
@@ -57,10 +63,10 @@ function Table({ data, onRowClick, ...flex }: TableProps) {
         textAlign: 'left',
         borderBottom: '1px solid var(--neutral-alpha-medium)'
       }}
-      className="px-16 py-12 font-label font-default font-s"
+      className='px-16 py-12 font-label font-default font-s'
       key={index}
     >
-      <Row gap="8" vertical="center">
+      <Row gap='8' vertical='center'>
         {header.content}
         {header.sortable && (
           <IconButton
@@ -71,8 +77,8 @@ function Table({ data, onRowClick, ...flex }: TableProps) {
                   : 'chevronDown'
                 : 'chevronDown'
             }
-            size="s"
-            variant="ghost"
+            size='s'
+            variant='ghost'
             onClick={(e: React.MouseEvent) => {
               e.stopPropagation()
               handleSort(header.key)
@@ -90,14 +96,14 @@ function Table({ data, onRowClick, ...flex }: TableProps) {
     <tr
       key={index}
       onClick={onRowClick ? () => onRowClick(index) : undefined}
-      className={onRowClick ? 'cursor-interactive ' + styles.hover : ''}
+      className={onRowClick ? `cursor-interactive ${styles.hover}` : ''}
       style={
         onRowClick ? { transition: 'background-color 0.2s ease' } : undefined
       }
     >
       {row.map((cell, cellIndex) => (
         <td
-          className="px-16 py-12 font-body font-default font-s"
+          className='px-16 py-12 font-body font-default font-s'
           key={cellIndex}
         >
           {cell}
@@ -109,12 +115,12 @@ function Table({ data, onRowClick, ...flex }: TableProps) {
   return (
     <Row
       fillWidth
-      radius="m"
-      overflowY="hidden"
-      border="neutral-alpha-medium"
-      overflowX="auto"
-      marginTop="8"
-      marginBottom="16"
+      radius='m'
+      overflowY='hidden'
+      border='neutral-alpha-medium'
+      overflowX='auto'
+      marginTop='8'
+      marginBottom='16'
       {...flex}
     >
       <style jsx>{`
@@ -123,24 +129,24 @@ function Table({ data, onRowClick, ...flex }: TableProps) {
         }
       `}</style>
       <table
-        className="fill-width surface-background"
+        className='fill-width surface-background'
         style={{
           borderSpacing: 0,
           borderCollapse: 'collapse',
           minWidth: '32rem'
         }}
       >
-        <thead className="neutral-on-background-strong">
+        <thead className='neutral-on-background-strong'>
           <tr>{headers}</tr>
         </thead>
-        <tbody className="neutral-on-background-medium">
+        <tbody className='neutral-on-background-medium'>
           {rows.length > 0 ? (
             rows
           ) : (
             <tr>
               <td
                 colSpan={headers.length}
-                className="px-24 py-12 font-body font-default font-s"
+                className='px-24 py-12 font-body font-default font-s'
               >
                 No data available
               </td>

@@ -151,10 +151,12 @@ const Flex = forwardRef<HTMLDivElement, ComponentProps>(
     }
 
     const generateDynamicClass = (type: string, value: string | undefined) => {
-      if (!value) return undefined
+      if (!value) {
+        return undefined
+      }
 
       if (value === 'transparent') {
-        return `transparent-border`
+        return 'transparent-border'
       }
 
       if (['surface', 'page', 'overlay'].includes(value)) {
@@ -275,8 +277,12 @@ const Flex = forwardRef<HTMLDivElement, ComponentProps>(
       value: number | SpacingToken | undefined,
       type: 'width' | 'height'
     ): string | undefined => {
-      if (value === undefined) return undefined
-      if (typeof value === 'number') return `${value}rem`
+      if (value === undefined) {
+        return undefined
+      }
+      if (typeof value === 'number') {
+        return `${value}rem`
+      }
       if (
         [
           '0',
@@ -314,7 +320,7 @@ const Flex = forwardRef<HTMLDivElement, ComponentProps>(
       maxHeight: parseDimension(maxHeight, 'height'),
       width: parseDimension(width, 'width'),
       height: parseDimension(height, 'height'),
-      aspectRatio: aspectRatio,
+      aspectRatio,
       textAlign: align,
       ...style
     }

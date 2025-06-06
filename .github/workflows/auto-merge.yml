@@ -1,0 +1,128 @@
+name: Auto Merge Develop to Main
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      merge_type:
+        description: 'Type of merge to perform'
+        required: true
+        default: 'safe'
+        type: choice
+        options:
+          - safe
+          - quick
+      skip_checks:
+        description: 'Skip CI checks before merge'
+        required: false
+        default: false
+        type: boolean
+
+  # Trigger on develop push (optional - enable if you want auto-merge)
+  # push:
+  #   branches: [ develop ]
+
+  # Trigger on schedule (optional - weekly auto-merge)
+  # schedule:
+  #   - cron: '0 10 * * 1' # Every Monday at 10 AM UTC
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: 🛒 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔧 Setup Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📥 Install dependencies
+        run: npm ci
+
+      - name: 🧪 Run tests and checks (unless skipped)
+        if: ${{ !inputs.skip_checks }}
+        run: |
+          npm run code-quality
+          npm run build
+
+      - name: 🔄 Safe merge to main
+        if: ${{ inputs.merge_type == 'safe' || inputs.merge_type == '' }}
+        run: |
+          echo "🔄 Performing safe merge..."
+          git checkout main
+          git pull origin main
+          git checkout develop
+          git pull origin develop
+
+          # Check if there are changes to merge
+          if git diff --quiet main..develop; then
+            echo "⚠️ No changes to merge from develop to main"
+            exit 0
+          fi
+
+          # Create merge commit
+          git checkout main
+          git merge develop --no-ff -m "🔄 Auto-merge develop to main via GitHub Actions"
+
+          # Push changes
+          git push origin main
+
+          echo "✅ Successfully merged develop to main"
+
+      - name: ⚡ Quick merge to main
+        if: ${{ inputs.merge_type == 'quick' }}
+        run: |
+          echo "⚡ Performing quick merge..."
+          git checkout main
+          git pull origin main
+          git merge origin/develop --no-ff -m "⚡ Quick auto-merge develop to main"
+          git push origin main
+          echo "✅ Quick merge completed"
+
+      - name: 🏷️ Create release tag (optional)
+        if: success()
+        run: |
+          # Uncomment to auto-create tags
+          # VERSION=$(date +"%Y.%m.%d-%H%M")
+          # git tag -a "v$VERSION" -m "Auto-release v$VERSION"
+          # git push origin "v$VERSION"
+          echo "🏷️ Release tagging skipped (enable in workflow if needed)"
+
+      - name: 📝 Create summary
+        if: always()
+        run: |
+          echo "## 🔄 Merge Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: develop → main" >> $GITHUB_STEP_SUMMARY
+          echo "- **Type**: ${{ inputs.merge_type || 'safe' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Time**: $(date)" >> $GITHUB_STEP_SUMMARY
+
+  notify-slack:
+    needs: auto-merge
+    runs-on: ubuntu-latest
+    if: always() && false # Set to true to enable Slack notifications
+    steps:
+      - name: 📢 Notify Slack
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ needs.auto-merge.result }}
+          text: |
+            🔄 Auto-merge completed
+            Status: ${{ needs.auto-merge.result }}
+            Branch: develop → main
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

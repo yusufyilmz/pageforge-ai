@@ -1,5 +1,6 @@
-import { PageBuilder, createAboutPage } from './PageBuilder'
 import { PageType } from '../../types/page/pageTypes'
+
+import { PageBuilder, createAboutPage } from './PageBuilder'
 
 // ============================================================================
 // BEFORE: Verbose PageConfig (200+ lines of boilerplate)
@@ -112,8 +113,7 @@ export const aboutPageSimple = createAboutPage()
 // Advanced Example: Custom Blog Page
 // ============================================================================
 
-export const customBlogPage = PageBuilder
-  .create(PageType.BLOG, '/blog')
+export const customBlogPage = PageBuilder.create(PageType.BLOG, '/blog')
   .withTitle('My Tech Blog')
   .withDescription('Thoughts on web development and technology')
   .withAuthor('John Doe')
@@ -146,13 +146,12 @@ export const customBlogPage = PageBuilder
 // Quick Portfolio Page
 // ============================================================================
 
-export const portfolioPage = PageBuilder
-  .create(PageType.WORK, '/portfolio')
+export const portfolioPage = PageBuilder.create(PageType.WORK, '/portfolio')
   .withTitle('My Portfolio')
   .withDescription('Check out my latest projects and work')
   .addHero({
     title: 'My Work',
-    description: 'A collection of projects I\'ve worked on'
+    description: "A collection of projects I've worked on"
   })
   .addSection('projects', {
     layout: 'grid',
@@ -182,8 +181,13 @@ export const advancedPage = createAboutPage('/custom-about')
       mask: { cursor: true, x: 25, y: 75, radius: 150 },
       gradient: {
         display: true,
-        x: 0, y: 0, width: 100, height: 100,
-        tilt: 45, colorStart: 'blue', colorEnd: 'purple',
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 100,
+        tilt: 45,
+        colorStart: 'blue',
+        colorEnd: 'purple',
         opacity: 0.3
       },
       dots: { display: true, size: 3, color: 'brand', opacity: 0.4 }

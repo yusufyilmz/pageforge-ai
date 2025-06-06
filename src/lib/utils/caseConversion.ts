@@ -1,7 +1,6 @@
 import camelcaseKeys from 'camelcase-keys'
 import snakecaseKeys from 'snakecase-keys'
 
-
 // Convert object keys to snake_case for database operations
 export const toSnakeCase = <T>(data: T): Record<string, unknown> => {
   return snakecaseKeys(data as Record<string, unknown>, { deep: true })

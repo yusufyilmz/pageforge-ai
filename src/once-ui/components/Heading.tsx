@@ -1,7 +1,7 @@
 'use client'
 
-import React, { ElementType, ComponentPropsWithoutRef } from 'react'
 import classNames from 'classnames'
+import React, { ElementType, ComponentPropsWithoutRef } from 'react'
 
 import { TextProps, CommonProps, SpacingProps } from '../interfaces'
 import { ColorScheme, ColorWeight, TextVariant, SpacingToken } from '../types'

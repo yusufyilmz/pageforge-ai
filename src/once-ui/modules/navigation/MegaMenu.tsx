@@ -1,7 +1,5 @@
 'use client'
 
-import React, { useState, useRef, useEffect, ReactNode } from 'react'
-import { usePathname } from 'next/navigation'
 import {
   Flex,
   Row,
@@ -10,6 +8,9 @@ import {
   Icon,
   ToggleButton
 } from '@pageforge/once-ui/components'
+import { usePathname } from 'next/navigation'
+import React, { useState, useRef, useEffect, ReactNode } from 'react'
+
 import styles from './MegaMenu.module.scss'
 
 export interface MenuLink {
@@ -106,7 +107,9 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({
 
   // Check if a menu item should be selected based on the current path
   const isSelected = (href?: string) => {
-    if (!href || !pathname) return false
+    if (!href || !pathname) {
+      return false
+    }
     return pathname.startsWith(href)
   }
 
@@ -120,7 +123,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({
   }
 
   return (
-    <Flex gap="4" flex={1} className={className} {...rest}>
+    <Flex gap='4' flex={1} className={className} {...rest}>
       {menuGroups.map((group, index) => (
         <Row
           key={`menu-group-${index}`}
@@ -159,7 +162,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({
           >
             {group.label}
             {group.sections && group.suffixIcon && (
-              <Icon marginLeft="8" name={group.suffixIcon} size="xs" />
+              <Icon marginLeft='8' name={group.suffixIcon} size='xs' />
             )}
           </ToggleButton>
         </Row>
@@ -167,12 +170,12 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({
 
       {activeDropdown && (
         <Row
-          paddingTop="8"
+          paddingTop='8'
           ref={dropdownRef}
-          position="absolute"
-          pointerEvents="auto"
+          position='absolute'
+          pointerEvents='auto'
           opacity={100}
-          top="32"
+          top='32'
           className={isFirstAppearance ? styles.dropdown : ''}
           style={{
             left: `${dropdownPosition.left}px`,
@@ -189,12 +192,12 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({
           }}
         >
           <Row
-            background="surface"
-            radius="l"
-            border="neutral-alpha-weak"
-            shadow="xl"
-            padding="12"
-            gap="32"
+            background='surface'
+            radius='l'
+            border='neutral-alpha-weak'
+            shadow='xl'
+            padding='12'
+            gap='32'
           >
             {dropdownGroups.map(
               (group, groupIndex) =>
@@ -202,7 +205,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({
                 group.sections && (
                   <Row
                     key={`dropdown-content-${groupIndex}`}
-                    gap="16"
+                    gap='16'
                     ref={el => {
                       contentRefs.current[group.id] = el
                     }}
@@ -211,15 +214,15 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({
                       <Column
                         key={`section-${sectionIndex}`}
                         minWidth={10}
-                        gap="4"
+                        gap='4'
                       >
                         {section.title && (
                           <Text
-                            marginLeft="16"
-                            marginBottom="12"
-                            marginTop="12"
-                            onBackground="neutral-weak"
-                            variant="label-default-s"
+                            marginLeft='16'
+                            marginBottom='12'
+                            marginTop='12'
+                            onBackground='neutral-weak'
+                            variant='label-default-s'
                           >
                             {section.title}
                           </Text>
@@ -227,32 +230,32 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({
                         {section.links.map((link, linkIndex) => (
                           <ToggleButton
                             key={`link-${linkIndex}`}
-                            className="fit-height p-4 pr-12"
+                            className='fit-height p-4 pr-12'
                             style={{ height: 'auto' }}
                             fillWidth
-                            horizontal="start"
+                            horizontal='start'
                             href={link.href}
                             onClick={() => handleLinkClick(link.href)}
                           >
                             {link.description ? (
-                              <Row gap="12">
+                              <Row gap='12'>
                                 {link.icon && (
                                   <Icon
                                     name={link.icon}
-                                    size="s"
-                                    padding="8"
-                                    radius="s"
-                                    border="neutral-alpha-weak"
+                                    size='s'
+                                    padding='8'
+                                    radius='s'
+                                    border='neutral-alpha-weak'
                                   />
                                 )}
-                                <Column gap="4">
+                                <Column gap='4'>
                                   <Text
-                                    onBackground="neutral-strong"
-                                    variant="label-strong-s"
+                                    onBackground='neutral-strong'
+                                    variant='label-strong-s'
                                   >
                                     {link.label}
                                   </Text>
-                                  <Text onBackground="neutral-weak">
+                                  <Text onBackground='neutral-weak'>
                                     {link.description}
                                   </Text>
                                 </Column>

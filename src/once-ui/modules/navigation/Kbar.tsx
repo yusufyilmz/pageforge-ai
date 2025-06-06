@@ -1,13 +1,5 @@
 'use client'
 
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-  ReactNode
-} from 'react'
 import {
   Flex,
   Text,
@@ -17,8 +9,17 @@ import {
   Option,
   Row
 } from '@pageforge/once-ui/components'
-import { createPortal } from 'react-dom'
 import { useRouter, usePathname } from 'next/navigation'
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+  ReactNode
+} from 'react'
+import { createPortal } from 'react-dom'
+
 import styles from './Kbar.module.scss'
 
 export interface KbarItem {
@@ -35,11 +36,11 @@ export interface KbarItem {
 
 const SectionHeader: React.FC<{ label: string }> = ({ label }) => (
   <Flex
-    paddingX="12"
-    paddingBottom="8"
-    paddingTop="12"
-    textVariant="label-default-s"
-    onBackground="neutral-weak"
+    paddingX='12'
+    paddingBottom='8'
+    paddingTop='12'
+    textVariant='label-default-s'
+    onBackground='neutral-weak'
   >
     {label}
   </Flex>
@@ -94,7 +95,9 @@ export const KbarContent: React.FC<KbarContentProps> = ({
   // Filter items based on search query
   const filteredItems = useMemo(() => {
     return items.filter(item => {
-      if (!searchQuery) return true
+      if (!searchQuery) {
+        return true
+      }
 
       const searchLower = searchQuery.toLowerCase()
       return (
@@ -132,16 +135,16 @@ export const KbarContent: React.FC<KbarContentProps> = ({
           value: item.id,
           label: item.name,
           hasPrefix: item.icon ? (
-            <Icon name={item.icon} size="xs" onBackground="neutral-weak" />
+            <Icon name={item.icon} size='xs' onBackground='neutral-weak' />
           ) : undefined,
           hasSuffix:
             item.shortcut && item.shortcut.length > 0 ? (
-              <Row gap="4">
+              <Row gap='4'>
                 {item.shortcut.map((key, i) => (
                   <Text
                     key={i}
-                    variant="label-default-xs"
-                    onBackground="neutral-weak"
+                    variant='label-default-xs'
+                    onBackground='neutral-weak'
                   >
                     {key}
                   </Text>
@@ -181,20 +184,26 @@ export const KbarContent: React.FC<KbarContentProps> = ({
   // Handle keyboard navigation
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (!nonCustomOptions.length) return
+      if (!nonCustomOptions.length) {
+        return
+      }
 
       switch (e.key) {
         case 'ArrowDown':
           e.preventDefault()
           setHighlightedIndex(prevIndex => {
-            if (prevIndex === null) return 0
+            if (prevIndex === null) {
+              return 0
+            }
             return (prevIndex + 1) % nonCustomOptions.length
           })
           break
         case 'ArrowUp':
           e.preventDefault()
           setHighlightedIndex(prevIndex => {
-            if (prevIndex === null) return nonCustomOptions.length - 1
+            if (prevIndex === null) {
+              return nonCustomOptions.length - 1
+            }
             return (
               (prevIndex - 1 + nonCustomOptions.length) %
               nonCustomOptions.length
@@ -321,19 +330,21 @@ export const KbarContent: React.FC<KbarContentProps> = ({
   }
 
   // Render nothing if not open
-  if (!isOpen) return null
+  if (!isOpen) {
+    return null
+  }
 
   // Create portal for the kbar
   return (
     <Flex
-      position="fixed"
-      top="0"
-      left="0"
-      right="0"
-      bottom="0"
+      position='fixed'
+      top='0'
+      left='0'
+      right='0'
+      bottom='0'
       zIndex={10}
       center
-      background="overlay"
+      background='overlay'
       className={`${styles.overlay} ${isClosing ? styles.closing : ''}`}
       onClick={e => {
         if (e.target === e.currentTarget) {
@@ -345,26 +356,26 @@ export const KbarContent: React.FC<KbarContentProps> = ({
         ref={containerRef}
         maxHeight={32}
         fitHeight
-        maxWidth="xs"
-        background="surface"
-        radius="l"
-        border="neutral-alpha-medium"
-        overflow="hidden"
-        shadow="l"
+        maxWidth='xs'
+        background='surface'
+        radius='l'
+        border='neutral-alpha-medium'
+        overflow='hidden'
+        shadow='l'
         className={`${styles.content} ${isClosing ? styles.closing : ''}`}
         onClick={e => e.stopPropagation()}
       >
         <Flex fillWidth>
           <Input
-            id="kbar-search"
-            placeholder="Search docs..."
+            id='kbar-search'
+            placeholder='Search docs...'
             value={searchQuery}
             onChange={handleSearchChange}
             onKeyDown={handleKeyDown}
             ref={inputRef}
-            hasPrefix={<Icon name="search" size="xs" />}
-            radius="none"
-            autoComplete="off"
+            hasPrefix={<Icon name='search' size='xs' />}
+            radius='none'
+            autoComplete='off'
             style={{
               marginTop: '-1px',
               marginLeft: '-1px',
@@ -375,9 +386,9 @@ export const KbarContent: React.FC<KbarContentProps> = ({
         <Column
           ref={scrollContainerRef}
           fillWidth
-          padding="4"
-          gap="2"
-          overflowY="auto"
+          padding='4'
+          gap='2'
+          overflowY='auto'
         >
           {groupedItems.map((option, index) => {
             if (option.isCustom) {
@@ -422,8 +433,8 @@ export const KbarContent: React.FC<KbarContentProps> = ({
             )
           })}
           {searchQuery && filteredItems.length === 0 && (
-            <Flex fillWidth center paddingX="16" paddingY="64">
-              <Text variant="body-default-m" onBackground="neutral-weak">
+            <Flex fillWidth center paddingX='16' paddingY='64'>
+              <Text variant='body-default-m' onBackground='neutral-weak'>
                 No results found
               </Text>
             </Flex>

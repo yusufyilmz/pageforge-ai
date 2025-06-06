@@ -1,9 +1,11 @@
 'use client'
 
-import React, { forwardRef, ReactNode } from 'react'
 import classNames from 'classnames'
-import { Icon, ElementType } from '.'
+import React, { forwardRef, ReactNode } from 'react'
+
 import { IconName } from '../icons'
+
+import { Icon, ElementType } from '.'
 
 interface CommonProps {
   prefixIcon?: IconName

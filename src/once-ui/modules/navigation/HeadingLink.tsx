@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import {
   Heading,
   Flex,
@@ -60,8 +59,8 @@ export const HeadingLink: React.FC<HeadingLinkProps> = ({
       style={style}
       onClick={() => copyURL(id)}
       className={styles.control}
-      vertical="center"
-      gap="8"
+      vertical='center'
+      gap='8'
     >
       <Heading
         className={styles.text}
@@ -74,11 +73,11 @@ export const HeadingLink: React.FC<HeadingLinkProps> = ({
       </Heading>
       <IconButton
         className={styles.visibility}
-        size="m"
-        icon="openLink"
-        variant="secondary"
-        tooltip="Copy"
-        tooltipPosition="right"
+        size='m'
+        icon='openLink'
+        variant='secondary'
+        tooltip='Copy'
+        tooltipPosition='right'
       />
     </Flex>
   )

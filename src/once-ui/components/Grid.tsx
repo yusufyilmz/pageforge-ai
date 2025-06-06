@@ -1,7 +1,7 @@
 'use client'
 
-import React, { CSSProperties, forwardRef } from 'react'
 import classNames from 'classnames'
+import React, { CSSProperties, forwardRef } from 'react'
 
 import {
   GridProps,
@@ -111,10 +111,12 @@ const Grid = forwardRef<HTMLDivElement, ComponentProps>(
       type: string,
       value: string | '-1' | undefined
     ) => {
-      if (!value) return undefined
+      if (!value) {
+        return undefined
+      }
 
       if (value === 'transparent') {
-        return `transparent-border`
+        return 'transparent-border'
       }
 
       if (value === 'surface' || value === 'page' || value === 'transparent') {
@@ -135,8 +137,12 @@ const Grid = forwardRef<HTMLDivElement, ComponentProps>(
       value: number | SpacingToken | undefined,
       type: 'width' | 'height'
     ): string | undefined => {
-      if (value === undefined) return undefined
-      if (typeof value === 'number') return `${value}rem`
+      if (value === undefined) {
+        return undefined
+      }
+      if (typeof value === 'number') {
+        return `${value}rem`
+      }
       if (
         [
           '0',
@@ -209,7 +215,7 @@ const Grid = forwardRef<HTMLDivElement, ComponentProps>(
       (border || borderTop || borderRight || borderBottom || borderLeft) &&
         !borderStyle &&
         'border-solid',
-      border && !borderWidth && `border-1`,
+      border && !borderWidth && 'border-1',
       (borderTop || borderRight || borderBottom || borderLeft) &&
         'border-reset',
       borderTop && 'border-top-1',
@@ -248,7 +254,7 @@ const Grid = forwardRef<HTMLDivElement, ComponentProps>(
       maxHeight: parseDimension(maxHeight, 'height'),
       width: parseDimension(width, 'width'),
       height: parseDimension(height, 'height'),
-      aspectRatio: aspectRatio,
+      aspectRatio,
       textAlign: align,
       ...style
     }

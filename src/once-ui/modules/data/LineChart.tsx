@@ -1,9 +1,7 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
 import { isWithinInterval, parseISO } from 'date-fns'
-import { formatDate } from './utils/formatDate'
-import { chart } from '../../../app/resources/data.config'
+import React, { useState, useEffect, useMemo } from 'react'
 import {
   AreaChart as RechartsAreaChart,
   Area as RechartsArea,
@@ -14,7 +12,14 @@ import {
   ResponsiveContainer as RechartsResponsiveContainer,
   Legend as RechartsLegend
 } from 'recharts'
+
+import { chart } from '../../../app/resources/data.config'
 import { Column, Row, DateRange } from '../../components'
+import { schemes } from '../../types'
+
+import { getDistributedColor } from './utils/colorDistribution'
+import { formatDate } from './utils/formatDate'
+
 import {
   LinearGradient,
   ChartHeader,
@@ -26,8 +31,6 @@ import {
   ChartStyles,
   curveType
 } from '.'
-import { schemes } from '../../types'
-import { getDistributedColor } from './utils/colorDistribution'
 
 interface LineChartProps extends ChartProps {
   curve?: curveType
@@ -115,7 +118,9 @@ const LineChart: React.FC<LineChartProps> = ({
         return data.filter(item => {
           try {
             const itemDateValue = item[xAxisKey]
-            if (!itemDateValue) return false
+            if (!itemDateValue) {
+              return false
+            }
 
             const itemDate =
               typeof itemDateValue === 'string'
@@ -147,7 +152,7 @@ const LineChart: React.FC<LineChartProps> = ({
       fillWidth
       height={chart.height}
       border={border}
-      radius="l"
+      radius='l'
       {...flex}
     >
       <ChartHeader
@@ -166,7 +171,7 @@ const LineChart: React.FC<LineChartProps> = ({
           emptyState={emptyState}
         />
         {!loading && filteredData && filteredData.length > 0 && (
-          <RechartsResponsiveContainer width="100%" height="100%">
+          <RechartsResponsiveContainer width='100%' height='100%'>
             <RechartsAreaChart
               data={filteredData}
               margin={{ left: 0, bottom: 0, top: 0, right: 0 }}
@@ -188,7 +193,7 @@ const LineChart: React.FC<LineChartProps> = ({
               <RechartsCartesianGrid
                 vertical
                 horizontal
-                stroke="var(--neutral-alpha-weak)"
+                stroke='var(--neutral-alpha-weak)'
               />
               {legend.display && (
                 <RechartsLegend
@@ -303,7 +308,7 @@ const LineChart: React.FC<LineChartProps> = ({
                     dataKey={key}
                     name={key}
                     stroke={lineColor}
-                    transform="translate(0, -1)"
+                    transform='translate(0, -1)'
                     fill={
                       variant === 'outline'
                         ? 'transparent'

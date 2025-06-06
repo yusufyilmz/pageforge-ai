@@ -1,7 +1,7 @@
 'use client'
 
-import React from 'react'
 import { chart } from '../../../app/resources/data.config'
+
 import { ChartStyles } from './interfaces'
 
 interface GradientStop {

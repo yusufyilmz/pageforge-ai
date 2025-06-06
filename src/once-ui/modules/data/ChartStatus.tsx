@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import { Column, Text, Spinner } from '../../components'
 
 export interface ChartStatusProps {
@@ -21,10 +20,10 @@ export const ChartStatus: React.FC<ChartStatusProps> = ({
   return (
     <Column fill center>
       {loading ? (
-        <Spinner size="m" />
+        <Spinner size='m' />
       ) : (
         isEmpty && (
-          <Text variant="label-default-s" onBackground="neutral-weak">
+          <Text variant='label-default-s' onBackground='neutral-weak'>
             {emptyState}
           </Text>
         )

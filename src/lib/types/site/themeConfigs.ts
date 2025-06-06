@@ -11,7 +11,8 @@ import {
   Cinzel,
   Creepster
 } from 'next/font/google'
-import { SiteThemeType } from './siteThemes'
+
+import type { SiteThemeType } from './siteThemes'
 
 // Font definitions
 const geistFont = Geist({

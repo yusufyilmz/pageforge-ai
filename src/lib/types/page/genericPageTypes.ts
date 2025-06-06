@@ -1,6 +1,6 @@
-import React from 'react'
-import { InlineCode } from '@pageforge/once-ui/components'
-import {
+import type { CSSProperties } from 'react'
+
+import type {
   ColorScheme,
   ColorWeight,
   flex,
@@ -14,7 +14,6 @@ import {
   TextVariant,
   TextWeight
 } from '@pageforge/once-ui/types'
-import { CSSProperties } from 'react'
 
 // ============================================================================
 // GENERIC PAGE TYPES FOR AI-GENERATED CONTENT

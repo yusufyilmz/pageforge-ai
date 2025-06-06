@@ -1,12 +1,13 @@
 'use client'
 
-import { forwardRef, useState, useEffect } from 'react'
-import { Flex, Text, SegmentedControl, IconButton, Scroller, Column } from '.'
-
-import styles from './StylePanel.module.scss'
-import classNames from 'classnames'
 import { THEME_CONFIGS } from '@pageforge/lib/types/site/themeConfigs'
 import { style } from '@pageforge/types/site/onceUIConfig'
+import classNames from 'classnames'
+import { forwardRef, useState, useEffect } from 'react'
+
+import styles from './StylePanel.module.scss'
+
+import { Flex, Text, SegmentedControl, IconButton, Scroller, Column } from '.'
 
 interface StylePanelProps extends React.ComponentProps<typeof Flex> {
   style?: React.CSSProperties
@@ -89,25 +90,25 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
     ])
 
     return (
-      <Column fillWidth gap="16" ref={ref} {...rest}>
-        <Column fillWidth paddingTop="12" paddingLeft="16" gap="4">
-          <Text variant="heading-strong-s">Page</Text>
-          <Text variant="body-default-s" onBackground="neutral-weak">
+      <Column fillWidth gap='16' ref={ref} {...rest}>
+        <Column fillWidth paddingTop='12' paddingLeft='16' gap='4'>
+          <Text variant='heading-strong-s'>Page</Text>
+          <Text variant='body-default-s' onBackground='neutral-weak'>
             Customize global design settings
           </Text>
         </Column>
 
-        <Column fillWidth border="neutral-alpha-medium" radius="l-4">
+        <Column fillWidth border='neutral-alpha-medium' radius='l-4'>
           <Flex
-            borderBottom="neutral-alpha-medium"
-            horizontal="space-between"
-            vertical="center"
+            borderBottom='neutral-alpha-medium'
+            horizontal='space-between'
+            vertical='center'
             fillWidth
-            paddingX="24"
-            paddingY="16"
-            gap="24"
+            paddingX='24'
+            paddingY='16'
+            gap='24'
           >
-            <Text variant="label-default-s">Theme</Text>
+            <Text variant='label-default-s'>Theme</Text>
             <SegmentedControl
               maxWidth={22}
               buttons={[
@@ -124,20 +125,20 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
             />
           </Flex>
           <Flex
-            horizontal="space-between"
-            vertical="center"
+            horizontal='space-between'
+            vertical='center'
             fillWidth
-            paddingX="24"
-            paddingY="16"
+            paddingX='24'
+            paddingY='16'
           >
-            <Text variant="label-default-s">Shape</Text>
-            <Flex gap="4">
+            <Text variant='label-default-s'>Shape</Text>
+            <Flex gap='4'>
               {shapes.map((radius, index) => (
                 <Flex
                   data-border={shapes[index]}
                   key={radius}
-                  horizontal="center"
-                  vertical="center"
+                  horizontal='center'
+                  vertical='center'
                   className={classNames(
                     styles.select,
                     selectedShape === radius ? styles.selected : ''
@@ -146,7 +147,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
                     setSelectedShape(radius as any)
                   }}
                 >
-                  <IconButton variant="ghost" size="m">
+                  <IconButton variant='ghost' size='m'>
                     <div
                       className={classNames(styles.neutral, styles.swatch)}
                     ></div>
@@ -157,32 +158,32 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
           </Flex>
         </Column>
 
-        <Column fillWidth paddingTop="12" paddingLeft="16" gap="4">
-          <Text variant="heading-strong-s">Color</Text>
-          <Text variant="body-default-s" onBackground="neutral-weak">
+        <Column fillWidth paddingTop='12' paddingLeft='16' gap='4'>
+          <Text variant='heading-strong-s'>Color</Text>
+          <Text variant='body-default-s' onBackground='neutral-weak'>
             Customize color schemes
           </Text>
         </Column>
-        <Column fillWidth border="neutral-alpha-medium" radius="l-4">
+        <Column fillWidth border='neutral-alpha-medium' radius='l-4'>
           <Flex
-            borderBottom="neutral-alpha-medium"
-            horizontal="space-between"
-            vertical="center"
+            borderBottom='neutral-alpha-medium'
+            horizontal='space-between'
+            vertical='center'
             fillWidth
-            paddingX="24"
-            paddingY="16"
-            gap="24"
+            paddingX='24'
+            paddingY='16'
+            gap='24'
           >
-            <Flex textVariant="label-default-s" minWidth={3}>
+            <Flex textVariant='label-default-s' minWidth={3}>
               Brand
             </Flex>
             <Scroller minWidth={0} fitWidth>
               {colorOptions.brand.map((color, index) => (
                 <Flex
-                  marginRight="2"
+                  marginRight='2'
                   key={color}
-                  horizontal="center"
-                  vertical="center"
+                  horizontal='center'
+                  vertical='center'
                   className={classNames(
                     styles.select,
                     brandColor === color ? styles.selected : ''
@@ -191,7 +192,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
                     setBrandColor(color as any)
                   }}
                 >
-                  <IconButton variant="ghost" size="m">
+                  <IconButton variant='ghost' size='m'>
                     <div className={`${styles[color]} ${styles.swatch}`}></div>
                   </IconButton>
                 </Flex>
@@ -200,24 +201,24 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
           </Flex>
 
           <Flex
-            borderBottom="neutral-alpha-medium"
-            horizontal="space-between"
-            vertical="center"
+            borderBottom='neutral-alpha-medium'
+            horizontal='space-between'
+            vertical='center'
             fillWidth
-            paddingX="24"
-            paddingY="16"
-            gap="24"
+            paddingX='24'
+            paddingY='16'
+            gap='24'
           >
-            <Flex textVariant="label-default-s" minWidth={3}>
+            <Flex textVariant='label-default-s' minWidth={3}>
               Accent
             </Flex>
             <Scroller minWidth={0} fitWidth>
               {colorOptions.accent.map((color, index) => (
                 <Flex
-                  marginRight="2"
+                  marginRight='2'
                   key={color}
-                  horizontal="center"
-                  vertical="center"
+                  horizontal='center'
+                  vertical='center'
                   className={classNames(
                     styles.select,
                     accentColor === color ? styles.selected : ''
@@ -226,7 +227,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
                     setAccentColor(color as any)
                   }}
                 >
-                  <IconButton variant="ghost" size="m">
+                  <IconButton variant='ghost' size='m'>
                     <div className={`${styles[color]} ${styles.swatch}`}></div>
                   </IconButton>
                 </Flex>
@@ -235,23 +236,23 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
           </Flex>
 
           <Flex
-            horizontal="space-between"
-            vertical="center"
+            horizontal='space-between'
+            vertical='center'
             fillWidth
-            paddingX="24"
-            paddingY="16"
-            gap="24"
+            paddingX='24'
+            paddingY='16'
+            gap='24'
           >
-            <Flex textVariant="label-default-s" minWidth={3}>
+            <Flex textVariant='label-default-s' minWidth={3}>
               Neutral
             </Flex>
             <Scroller minWidth={0} fitWidth>
               {colorOptions.neutral.map((color, index) => (
                 <Flex
-                  marginRight="2"
+                  marginRight='2'
                   key={color}
-                  horizontal="center"
-                  vertical="center"
+                  horizontal='center'
+                  vertical='center'
                   className={classNames(
                     styles.select,
                     neutralColor === color ? styles.selected : ''
@@ -260,7 +261,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
                     setNeutralColor(color as any)
                   }}
                 >
-                  <IconButton variant="ghost" size="m">
+                  <IconButton variant='ghost' size='m'>
                     <div className={`${styles[color]} ${styles.swatch}`}></div>
                   </IconButton>
                 </Flex>
@@ -269,23 +270,23 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
           </Flex>
         </Column>
 
-        <Column fillWidth paddingTop="12" paddingLeft="16" gap="4">
-          <Text variant="heading-strong-s">Solid style</Text>
-          <Text variant="body-default-s" onBackground="neutral-weak">
+        <Column fillWidth paddingTop='12' paddingLeft='16' gap='4'>
+          <Text variant='heading-strong-s'>Solid style</Text>
+          <Text variant='body-default-s' onBackground='neutral-weak'>
             Customize the appearance of interactive elements
           </Text>
         </Column>
-        <Column fillWidth border="neutral-alpha-medium" radius="l-4">
+        <Column fillWidth border='neutral-alpha-medium' radius='l-4'>
           <Flex
-            borderBottom="neutral-alpha-medium"
-            horizontal="space-between"
-            vertical="center"
+            borderBottom='neutral-alpha-medium'
+            horizontal='space-between'
+            vertical='center'
             fillWidth
-            paddingX="24"
-            paddingY="16"
-            gap="24"
+            paddingX='24'
+            paddingY='16'
+            gap='24'
           >
-            <Text variant="label-default-s">Style</Text>
+            <Text variant='label-default-s'>Style</Text>
             <SegmentedControl
               maxWidth={22}
               minWidth={0}
@@ -293,14 +294,14 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
                 {
                   size: 'l',
                   label: (
-                    <Flex vertical="center" gap="12">
+                    <Flex vertical='center' gap='12'>
                       <Flex
-                        data-solid="color"
-                        border="brand-strong"
-                        solid="brand-weak"
-                        width="24"
-                        height="24"
-                        radius="s"
+                        data-solid='color'
+                        border='brand-strong'
+                        solid='brand-weak'
+                        width='24'
+                        height='24'
+                        radius='s'
                       ></Flex>
                       Color
                     </Flex>
@@ -310,14 +311,14 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
                 {
                   size: 'l',
                   label: (
-                    <Flex vertical="center" gap="12">
+                    <Flex vertical='center' gap='12'>
                       <Flex
-                        data-solid="inverse"
-                        border="brand-strong"
-                        solid="brand-strong"
-                        width="24"
-                        height="24"
-                        radius="s"
+                        data-solid='inverse'
+                        border='brand-strong'
+                        solid='brand-strong'
+                        width='24'
+                        height='24'
+                        radius='s'
                       ></Flex>
                       Inverse
                     </Flex>
@@ -327,14 +328,14 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
                 {
                   size: 'l',
                   label: (
-                    <Flex vertical="center" gap="12">
+                    <Flex vertical='center' gap='12'>
                       <Flex
-                        data-solid="contrast"
-                        border="brand-strong"
-                        solid="brand-strong"
-                        width="24"
-                        height="24"
-                        radius="s"
+                        data-solid='contrast'
+                        border='brand-strong'
+                        solid='brand-strong'
+                        width='24'
+                        height='24'
+                        radius='s'
                       ></Flex>
                       Contrast
                     </Flex>
@@ -349,14 +350,14 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
             />
           </Flex>
           <Flex
-            horizontal="space-between"
-            vertical="center"
+            horizontal='space-between'
+            vertical='center'
             fillWidth
-            paddingX="24"
-            paddingY="16"
-            gap="24"
+            paddingX='24'
+            paddingY='16'
+            gap='24'
           >
-            <Text variant="label-default-s">Effect</Text>
+            <Text variant='label-default-s'>Effect</Text>
             <SegmentedControl
               maxWidth={22}
               minWidth={0}
@@ -364,13 +365,13 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
                 {
                   size: 'l',
                   label: (
-                    <Flex vertical="center" gap="12">
+                    <Flex vertical='center' gap='12'>
                       <Flex
-                        border="brand-strong"
-                        solid="brand-weak"
-                        width="24"
-                        height="24"
-                        radius="s"
+                        border='brand-strong'
+                        solid='brand-weak'
+                        width='24'
+                        height='24'
+                        radius='s'
                       ></Flex>
                       Flat
                     </Flex>
@@ -380,17 +381,17 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
                 {
                   size: 'l',
                   label: (
-                    <Flex vertical="center" gap="12">
+                    <Flex vertical='center' gap='12'>
                       <Flex
-                        border="brand-strong"
+                        border='brand-strong'
                         style={{
                           boxShadow:
                             'inset 0 calc(-1 * var(--static-space-8)) var(--static-space-8) var(--brand-solid-strong)'
                         }}
-                        solid="brand-weak"
-                        width="24"
-                        height="24"
-                        radius="s"
+                        solid='brand-weak'
+                        width='24'
+                        height='24'
+                        radius='s'
                       ></Flex>
                       Plastic
                     </Flex>
@@ -403,23 +404,23 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
             />
           </Flex>
         </Column>
-        <Column fillWidth paddingTop="12" paddingLeft="16" gap="4">
-          <Text variant="heading-strong-s">Advanced</Text>
-          <Text variant="body-default-s" onBackground="neutral-weak">
+        <Column fillWidth paddingTop='12' paddingLeft='16' gap='4'>
+          <Text variant='heading-strong-s'>Advanced</Text>
+          <Text variant='body-default-s' onBackground='neutral-weak'>
             Customize advanced styling options
           </Text>
         </Column>
-        <Column fillWidth border="neutral-alpha-medium" radius="l-4">
+        <Column fillWidth border='neutral-alpha-medium' radius='l-4'>
           <Flex
-            borderBottom="neutral-alpha-medium"
-            horizontal="space-between"
-            vertical="center"
+            borderBottom='neutral-alpha-medium'
+            horizontal='space-between'
+            vertical='center'
             fillWidth
-            paddingX="24"
-            paddingY="16"
-            gap="24"
+            paddingX='24'
+            paddingY='16'
+            gap='24'
           >
-            <Text variant="label-default-s">Surface</Text>
+            <Text variant='label-default-s'>Surface</Text>
             <SegmentedControl
               maxWidth={22}
               minWidth={0}
@@ -440,15 +441,15 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
             />
           </Flex>
           <Flex
-            borderBottom="neutral-alpha-medium"
-            horizontal="space-between"
-            vertical="center"
+            borderBottom='neutral-alpha-medium'
+            horizontal='space-between'
+            vertical='center'
             fillWidth
-            paddingX="24"
-            paddingY="16"
-            gap="24"
+            paddingX='24'
+            paddingY='16'
+            gap='24'
           >
-            <Text variant="label-default-s">Scaling</Text>
+            <Text variant='label-default-s'>Scaling</Text>
             <SegmentedControl
               maxWidth={22}
               minWidth={0}
@@ -486,14 +487,14 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(
             />
           </Flex>
           <Flex
-            horizontal="space-between"
-            vertical="center"
+            horizontal='space-between'
+            vertical='center'
             fillWidth
-            paddingX="24"
-            paddingY="16"
-            gap="24"
+            paddingX='24'
+            paddingY='16'
+            gap='24'
           >
-            <Text variant="label-default-s">Transition</Text>
+            <Text variant='label-default-s'>Transition</Text>
             <SegmentedControl
               maxWidth={22}
               minWidth={0}

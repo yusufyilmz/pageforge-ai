@@ -1,9 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Flex } from '.'
-import styles from './ScrollToTop.module.scss'
 import classNames from 'classnames'
+import { useState, useEffect } from 'react'
+
+import styles from './ScrollToTop.module.scss'
+
+import { Flex } from '.'
 
 interface ScrollToTopProps extends React.ComponentProps<typeof Flex> {
   offset?: number
@@ -37,14 +39,14 @@ export const ScrollToTop = ({
     <Flex
       onClick={scrollToTop}
       aria-hidden={!isVisible}
-      position="fixed"
-      bottom="16"
-      right="16"
+      position='fixed'
+      bottom='16'
+      right='16'
       className={classNames(styles.scrollToTop, className)}
       data-visible={isVisible}
       tabIndex={isVisible ? 0 : -1}
       zIndex={isVisible ? 8 : 0}
-      cursor="pointer"
+      cursor='pointer'
       {...rest}
     >
       {children}

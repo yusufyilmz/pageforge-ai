@@ -1,5 +1,6 @@
 'use client'
 
+import classNames from 'classnames'
 import React, {
   useState,
   useEffect,
@@ -8,10 +9,12 @@ import React, {
   useCallback,
   ReactNode
 } from 'react'
-import classNames from 'classnames'
-import { Flex, Text } from '.'
-import styles from './Input.module.scss'
+
 import useDebounce from '../hooks/useDebounce'
+
+import styles from './Input.module.scss'
+
+import { Flex, Text } from '.'
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   id: string
@@ -83,18 +86,24 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       if (lines === 'auto') {
         adjustHeight()
       }
-      if (onChange) onChange(event)
+      if (onChange) {
+        onChange(event)
+      }
     }
 
     const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
       setIsFocused(true)
-      if (onFocus) onFocus(event)
+      if (onFocus) {
+        onFocus(event)
+      }
     }
 
     const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
       setIsFocused(false)
       setIsFilled(!!event.target.value)
-      if (onBlur) onBlur(event)
+      if (onBlur) {
+        onBlur(event)
+      }
     }
 
     const validateInput = useCallback(() => {
@@ -145,8 +154,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     return (
       <Flex
-        direction="column"
-        gap="8"
+        direction='column'
+        gap='8'
         fillWidth
         fitHeight
         className={classNames(className, {
@@ -155,11 +164,11 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       >
         <Flex
           minHeight={placeholder ? '48' : '56'}
-          transition="micro-medium"
-          border="neutral-medium"
-          background="neutral-alpha-weak"
-          overflow="hidden"
-          vertical="stretch"
+          transition='micro-medium'
+          border='neutral-medium'
+          background='neutral-alpha-weak'
+          overflow='hidden'
+          vertical='stretch'
           className={classNames(
             styles.base,
             lines !== 'auto' && resize !== 'none' && styles.textareaBase,
@@ -171,11 +180,11 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           )}
         >
           {hasPrefix && (
-            <Flex paddingLeft="12" className={styles.prefix}>
+            <Flex paddingLeft='12' className={styles.prefix}>
               {hasPrefix}
             </Flex>
           )}
-          <Flex fillWidth direction="column">
+          <Flex fillWidth direction='column'>
             <textarea
               {...props}
               ref={node => {
@@ -204,8 +213,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             />
             {!placeholder && (
               <Text
-                as="label"
-                variant="label-default-m"
+                as='label'
+                variant='label-default-m'
                 htmlFor={id}
                 className={classNames(styles.label, styles.textareaLabel, {
                   [styles.floating]: isFocused || isFilled
@@ -217,30 +226,30 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             {children}
           </Flex>
           {hasSuffix && (
-            <Flex paddingRight="12" className={styles.suffix}>
+            <Flex paddingRight='12' className={styles.suffix}>
               {hasSuffix}
             </Flex>
           )}
         </Flex>
         {displayError && errorMessage !== false && (
-          <Flex paddingX="16">
+          <Flex paddingX='16'>
             <Text
-              as="span"
+              as='span'
               id={`${id}-error`}
-              variant="body-default-s"
-              onBackground="danger-weak"
+              variant='body-default-s'
+              onBackground='danger-weak'
             >
               {displayError}
             </Text>
           </Flex>
         )}
         {description && (
-          <Flex paddingX="16">
+          <Flex paddingX='16'>
             <Text
-              as="span"
+              as='span'
               id={`${id}-description`}
-              variant="body-default-s"
-              onBackground="neutral-weak"
+              variant='body-default-s'
+              onBackground='neutral-weak'
             >
               {description}
             </Text>

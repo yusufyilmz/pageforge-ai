@@ -1,7 +1,8 @@
 'use client'
 
-import { Flex, RevealFx, Scroller, Media } from '.'
 import { useEffect, useState, useRef } from 'react'
+
+import { Flex, RevealFx, Scroller, Media } from '.'
 
 interface Image {
   src: string
@@ -78,20 +79,20 @@ const Carousel: React.FC<CarouselProps> = ({
   }
 
   return (
-    <Flex fillWidth gap="12" direction="column" {...rest}>
+    <Flex fillWidth gap='12' direction='column' {...rest}>
       <RevealFx
         onClick={handleImageClick}
         fillWidth
         trigger={isTransitioning}
-        translateY="16"
+        translateY='16'
         aspectRatio={aspectRatio}
-        speed="fast"
+        speed='fast'
       >
         <Media
           sizes={sizes}
           priority
-          radius="l"
-          border="neutral-alpha-weak"
+          radius='l'
+          border='neutral-alpha-weak'
           alt={images[activeIndex]?.alt}
           aspectRatio={aspectRatio}
           src={images[activeIndex]?.src}
@@ -105,10 +106,10 @@ const Carousel: React.FC<CarouselProps> = ({
       {images.length > 1 && (
         <>
           {indicator === 'line' ? (
-            <Flex gap="4" paddingX="s" fillWidth horizontal="center">
+            <Flex gap='4' paddingX='s' fillWidth horizontal='center'>
               {images.map((_, index) => (
                 <Flex
-                  radius="full"
+                  radius='full'
                   key={index}
                   onClick={() => handleControlClick(index)}
                   style={{
@@ -118,14 +119,14 @@ const Carousel: React.FC<CarouselProps> = ({
                         : 'var(--neutral-alpha-medium)',
                     transition: 'background 0.3s ease'
                   }}
-                  cursor="interactive"
+                  cursor='interactive'
                   fillWidth
-                  height="2"
+                  height='2'
                 ></Flex>
               ))}
             </Flex>
           ) : (
-            <Scroller fillWidth gap="4" onItemClick={handleControlClick}>
+            <Scroller fillWidth gap='4' onItemClick={handleControlClick}>
               {images.map((image, index) => (
                 <Flex
                   key={index}
@@ -137,19 +138,19 @@ const Carousel: React.FC<CarouselProps> = ({
                     borderRadius: 'var(--radius-m-nest-4)',
                     transition: 'border 0.3s ease'
                   }}
-                  cursor="interactive"
-                  padding="4"
+                  cursor='interactive'
+                  padding='4'
                   aspectRatio={aspectRatio}
-                  height="80"
+                  height='80'
                 >
                   <Media
                     alt={image.alt}
-                    aspectRatio="1 / 1"
-                    sizes="120px"
+                    aspectRatio='1 / 1'
+                    sizes='120px'
                     src={image.src}
-                    cursor="interactive"
-                    radius="m"
-                    transition="macro-medium"
+                    cursor='interactive'
+                    radius='m'
+                    transition='macro-medium'
                   />
                 </Flex>
               ))}

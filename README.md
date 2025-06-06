@@ -1,7 +1,5 @@
 # PageForge - Next.js + Supabase + Once UI Starter
 
-A full-stack starter template combining the power of Next.js 15, Supabase authentication, and Once UI design system. Perfect for indie builders who want to ship fast without compromising on quality.
-
 ![PageForge](public/images/og/home.jpg)
 
 ## Tech Stack
@@ -24,11 +22,14 @@ A full-stack starter template combining the power of Next.js 15, Supabase authen
 
 ## AI-Powered Section Generation 🤖
 
-PageForge includes an advanced AI-powered section generation system that can create complex, interactive sections from natural language descriptions. This system goes far beyond basic templates to generate sophisticated, industry-specific components.
+PageForge includes an advanced AI-powered section generation system that can create complex,
+interactive sections from natural language descriptions. This system goes far beyond basic templates
+to generate sophisticated, industry-specific components.
 
 ### 🎯 What You Can Generate
 
 **Basic Sections:**
+
 - Team showcases with member profiles
 - Image galleries with lightbox functionality
 - Contact forms with validation
@@ -36,6 +37,7 @@ PageForge includes an advanced AI-powered section generation system that can cre
 - FAQ accordions
 
 **Advanced Sections:**
+
 - Interactive pricing calculators with sliders
 - Product configurators with 3D previews
 - Learning paths with progress tracking
@@ -44,6 +46,7 @@ PageForge includes an advanced AI-powered section generation system that can cre
 - Multi-step forms with conditional logic
 
 **Industry-Specific:**
+
 - E-commerce product catalogs
 - Real estate property listings
 - Portfolio showcases for creatives
@@ -89,10 +92,12 @@ PageForge includes an advanced AI-powered section generation system that can cre
 ### 📚 Documentation
 
 For detailed usage instructions and advanced examples, see:
+
 - [Custom Sections Guide](src/components/universal-section/CUSTOM_SECTIONS_GUIDE.md)
 - [AI Section Factory Documentation](src/components/universal-section/README.md)
 
-Try the interactive demo by visiting `/demo` (coming soon) or check out the example implementations in the components directory.
+Try the interactive demo by visiting `/demo` (coming soon) or check out the example implementations
+in the components directory.
 
 ## Quick Start
 
@@ -168,21 +173,28 @@ Don't forget to add your environment variables in Vercel:
 
 Connect with us!
 
-**Lorant One**: [Site](https://lorant.one) / [Threads](https://www.threads.net/@lorant.one) / [LinkedIn](https://www.linkedin.com/in/lorant-one/)
+**Lorant One**: [Site](https://lorant.one) / [Threads](https://www.threads.net/@lorant.one) /
+[LinkedIn](https://www.linkedin.com/in/lorant-one/)
 
-**Zsofia Komaromi**: [Site](https://zsofia.pro) / [Threads](https://www.threads.net/@zsofia_kom) / [LinkedIn](https://www.linkedin.com/in/zsofiakomaromi/)
+**Zsofia Komaromi**: [Site](https://zsofia.pro) / [Threads](https://www.threads.net/@zsofia_kom) /
+[LinkedIn](https://www.linkedin.com/in/zsofiakomaromi/)
 
 ## Become a Oncer
 
 ![Design Engineers Club](https://docs.once-ui.com/images/quasar-coding.jpg)
 
-Join the [Design Engineers Club](https://discord.com/invite/5EyAQ4eNdS) on Discord to connect with us and share your projects.
+Join the [Design Engineers Club](https://discord.com/invite/5EyAQ4eNdS) on Discord to connect with
+us and share your projects.
 
-Found a bug? Report it [here](https://github.com/once-ui-system/nextjs-starter/issues/new?labels=bug&template=bug_report.md). Got a feature request? Submit it [here](https://github.com/once-ui-system/nextjs-starter/issues/new?labels=feature%20request&template=feature_request.md).
+Found a bug? Report it
+[here](https://github.com/once-ui-system/nextjs-starter/issues/new?labels=bug&template=bug_report.md).
+Got a feature request? Submit it
+[here](https://github.com/once-ui-system/nextjs-starter/issues/new?labels=feature%20request&template=feature_request.md).
 
 ## Sponsors
 
-Once UI is an indie project. [Sponsor us](https://github.com/sponsors/once-ui-system) and get featured on our site!
+Once UI is an indie project. [Sponsor us](https://github.com/sponsors/once-ui-system) and get
+featured on our site!
 
 ## License
 

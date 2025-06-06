@@ -1,14 +1,5 @@
 'use client'
 
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  ReactNode,
-  forwardRef,
-  useImperativeHandle,
-  useCallback
-} from 'react'
 import {
   useFloating,
   shift,
@@ -18,8 +9,19 @@ import {
   autoUpdate,
   Placement
 } from '@floating-ui/react-dom'
-import { Flex, Dropdown } from '.'
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  ReactNode,
+  forwardRef,
+  useImperativeHandle,
+  useCallback
+} from 'react'
+
 import styles from './DropdownWrapper.module.scss'
+
+import { Flex, Dropdown } from '.'
 
 export interface DropdownWrapperProps {
   fillWidth?: boolean
@@ -162,8 +164,8 @@ const DropdownWrapper = forwardRef<HTMLDivElement, DropdownWrapperProps>(
     return (
       <Flex
         fillWidth={fillWidth}
-        direction="column"
-        transition="macro-medium"
+        direction='column'
+        transition='macro-medium'
         style={{
           ...(minHeight && isOpen
             ? {
@@ -195,8 +197,8 @@ const DropdownWrapper = forwardRef<HTMLDivElement, DropdownWrapperProps>(
           }
         }}
         tabIndex={-1}
-        role="button"
-        aria-haspopup="listbox"
+        role='button'
+        aria-haspopup='listbox'
         aria-expanded={isOpen}
       >
         {trigger}
@@ -211,11 +213,11 @@ const DropdownWrapper = forwardRef<HTMLDivElement, DropdownWrapperProps>(
               top: y ?? 0,
               left: x ?? 0
             }}
-            role="listbox"
+            role='listbox'
           >
             <Dropdown
               minWidth={minWidth}
-              radius="l"
+              radius='l'
               selectedOption={selectedOption}
               onSelect={onSelect}
             >

@@ -1,10 +1,13 @@
 'use client'
 
-import React, { useEffect, useState, forwardRef } from 'react'
-import { IconButton, Icon, Flex, Row } from '.'
 import classNames from 'classnames'
-import styles from './Toast.module.scss'
+import React, { useEffect, useState, forwardRef } from 'react'
+
 import { IconName } from '../icons'
+
+import styles from './Toast.module.scss'
+
+import { IconButton, Icon, Flex, Row } from '.'
 
 interface ToastProps {
   className?: string
@@ -39,37 +42,37 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
       <Flex
         ref={ref}
         fillWidth
-        background="surface"
-        radius="l"
-        paddingY="12"
-        paddingX="20"
-        border="neutral-medium"
-        role="alert"
-        aria-live="assertive"
+        background='surface'
+        radius='l'
+        paddingY='12'
+        paddingX='20'
+        border='neutral-medium'
+        role='alert'
+        aria-live='assertive'
         className={classNames(className, styles.toast, styles[variant], {
           [styles.visible]: visible,
           [styles.hidden]: !visible
         })}
       >
-        <Flex fillWidth vertical="center" gap="8">
+        <Flex fillWidth vertical='center' gap='8'>
           {icon && (
             <Icon
-              size="s"
+              size='s'
               onBackground={`${variant}-medium`}
               name={iconMap[variant]}
             />
           )}
-          <Row fillWidth textVariant="body-default-s">
+          <Row fillWidth textVariant='body-default-s'>
             {children}
           </Row>
           {action && action}
           {onClose && (
             <IconButton
-              variant="ghost"
-              icon="close"
-              size="m"
-              tooltip="Hide"
-              tooltipPosition="top"
+              variant='ghost'
+              icon='close'
+              size='m'
+              tooltip='Hide'
+              tooltipPosition='top'
               onClick={() => setVisible(false)}
             />
           )}

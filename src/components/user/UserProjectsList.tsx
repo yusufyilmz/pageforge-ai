@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import {
   Column,
   Row,
@@ -9,6 +8,7 @@ import {
   Badge,
   Button
 } from '@pageforge/once-ui/components'
+
 import { useUserProjects } from '../../contexts/UserContext'
 
 interface UserProjectsListProps {
@@ -29,8 +29,8 @@ export function UserProjectsList({
 
   if (projects.length === 0) {
     return (
-      <Column gap="m" className={className}>
-        <Text variant="body-default-s" onBackground="neutral-weak">
+      <Column gap='m' className={className}>
+        <Text variant='body-default-s' onBackground='neutral-weak'>
           No projects found.
         </Text>
       </Column>
@@ -38,24 +38,24 @@ export function UserProjectsList({
   }
 
   return (
-    <Column gap="l" className={className}>
+    <Column gap='l' className={className}>
       {projects.map(project => (
         <Column
           key={project.id}
-          gap="m"
-          padding="l"
-          border="neutral-alpha-weak"
-          radius="m"
+          gap='m'
+          padding='l'
+          border='neutral-alpha-weak'
+          radius='m'
         >
           {/* Project Header */}
-          <Row gap="m" vertical="center" horizontal="space-between">
-            <Column gap="xs">
-              <Row gap="xs" vertical="center">
-                <Heading variant="heading-strong-s">{project.title}</Heading>
+          <Row gap='m' vertical='center' horizontal='space-between'>
+            <Column gap='xs'>
+              <Row gap='xs' vertical='center'>
+                <Heading variant='heading-strong-s'>{project.title}</Heading>
                 {showStatus && <Badge>{project.status}</Badge>}
                 {project.featured && <Badge>Featured</Badge>}
               </Row>
-              <Text variant="body-default-s" onBackground="neutral-weak">
+              <Text variant='body-default-s' onBackground='neutral-weak'>
                 {project.description}
               </Text>
             </Column>
@@ -63,8 +63,8 @@ export function UserProjectsList({
 
           {/* Technologies */}
           {project.technologies && project.technologies.length > 0 && (
-            <Row gap="xs" wrap>
-              <Text variant="label-default-xs" onBackground="neutral-weak">
+            <Row gap='xs' wrap>
+              <Text variant='label-default-xs' onBackground='neutral-weak'>
                 Technologies:
               </Text>
               {project.technologies.map(tech => (
@@ -74,27 +74,27 @@ export function UserProjectsList({
           )}
 
           {/* Dates */}
-          <Row gap="m" vertical="center">
+          <Row gap='m' vertical='center'>
             {project.startDate && (
-              <Text variant="label-default-xs" onBackground="neutral-weak">
+              <Text variant='label-default-xs' onBackground='neutral-weak'>
                 Started: {new Date(project.startDate).toLocaleDateString()}
               </Text>
             )}
             {project.endDate && (
-              <Text variant="label-default-xs" onBackground="neutral-weak">
+              <Text variant='label-default-xs' onBackground='neutral-weak'>
                 Completed: {new Date(project.endDate).toLocaleDateString()}
               </Text>
             )}
           </Row>
 
           {/* Actions */}
-          <Row gap="s">
+          <Row gap='s'>
             {project.url && (
               <Button
                 href={project.url}
-                variant="secondary"
-                size="s"
-                suffixIcon="external"
+                variant='secondary'
+                size='s'
+                suffixIcon='external'
               >
                 View Project
               </Button>
@@ -102,9 +102,9 @@ export function UserProjectsList({
             {project.githubUrl && (
               <Button
                 href={project.githubUrl}
-                variant="tertiary"
-                size="s"
-                suffixIcon="external"
+                variant='tertiary'
+                size='s'
+                suffixIcon='external'
               >
                 GitHub
               </Button>

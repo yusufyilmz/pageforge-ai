@@ -1,5 +1,7 @@
-import { ComponentType } from 'react'
-import { ContentBlock } from '@pageforge/types/page/pageTypes'
+import type { ComponentType } from 'react'
+
+import type { ContentBlock } from '@pageforge/types/page/pageTypes'
+
 import { aiSectionFactory } from './AISectionFactory'
 
 interface SectionProps {
@@ -58,12 +60,10 @@ export class AutoSectionRegistry {
   private getComponentName(type: string): string {
     // Convert kebab-case to PascalCase + Section
     // e.g., 'table-of-contents' -> 'TableOfContentsSection'
-    return (
-      type
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join('') + 'Section'
-    )
+    return `${type
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('')}Section`
   }
 
   async loadSection(type: string): Promise<SectionComponent | null> {

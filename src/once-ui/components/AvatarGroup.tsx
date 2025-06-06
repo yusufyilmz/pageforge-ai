@@ -1,10 +1,11 @@
 'use client'
 
+import classNames from 'classnames'
 import React, { forwardRef } from 'react'
 
-import { Avatar, AvatarProps, Flex } from '.'
 import styles from './AvatarGroup.module.scss'
-import classNames from 'classnames'
+
+import { Avatar, AvatarProps, Flex } from '.'
 
 interface AvatarGroupProps extends React.ComponentProps<typeof Flex> {
   avatars: AvatarProps[]
@@ -26,7 +27,7 @@ const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
 
     return (
       <Flex
-        vertical="center"
+        vertical='center'
         ref={ref}
         className={classNames(styles.avatarGroup, className)}
         style={style}

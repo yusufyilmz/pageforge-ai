@@ -1,7 +1,9 @@
 'use client'
 
-import React, { useState, useEffect, ComponentType } from 'react'
-import { ContentBlock } from '@pageforge/types/page/pageTypes'
+import { useState, useEffect, ComponentType } from 'react'
+
+import type { ContentBlock } from '@pageforge/types/page/pageTypes'
+
 import { autoSectionRegistry } from './AutoSectionRegistry'
 
 interface SectionProps {
@@ -53,7 +55,7 @@ export const AIUniversalSections = ({
   if (loading) {
     return (
       <div
-        className="section-loading"
+        className='section-loading'
         style={{
           padding: '2rem',
           textAlign: 'center',
@@ -73,7 +75,7 @@ export const AIUniversalSections = ({
     // Show a fallback for unknown sections instead of returning null
     return (
       <div
-        className="section-error"
+        className='section-error'
         style={{
           padding: '2rem',
           textAlign: 'center',
@@ -99,7 +101,7 @@ export const AIUniversalSections = ({
   // Wrap AI-generated sections with a special indicator
   if (isAIGenerated) {
     return (
-      <div className="ai-generated-section" style={{ position: 'relative' }}>
+      <div className='ai-generated-section' style={{ position: 'relative' }}>
         <div
           style={{
             position: 'absolute',

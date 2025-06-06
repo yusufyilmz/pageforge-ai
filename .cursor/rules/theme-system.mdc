@@ -1,0 +1,330 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# PageForge Theme System Guide
+
+## 🎨 Theme Architecture
+
+### Core Structure
+**Location**: `src/lib/types/site/`
+
+The theme system is built on a comprehensive configuration structure:
+```typescript
+interface ThemeConfig {
+  font: {
+    primary: NextFont    // Main text font
+    secondary: NextFont  // Heading font
+    tertiary: NextFont   // Display font
+    code: NextFont       // Monospace font
+  }
+  style: {
+    theme: 'dark' | 'light'
+    neutral: 'sand' | 'gray' | 'slate'
+    brand: BrandColor     // Primary brand color
+    accent: AccentColor   // Secondary accent color
+    solid: 'color' | 'contrast' | 'inverse'
+    solidStyle: 'flat' | 'plastic'
+    border: 'rounded' | 'playful' | 'conservative'
+    surface: 'filled' | 'translucent'
+    transition: 'all' | 'micro' | 'macro'
+    scaling: '90' | '95' | '100' | '105' | '110'
+  }
+  effects: {
+    mask: { cursor, x, y, radius }
+    gradient: { display, x, y, width, height, tilt, colors, opacity }
+    dots: { display, size, color, opacity }
+    lines: { display, color, opacity, thickness, angle, size }
+    grid: { display, color, opacity, width, height }
+  }
+}
+```
+
+## 🎯 Available Themes
+
+### Professional Themes
+- **minimal** - Clean, light theme with subtle effects
+- **bold** - Vibrant, high-contrast with strong effects
+- **dark** - Dark mode with cyan/blue accents
+- **elegant** - Sophisticated with serif fonts
+- **classic** - Traditional, conservative styling
+
+### Creative Themes
+- **playful** - Fun, colorful with pink/yellow palette
+- **futuristic** - Sci-fi aesthetic with neon effects
+- **natural** - Earth tones with organic feel
+- **luxury** - Premium look with gold accents
+- **vintage** - Retro styling with warm colors
+- **creative** - Artistic, experimental design
+
+## 🎭 Theme Context Usage
+
+### 1. Theme Management
+```typescript
+// ✅ Use theme context for dynamic styling
+import { useTheme, useThemeUtils } from '@/contexts/ThemeContext'
+
+const MyComponent = () => {
+  const { currentTheme, setPageTheme } = useTheme()
+  const { getThemeClass } = useThemeUtils()
+
+  return (
+    <div className={getThemeClass()}>
+      Themed content
+    </div>
+  )
+}
+```
+
+### 2. Theme Priority
+```typescript
+// Theme priority (highest to lowest)
+const themePriority = {
+  pageTheme: 'highest',    // Page-specific override
+  userTheme: 'medium',     // User preference
+  systemTheme: 'lowest'    // System preference
+}
+```
+
+### 3. Theme Switching
+```typescript
+// ✅ Switch themes with proper typing
+const { setPageTheme } = useTheme()
+
+// Switch to a predefined theme
+setPageTheme('dark')
+
+// Switch to a custom theme
+setPageTheme({
+  style: {
+    theme: 'dark',
+    neutral: 'slate',
+    brand: 'blue',
+    accent: 'cyan'
+  }
+})
+```
+
+## 🎨 Theme Styling Patterns
+
+### 1. Component Theming
+```typescript
+// ✅ Use theme-aware components
+import { Flex, Text, Button } from '@pageforge/once-ui/components'
+
+const ThemedComponent = () => (
+  <Flex direction="column" gap="m">
+    <Text variant="heading-strong-l">Title</Text>
+    <Button variant="primary">Action</Button>
+  </Flex>
+)
+```
+
+### 2. Custom Theme Classes
+```typescript
+// ✅ Use theme utilities for custom classes
+const { getThemeClass, getThemeColor } = useThemeUtils()
+
+const customClass = getThemeClass({
+  base: 'custom-component',
+  variants: {
+    theme: {
+      dark: 'dark-mode',
+      light: 'light-mode'
+    }
+  }
+})
+
+const customColor = getThemeColor('brand', 'primary')
+```
+
+### 3. Theme Effects
+```typescript
+// ✅ Apply theme effects
+const { effects } = currentTheme
+
+// Gradient background
+<div style={{
+  background: `linear-gradient(${effects.gradient.tilt}deg, ${effects.gradient.colors.join(', ')})`,
+  opacity: effects.gradient.opacity
+}} />
+
+// Dots pattern
+<div style={{
+  backgroundImage: `radial-gradient(${effects.dots.color} ${effects.dots.size}px, transparent ${effects.dots.size}px)`,
+  opacity: effects.dots.opacity
+}} />
+```
+
+## 🛡️ Theme Best Practices
+
+### 1. Color Management
+```typescript
+// ✅ Use theme colors consistently
+const { getThemeColor } = useThemeUtils()
+
+// Get brand colors
+const primaryColor = getThemeColor('brand', 'primary')
+const accentColor = getThemeColor('brand', 'accent')
+
+// Get neutral colors
+const textColor = getThemeColor('neutral', 'text')
+const bgColor = getThemeColor('neutral', 'background')
+```
+
+### 2. Typography
+```typescript
+// ✅ Use theme fonts
+const { font } = currentTheme
+
+// Apply fonts
+const textStyle = {
+  fontFamily: font.primary.style.fontFamily,
+  fontSize: '1rem',
+  lineHeight: 1.5
+}
+
+// Use Once UI Text component
+<Text variant="body-default-l" font={font.primary}>
+  Content
+</Text>
+```
+
+### 3. Responsive Design
+```typescript
+// ✅ Use theme-aware responsive design
+<Flex
+  direction={{ base: 'column', md: 'row' }}
+  gap={{ base: 'm', md: 'l' }}
+  padding={{ base: 'm', md: 'l' }}
+>
+  <Column width={{ base: 'full', md: '1/2' }}>
+    {content}
+  </Column>
+</Flex>
+```
+
+## 🚫 Theme Anti-Patterns
+
+### ❌ Don't Hardcode Colors
+```typescript
+// ❌ Avoid hardcoded colors
+<div style={{ color: '#000000' }}>Content</div>
+
+// ✅ Use theme colors
+<div style={{ color: getThemeColor('neutral', 'text') }}>Content</div>
+```
+
+### ❌ Don't Ignore Theme Context
+```typescript
+// ❌ Avoid direct theme access
+const theme = require('../theme')
+
+// ✅ Use theme context
+const { currentTheme } = useTheme()
+```
+
+### ❌ Don't Skip Theme Transitions
+```typescript
+// ❌ Avoid abrupt theme changes
+setTheme(newTheme)
+
+// ✅ Use smooth transitions
+setTheme(newTheme, { transition: 'all 0.3s ease' })
+```
+
+## 🎯 Theme Configuration Examples
+
+### 1. Minimal Theme
+```typescript
+const minimalTheme: ThemeConfig = {
+  font: {
+    primary: inter,
+    secondary: inter,
+    tertiary: inter,
+    code: jetBrainsMono
+  },
+  style: {
+    theme: 'light',
+    neutral: 'gray',
+    brand: 'blue',
+    accent: 'cyan',
+    solid: 'color',
+    solidStyle: 'flat',
+    border: 'rounded',
+    surface: 'filled',
+    transition: 'micro',
+    scaling: '100'
+  },
+  effects: {
+    mask: { display: false },
+    gradient: { display: false },
+    dots: { display: false },
+    lines: { display: false },
+    grid: { display: false }
+  }
+}
+```
+
+### 2. Dark Theme
+```typescript
+const darkTheme: ThemeConfig = {
+  font: {
+    primary: inter,
+    secondary: inter,
+    tertiary: inter,
+    code: jetBrainsMono
+  },
+  style: {
+    theme: 'dark',
+    neutral: 'slate',
+    brand: 'cyan',
+    accent: 'blue',
+    solid: 'contrast',
+    solidStyle: 'plastic',
+    border: 'rounded',
+    surface: 'translucent',
+    transition: 'all',
+    scaling: '100'
+  },
+  effects: {
+    mask: { display: true, cursor: true },
+    gradient: { display: true, colors: ['#000', '#111'] },
+    dots: { display: true, color: '#333' },
+    lines: { display: false },
+    grid: { display: false }
+  }
+}
+```
+
+### 3. Playful Theme
+```typescript
+const playfulTheme: ThemeConfig = {
+  font: {
+    primary: inter,
+    secondary: inter,
+    tertiary: inter,
+    code: jetBrainsMono
+  },
+  style: {
+    theme: 'light',
+    neutral: 'sand',
+    brand: 'pink',
+    accent: 'yellow',
+    solid: 'color',
+    solidStyle: 'plastic',
+    border: 'playful',
+    surface: 'filled',
+    transition: 'macro',
+    scaling: '105'
+  },
+  effects: {
+    mask: { display: true, cursor: true },
+    gradient: { display: true, colors: ['#ff69b4', '#ffd700'] },
+    dots: { display: true, color: '#ff69b4' },
+    lines: { display: true, color: '#ffd700' },
+    grid: { display: false }
+  }
+}
+```

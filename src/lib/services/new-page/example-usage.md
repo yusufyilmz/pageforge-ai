@@ -1,10 +1,12 @@
 # How to Use Content Configuration
 
-The `createContentConfig` function now intelligently handles example vs. real content. Here's how to use it properly:
+The `createContentConfig` function now intelligently handles example vs. real content. Here's how to
+use it properly:
 
 ## 🚨 Important: Using Real Content
 
-The configuration functions will show example data by default. To use your real content, you need to provide your own data.
+The configuration functions will show example data by default. To use your real content, you need to
+provide your own data.
 
 ## Method 1: Using the Template Helper (Recommended)
 
@@ -142,6 +144,7 @@ const exampleConfig = createComprehensiveAboutPageConfig()
 ```
 
 You'll see:
+
 - Console warnings about using example data
 - Names like "[Example] John [Example] Doe"
 - Placeholder social links like "https://github.com/[your-username]"
@@ -158,4 +161,5 @@ You'll see:
 
 ## Migration from Old System
 
-If you were previously relying on the hardcoded "Selene Yu" data, you now need to provide your own content configuration to get real data instead of examples.
+If you were previously relying on the hardcoded "Selene Yu" data, you now need to provide your own
+content configuration to get real data instead of examples.

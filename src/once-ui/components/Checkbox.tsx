@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useState, useEffect, forwardRef } from 'react'
 import classNames from 'classnames'
-import { Flex, Icon, InteractiveDetails, InteractiveDetailsProps } from '.'
+import React, { useState, useEffect, forwardRef } from 'react'
+
 import styles from './SharedInteractiveStyles.module.scss'
+
+import { Flex, Icon, InteractiveDetails, InteractiveDetailsProps } from '.'
 
 interface CheckboxProps
   extends Omit<InteractiveDetailsProps, 'onClick'>,
@@ -42,7 +44,9 @@ const Checkbox: React.FC<CheckboxProps> = forwardRef<
     }, [controlledIsChecked])
 
     const toggleItem = () => {
-      if (disabled) return
+      if (disabled) {
+        return
+      }
       if (onToggle) {
         onToggle()
       } else {
@@ -51,7 +55,9 @@ const Checkbox: React.FC<CheckboxProps> = forwardRef<
     }
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
-      if (disabled) return
+      if (disabled) {
+        return
+      }
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault()
         toggleItem()
@@ -60,15 +66,15 @@ const Checkbox: React.FC<CheckboxProps> = forwardRef<
 
     return (
       <Flex
-        vertical="center"
-        gap="16"
+        vertical='center'
+        gap='16'
         className={classNames(styles.container, className, {
           [styles.disabled]: disabled
         })}
         style={style}
       >
         <input
-          type="checkbox"
+          type='checkbox'
           ref={ref}
           aria-checked={
             isIndeterminate
@@ -89,12 +95,12 @@ const Checkbox: React.FC<CheckboxProps> = forwardRef<
           style={{
             borderRadius: 'min(var(--static-space-4), var(--radius-xs))'
           }}
-          role="checkbox"
+          role='checkbox'
           tabIndex={0}
           cursor={disabled ? 'not-allowed' : undefined}
-          horizontal="center"
-          vertical="center"
-          radius="xs"
+          horizontal='center'
+          vertical='center'
+          radius='xs'
           aria-checked={
             isIndeterminate
               ? 'mixed'
@@ -118,12 +124,12 @@ const Checkbox: React.FC<CheckboxProps> = forwardRef<
             : isChecked) &&
             !isIndeterminate && (
               <Flex className={styles.icon}>
-                <Icon onSolid="brand-strong" name="checkbox" size="xs" />
+                <Icon onSolid='brand-strong' name='checkbox' size='xs' />
               </Flex>
             )}
           {isIndeterminate && (
             <Flex className={styles.icon}>
-              <Icon onSolid="brand-strong" name="minus" size="xs" />
+              <Icon onSolid='brand-strong' name='minus' size='xs' />
             </Flex>
           )}
         </Flex>

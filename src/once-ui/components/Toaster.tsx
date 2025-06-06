@@ -2,8 +2,10 @@
 
 import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Flex, Toast } from '.'
+
 import styles from './Toaster.module.scss'
+
+import { Flex, Toast } from '.'
 
 interface ToasterProps {
   toasts: {
@@ -23,22 +25,24 @@ const Toaster: React.FC<ToasterProps> = ({ toasts, removeToast }) => {
     return () => setMounted(false)
   }, [])
 
-  if (!mounted) return null
+  if (!mounted) {
+    return null
+  }
 
   return createPortal(
     <Flex
       zIndex={10}
       fillWidth
-      direction="column"
+      direction='column'
       maxWidth={32}
-      position="fixed"
+      position='fixed'
       className={styles.toastContainer}
     >
       {toasts.map((toast, index, array) => (
         <Flex
-          padding="4"
+          padding='4'
           fillWidth
-          position="absolute"
+          position='absolute'
           key={toast.id}
           className={styles.toastWrapper}
           style={{

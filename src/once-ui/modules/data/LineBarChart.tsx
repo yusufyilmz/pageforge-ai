@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
 import { isWithinInterval, parseISO } from 'date-fns'
-import { formatDate } from './utils/formatDate'
+import React, { useState, useEffect, useMemo } from 'react'
 import {
   ComposedChart as RechartsComposedChart,
   Bar as RechartsBar,
@@ -14,7 +13,11 @@ import {
   Legend as RechartsLegend,
   Area as RechartsArea
 } from 'recharts'
+
 import { Column, Row, DateRange } from '../../components'
+
+import { formatDate } from './utils/formatDate'
+
 import {
   LinearGradient,
   ChartHeader,
@@ -106,7 +109,9 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
         return data.filter(item => {
           try {
             const itemDateValue = item[xAxisKey]
-            if (!itemDateValue) return false
+            if (!itemDateValue) {
+              return false
+            }
 
             const itemDate =
               typeof itemDateValue === 'string'
@@ -163,7 +168,7 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
       fillWidth
       height={chart.height}
       border={border}
-      radius="l"
+      radius='l'
       {...flex}
     >
       <ChartHeader
@@ -182,7 +187,7 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
           emptyState={emptyState}
         />
         {!loading && filteredData && filteredData.length > 0 && (
-          <RechartsResponsiveContainer width="100%" height="100%">
+          <RechartsResponsiveContainer width='100%' height='100%'>
             <RechartsComposedChart
               data={filteredData}
               margin={{ left: 0, bottom: 0, top: 0, right: 0 }}
@@ -204,7 +209,7 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
               <RechartsCartesianGrid
                 horizontal
                 vertical={false}
-                stroke="var(--neutral-alpha-weak)"
+                stroke='var(--neutral-alpha-weak)'
               />
               {legend.display && (
                 <RechartsLegend
@@ -306,7 +311,7 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
                 dataKey={lineSeries.key}
                 name={lineSeries.key}
                 stroke={finalLineColor}
-                transform="translate(0, -1)"
+                transform='translate(0, -1)'
                 fill={`url(#lineGradient${chartId})`}
                 activeDot={{
                   r: 4,
@@ -321,7 +326,7 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
                 fill={`url(#barGradient${chartId})`}
                 stroke={finalBarColor}
                 strokeWidth={1}
-                transform="translate(0, -1)"
+                transform='translate(0, -1)'
                 radius={[4, 4, 4, 4]}
                 barSize={
                   barWidth === 'fill'

@@ -42,7 +42,9 @@ export function ThemeProvider({
   }, [initial])
 
   useEffect(() => {
-    if (!mounted) return
+    if (!mounted) {
+      return
+    }
 
     const updateResolvedTheme = () => {
       if (theme === 'system') {

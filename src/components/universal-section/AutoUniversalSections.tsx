@@ -1,7 +1,9 @@
 'use client'
 
 import React, { useState, useEffect, ComponentType } from 'react'
-import { ContentBlock } from '@pageforge/types/page/pageTypes'
+
+import type { ContentBlock } from '@pageforge/types/page/pageTypes'
+
 import { autoSectionRegistry } from './AutoSectionRegistry'
 
 interface SectionProps {
@@ -50,7 +52,7 @@ export const AutoUniversalSections = ({
 
   if (loading) {
     return (
-      <div className="section-loading">
+      <div className='section-loading'>
         <div>Loading section...</div>
       </div>
     )

@@ -1,11 +1,11 @@
 import {
-  SiteThemeType,
   getThemeConfig,
-  ThemeConfig
+  type SiteThemeType,
+  type ThemeConfig
 } from '@pageforge/types/site'
 
 // Base URL configuration
-export const baseURL = 'https://demo.once-ui.com' // Replace with your domain
+export const baseURL = 'https://demo.once-ui.com'
 
 // Metadata configuration
 export const meta = {

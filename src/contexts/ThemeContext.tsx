@@ -5,13 +5,12 @@ import React, {
   useContext,
   useState,
   useEffect,
-  ReactNode
+  type ReactNode
 } from 'react'
-import { useUserProfile } from './UserContext'
+
+import type { SiteThemeType } from '../lib/types/site/siteThemes'
 import {
   ThemeConfig,
-  getThemeConfig,
-  getAvailableThemes,
   ThemeMode,
   NeutralColor,
   BrandColor,
@@ -20,9 +19,12 @@ import {
   SolidStyle,
   BorderStyle,
   SurfaceStyle,
-  TransitionStyle
+  TransitionStyle,
+  getThemeConfig,
+  getAvailableThemes
 } from '../lib/types/site/themeConfigs'
-import { SiteThemeType } from '../lib/types/site/siteThemes'
+
+import { useUserProfile } from './UserContext'
 
 // ============================================================================
 // THEME CONTEXT TYPES
@@ -107,7 +109,9 @@ function mergeThemeConfig(
   baseConfig: ThemeConfig,
   overrides?: PageThemeOverride['customOverrides']
 ): ThemeConfig {
-  if (!overrides) return baseConfig
+  if (!overrides) {
+    return baseConfig
+  }
 
   const mergedStyle = {
     ...baseConfig.style,
@@ -123,7 +127,9 @@ function mergeThemeConfig(
 function getThemeFromUserPreferences(
   userPreferences: any
 ): UserThemePreferences | null {
-  if (!userPreferences?.siteTheme) return null
+  if (!userPreferences?.siteTheme) {
+    return null
+  }
 
   return {
     siteTheme: userPreferences.siteTheme || defaultSystemTheme,

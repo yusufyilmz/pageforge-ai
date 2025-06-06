@@ -1,7 +1,9 @@
-import React, { forwardRef } from 'react'
-import styles from './NavIcon.module.scss'
-import { Flex } from '.'
 import classNames from 'classnames'
+import React, { forwardRef } from 'react'
+
+import styles from './NavIcon.module.scss'
+
+import { Flex } from '.'
 
 interface NavIconProps extends React.ComponentProps<typeof Flex> {
   className?: string
@@ -16,12 +18,12 @@ const NavIcon = forwardRef<HTMLDivElement, Partial<NavIconProps>>(
       <Flex
         ref={ref}
         tabIndex={0}
-        radius="m"
-        cursor="interactive"
-        width="40"
-        height="40"
-        minHeight="40"
-        minWidth="40"
+        radius='m'
+        cursor='interactive'
+        width='40'
+        height='40'
+        minHeight='40'
+        minWidth='40'
         className={className}
         style={style}
         onClick={onClick}

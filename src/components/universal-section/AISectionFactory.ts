@@ -1,6 +1,11 @@
-import { ComponentType } from 'react'
-import { ContentBlock } from '@pageforge/types/page/pageTypes'
-import React from 'react'
+import {
+  createElement,
+  useState,
+  type ComponentType,
+  type CSSProperties,
+  type ReactElement
+} from 'react'
+
 import {
   Flex,
   Heading,
@@ -11,11 +16,10 @@ import {
   Button,
   Icon,
   Avatar,
-  Badge,
   Input,
-  Textarea,
-  Select
+  Textarea
 } from '@pageforge/once-ui/components'
+import type { ContentBlock } from '@pageforge/types/page/pageTypes'
 
 interface SectionProps {
   block: ContentBlock
@@ -101,43 +105,63 @@ class AISectionFactory {
 
     // Detect layout preferences
     let layout: SectionRequirement['layout'] = 'single-column'
-    if (description.includes('grid') || description.includes('cards'))
+    if (description.includes('grid') || description.includes('cards')) {
       layout = 'grid'
+    }
     if (
       description.includes('two column') ||
       description.includes('side by side')
-    )
+    ) {
       layout = 'two-column'
-    if (description.includes('three column')) layout = 'three-column'
-    if (description.includes('hero') || description.includes('banner'))
+    }
+    if (description.includes('three column')) {
+      layout = 'three-column'
+    }
+    if (description.includes('hero') || description.includes('banner')) {
       layout = 'hero'
-    if (description.includes('sidebar')) layout = 'sidebar'
-    if (description.includes('masonry') || description.includes('pinterest'))
+    }
+    if (description.includes('sidebar')) {
+      layout = 'sidebar'
+    }
+    if (description.includes('masonry') || description.includes('pinterest')) {
       layout = 'masonry'
-    if (description.includes('split screen')) layout = 'split'
+    }
+    if (description.includes('split screen')) {
+      layout = 'split'
+    }
 
     // Detect style preferences
     let style: SectionRequirement['style'] = 'modern'
-    if (description.includes('minimal') || description.includes('clean'))
+    if (description.includes('minimal') || description.includes('clean')) {
       style = 'minimal'
-    if (description.includes('bold') || description.includes('vibrant'))
+    }
+    if (description.includes('bold') || description.includes('vibrant')) {
       style = 'bold'
+    }
     if (
       description.includes('elegant') ||
       description.includes('sophisticated')
-    )
+    ) {
       style = 'elegant'
-    if (description.includes('playful') || description.includes('fun'))
+    }
+    if (description.includes('playful') || description.includes('fun')) {
       style = 'playful'
+    }
     if (
       description.includes('corporate') ||
       description.includes('professional')
-    )
+    ) {
       style = 'corporate'
-    if (description.includes('creative') || description.includes('artistic'))
+    }
+    if (description.includes('creative') || description.includes('artistic')) {
       style = 'creative'
-    if (description.includes('technical') || description.includes('developer'))
+    }
+    if (
+      description.includes('technical') ||
+      description.includes('developer')
+    ) {
       style = 'technical'
+    }
 
     // Enhanced element detection with more patterns
     this.detectCommonElements(description, elements)
@@ -398,10 +422,12 @@ class AISectionFactory {
 
   private detectInteractiveElements(
     description: string,
-    elements: SectionRequirement['elements'],
+    _elements: SectionRequirement['elements'],
     interactions: SectionRequirement['interactions']
   ) {
-    if (!interactions) return
+    if (!interactions) {
+      return
+    }
 
     // Modal/Popup interactions
     if (
@@ -577,15 +603,30 @@ class AISectionFactory {
   private extractFormFields(description: string): string[] {
     const fields = ['name', 'email'] // Always include these basics
 
-    if (description.includes('phone')) fields.push('phone')
-    if (description.includes('company')) fields.push('company')
-    if (description.includes('website')) fields.push('website')
-    if (description.includes('budget')) fields.push('budget')
-    if (description.includes('timeline')) fields.push('timeline')
-    if (description.includes('message') || description.includes('comment'))
+    if (description.includes('phone')) {
+      fields.push('phone')
+    }
+    if (description.includes('company')) {
+      fields.push('company')
+    }
+    if (description.includes('website')) {
+      fields.push('website')
+    }
+    if (description.includes('budget')) {
+      fields.push('budget')
+    }
+    if (description.includes('timeline')) {
+      fields.push('timeline')
+    }
+    if (description.includes('message') || description.includes('comment')) {
       fields.push('message')
-    if (description.includes('address')) fields.push('address')
-    if (description.includes('subject')) fields.push('subject')
+    }
+    if (description.includes('address')) {
+      fields.push('address')
+    }
+    if (description.includes('subject')) {
+      fields.push('subject')
+    }
 
     return fields
   }
@@ -595,23 +636,45 @@ class AISectionFactory {
     defaultCount: number
   ): number {
     const matches = description.match(/(\d+)\s*column/i)
-    if (matches) return parseInt(matches[1])
+    if (matches) {
+      return parseInt(matches[1])
+    }
 
-    if (description.includes('two')) return 2
-    if (description.includes('three')) return 3
-    if (description.includes('four')) return 4
-    if (description.includes('five')) return 5
+    if (description.includes('two')) {
+      return 2
+    }
+    if (description.includes('three')) {
+      return 3
+    }
+    if (description.includes('four')) {
+      return 4
+    }
+    if (description.includes('five')) {
+      return 5
+    }
 
     return defaultCount
   }
 
   private detectChartType(description: string): string {
-    if (description.includes('bar')) return 'bar'
-    if (description.includes('line')) return 'line'
-    if (description.includes('pie')) return 'pie'
-    if (description.includes('donut')) return 'donut'
-    if (description.includes('area')) return 'area'
-    if (description.includes('scatter')) return 'scatter'
+    if (description.includes('bar')) {
+      return 'bar'
+    }
+    if (description.includes('line')) {
+      return 'line'
+    }
+    if (description.includes('pie')) {
+      return 'pie'
+    }
+    if (description.includes('donut')) {
+      return 'donut'
+    }
+    if (description.includes('area')) {
+      return 'area'
+    }
+    if (description.includes('scatter')) {
+      return 'scatter'
+    }
     return 'bar' // default
   }
 
@@ -621,17 +684,23 @@ class AISectionFactory {
 
     if (description.includes('must')) {
       const mustMatch = description.match(/must\s+([^.!?]+)/gi)
-      if (mustMatch) customPhrases.push(...mustMatch)
+      if (mustMatch) {
+        customPhrases.push(...mustMatch)
+      }
     }
 
     if (description.includes('need')) {
       const needMatch = description.match(/need\s+([^.!?]+)/gi)
-      if (needMatch) customPhrases.push(...needMatch)
+      if (needMatch) {
+        customPhrases.push(...needMatch)
+      }
     }
 
     if (description.includes('should')) {
       const shouldMatch = description.match(/should\s+([^.!?]+)/gi)
-      if (shouldMatch) customPhrases.push(...shouldMatch)
+      if (shouldMatch) {
+        customPhrases.push(...shouldMatch)
+      }
     }
 
     return customPhrases.join('; ')
@@ -661,16 +730,18 @@ class AISectionFactory {
   ): ComponentType<SectionProps> {
     const componentName = `${sectionName}Section`
 
-    const Component = ({ block, index }: SectionProps) => {
-      const [activeTab, setActiveTab] = React.useState(0)
-      const [openAccordions, setOpenAccordions] = React.useState<number[]>([])
-      const [formData, setFormData] = React.useState({})
-      const [isSubmitting, setIsSubmitting] = React.useState(false)
-      const [countersVisible, setCountersVisible] = React.useState(false)
+    const Component = ({ block }: SectionProps) => {
+      const [activeTab, setActiveTab] = useState(0)
+      const [openAccordions, setOpenAccordions] = useState<number[]>([])
+      const [formData, setFormData] = useState({})
+      const [isSubmitting, setIsSubmitting] = useState(false)
+      // const [countersVisible, setCountersVisible] = useState(false)
 
       const content = block.content || {}
 
-      if (block.display === false) return null
+      if (block.display === false) {
+        return null
+      }
 
       const styleProps = this.getStyleProps(requirements)
       const headerSection = this.generateHeaderSection(content)
@@ -686,19 +757,19 @@ class AISectionFactory {
       })
       const footerSection = this.generateFooterSection(requirements, content)
 
-      return React.createElement(
+      return createElement(
         Flex,
         {
           fillWidth: true,
-          direction: "column",
-          align: "center",
-          padding: "xl",
-          gap: "l",
+          direction: 'column',
+          align: 'center',
+          padding: 'xl',
+          gap: 'l',
           style: styleProps
         },
-        React.createElement(
+        createElement(
           Column,
-          { maxWidth: "l", fillWidth: true },
+          { maxWidth: 'l', fillWidth: true },
           headerSection,
           layoutContent,
           footerSection
@@ -712,15 +783,16 @@ class AISectionFactory {
     return Component
   }
 
-  private getStyleProps(requirements: SectionRequirement): React.CSSProperties {
-    const styles: React.CSSProperties = {}
+  private getStyleProps(requirements: SectionRequirement): CSSProperties {
+    const styles: CSSProperties = {}
 
     switch (requirements.style) {
       case 'minimal':
         styles.background = 'var(--neutral-50)'
         break
       case 'bold':
-        styles.background = 'linear-gradient(135deg, var(--accent-500), var(--accent-600))'
+        styles.background =
+          'linear-gradient(135deg, var(--accent-500), var(--accent-600))'
         styles.color = 'white'
         break
       case 'elegant':
@@ -728,60 +800,70 @@ class AISectionFactory {
         styles.borderTop = '1px solid var(--neutral-200)'
         break
       case 'creative':
-        styles.background = 'linear-gradient(45deg, var(--accent-100), var(--accent-200))'
+        styles.background =
+          'linear-gradient(45deg, var(--accent-100), var(--accent-200))'
         break
     }
 
     return styles
   }
 
-  private generateHeaderSection(content: any): React.ReactElement | null {
-    if (!content.title) return null
-
-    return React.createElement(
-      Flex,
-      {
-        direction: "column",
-        align: "center",
-        gap: "s",
-        marginBottom: "xl"
-      },
-      React.createElement(
-        Heading,
-        {
-          variant: "display-strong-l",
-          textAlign: "center"
-        },
-        content.title
-      ),
-      content.subtitle && React.createElement(
-        Text,
-        {
-          variant: "body-default-l",
-          textAlign: "center",
-          onBackground: "neutral-weak"
-        },
-        content.subtitle
-      )
-    )
-  }
-
-  private generateFooterSection(requirements: SectionRequirement, content: any): React.ReactElement | null {
-    if (!requirements.elements.some(e => e.type === 'button') || !content.ctaButton) {
+  private generateHeaderSection(content: any): ReactElement | null {
+    if (!content.title) {
       return null
     }
 
-    return React.createElement(
+    return createElement(
       Flex,
       {
-        horizontal: "center",
-        marginTop: "xl"
+        direction: 'column',
+        align: 'center',
+        gap: 's',
+        marginBottom: 'xl'
       },
-      React.createElement(
+      createElement(
+        Heading,
+        {
+          variant: 'display-strong-l',
+          textAlign: 'center'
+        },
+        content.title
+      ),
+      content.subtitle &&
+        createElement(
+          Text,
+          {
+            variant: 'body-default-l',
+            textAlign: 'center',
+            onBackground: 'neutral-weak'
+          },
+          content.subtitle
+        )
+    )
+  }
+
+  private generateFooterSection(
+    requirements: SectionRequirement,
+    content: any
+  ): ReactElement | null {
+    if (
+      !requirements.elements.some(e => e.type === 'button') ||
+      !content.ctaButton
+    ) {
+      return null
+    }
+
+    return createElement(
+      Flex,
+      {
+        horizontal: 'center',
+        marginTop: 'xl'
+      },
+      createElement(
         Button,
         {
-          variant: "primary",
-          size: "l",
+          variant: 'primary',
+          size: 'l',
           href: content.ctaButton.href
         },
         content.ctaButton.text
@@ -794,7 +876,7 @@ class AISectionFactory {
     requirements: SectionRequirement,
     content: any,
     state: any
-  ): React.ReactElement {
+  ): ReactElement {
     // Check for specific element types that override layout
     if (requirements.elements.some(e => e.type === 'tabs')) {
       return this.generateTabsLayout(requirements, content, state)
@@ -841,7 +923,11 @@ class AISectionFactory {
     }
   }
 
-  private generateGridLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
+  private generateGridLayout(
+    requirements: SectionRequirement,
+    content: any,
+    _state: any
+  ): ReactElement {
     const elements = requirements.elements
 
     // Enhanced grid layouts for different element types
@@ -849,24 +935,24 @@ class AISectionFactory {
       const cardElement = elements.find(e => e.type === 'card')
       const columns = cardElement?.properties?.columns || 3
 
-      return React.createElement(
+      return createElement(
         Grid,
-        { columns, gap: "m" },
+        { columns, gap: 'm' },
         ...(content.items || []).map((item: any, index: number) =>
-          React.createElement(
+          createElement(
             Card,
             {
               key: index,
-              padding: "m",
-              border: "neutral-medium",
+              padding: 'm',
+              border: 'neutral-medium',
               ...this.generateCardInteractions(requirements)
             },
-            React.createElement(
+            createElement(
               Flex,
               {
-                direction: "column",
-                gap: "s",
-                align: "center"
+                direction: 'column',
+                gap: 's',
+                align: 'center'
               },
               ...this.generateCardContent(cardElement, item)
             )
@@ -876,28 +962,28 @@ class AISectionFactory {
     }
 
     if (elements.some(e => e.type === 'counter')) {
-      return React.createElement(
+      return createElement(
         Grid,
-        { columns: 4, gap: "m" },
+        { columns: 4, gap: 'm' },
         ...(content.stats || []).map((stat: any, index: number) =>
-          React.createElement(
+          createElement(
             Card,
             {
               key: index,
-              padding: "l",
+              padding: 'l',
               style: { textAlign: 'center' }
             },
-            React.createElement(
+            createElement(
               Flex,
               {
-                direction: "column",
-                gap: "s",
-                align: "center"
+                direction: 'column',
+                gap: 's',
+                align: 'center'
               },
-              React.createElement(
+              createElement(
                 Heading,
                 {
-                  variant: "display-strong-xl",
+                  variant: 'display-strong-xl',
                   style: {
                     color: 'var(--accent-500)',
                     fontSize: '3rem'
@@ -905,50 +991,51 @@ class AISectionFactory {
                 },
                 stat.value
               ),
-              React.createElement(
+              createElement(
                 Text,
                 {
-                  variant: "body-default-m",
-                  weight: "strong"
+                  variant: 'body-default-m',
+                  weight: 'strong'
                 },
                 stat.label
               ),
-              stat.description && React.createElement(
-                Text,
-                {
-                  variant: "body-default-s",
-                  onBackground: "neutral-weak"
-                },
-                stat.description
-              )
+              stat.description &&
+                createElement(
+                  Text,
+                  {
+                    variant: 'body-default-s',
+                    onBackground: 'neutral-weak'
+                  },
+                  stat.description
+                )
             )
           )
         )
       )
     }
 
-    return React.createElement(
+    return createElement(
       Grid,
-      { columns: 3, gap: "m" },
-      React.createElement(Text, null, "Enhanced grid content")
+      { columns: 3, gap: 'm' },
+      createElement(Text, null, 'Enhanced grid content')
     )
   }
 
-  private generateCardContent(cardElement: any, item: any): React.ReactElement[] {
-    const elements: React.ReactElement[] = []
+  private generateCardContent(cardElement: any, item: any): ReactElement[] {
+    const elements: ReactElement[] = []
 
     if (!cardElement?.properties) {
       elements.push(
-        React.createElement(
+        createElement(
           Heading,
-          { key: "title", variant: "heading-strong-s" },
+          { key: 'title', variant: 'heading-strong-s' },
           item.title
         )
       )
       elements.push(
-        React.createElement(
+        createElement(
           Text,
-          { key: "description", variant: "body-default-s" },
+          { key: 'description', variant: 'body-default-s' },
           item.description
         )
       )
@@ -959,9 +1046,9 @@ class AISectionFactory {
 
     if (props.showImage && item.image) {
       elements.push(
-        React.createElement(Avatar, {
-          key: "avatar",
-          size: "l",
+        createElement(Avatar, {
+          key: 'avatar',
+          size: 'l',
           src: item.image,
           alt: item.name
         })
@@ -969,21 +1056,21 @@ class AISectionFactory {
     }
 
     elements.push(
-      React.createElement(
+      createElement(
         Heading,
-        { key: "name", variant: "heading-strong-s" },
+        { key: 'name', variant: 'heading-strong-s' },
         item.name || item.title
       )
     )
 
     if ((props.showTitle || props.showRole) && item.role) {
       elements.push(
-        React.createElement(
+        createElement(
           Text,
           {
-            key: "role",
-            variant: "body-default-s",
-            onBackground: "neutral-weak"
+            key: 'role',
+            variant: 'body-default-s',
+            onBackground: 'neutral-weak'
           },
           item.role
         )
@@ -992,12 +1079,12 @@ class AISectionFactory {
 
     if (props.showBio && item.bio) {
       elements.push(
-        React.createElement(
+        createElement(
           Text,
           {
-            key: "bio",
-            variant: "body-default-s",
-            align: "center"
+            key: 'bio',
+            variant: 'body-default-s',
+            align: 'center'
           },
           item.bio
         )
@@ -1006,11 +1093,11 @@ class AISectionFactory {
 
     if (props.showPrice && item.price) {
       elements.push(
-        React.createElement(
+        createElement(
           Text,
           {
-            key: "price",
-            variant: "heading-strong-m",
+            key: 'price',
+            variant: 'heading-strong-m',
             style: { color: 'var(--accent-500)' }
           },
           item.price
@@ -1020,33 +1107,29 @@ class AISectionFactory {
 
     if (props.showRating && item.rating) {
       elements.push(
-        React.createElement(
+        createElement(
           Flex,
-          { key: "rating", gap: "xs", align: "center" },
-          React.createElement(Icon, {
-            name: "star",
-            size: "s",
+          { key: 'rating', gap: 'xs', align: 'center' },
+          createElement(Icon, {
+            name: 'star',
+            size: 's',
             style: { color: 'var(--warning-500' }
           }),
-          React.createElement(
-            Text,
-            { variant: "body-default-s" },
-            item.rating
-          )
+          createElement(Text, { variant: 'body-default-s' }, item.rating)
         )
       )
     }
 
     if (props.addToCart) {
       elements.push(
-        React.createElement(
+        createElement(
           Button,
           {
-            key: "cart",
-            variant: "primary",
-            size: "s"
+            key: 'cart',
+            variant: 'primary',
+            size: 's'
           },
-          "Add to Cart"
+          'Add to Cart'
         )
       )
     }
@@ -1078,53 +1161,59 @@ class AISectionFactory {
     return {}
   }
 
-  private generateTwoColumnLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
-    return React.createElement(
+  private generateTwoColumnLayout(
+    _requirements: SectionRequirement,
+    content: any,
+    _state: any
+  ): ReactElement {
+    return createElement(
       Grid,
-      { columns: 2, gap: "xl", align: "center" },
-      React.createElement(
+      { columns: 2, gap: 'xl', align: 'center' },
+      createElement(
         Flex,
-        { direction: "column", gap: "m" },
-        React.createElement(
+        { direction: 'column', gap: 'm' },
+        createElement(
           Heading,
-          { variant: "display-strong-s" },
+          { variant: 'display-strong-s' },
           content.title || 'Section Title'
         ),
-        React.createElement(
+        createElement(
           Text,
-          { variant: "body-default-l" },
+          { variant: 'body-default-l' },
           content.description || 'Section description'
         ),
-        content.features && React.createElement(
-          Flex,
-          { direction: "column", gap: "s" },
-          ...content.features.map((feature: string, index: number) =>
-            React.createElement(
-              Flex,
-              { key: index, gap: "s", align: "center" },
-              React.createElement(Icon, { name: "check", size: "s" }),
-              React.createElement(
-                Text,
-                { variant: "body-default-m" },
-                feature
+        content.features &&
+          createElement(
+            Flex,
+            { direction: 'column', gap: 's' },
+            ...content.features.map((feature: string, index: number) =>
+              createElement(
+                Flex,
+                { key: index, gap: 's', align: 'center' },
+                createElement(Icon, { name: 'check', size: 's' }),
+                createElement(Text, { variant: 'body-default-m' }, feature)
               )
             )
           )
-        )
       ),
-      React.createElement(
+      createElement(
         Flex,
-        { direction: "column", gap: "m" },
-        content.image && React.createElement("img", {
-          src: content.image,
-          alt: content.imageAlt,
-          style: { width: '100%', borderRadius: '8px' }
-        })
+        { direction: 'column', gap: 'm' },
+        content.image &&
+          createElement('img', {
+            src: content.image,
+            alt: content.imageAlt,
+            style: { width: '100%', borderRadius: '8px' }
+          })
       )
     )
   }
 
-  private generateSingleColumnLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
+  private generateSingleColumnLayout(
+    requirements: SectionRequirement,
+    content: any,
+    state: any
+  ): ReactElement {
     const hasForm = requirements.elements.some(e => e.type === 'form')
     const hasRating = requirements.elements.some(e => e.type === 'rating')
 
@@ -1133,51 +1222,51 @@ class AISectionFactory {
     }
 
     if (hasRating) {
-      return React.createElement(
+      return createElement(
         Flex,
-        { direction: "column", gap: "l" },
-        React.createElement(
+        { direction: 'column', gap: 'l' },
+        createElement(
           Heading,
           {
-            variant: "display-strong-s",
-            textAlign: "center"
+            variant: 'display-strong-s',
+            textAlign: 'center'
           },
           content.title || 'Customer Reviews'
         ),
-        React.createElement(
+        createElement(
           Grid,
-          { columns: 1, gap: "m" },
+          { columns: 1, gap: 'm' },
           ...(content.reviews || []).map((review: any, index: number) =>
-            React.createElement(
+            createElement(
               Card,
-              { key: index, padding: "l" },
-              React.createElement(
+              { key: index, padding: 'l' },
+              createElement(
                 Flex,
-                { direction: "column", gap: "s" },
-                React.createElement(
+                { direction: 'column', gap: 's' },
+                createElement(
                   Flex,
-                  { align: "center", gap: "s" },
-                  React.createElement(Avatar, {
-                    size: "s",
+                  { align: 'center', gap: 's' },
+                  createElement(Avatar, {
+                    size: 's',
                     src: review.avatar,
                     alt: review.name
                   }),
-                  React.createElement(
+                  createElement(
                     Flex,
-                    { direction: "column", gap: "xs" },
-                    React.createElement(
+                    { direction: 'column', gap: 'xs' },
+                    createElement(
                       Text,
-                      { variant: "heading-strong-xs" },
+                      { variant: 'heading-strong-xs' },
                       review.name
                     ),
-                    React.createElement(
+                    createElement(
                       Flex,
-                      { gap: "xs" },
+                      { gap: 'xs' },
                       ...[...Array(5)].map((_, i) =>
-                        React.createElement(Icon, {
+                        createElement(Icon, {
                           key: i,
-                          name: "star",
-                          size: "xs",
+                          name: 'star',
+                          size: 'xs',
                           style: {
                             color: i < review.rating ? '#ffd700' : '#ddd'
                           }
@@ -1186,11 +1275,7 @@ class AISectionFactory {
                     )
                   )
                 ),
-                React.createElement(
-                  Text,
-                  { variant: "body-default-m" },
-                  review.text
-                )
+                createElement(Text, { variant: 'body-default-m' }, review.text)
               )
             )
           )
@@ -1198,35 +1283,43 @@ class AISectionFactory {
       )
     }
 
-    return React.createElement(
+    return createElement(
       Flex,
-      { direction: "column", gap: "l", align: "center" },
-      React.createElement(
+      { direction: 'column', gap: 'l', align: 'center' },
+      createElement(
         Heading,
-        { variant: "display-strong-s" },
+        { variant: 'display-strong-s' },
         content.title || 'Section Title'
       ),
-      React.createElement(
+      createElement(
         Text,
-        { variant: "body-default-l", textAlign: "center" },
+        { variant: 'body-default-l', textAlign: 'center' },
         content.description || 'Section content'
       )
     )
   }
 
-  private generateFormLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
+  private generateFormLayout(
+    requirements: SectionRequirement,
+    content: any,
+    state: any
+  ): ReactElement {
     const formElement = requirements.elements.find(e => e.type === 'form')
-    const fields = formElement?.properties?.fields || ['name', 'email', 'message']
+    const fields = formElement?.properties?.fields || [
+      'name',
+      'email',
+      'message'
+    ]
 
-    return React.createElement(
+    return createElement(
       Card,
       {
-        padding: "xl",
-        maxWidth: "m",
+        padding: 'xl',
+        maxWidth: 'm',
         style: { margin: '0 auto' }
       },
-      React.createElement(
-        "form",
+      createElement(
+        'form',
         {
           onSubmit: (e: any) => {
             e.preventDefault()
@@ -1234,93 +1327,100 @@ class AISectionFactory {
             setTimeout(() => state.setIsSubmitting(false), 2000)
           }
         },
-        React.createElement(
+        createElement(
           Flex,
-          { direction: "column", gap: "l" },
-          React.createElement(
+          { direction: 'column', gap: 'l' },
+          createElement(
             Heading,
             {
-              variant: "heading-strong-l",
-              align: "center"
+              variant: 'heading-strong-l',
+              align: 'center'
             },
             content.title || 'Contact Us'
           ),
-          content.description && React.createElement(
-            Text,
-            {
-              variant: "body-default-m",
-              align: "center",
-              onBackground: "neutral-weak"
-            },
-            content.description
-          ),
-          React.createElement(
+          content.description &&
+            createElement(
+              Text,
+              {
+                variant: 'body-default-m',
+                align: 'center',
+                onBackground: 'neutral-weak'
+              },
+              content.description
+            ),
+          createElement(
             Flex,
-            { direction: "column", gap: "m" },
+            { direction: 'column', gap: 'm' },
             ...fields.map((field: string, index: number) =>
               this.generateFormField(field, index, state)
             )
           ),
-          React.createElement(
+          createElement(
             Button,
             {
-              type: "submit",
-              variant: "primary",
-              size: "l",
+              type: 'submit',
+              variant: 'primary',
+              size: 'l',
               fillWidth: true,
               loading: state.isSubmitting
             },
-            state.isSubmitting ? 'Sending...' : (content.submitText || 'Send Message')
+            state.isSubmitting
+              ? 'Sending...'
+              : content.submitText || 'Send Message'
           )
         )
       )
     )
   }
 
-  private generateFormField(field: string, index: number, state: any): React.ReactElement {
+  private generateFormField(
+    field: string,
+    index: number,
+    state: any
+  ): ReactElement {
     const commonProps = {
       key: index,
       value: state.formData[field] || '',
-      onChange: (e: any) => state.setFormData((prev: any) => ({
-        ...prev,
-        [field]: e.target.value
-      }))
+      onChange: (e: any) =>
+        state.setFormData((prev: any) => ({
+          ...prev,
+          [field]: e.target.value
+        }))
     }
 
     switch (field) {
       case 'name':
-        return React.createElement(Input, {
+        return createElement(Input, {
           ...commonProps,
           id: 'name',
-          placeholder: "Your Name",
+          placeholder: 'Your Name',
           required: true
         })
       case 'email':
-        return React.createElement(Input, {
+        return createElement(Input, {
           ...commonProps,
           id: 'email',
-          type: "email",
-          placeholder: "Your Email",
+          type: 'email',
+          placeholder: 'Your Email',
           required: true
         })
       case 'phone':
-        return React.createElement(Input, {
+        return createElement(Input, {
           ...commonProps,
-          type: "tel",
-          placeholder: "Your Phone",
-          id: "phone"
-
+          type: 'tel',
+          placeholder: 'Your Phone',
+          id: 'phone'
         })
       case 'message':
-        return React.createElement(Textarea, {
+        return createElement(Textarea, {
           ...commonProps,
-          placeholder: "Your Message",
+          placeholder: 'Your Message',
           rows: 5,
           required: true,
-          id: "message"
+          id: 'message'
         })
       default:
-        return React.createElement(Input, {
+        return createElement(Input, {
           ...commonProps,
           id: 'default',
           placeholder: field.charAt(0).toUpperCase() + field.slice(1)
@@ -1329,86 +1429,119 @@ class AISectionFactory {
   }
 
   // Stub implementations for other layout methods
-  private generateThreeColumnLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
-    return React.createElement(Text, null, "Three column layout component")
+  private generateThreeColumnLayout(
+    _requirements: SectionRequirement,
+    _content: any,
+    _state: any
+  ): ReactElement {
+    return createElement(Text, null, 'Three column layout component')
   }
 
-  private generateHeroLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
-    return React.createElement(
+  private generateHeroLayout(
+    _requirements: SectionRequirement,
+    content: any,
+    _state: any
+  ): ReactElement {
+    return createElement(
       Flex,
-      { direction: "column", align: "center", gap: "l" },
-      React.createElement(
+      { direction: 'column', align: 'center', gap: 'l' },
+      createElement(
         Heading,
-        { variant: "display-strong-l" },
+        { variant: 'display-strong-l' },
         content.title || 'Hero Title'
       ),
-      React.createElement(
+      createElement(
         Text,
-        { variant: "body-default-l", maxWidth: "m" },
+        { variant: 'body-default-l', maxWidth: 'm' },
         content.subtitle || 'Hero subtitle'
       )
     )
   }
 
-  private generateSidebarLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
-    return React.createElement(Text, null, "Sidebar layout component")
+  private generateSidebarLayout(
+    _requirements: SectionRequirement,
+    _content: any,
+    _state: any
+  ): ReactElement {
+    return createElement(Text, null, 'Sidebar layout component')
   }
 
-  private generateTabsLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
-    return React.createElement(Text, null, "Tabs layout component")
+  private generateTabsLayout(
+    _requirements: SectionRequirement,
+    _content: any,
+    _state: any
+  ): ReactElement {
+    return createElement(Text, null, 'Tabs layout component')
   }
 
-  private generateAccordionLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
-    return React.createElement(Text, null, "Accordion layout component")
+  private generateAccordionLayout(
+    _requirements: SectionRequirement,
+    _content: any,
+    _state: any
+  ): ReactElement {
+    return createElement(Text, null, 'Accordion layout component')
   }
 
-  private generateTimelineLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
-    return React.createElement(Text, null, "Timeline layout component")
+  private generateTimelineLayout(
+    _requirements: SectionRequirement,
+    _content: any,
+    _state: any
+  ): ReactElement {
+    return createElement(Text, null, 'Timeline layout component')
   }
 
-  private generateCarouselLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
-    return React.createElement(Text, null, "Carousel layout component")
+  private generateCarouselLayout(
+    _requirements: SectionRequirement,
+    _content: any,
+    _state: any
+  ): ReactElement {
+    return createElement(Text, null, 'Carousel layout component')
   }
 
-  private generateCustomLayout(requirements: SectionRequirement, content: any, state: any): React.ReactElement {
-    return React.createElement(
+  private generateCustomLayout(
+    requirements: SectionRequirement,
+    _content: any,
+    _state: any
+  ): ReactElement {
+    return createElement(
       Flex,
-      { direction: "column", gap: "l", align: "center" },
-      React.createElement(
+      { direction: 'column', gap: 'l', align: 'center' },
+      createElement(
         Card,
         {
-          padding: "xl",
-          border: "accent-medium",
+          padding: 'xl',
+          border: 'accent-medium',
           style: {
-            background: 'linear-gradient(135deg, var(--accent-50), var(--accent-100))',
+            background:
+              'linear-gradient(135deg, var(--accent-50), var(--accent-100))',
             textAlign: 'center'
           }
         },
-        React.createElement(
+        createElement(
           Flex,
-          { direction: "column", gap: "m" },
-          React.createElement(Icon, {
-            name: "sparkles",
-            size: "l",
+          { direction: 'column', gap: 'm' },
+          createElement(Icon, {
+            name: 'sparkles',
+            size: 'l',
             style: { color: 'var(--accent-500)' }
           }),
-          React.createElement(
+          createElement(
             Heading,
-            { variant: "heading-strong-l" },
-            "Custom Section"
+            { variant: 'heading-strong-l' },
+            'Custom Section'
           ),
-          React.createElement(
+          createElement(
             Text,
             {
-              variant: "body-default-m",
-              onBackground: "neutral-weak"
+              variant: 'body-default-m',
+              onBackground: 'neutral-weak'
             },
-            "This section was generated based on your specific requirements:"
+            'This section was generated based on your specific requirements:'
           ),
-          React.createElement(
+          createElement(
             Text,
             {
-              variant: "body-default-s",
+              variant: 'body-default-s',
               style: {
                 fontStyle: 'italic',
                 padding: '12px',
@@ -1525,7 +1658,7 @@ export const ${componentName} = ({ block, index }: ${componentName}Props) => {
       )
     }
 
-    return hooks.length > 0 ? '\n  ' + hooks.join('\n  ') + '\n' : ''
+    return hooks.length > 0 ? `\n  ${hooks.join('\n  ')}\n` : ''
   }
 
   private generateStyleObject(requirements: SectionRequirement): string {
@@ -1555,7 +1688,9 @@ export const ${componentName} = ({ block, index }: ${componentName}Props) => {
     return `{${styles.join(', ')}}`
   }
 
-  private generateHeaderSectionString(requirements: SectionRequirement): string {
+  private generateHeaderSectionString(
+    _requirements: SectionRequirement
+  ): string {
     return `
         {content.title && (
           <Flex direction="column" align="center" gap="s" marginBottom="xl">
@@ -1571,7 +1706,9 @@ export const ${componentName} = ({ block, index }: ${componentName}Props) => {
         )}`
   }
 
-  private generateFooterSectionString(requirements: SectionRequirement): string {
+  private generateFooterSectionString(
+    requirements: SectionRequirement
+  ): string {
     if (requirements.elements.some(e => e.type === 'button')) {
       return `
         {content.ctaButton && (
@@ -1595,7 +1732,10 @@ export const ${componentName} = ({ block, index }: ${componentName}Props) => {
       return this.generateFormLayoutString(requirements)
     }
 
-    if (requirements.elements.some(e => e.type === 'grid') || requirements.layout === 'grid') {
+    if (
+      requirements.elements.some(e => e.type === 'grid') ||
+      requirements.layout === 'grid'
+    ) {
       return this.generateGridLayoutString(requirements)
     }
 
@@ -1619,7 +1759,7 @@ export const ${componentName} = ({ block, index }: ${componentName}Props) => {
         </Flex>`
   }
 
-  private generateFormLayoutString(requirements: SectionRequirement): string {
+  private generateFormLayoutString(_requirements: SectionRequirement): string {
     return `
         <Flex direction="column" gap="l" align="center">
           <Heading variant="display-strong-s" textAlign="center">
@@ -1638,7 +1778,7 @@ export const ${componentName} = ({ block, index }: ${componentName}Props) => {
         </Flex>`
   }
 
-  private generateGridLayoutString(requirements: SectionRequirement): string {
+  private generateGridLayoutString(_requirements: SectionRequirement): string {
     return `
         <Grid columns={3} gap="m">
           {(content.items || []).map((item: any, index: number) => (

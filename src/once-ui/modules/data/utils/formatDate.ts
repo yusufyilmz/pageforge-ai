@@ -1,4 +1,5 @@
 import { format, parseISO } from 'date-fns'
+
 import { DateConfig } from '../interfaces'
 
 /**
