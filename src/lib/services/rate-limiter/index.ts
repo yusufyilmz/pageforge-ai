@@ -36,10 +36,7 @@ export class RedisCacheClient implements CacheClient {
   private readonly keyPrefix: string;
 
   constructor(keyPrefix = "devhub-showcase") {
-    this.client = new Redis({
-      url: process.env.REDIS_URL,
-      token: process.env.REDIS_TOKEN,
-    });
+    this.client = new Redis();
     this.keyPrefix = keyPrefix;
   }
 
