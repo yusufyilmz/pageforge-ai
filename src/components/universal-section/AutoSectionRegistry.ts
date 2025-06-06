@@ -113,7 +113,7 @@ export class AutoSectionRegistry {
       }
 
       return null;
-    } catch (error) {
+    } catch (_error) {
       // Not a predefined section
       return null;
     }
@@ -122,12 +122,12 @@ export class AutoSectionRegistry {
   // Generate new section from AI description
   async generateSectionFromAI(
     userDescription: string,
-    sectionName?: string,
+    sectionName?: string
   ): Promise<string | null> {
     try {
       const { component, config } = await aiSectionFactory.generateSectionFromDescription(
         userDescription,
-        sectionName,
+        sectionName
       );
 
       // Add to registry

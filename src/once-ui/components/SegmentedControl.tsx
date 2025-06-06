@@ -48,7 +48,7 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({
 
   const handleButtonClick = (
     clickedButton: ButtonOption,
-    event: React.MouseEvent<HTMLButtonElement>,
+    event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation();
     const newSelected = clickedButton.value;

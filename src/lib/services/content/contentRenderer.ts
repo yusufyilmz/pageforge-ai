@@ -102,7 +102,7 @@ ContentRenderer.registerBlockRenderer("spacer", (content, variant) => ({
   variant: variant || "default",
 }));
 
-ContentRenderer.registerBlockRenderer("divider", (content, variant) => ({
+ContentRenderer.registerBlockRenderer("divider", (_content, variant) => ({
   type: "divider",
   variant: variant || "line",
 }));

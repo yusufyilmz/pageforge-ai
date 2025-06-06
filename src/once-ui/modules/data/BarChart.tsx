@@ -61,7 +61,7 @@ const BarChart: React.FC<BarChartProps> = ({
           startDate: date.start,
           endDate: date.end,
         }
-      : undefined,
+      : undefined
   );
 
   useEffect(() => {
@@ -118,7 +118,7 @@ const BarChart: React.FC<BarChartProps> = ({
             : (item[xAxisKey] as Date);
 
         return itemDate >= selectedDateRange.startDate && itemDate <= selectedDateRange.endDate;
-      } catch (e) {
+      } catch (_e) {
         return true;
       }
     });
@@ -155,7 +155,7 @@ const BarChart: React.FC<BarChartProps> = ({
               />
               {legend.display && (
                 <RechartsLegend
-                  content={(props) => {
+                  content={() => {
                     const customPayload = autoSeries.map((series, index) => ({
                       value: series.key,
                       color: barColors[index],

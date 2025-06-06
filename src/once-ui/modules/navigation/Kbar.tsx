@@ -195,7 +195,7 @@ export const KbarContent: React.FC<KbarContentProps> = ({ isOpen, onClose, items
           break;
       }
     },
-    [nonCustomOptions, items, router, onClose, highlightedIndex],
+    [nonCustomOptions, items, router, onClose, highlightedIndex]
   );
 
   // Scroll highlighted element into view
@@ -343,7 +343,7 @@ export const KbarContent: React.FC<KbarContentProps> = ({ isOpen, onClose, items
           />
         </Flex>
         <Column ref={scrollContainerRef} fillWidth padding="4" gap="2" overflowY="auto">
-          {groupedItems.map((option, index) => {
+          {groupedItems.map((option) => {
             if (option.isCustom) {
               return <React.Fragment key={option.value}>{option.label}</React.Fragment>;
             }
@@ -397,7 +397,6 @@ export interface KbarProps {
 
 export const Kbar: React.FC<KbarProps> = ({ items, children, ...rest }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
   const pathname = usePathname();
 
   const handleOpen = () => {
@@ -442,7 +441,7 @@ export const Kbar: React.FC<KbarProps> = ({ items, children, ...rest }) => {
       {isOpen &&
         createPortal(
           <KbarContent isOpen={isOpen} onClose={handleClose} items={items} />,
-          document.body,
+          document.body
         )}
     </>
   );

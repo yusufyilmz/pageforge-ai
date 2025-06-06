@@ -401,7 +401,7 @@ class AISectionFactory {
   private detectInteractiveElements(
     description: string,
     _elements: SectionRequirement["elements"],
-    interactions: SectionRequirement["interactions"],
+    interactions: SectionRequirement["interactions"]
   ) {
     if (!interactions) {
       return;
@@ -693,7 +693,7 @@ class AISectionFactory {
   // Generate React component based on requirements
   generateSectionComponent(
     requirements: SectionRequirement,
-    sectionName: string,
+    sectionName: string
   ): ComponentType<SectionProps> {
     const componentName = `${sectionName}Section`;
 
@@ -739,8 +739,8 @@ class AISectionFactory {
           { maxWidth: "l", fillWidth: true },
           headerSection,
           layoutContent,
-          footerSection,
-        ),
+          footerSection
+        )
       );
     };
 
@@ -792,7 +792,7 @@ class AISectionFactory {
           variant: "display-strong-l",
           textAlign: "center",
         },
-        content.title,
+        content.title
       ),
       content.subtitle &&
         createElement(
@@ -802,14 +802,14 @@ class AISectionFactory {
             textAlign: "center",
             onBackground: "neutral-weak",
           },
-          content.subtitle,
-        ),
+          content.subtitle
+        )
     );
   }
 
   private generateFooterSection(
     requirements: SectionRequirement,
-    content: any,
+    content: any
   ): ReactElement | null {
     if (!requirements.elements.some((e) => e.type === "button") || !content.ctaButton) {
       return null;
@@ -828,8 +828,8 @@ class AISectionFactory {
           size: "l",
           href: content.ctaButton.href,
         },
-        content.ctaButton.text,
-      ),
+        content.ctaButton.text
+      )
     );
   }
 
@@ -837,7 +837,7 @@ class AISectionFactory {
   private generateLayoutContent(
     requirements: SectionRequirement,
     content: any,
-    state: any,
+    state: any
   ): ReactElement {
     // Check for specific element types that override layout
     if (requirements.elements.some((e) => e.type === "tabs")) {
@@ -888,7 +888,7 @@ class AISectionFactory {
   private generateGridLayout(
     requirements: SectionRequirement,
     content: any,
-    _state: any,
+    _state: any
   ): ReactElement {
     const elements = requirements.elements;
 
@@ -916,10 +916,10 @@ class AISectionFactory {
                 gap: "s",
                 align: "center",
               },
-              ...this.generateCardContent(cardElement, item),
-            ),
-          ),
-        ),
+              ...this.generateCardContent(cardElement, item)
+            )
+          )
+        )
       );
     }
 
@@ -951,7 +951,7 @@ class AISectionFactory {
                     fontSize: "3rem",
                   },
                 },
-                stat.value,
+                stat.value
               ),
               createElement(
                 Text,
@@ -959,7 +959,7 @@ class AISectionFactory {
                   variant: "body-default-m",
                   weight: "strong",
                 },
-                stat.label,
+                stat.label
               ),
               stat.description &&
                 createElement(
@@ -968,18 +968,18 @@ class AISectionFactory {
                     variant: "body-default-s",
                     onBackground: "neutral-weak",
                   },
-                  stat.description,
-                ),
-            ),
-          ),
-        ),
+                  stat.description
+                )
+            )
+          )
+        )
       );
     }
 
     return createElement(
       Grid,
       { columns: 3, gap: "m" },
-      createElement(Text, null, "Enhanced grid content"),
+      createElement(Text, null, "Enhanced grid content")
     );
   }
 
@@ -988,10 +988,10 @@ class AISectionFactory {
 
     if (!cardElement?.properties) {
       elements.push(
-        createElement(Heading, { key: "title", variant: "heading-strong-s" }, item.title),
+        createElement(Heading, { key: "title", variant: "heading-strong-s" }, item.title)
       );
       elements.push(
-        createElement(Text, { key: "description", variant: "body-default-s" }, item.description),
+        createElement(Text, { key: "description", variant: "body-default-s" }, item.description)
       );
       return elements;
     }
@@ -1005,12 +1005,12 @@ class AISectionFactory {
           size: "l",
           src: item.image,
           alt: item.name,
-        }),
+        })
       );
     }
 
     elements.push(
-      createElement(Heading, { key: "name", variant: "heading-strong-s" }, item.name || item.title),
+      createElement(Heading, { key: "name", variant: "heading-strong-s" }, item.name || item.title)
     );
 
     if ((props.showTitle || props.showRole) && item.role) {
@@ -1022,8 +1022,8 @@ class AISectionFactory {
             variant: "body-default-s",
             onBackground: "neutral-weak",
           },
-          item.role,
-        ),
+          item.role
+        )
       );
     }
 
@@ -1036,8 +1036,8 @@ class AISectionFactory {
             variant: "body-default-s",
             align: "center",
           },
-          item.bio,
-        ),
+          item.bio
+        )
       );
     }
 
@@ -1050,8 +1050,8 @@ class AISectionFactory {
             variant: "heading-strong-m",
             style: { color: "var(--accent-500)" },
           },
-          item.price,
-        ),
+          item.price
+        )
       );
     }
 
@@ -1065,8 +1065,8 @@ class AISectionFactory {
             size: "s",
             style: { color: "var(--warning-500" },
           }),
-          createElement(Text, { variant: "body-default-s" }, item.rating),
-        ),
+          createElement(Text, { variant: "body-default-s" }, item.rating)
+        )
       );
     }
 
@@ -1079,8 +1079,8 @@ class AISectionFactory {
             variant: "primary",
             size: "s",
           },
-          "Add to Cart",
-        ),
+          "Add to Cart"
+        )
       );
     }
 
@@ -1114,7 +1114,7 @@ class AISectionFactory {
   private generateTwoColumnLayout(
     _requirements: SectionRequirement,
     content: any,
-    _state: any,
+    _state: any
   ): ReactElement {
     return createElement(
       Grid,
@@ -1126,7 +1126,7 @@ class AISectionFactory {
         createElement(
           Text,
           { variant: "body-default-l" },
-          content.description || "Section description",
+          content.description || "Section description"
         ),
         content.features &&
           createElement(
@@ -1137,10 +1137,10 @@ class AISectionFactory {
                 Flex,
                 { key: index, gap: "s", align: "center" },
                 createElement(Icon, { name: "check", size: "s" }),
-                createElement(Text, { variant: "body-default-m" }, feature),
-              ),
-            ),
-          ),
+                createElement(Text, { variant: "body-default-m" }, feature)
+              )
+            )
+          )
       ),
       createElement(
         Flex,
@@ -1150,15 +1150,15 @@ class AISectionFactory {
             src: content.image,
             alt: content.imageAlt,
             style: { width: "100%", borderRadius: "8px" },
-          }),
-      ),
+          })
+      )
     );
   }
 
   private generateSingleColumnLayout(
     requirements: SectionRequirement,
     content: any,
-    state: any,
+    state: any
   ): ReactElement {
     const hasForm = requirements.elements.some((e) => e.type === "form");
     const hasRating = requirements.elements.some((e) => e.type === "rating");
@@ -1177,7 +1177,7 @@ class AISectionFactory {
             variant: "display-strong-s",
             textAlign: "center",
           },
-          content.title || "Customer Reviews",
+          content.title || "Customer Reviews"
         ),
         createElement(
           Grid,
@@ -1212,16 +1212,16 @@ class AISectionFactory {
                           style: {
                             color: i < review.rating ? "#ffd700" : "#ddd",
                           },
-                        }),
-                      ),
-                    ),
-                  ),
+                        })
+                      )
+                    )
+                  )
                 ),
-                createElement(Text, { variant: "body-default-m" }, review.text),
-              ),
-            ),
-          ),
-        ),
+                createElement(Text, { variant: "body-default-m" }, review.text)
+              )
+            )
+          )
+        )
       );
     }
 
@@ -1232,15 +1232,15 @@ class AISectionFactory {
       createElement(
         Text,
         { variant: "body-default-l", textAlign: "center" },
-        content.description || "Section content",
-      ),
+        content.description || "Section content"
+      )
     );
   }
 
   private generateFormLayout(
     requirements: SectionRequirement,
     content: any,
-    state: any,
+    state: any
   ): ReactElement {
     const formElement = requirements.elements.find((e) => e.type === "form");
     const fields = formElement?.properties?.fields || ["name", "email", "message"];
@@ -1270,7 +1270,7 @@ class AISectionFactory {
               variant: "heading-strong-l",
               align: "center",
             },
-            content.title || "Contact Us",
+            content.title || "Contact Us"
           ),
           content.description &&
             createElement(
@@ -1280,14 +1280,14 @@ class AISectionFactory {
                 align: "center",
                 onBackground: "neutral-weak",
               },
-              content.description,
+              content.description
             ),
           createElement(
             Flex,
             { direction: "column", gap: "m" },
             ...fields.map((field: string, index: number) =>
-              this.generateFormField(field, index, state),
-            ),
+              this.generateFormField(field, index, state)
+            )
           ),
           createElement(
             Button,
@@ -1298,10 +1298,10 @@ class AISectionFactory {
               fillWidth: true,
               loading: state.isSubmitting,
             },
-            state.isSubmitting ? "Sending..." : content.submitText || "Send Message",
-          ),
-        ),
-      ),
+            state.isSubmitting ? "Sending..." : content.submitText || "Send Message"
+          )
+        )
+      )
     );
   }
 
@@ -1360,7 +1360,7 @@ class AISectionFactory {
   private generateThreeColumnLayout(
     _requirements: SectionRequirement,
     _content: any,
-    _state: any,
+    _state: any
   ): ReactElement {
     return createElement(Text, null, "Three column layout component");
   }
@@ -1368,7 +1368,7 @@ class AISectionFactory {
   private generateHeroLayout(
     _requirements: SectionRequirement,
     content: any,
-    _state: any,
+    _state: any
   ): ReactElement {
     return createElement(
       Flex,
@@ -1377,15 +1377,15 @@ class AISectionFactory {
       createElement(
         Text,
         { variant: "body-default-l", maxWidth: "m" },
-        content.subtitle || "Hero subtitle",
-      ),
+        content.subtitle || "Hero subtitle"
+      )
     );
   }
 
   private generateSidebarLayout(
     _requirements: SectionRequirement,
     _content: any,
-    _state: any,
+    _state: any
   ): ReactElement {
     return createElement(Text, null, "Sidebar layout component");
   }
@@ -1393,7 +1393,7 @@ class AISectionFactory {
   private generateTabsLayout(
     _requirements: SectionRequirement,
     _content: any,
-    _state: any,
+    _state: any
   ): ReactElement {
     return createElement(Text, null, "Tabs layout component");
   }
@@ -1401,7 +1401,7 @@ class AISectionFactory {
   private generateAccordionLayout(
     _requirements: SectionRequirement,
     _content: any,
-    _state: any,
+    _state: any
   ): ReactElement {
     return createElement(Text, null, "Accordion layout component");
   }
@@ -1409,7 +1409,7 @@ class AISectionFactory {
   private generateTimelineLayout(
     _requirements: SectionRequirement,
     _content: any,
-    _state: any,
+    _state: any
   ): ReactElement {
     return createElement(Text, null, "Timeline layout component");
   }
@@ -1417,7 +1417,7 @@ class AISectionFactory {
   private generateCarouselLayout(
     _requirements: SectionRequirement,
     _content: any,
-    _state: any,
+    _state: any
   ): ReactElement {
     return createElement(Text, null, "Carousel layout component");
   }
@@ -1425,7 +1425,7 @@ class AISectionFactory {
   private generateCustomLayout(
     requirements: SectionRequirement,
     _content: any,
-    _state: any,
+    _state: any
   ): ReactElement {
     return createElement(
       Flex,
@@ -1455,7 +1455,7 @@ class AISectionFactory {
               variant: "body-default-m",
               onBackground: "neutral-weak",
             },
-            "This section was generated based on your specific requirements:",
+            "This section was generated based on your specific requirements:"
           ),
           createElement(
             Text,
@@ -1468,10 +1468,10 @@ class AISectionFactory {
                 borderRadius: "8px",
               },
             },
-            `"${requirements.description}"`,
-          ),
-        ),
-      ),
+            `"${requirements.description}"`
+          )
+        )
+      )
     );
   }
 
@@ -1745,7 +1745,7 @@ export const ${componentName} = ({ block, index }: ${componentName}Props) => {
   // Generate section from user description
   async generateSectionFromDescription(
     userDescription: string,
-    sectionName?: string,
+    sectionName?: string
   ): Promise<{
     component: ComponentType<SectionProps>;
     config: GeneratedSectionConfig;

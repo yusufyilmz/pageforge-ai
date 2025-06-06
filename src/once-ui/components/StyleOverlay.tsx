@@ -64,7 +64,7 @@ const StyleOverlay = forwardRef<HTMLDivElement, StyleOverlayProps>(
         </Flex>
       </Flex>
     );
-  },
+  }
 );
 
 StyleOverlay.displayName = "StyleOverlay";

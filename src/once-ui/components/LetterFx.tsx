@@ -18,7 +18,7 @@ function createEventHandler(
   setInProgress: React.Dispatch<React.SetStateAction<boolean>>,
   speed: "fast" | "medium" | "slow",
   charset: string[],
-  setHasAnimated?: React.Dispatch<React.SetStateAction<boolean>>,
+  setHasAnimated?: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   const speedSettings = {
     fast: {
@@ -95,7 +95,7 @@ const LetterFx = forwardRef<HTMLSpanElement, LetterFxProps>(
       className,
       style,
     },
-    ref,
+    ref
   ) => {
     const [text, setText] = useState<string>(typeof children === "string" ? children : "");
     const [inProgress, setInProgress] = useState<boolean>(false);
@@ -110,7 +110,7 @@ const LetterFx = forwardRef<HTMLSpanElement, LetterFxProps>(
         setInProgress,
         speed,
         charset,
-        trigger === "instant" ? setHasAnimated : undefined,
+        trigger === "instant" ? setHasAnimated : undefined
       )();
     }, [inProgress, speed, charset, trigger, setHasAnimated]);
 
@@ -141,7 +141,7 @@ const LetterFx = forwardRef<HTMLSpanElement, LetterFxProps>(
         {text}
       </span>
     );
-  },
+  }
 );
 
 LetterFx.displayName = "LetterFx";

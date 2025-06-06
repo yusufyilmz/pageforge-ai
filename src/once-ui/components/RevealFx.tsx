@@ -33,7 +33,7 @@ const RevealFx = forwardRef<HTMLDivElement, RevealFxProps>(
       className,
       ...rest
     },
-    ref,
+    ref
   ) => {
     const [isRevealed, setIsRevealed] = useState(revealedByDefault);
 
@@ -92,7 +92,7 @@ const RevealFx = forwardRef<HTMLDivElement, RevealFxProps>(
         {children}
       </Flex>
     );
-  },
+  }
 );
 
 RevealFx.displayName = "RevealFx";

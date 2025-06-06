@@ -157,7 +157,7 @@ export function createAboutPageFromTemplate(data: AboutPageTemplate): PageConfig
               timeframe: exp.timeframe,
               achievements: exp.achievements,
               current: exp.current,
-            })),
+            }))
           );
         }
         break;
@@ -364,7 +364,7 @@ export function createLandingPageFromTemplate(data: LandingPageTemplate): PageCo
  */
 export const designerTemplate = (
   person?: Partial<PersonData>,
-  projects?: ProjectData[],
+  projects?: ProjectData[]
 ): PageConfig => {
   const defaultPerson: PersonData = {
     name: "Sarah",
@@ -410,7 +410,7 @@ export const designerTemplate = (
  */
 export const developerTemplate = (
   person?: Partial<PersonData>,
-  projects?: ProjectData[],
+  projects?: ProjectData[]
 ): PageConfig => {
   const defaultPerson: PersonData = {
     name: "Alex",

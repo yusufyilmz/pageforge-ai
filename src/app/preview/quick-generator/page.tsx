@@ -100,7 +100,7 @@ const QuickGenerator = () => {
 
   const updateProject = (index: number, field: keyof ProjectFormData, value: string | boolean) => {
     setProjects((prev) =>
-      prev.map((project, i) => (i === index ? { ...project, [field]: value } : project)),
+      prev.map((project, i) => (i === index ? { ...project, [field]: value } : project))
     );
   };
 

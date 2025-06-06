@@ -29,7 +29,7 @@ const Checkbox: React.FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxP
       disabled,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [isChecked, setIsChecked] = useState(controlledIsChecked || false);
     const [checkboxId] = useState(generateId());
@@ -131,7 +131,7 @@ const Checkbox: React.FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxP
         )}
       </Flex>
     );
-  },
+  }
 );
 
 Checkbox.displayName = "Checkbox";

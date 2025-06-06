@@ -380,7 +380,7 @@ export class AISectionGenerator {
   // Combine and deduplicate intents
   private combineIntents(
     userIntents: SectionIntent[],
-    industryIntents: SectionIntent[],
+    industryIntents: SectionIntent[]
   ): SectionIntent[] {
     const combined = [...userIntents];
     const existingTypes = new Set(userIntents.map((intent) => intent.type));
@@ -399,7 +399,7 @@ export class AISectionGenerator {
   // Generate actual section from intent
   private async generateSectionFromIntent(
     intent: SectionIntent,
-    userReq: UserRequirement,
+    userReq: UserRequirement
   ): Promise<SectionIntent> {
     const template = this.sectionTemplates.get(intent.type);
 
@@ -427,7 +427,7 @@ export class AISectionGenerator {
   // Generate complete section specification
   async generateSectionSpecification(
     intent: SectionIntent,
-    userReq: UserRequirement,
+    userReq: UserRequirement
   ): Promise<GeneratedSectionSpec> {
     const sectionId = `${intent.type}-${Date.now()}`;
     const sectionName = this.generateSectionName(intent.type);
@@ -464,7 +464,7 @@ export class AISectionGenerator {
 
   private async generateReactComponent(
     intent: SectionIntent,
-    userReq: UserRequirement,
+    userReq: UserRequirement
   ): Promise<string> {
     const sectionName = this.generateSectionName(intent.type);
     const template = this.sectionTemplates.get(intent.type);
@@ -652,7 +652,7 @@ export const ${sectionName} = ({ block, index }: ${sectionName}Props) => {
 
   private generateDefaultContent(
     intent: SectionIntent,
-    userReq: UserRequirement,
+    userReq: UserRequirement
   ): Record<string, any> {
     const content: Record<string, any> = {
       title: this.generateDefaultTitle(intent, userReq),

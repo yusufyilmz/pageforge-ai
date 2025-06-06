@@ -69,7 +69,7 @@ export function UniversalPage({ config }: UniversalPageProps) {
 
   // Handle table of contents
   const tableOfContentsBlock = content.sidebar?.blocks.find(
-    (block) => block.type === "table-of-contents",
+    (block) => block.type === "table-of-contents"
   );
 
   return (

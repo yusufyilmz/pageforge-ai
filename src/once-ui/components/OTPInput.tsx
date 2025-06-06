@@ -28,7 +28,7 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [values, setValues] = useState<string[]>(Array(length).fill(""));
     const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
@@ -133,7 +133,7 @@ const OTPInput = forwardRef<HTMLDivElement, OTPInputProps>(
         )}
       </Column>
     );
-  },
+  }
 );
 
 OTPInput.displayName = "OTPInput";

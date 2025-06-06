@@ -42,7 +42,7 @@ export const ShopItemsSection = ({ block, index }: ShopItemsSectionProps) => {
           style={{ color: i <= rating ? "#fbbf24" : "#d1d5db" }}
         >
           ★
-        </Text>,
+        </Text>
       );
     }
     return stars;

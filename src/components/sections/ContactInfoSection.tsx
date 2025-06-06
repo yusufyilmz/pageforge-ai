@@ -19,7 +19,7 @@ export const ContactInfoSection = ({ block, index }: ContactInfoSectionProps) =>
 
   const renderContact = (
     contact: ContactInfoSectionContent["contacts"][0],
-    contactIndex: number,
+    contactIndex: number
   ) => (
     <Flex key={contactIndex} gap="m" vertical="center">
       <Icon name={contact.icon || contact.type} size="l" onBackground="accent-weak" />

@@ -23,7 +23,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const [localValue, setLocalValue] = useState<string>(
       padStart && value !== undefined
         ? value.toString().padStart(padStart, "0")
-        : (value?.toString() ?? ""),
+        : (value?.toString() ?? "")
     );
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,7 +117,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         className={styles.numberInput}
       />
     );
-  },
+  }
 );
 
 NumberInput.displayName = "NumberInput";

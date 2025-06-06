@@ -36,7 +36,7 @@ export default function CustomSection({ block, index }: CustomSectionProps) {
       // Generate the section component
       const component = aiSectionFactory.generateSectionComponent(
         requirements,
-        formatSectionName(block.type),
+        formatSectionName(block.type)
       );
 
       setGeneratedComponent(() => component);

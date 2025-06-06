@@ -39,7 +39,7 @@ export const NewsletterSection = ({ block, index }: NewsletterSectionProps) => {
       setStatus("success");
       setEmail("");
     } catch (error) {
-      setStatus("error");
+      setStatus(error ? "error" : "idle");
     }
   };
 

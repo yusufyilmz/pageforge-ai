@@ -63,7 +63,7 @@ const LineChart: React.FC<LineChartProps> = ({
           startDate: date.start,
           endDate: date.end,
         }
-      : undefined,
+      : undefined
   );
 
   useEffect(() => {
@@ -117,7 +117,7 @@ const LineChart: React.FC<LineChartProps> = ({
               start: startDate,
               end: endDate,
             });
-          } catch (error) {
+          } catch (_error) {
             return false;
           }
         });
@@ -157,7 +157,7 @@ const LineChart: React.FC<LineChartProps> = ({
               margin={{ left: 0, bottom: 0, top: 0, right: 0 }}
             >
               <defs>
-                {autoSeries.map(({ key, color }, index) => {
+                {autoSeries.map(({ color }, index) => {
                   const colorValue = color || schemes[index % schemes.length];
                   const lineColor = `var(--data-${colorValue})`;
                   return (
@@ -173,7 +173,7 @@ const LineChart: React.FC<LineChartProps> = ({
               <RechartsCartesianGrid vertical horizontal stroke="var(--neutral-alpha-weak)" />
               {legend.display && (
                 <RechartsLegend
-                  content={(props) => {
+                  content={() => {
                     const customPayload = autoSeries.map(({ key, color }, index) => ({
                       value: key,
                       color: `var(--data-${color || schemes[index % schemes.length]})`,

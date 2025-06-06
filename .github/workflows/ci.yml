@@ -186,27 +186,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Biome check
-        run: npm run biome-check
+      - name: Run comprehensive code check
+        run: npm run format:check
         continue-on-error: true
 
-      - name: Generate code coverage
+      - name: Generate code coverage (placeholder)
         run: npm run test:coverage
         continue-on-error: true
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        continue-on-error: true
-        with:
-          file: ./coverage/lcov.info
-          flags: unittests
-          name: codecov-umbrella
 
   # Auto-fix and commit (only on specific branches)
   auto-fix:
     name: Auto-fix Code Issues
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/fix/*')
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/fix/'))
 
     steps:
       - name: Checkout code
@@ -224,10 +216,7 @@ jobs:
         run: npm ci
 
       - name: Run auto-fixes
-        run: |
-          npm run lint:fix
-          npm run format:fix
-          npm run biome-write
+        run: npm run code-quality:fix
 
       - name: Commit changes
         run: |

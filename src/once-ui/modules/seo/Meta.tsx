@@ -55,7 +55,7 @@ export function generateMetadata({
 
   return {
     metadataBase: new URL(
-      normalizedBaseURL.startsWith("https://") ? normalizedBaseURL : `https://${normalizedBaseURL}`,
+      normalizedBaseURL.startsWith("https://") ? normalizedBaseURL : `https://${normalizedBaseURL}`
     ),
     title,
     description,

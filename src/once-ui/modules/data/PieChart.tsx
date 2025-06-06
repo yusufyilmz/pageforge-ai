@@ -76,7 +76,7 @@ export const PieChart: React.FC<PieChartProps> = ({
           startDate: date.start,
           endDate: date.end,
         }
-      : undefined,
+      : undefined
   );
 
   useEffect(() => {
@@ -107,20 +107,20 @@ export const PieChart: React.FC<PieChartProps> = ({
   }, [data]);
 
   const filteredData = React.useMemo(() => {
-    if (!selectedDateRange || !data || data.length === 0) {
+    if (!(selectedDateRange && data) || data.length === 0) {
       return data;
     }
 
     return data.filter((item) => {
       try {
-        if (!item.date || !selectedDateRange.startDate || !selectedDateRange.endDate) {
+        if (!(item.date && selectedDateRange.startDate && selectedDateRange.endDate)) {
           return true;
         }
 
         const itemDate = typeof item.date === "string" ? new Date(item.date) : item.date;
 
         return itemDate >= selectedDateRange.startDate && itemDate <= selectedDateRange.endDate;
-      } catch (e) {
+      } catch (_e) {
         return true;
       }
     });
@@ -187,8 +187,8 @@ export const PieChart: React.FC<PieChartProps> = ({
                   new Set(
                     filteredData.map((entry, index) => {
                       return entry.color || getDistributedColor(index, filteredData.length);
-                    }),
-                  ),
+                    })
+                  )
                 ).map((colorKey) => {
                   const baseColor = `var(--data-${colorKey})`;
                   const patternId = getGradientId(colorKey as string);

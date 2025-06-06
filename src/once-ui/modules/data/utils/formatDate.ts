@@ -14,7 +14,7 @@ import type { DateConfig } from "../interfaces";
 export function formatDate(
   value: any,
   dateConfig?: DateConfig,
-  dataPoint?: Record<string, any>,
+  dataPoint?: Record<string, any>
 ): string {
   if (dataPoint?.label) {
     return dataPoint.label;
@@ -31,7 +31,12 @@ export function formatDate(
       if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}/.test(value)) {
         return format(parseISO(value), dateConfig.format);
       }
-    } catch (error) {}
+    } catch (error) {
+      // If formatting fails, return the original value
+      console.warn("Failed to format date:", value, "with format:", dateConfig.format, {
+        error: error,
+      });
+    }
   }
 
   return value;

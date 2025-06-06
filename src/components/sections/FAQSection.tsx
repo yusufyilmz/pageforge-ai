@@ -45,7 +45,7 @@ export const FAQSection = ({ block, index }: FAQSectionProps) => {
       category?: string;
     },
     questionIndex: number,
-    categoryIndex?: number,
+    categoryIndex?: number
   ) => {
     const id = `faq-${categoryIndex ?? "general"}-${questionIndex}`;
     const isExpanded = expandedItems.has(id);
@@ -132,7 +132,7 @@ export const FAQSection = ({ block, index }: FAQSectionProps) => {
                   </Heading>
                   <Column gap="s">
                     {category.questions.map((question, questionIndex) =>
-                      renderQuestion(question, questionIndex, categoryIndex),
+                      renderQuestion(question, questionIndex, categoryIndex)
                     )}
                   </Column>
                 </Column>

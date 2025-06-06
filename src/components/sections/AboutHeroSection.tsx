@@ -174,7 +174,7 @@ export const AboutHeroSection = ({ block, index }: AboutHeroSectionProps) => {
                         variant="secondary"
                       />
                     </React.Fragment>
-                  ),
+                  )
               )}
             </Flex>
           )}

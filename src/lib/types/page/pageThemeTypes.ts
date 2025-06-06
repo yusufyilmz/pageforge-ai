@@ -29,7 +29,7 @@ export function applyPageTheme(themeConfig?: PageThemeConfig): PageThemeOverride
 // Helper function for responsive theme application
 export function getResponsiveTheme(
   baseTheme: PageThemeConfig,
-  breakpoint: "mobile" | "tablet" | "desktop",
+  breakpoint: "mobile" | "tablet" | "desktop"
 ): PageThemeOverride | null {
   if (!baseTheme.enabled || !baseTheme.responsive?.[breakpoint]) {
     return null;

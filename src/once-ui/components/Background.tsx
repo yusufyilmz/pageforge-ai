@@ -86,7 +86,7 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
       style,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const dotsColor = dots.color ?? "brand-on-background-weak";
     const dotsSize = `var(--static-space-${dots.size ?? "24"})`;
@@ -172,7 +172,7 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
       inputMin: number,
       inputMax: number,
       outputMin: number,
-      outputMax: number,
+      outputMax: number
     ) => {
       return ((value - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin) + outputMin;
     };
@@ -299,7 +299,7 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
         {children}
       </Flex>
     );
-  },
+  }
 );
 
 Background.displayName = "Background";

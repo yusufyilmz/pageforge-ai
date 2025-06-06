@@ -74,7 +74,7 @@ const ElementType = forwardRef<HTMLElement, ElementTypeProps>(
         {children}
       </Flex>
     );
-  },
+  }
 );
 
 ElementType.displayName = "ElementType";

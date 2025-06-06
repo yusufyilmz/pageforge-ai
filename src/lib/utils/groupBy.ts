@@ -8,5 +8,5 @@ export const groupBy = <T, K extends keyof unknown>(arr: T[], key: (i: T) => K) 
       groups[key(item)].push(item);
       return groups;
     },
-    {} as Record<K, T[]>,
+    {} as Record<K, T[]>
   );

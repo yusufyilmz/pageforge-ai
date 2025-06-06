@@ -46,7 +46,7 @@ export const PageBuilderInterface: React.FC = () => {
   });
 
   const [currentStep, setCurrentStep] = useState<"template" | "content" | "preview" | "export">(
-    "template",
+    "template"
   );
 
   const handleTemplateSelect = useCallback((template: PageBuilderState["selectedTemplate"]) => {
@@ -59,11 +59,11 @@ export const PageBuilderInterface: React.FC = () => {
       setState((prev) => ({ ...prev, ...updates }));
       generatePageConfig({ ...state, ...updates });
     },
-    [state],
+    [state]
   );
 
   const generatePageConfig = useCallback((currentState: PageBuilderState) => {
-    if (!currentState.selectedTemplate || !currentState.personData.name) {
+    if (!(currentState.selectedTemplate && currentState.personData.name)) {
       return;
     }
 

@@ -46,7 +46,7 @@ jobs:
       - name: 📦 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '20.x'
           cache: 'npm'
 
       - name: 📥 Install dependencies
@@ -54,9 +54,15 @@ jobs:
 
       - name: 🧪 Run tests and checks (unless skipped)
         if: ${{ !inputs.skip_checks }}
-        run: |
-          npm run code-quality
-          npm run build
+        run: npm run code-quality
+
+      - name: 🏗️ Build application (unless skipped)
+        if: ${{ !inputs.skip_checks }}
+        run: npm run build
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
 
       - name: 🔄 Safe merge to main
         if: ${{ inputs.merge_type == 'safe' || inputs.merge_type == '' }}

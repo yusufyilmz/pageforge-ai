@@ -25,10 +25,10 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           "display-flex",
           "fill-width",
           (onClick || href) && "focus-ring",
-          (onClick || href) && "radius-l",
+          (onClick || href) && "radius-l"
         )}
         href={href}
-        onClick={onClick ? onClick : () => {}}
+        // onClick={onClick ? onClick : () => {}}
         role="button"
         ref={ref}
       >
@@ -50,7 +50,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         </Flex>
       </ElementType>
     );
-  },
+  }
 );
 
 Card.displayName = "Card";

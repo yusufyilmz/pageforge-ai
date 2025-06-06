@@ -70,7 +70,7 @@ export class PageBuilder {
       display?: boolean;
       variant?: string;
       className?: string;
-    },
+    }
   ): this {
     const section: ContentBlock = {
       type,
@@ -100,11 +100,11 @@ export class PageBuilder {
     return this.addSection("features", { features });
   }
 
-  addExperience(experiences: Array<any>): this {
+  addExperience(experiences: any[]): this {
     return this.addSection("experience", { experiences });
   }
 
-  addSkills(skills: Array<any>, categories?: string[]): this {
+  addSkills(skills: any[], categories?: string[]): this {
     return this.addSection("skills", { skills, categories });
   }
 
@@ -129,7 +129,7 @@ export class PageBuilder {
       showFilter?: boolean;
       showCategories?: boolean;
       showStats?: boolean;
-    },
+    }
   ): this {
     return this.addSection("showcase", {
       items,
@@ -166,7 +166,7 @@ export class PageBuilder {
       showStepNumbers?: boolean;
       showDuration?: boolean;
       showComplexity?: boolean;
-    },
+    }
   ): this {
     return this.addSection("quickstart", {
       steps,

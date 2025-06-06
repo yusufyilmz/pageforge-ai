@@ -79,7 +79,7 @@ export function generatePageMetadata({
 // Helper function to extract metadata from page configuration using new type structure
 export function extractMetadataFromPageConfig(
   pageConfig: PageConfig,
-  siteURL: string,
+  siteURL: string
 ): NextMetadata {
   const { metadata } = pageConfig;
 

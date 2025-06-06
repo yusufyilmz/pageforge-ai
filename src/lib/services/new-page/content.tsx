@@ -169,7 +169,7 @@ export const createContentConfig = (props: Partial<ContentConfig> = {}): Content
   console.log("Creating content configuration with props:", props);
   if (isUsingExampleData) {
     console.warn(
-      "⚠️  Using example data in createContentConfig. Please provide real content configuration.",
+      "⚠️  Using example data in createContentConfig. Please provide real content configuration."
     );
   }
 

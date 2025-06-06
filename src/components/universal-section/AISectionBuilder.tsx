@@ -258,7 +258,7 @@ export const useAISectionGeneration = () => {
 
   const generateSectionsFromChat = async (
     chatMessage: string,
-    context?: any,
+    context?: any
   ): Promise<GeneratedSectionSpec[]> => {
     setIsGenerating(true);
     try {
@@ -349,7 +349,7 @@ const extractIndustryFromMessage = (message: string): string | undefined => {
 };
 
 const extractPageTypeFromMessage = (
-  message: string,
+  message: string
 ): "landing" | "about" | "product" | "service" | "portfolio" | "blog" | "contact" | "custom" => {
   const lowerMessage = message.toLowerCase();
 

@@ -40,7 +40,7 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>(
       style,
       ...rest
     },
-    ref,
+    ref
   ) => {
     const [isOpen, setIsOpen] = useState(open);
 
@@ -63,7 +63,7 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>(
 
         return Object.assign(document.createElement("div"), methods) as unknown as AccordionHandle;
       },
-      [toggleAccordion],
+      [toggleAccordion]
     );
 
     return (
@@ -126,7 +126,7 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>(
         </Grid>
       </Column>
     );
-  },
+  }
 );
 
 Accordion.displayName = "Accordion";

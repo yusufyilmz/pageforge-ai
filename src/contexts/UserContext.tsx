@@ -419,7 +419,7 @@ export function UserProvider({ children, initialData }: UserProviderProps) {
     setUserInfo((prev) => ({
       ...prev,
       workExperience: prev.workExperience.map((exp) =>
-        exp.id === id ? { ...exp, ...experienceUpdate } : exp,
+        exp.id === id ? { ...exp, ...experienceUpdate } : exp
       ),
       lastUpdated: new Date().toISOString(),
     }));
@@ -449,7 +449,7 @@ export function UserProvider({ children, initialData }: UserProviderProps) {
     setUserInfo((prev) => ({
       ...prev,
       education: prev.education.map((edu) =>
-        edu.id === id ? { ...edu, ...educationUpdate } : edu,
+        edu.id === id ? { ...edu, ...educationUpdate } : edu
       ),
       lastUpdated: new Date().toISOString(),
     }));
@@ -491,7 +491,7 @@ export function UserProvider({ children, initialData }: UserProviderProps) {
     setUserInfo((prev) => ({
       ...prev,
       projects: prev.projects.map((project) =>
-        project.id === id ? { ...project, ...projectUpdate } : project,
+        project.id === id ? { ...project, ...projectUpdate } : project
       ),
       lastUpdated: new Date().toISOString(),
     }));
@@ -601,13 +601,13 @@ export function useUserSocialLinks(onlyVisible = true) {
 export function useUserExperience() {
   const { userInfo } = useUser();
   return userInfo.workExperience.sort(
-    (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+    (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
   );
 }
 
 export function useUserEducation() {
   const { userInfo } = useUser();
   return userInfo.education.sort(
-    (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+    (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
   );
 }

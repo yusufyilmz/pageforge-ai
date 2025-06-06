@@ -211,7 +211,7 @@ class ChatSectionGenerator {
 
   // Main method to generate section from chat
   async generateSectionFromChat(
-    request: SectionGenerationRequest,
+    request: SectionGenerationRequest
   ): Promise<SectionGenerationResult> {
     try {
       // Check if this is actually a section request
@@ -229,7 +229,7 @@ class ChatSectionGenerator {
       // Generate the section using AI factory
       const sectionType = await autoSectionRegistry.generateSectionFromAI(
         request.userMessage,
-        requirements.name,
+        requirements.name
       );
 
       if (!sectionType) {

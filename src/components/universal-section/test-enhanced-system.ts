@@ -7,7 +7,7 @@ console.log("🧪 Testing Enhanced AI Section Generation System\n");
 console.log("1️⃣ Testing Basic Section Analysis:");
 try {
   const basicRequirements = aiSectionFactory.analyzeUserRequirements(
-    "Create a team section with member photos and bios",
+    "Create a team section with member photos and bios"
   );
   console.log("✅ Basic analysis completed:");
   console.log("   Layout:", basicRequirements.layout);
@@ -33,7 +33,7 @@ try {
   console.log("   Elements:", advancedRequirements.elements.map((e: any) => e.type).join(", "));
   console.log(
     "   Interactions:",
-    advancedRequirements.interactions?.map((i: any) => i.action).join(", ") || "none",
+    advancedRequirements.interactions?.map((i: any) => i.action).join(", ") || "none"
   );
   console.log("   Custom requirements:", advancedRequirements.customRequirements);
 } catch (error) {
@@ -62,7 +62,7 @@ try {
 console.log("\n4️⃣ Testing Code Generation:");
 try {
   const requirements = aiSectionFactory.analyzeUserRequirements(
-    "Create a simple contact form with name, email, and message fields",
+    "Create a simple contact form with name, email, and message fields"
   );
   const code = aiSectionFactory.generateSectionCode(requirements, "ContactForm");
   console.log("✅ Code generation completed");
@@ -75,5 +75,5 @@ try {
 
 console.log("\n🎉 Enhanced AI Section Generation System Testing Complete!");
 console.log(
-  "📊 System can now handle 20+ element types, 7 layout types, and complex requirements.",
+  "📊 System can now handle 20+ element types, 7 layout types, and complex requirements."
 );

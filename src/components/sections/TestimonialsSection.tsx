@@ -25,7 +25,7 @@ export const TestimonialsSection = ({ block, index }: TestimonialsSectionProps) 
 
   const renderTestimonial = (
     testimonial: TestimonialsSectionContent["testimonials"][0],
-    testimonialIndex: number,
+    testimonialIndex: number
   ) => (
     <Column
       key={testimonialIndex}
@@ -120,7 +120,7 @@ export const TestimonialsSection = ({ block, index }: TestimonialsSectionProps) 
           }}
         >
           {testimonials.map((testimonial, testimonialIndex) =>
-            renderTestimonial(testimonial, testimonialIndex),
+            renderTestimonial(testimonial, testimonialIndex)
           )}
         </Flex>
       )}
@@ -138,7 +138,7 @@ export const TestimonialsSection = ({ block, index }: TestimonialsSectionProps) 
       {layout === "masonry" && (
         <Column fillWidth gap="l">
           {testimonials.map((testimonial, testimonialIndex) =>
-            renderTestimonial(testimonial, testimonialIndex),
+            renderTestimonial(testimonial, testimonialIndex)
           )}
         </Column>
       )}

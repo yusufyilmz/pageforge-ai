@@ -48,7 +48,7 @@ export const QuickstartSection = ({ block, index }: QuickstartSectionProps) => {
   const renderStepContent = (
     step: QuickstartSectionContent["steps"][0],
     stepIndex: number,
-    isActive = true,
+    isActive = true
   ) => (
     <Column
       key={stepIndex}

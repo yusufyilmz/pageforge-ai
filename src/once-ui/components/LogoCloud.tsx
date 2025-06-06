@@ -48,7 +48,7 @@ const LogoCloud = forwardRef<HTMLDivElement, LogoCloudProps>(
             return nextLogos;
           });
         },
-        rotationInterval + STAGGER_DELAY * limit,
+        rotationInterval + STAGGER_DELAY * limit
       );
 
       return () => clearInterval(interval);
@@ -77,7 +77,7 @@ const LogoCloud = forwardRef<HTMLDivElement, LogoCloudProps>(
         ))}
       </Grid>
     );
-  },
+  }
 );
 
 LogoCloud.displayName = "LogoCloud";

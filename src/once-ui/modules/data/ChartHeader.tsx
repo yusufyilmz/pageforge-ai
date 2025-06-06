@@ -112,7 +112,7 @@ export const ChartHeader: React.FC<ChartHeaderProps> = ({
 
   useEffect(() => {
     if (dateRange) {
-      const matchingPreset = Object.entries(dateRangePresets).find(([name, preset]) => {
+      const matchingPreset = Object.entries(dateRangePresets).find(([_name, preset]) => {
         const presetRange = preset.getRange();
         return (
           dateRange.startDate &&

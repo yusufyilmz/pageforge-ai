@@ -98,7 +98,7 @@ function resolveThemeMode(mode: ThemeMode, isSystemDark: boolean): "light" | "da
 
 function mergeThemeConfig(
   baseConfig: ThemeConfig,
-  overrides?: PageThemeOverride["customOverrides"],
+  overrides?: PageThemeOverride["customOverrides"]
 ): ThemeConfig {
   if (!overrides) {
     return baseConfig;
@@ -220,7 +220,7 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
       `brand-${theme.style.brand}`,
       `accent-${theme.style.accent}`,
       `border-${theme.style.border}`,
-      `surface-${theme.style.surface}`,
+      `surface-${theme.style.surface}`
     );
 
     // Apply font variables

@@ -16,7 +16,7 @@ export const AccordionSection = ({ block, index }: AccordionSectionProps) => {
 
   const toggleItem = (itemIndex: number) => {
     setOpenItems((prev) =>
-      prev.includes(itemIndex) ? prev.filter((i) => i !== itemIndex) : [...prev, itemIndex],
+      prev.includes(itemIndex) ? prev.filter((i) => i !== itemIndex) : [...prev, itemIndex]
     );
   };
 

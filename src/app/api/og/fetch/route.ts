@@ -92,7 +92,7 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error(
       "Error fetching metadata:",
-      error instanceof Error ? error.message : String(error),
+      error instanceof Error ? error.message : String(error)
     );
 
     return NextResponse.json(
@@ -100,7 +100,7 @@ export async function GET(request: Request) {
         error: "Failed to fetch metadata",
         message: error instanceof Error ? error.message : "Unknown error occurred",
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

@@ -44,7 +44,7 @@ export const GenericLayout = ({ children, theme }: LayoutProps) => {
         font.primary.variable,
         font.secondary.variable,
         font.tertiary.variable,
-        font.code.variable,
+        font.code.variable
       )}
     >
       <Head>

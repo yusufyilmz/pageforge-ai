@@ -24,7 +24,7 @@ export const useContextualTemplates = (
   userExperiences: any[] = [],
   userSkills: any[] = [],
   socialLinks: any[] = [],
-  currentTheme?: string,
+  currentTheme?: string
 ) => {
   return useMemo(() => {
     // Transform user context data to template format

@@ -34,7 +34,7 @@ export const HeadingLink: React.FC<HeadingLinkProps> = ({
           variant: "danger",
           message: "Failed to copy link.",
         });
-      },
+      }
     );
   };
 

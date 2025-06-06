@@ -1,52 +1,5 @@
 {
-  "name": "pageforge",
-  "version": "1.0.0",
-  "description": "🚀 PageForge - Revolutionary Next.js Page Builder System with 98% code reduction and AI-powered generation",
-  "scripts": {
-    "dev": "next dev",
-    "dev:turbo": "next dev --turbopack --port 3001",
-    "build": "next build",
-    "start": "next start",
-    "export": "next export",
-    "lint": "npx @biomejs/biome lint .",
-    "lint:fix": "npx @biomejs/biome lint --write .",
-    "format": "npx @biomejs/biome format .",
-    "format:fix": "npx @biomejs/biome format --write .",
-    "format:check": "npx @biomejs/biome check .",
-    "type-check": "tsc --noEmit --skipLibCheck",
-    "type-check:watch": "tsc --noEmit --skipLibCheck --watch",
-    "code-quality": "npm run type-check && npm run lint && npm run format:check",
-    "code-quality:fix": "npm run type-check && npm run lint:fix && npm run format:fix",
-    "clean": "rm -rf .next out dist build coverage .turbo",
-    "clean:all": "npm run clean && rm -rf node_modules package-lock.json",
-    "reset": "npm run clean:all && npm install",
-    "test": "echo \"No tests specified yet\"",
-    "test:coverage": "echo \"No test coverage specified yet\"",
-    "test:watch": "echo \"No test watch specified yet\"",
-    "supabase:start": "supabase start",
-    "supabase:stop": "supabase stop",
-    "supabase:status": "supabase status",
-    "supabase:reset": "supabase db reset",
-    "supabase:gen-types": "supabase gen types typescript --local > src/lib/supabase/types.ts",
-    "generate-section": "tsx src/components/universal-section/generateSection.ts",
-    "merge-to-main": "./scripts/merge-to-main.sh",
-    "quick-merge": "./scripts/quick-merge.sh",
-    "merge": "git checkout main && git pull origin main && git merge develop && git push origin main",
-    "git-workflow": "./scripts/git-workflow.sh",
-    "setup-branch-protection": "./scripts/setup-branch-protection.sh",
-    "prepare": "husky install",
-    "pre-commit": "lint-staged",
-    "deploy": "npm run build && npm run export",
-    "deploy:vercel": "vercel --prod",
-    "deploy:netlify": "netlify deploy --prod",
-    "audit": "npm audit",
-    "audit:fix": "npm audit fix",
-    "outdated": "npm outdated",
-    "update:deps": "npm update",
-    "analyze": "cross-env ANALYZE=true npm run build",
-    "analyze:server": "cross-env BUNDLE_ANALYZE=server npm run build",
-    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser npm run build"
-  },
+  "author": "Yusuf Yilmaz",
   "dependencies": {
     "@floating-ui/react-dom": "^2.1.1",
     "@supabase/ssr": "^0.6.1",
@@ -69,6 +22,7 @@
     "sharp": "^0.33.4",
     "snakecase-keys": "^8.0.1"
   },
+  "description": "🚀 PageForge - Revolutionary Next.js Page Builder System with 98% code reduction and AI-powered generation",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@csstools/postcss-global-data": "^2.1.1",
@@ -83,27 +37,15 @@
     "tailwind-merge": "^3.3.0",
     "typescript": "^5.8.3"
   },
-  "overrides": {
-    "@types/react": "19.0.1",
-    "@types/react-dom": "19.0.2"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,jsonc}": ["biome check --write --no-errors-on-unmatched"],
-    "*.{md,css,scss,yml,yaml}": ["biome format --write --no-errors-on-unmatched"]
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
       "pre-push": "npm run type-check"
     }
-  },
-  "engines": {
-    "node": ">=20.0.0",
-    "npm": ">=9.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yusufyilmz/pageforge-ai.git"
   },
   "keywords": [
     "nextjs",
@@ -116,6 +58,67 @@
     "template",
     "website-builder"
   ],
-  "author": "Yusuf Yilmaz",
-  "license": "MIT"
+  "license": "MIT",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,jsonc}": ["biome check --write --no-errors-on-unmatched"],
+    "*.{md,css,scss,yml,yaml}": ["biome format --write --no-errors-on-unmatched"]
+  },
+  "name": "pageforge",
+  "overrides": {
+    "@types/react": "19.0.1",
+    "@types/react-dom": "19.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yusufyilmz/pageforge-ai.git"
+  },
+  "scripts": {
+    "analyze": "cross-env ANALYZE=true npm run build",
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser npm run build",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server npm run build",
+    "audit": "npm audit",
+    "audit:fix": "npm audit fix",
+    "build": "next build",
+    "clean": "rm -rf .next out dist build coverage .turbo",
+    "clean:all": "npm run clean && rm -rf node_modules package-lock.json",
+    "code-quality": "npm run type-check && npm run lint && npm run format:check",
+    "code-quality:fix": "npm run type-check && npm run lint:fix && npm run format:fix",
+    "deploy": "npm run build && npm run export",
+    "deploy:netlify": "netlify deploy --prod",
+    "deploy:vercel": "vercel --prod",
+    "dev": "next dev",
+    "dev:turbo": "next dev --turbopack --port 3001",
+    "export": "next export",
+    "format": "npx @biomejs/biome format .",
+    "format:check": "npx @biomejs/biome check .",
+    "format:check-errors": "npx @biomejs/biome check --diagnostic-level=error .",
+    "format:fix": "npx @biomejs/biome format --write .",
+    "generate-section": "tsx src/components/universal-section/generateSection.ts",
+    "git-workflow": "./scripts/git-workflow.sh",
+    "lint": "npx @biomejs/biome lint .",
+    "lint:errors": "npx @biomejs/biome lint --diagnostic-level=error .",
+    "lint:errors-fix": "npx @biomejs/biome lint --write --diagnostic-level=error .",
+    "lint:fix": "npx @biomejs/biome lint --write .",
+    "merge": "git checkout main && git pull origin main && git merge develop && git push origin main",
+    "merge-to-main": "./scripts/merge-to-main.sh",
+    "outdated": "npm outdated",
+    "pre-commit": "lint-staged",
+    "prepare": "husky install",
+    "quick-merge": "./scripts/quick-merge.sh",
+    "reset": "npm run clean:all && npm install",
+    "setup-branch-protection": "./scripts/setup-branch-protection.sh",
+    "start": "next start",
+    "supabase:gen-types": "supabase gen types typescript --local > src/lib/supabase/types.ts",
+    "supabase:reset": "supabase db reset",
+    "supabase:start": "supabase start",
+    "supabase:status": "supabase status",
+    "supabase:stop": "supabase stop",
+    "test": "echo \"No tests specified yet\"",
+    "test:coverage": "echo \"No test coverage specified yet\"",
+    "test:watch": "echo \"No test watch specified yet\"",
+    "type-check": "tsc --noEmit --skipLibCheck",
+    "type-check:watch": "tsc --noEmit --skipLibCheck --watch",
+    "update:deps": "npm update"
+  },
+  "version": "1.0.0"
 }

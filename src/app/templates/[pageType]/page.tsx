@@ -49,7 +49,7 @@ const TemplatePreview = () => {
   const pageType = params.pageType as string;
 
   // Validate page type
-  if (!pageType || !(pageType in templates)) {
+  if (!(pageType && pageType in templates)) {
     return (
       <Card padding="xl" background="surface">
         <Flex direction="column" gap="m" horizontal="center">

@@ -93,7 +93,7 @@ export const useAIGeneratedSections = () => {
     (sectionType: string): boolean => {
       return aiSections.includes(sectionType);
     },
-    [aiSections],
+    [aiSections]
   );
 
   return {

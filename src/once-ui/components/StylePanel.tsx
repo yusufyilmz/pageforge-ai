@@ -134,7 +134,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
                 vertical="center"
                 className={classNames(
                   styles.select,
-                  selectedShape === radius ? styles.selected : "",
+                  selectedShape === radius ? styles.selected : ""
                 )}
                 onClick={() => {
                   setSelectedShape(radius as any);
@@ -169,7 +169,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
             Brand
           </Flex>
           <Scroller minWidth={0} fitWidth>
-            {colorOptions.brand.map((color, index) => (
+            {colorOptions.brand.map((color) => (
               <Flex
                 marginRight="2"
                 key={color}
@@ -201,7 +201,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
             Accent
           </Flex>
           <Scroller minWidth={0} fitWidth>
-            {colorOptions.accent.map((color, index) => (
+            {colorOptions.accent.map((color) => (
               <Flex
                 marginRight="2"
                 key={color}
@@ -232,7 +232,7 @@ const StylePanel = forwardRef<HTMLDivElement, StylePanelProps>(({ ...rest }, ref
             Neutral
           </Flex>
           <Scroller minWidth={0} fitWidth>
-            {colorOptions.neutral.map((color, index) => (
+            {colorOptions.neutral.map((color) => (
               <Flex
                 marginRight="2"
                 key={color}

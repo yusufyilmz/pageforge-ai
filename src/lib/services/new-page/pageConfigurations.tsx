@@ -781,7 +781,7 @@ import { type ContentConfig, createContentConfig, createContentTemplate } from "
 // }
 
 export const createComprehensiveAboutPageConfig = (
-  contentConfig?: Partial<ContentConfig>,
+  contentConfig?: Partial<ContentConfig>
 ): AboutPageConfig => {
   const content = createContentConfig(contentConfig);
   const { person, about, social } = content;

@@ -51,7 +51,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
       style = {},
       ...rest
     },
-    ref,
+    ref
   ) => {
     const sizeInRem = typeof size === "number" ? `${size}rem` : undefined;
     const sizeStyle = sizeInRem
@@ -153,7 +153,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
         )}
       </Flex>
     );
-  },
+  }
 );
 
 Avatar.displayName = "Avatar";

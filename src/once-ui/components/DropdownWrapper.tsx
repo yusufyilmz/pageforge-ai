@@ -59,7 +59,7 @@ const DropdownWrapper = forwardRef<HTMLDivElement, DropdownWrapperProps>(
       className,
       style,
     },
-    ref,
+    ref
   ) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -76,7 +76,7 @@ const DropdownWrapper = forwardRef<HTMLDivElement, DropdownWrapperProps>(
         }
         onOpenChange?.(newIsOpen);
       },
-      [onOpenChange, isControlled],
+      [onOpenChange, isControlled]
     );
 
     const { x, y, strategy, refs, update } = useFloating({
@@ -132,7 +132,7 @@ const DropdownWrapper = forwardRef<HTMLDivElement, DropdownWrapperProps>(
           handleOpenChange(false);
         }
       },
-      [handleOpenChange, wrapperRef],
+      [handleOpenChange, wrapperRef]
     );
 
     const handleFocusOut = useCallback(
@@ -141,7 +141,7 @@ const DropdownWrapper = forwardRef<HTMLDivElement, DropdownWrapperProps>(
           handleOpenChange(false);
         }
       },
-      [handleOpenChange, wrapperRef],
+      [handleOpenChange, wrapperRef]
     );
 
     useEffect(() => {
@@ -222,7 +222,7 @@ const DropdownWrapper = forwardRef<HTMLDivElement, DropdownWrapperProps>(
         )}
       </Flex>
     );
-  },
+  }
 );
 
 DropdownWrapper.displayName = "DropdownWrapper";

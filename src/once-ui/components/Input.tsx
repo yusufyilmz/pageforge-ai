@@ -65,7 +65,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       cursor,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [isFocused, setIsFocused] = useState(false);
     const [isFilled, setIsFilled] = useState(!!props.value);
@@ -133,7 +133,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         [styles.placeholder]: placeholder,
         [styles.hasChildren]: children,
         [styles.error]: displayError && debouncedValue !== "",
-      },
+      }
     );
 
     return (
@@ -160,7 +160,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             {
               [styles.m]: height === "m",
             },
-            radius === "none" ? "radius-none" : radius ? `radius-l-${radius}` : "radius-l",
+            radius === "none" ? "radius-none" : radius ? `radius-l-${radius}` : "radius-l"
           )}
         >
           {hasPrefix && (
@@ -220,7 +220,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
       </Column>
     );
-  },
+  }
 );
 
 Input.displayName = "Input";

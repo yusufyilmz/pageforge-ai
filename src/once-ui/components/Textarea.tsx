@@ -64,12 +64,12 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       style,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [isFocused, setIsFocused] = useState(false);
     const [isFilled, setIsFilled] = useState(!!props.value);
     const [validationError, setValidationError] = useState<ReactNode | null>(null);
-    const [height, setHeight] = useState<number | undefined>(undefined);
+    // const [height, setHeight] = useState<number | undefined>(undefined);
     const textareaRef = React.useRef<HTMLTextAreaElement>(null);
     const debouncedValue = useDebounce(props.value, 1000);
 
@@ -147,7 +147,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         [styles.withSuffix]: hasSuffix,
         [styles.placeholder]: placeholder,
         [styles.hasChildren]: children,
-      },
+      }
     );
 
     return (
@@ -170,7 +170,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           className={classNames(
             styles.base,
             lines !== "auto" && resize !== "none" && styles.textareaBase,
-            radius === "none" ? "radius-none" : radius ? `radius-l-${radius}` : "radius-l",
+            radius === "none" ? "radius-none" : radius ? `radius-l-${radius}` : "radius-l"
           )}
         >
           {hasPrefix && (
@@ -201,7 +201,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
               style={{
                 ...style,
                 resize: lines === "auto" ? "none" : resize,
-                height: height ? `${height}rem` : "auto",
+                // height: height ? `${height}rem` : "auto",
               }}
               onChange={handleChange}
             />
@@ -246,7 +246,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         )}
       </Flex>
     );
-  },
+  }
 );
 
 Textarea.displayName = "Textarea";

@@ -3,6 +3,6 @@ import type { SectionType } from "./sectionTypes";
 export declare function generateSection(
   type: SectionType,
   pageId: string,
-  orderIndex: number,
+  orderIndex: number
 ): Section;
 //# sourceMappingURL=utils.d.ts.map

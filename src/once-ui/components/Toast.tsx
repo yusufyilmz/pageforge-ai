@@ -74,7 +74,7 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
         </Flex>
       </Flex>
     );
-  },
+  }
 );
 
 Toast.displayName = "Toast";

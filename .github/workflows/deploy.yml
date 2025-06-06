@@ -24,11 +24,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: |
-          npm run type-check
-          npm run lint
-          npm run build
+      - name: Run quality checks
+        run: npm run code-quality
+
+      - name: Build application
+        run: npm run build
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
@@ -42,8 +46,13 @@ jobs:
 
       - name: Notify deployment success
         if: success()
-        run: echo "🚀 Deployment to production successful!"
+        run: |
+          echo "🚀 Deployment to production successful!"
+          echo "Deployed at: $(date)"
 
       - name: Notify deployment failure
         if: failure()
-        run: echo "❌ Deployment to production failed!"
+        run: |
+          echo "❌ Deployment to production failed!"
+          echo "Failed at: $(date)"
+          exit 1

@@ -34,7 +34,9 @@ const DialogContext = React.createContext<{
   setStackedDialogOpen: (open: boolean) => void;
 }>({
   stackedDialogOpen: false,
-  setStackedDialogOpen: () => {},
+  setStackedDialogOpen: () => {
+    // Default no-op function
+  },
 });
 
 export const DialogProvider: React.FC<{
@@ -69,11 +71,12 @@ const Dialog: React.FC<DialogProps> = forwardRef<HTMLDivElement, DialogProps>(
       minHeight,
       ...rest
     },
-    ref,
+    ref
   ) => {
     const dialogRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(isOpen);
     const [isAnimating, setIsAnimating] = useState(false);
+    // biome-ignore lint/correctness/noUnusedVariables: <explanation>
     const { stackedDialogOpen, setStackedDialogOpen } = useContext(DialogContext);
 
     useEffect(() => {
@@ -110,7 +113,7 @@ const Dialog: React.FC<DialogProps> = forwardRef<HTMLDivElement, DialogProps>(
         }
         if (event.key === "Tab" && dialogRef.current) {
           const focusableElements = dialogRef.current.querySelectorAll(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
           );
 
           if (focusableElements.length > 0) {
@@ -127,7 +130,7 @@ const Dialog: React.FC<DialogProps> = forwardRef<HTMLDivElement, DialogProps>(
           }
         }
       },
-      [onClose, base],
+      [onClose, base]
     );
 
     useEffect(() => {
@@ -182,7 +185,7 @@ const Dialog: React.FC<DialogProps> = forwardRef<HTMLDivElement, DialogProps>(
     useEffect(() => {
       if (isOpen && dialogRef.current) {
         const focusableElements = dialogRef.current.querySelectorAll<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         );
         const firstElement = focusableElements[0];
         firstElement.focus();
@@ -259,8 +262,8 @@ const Dialog: React.FC<DialogProps> = forwardRef<HTMLDivElement, DialogProps>(
               if (e.key === "Tab") {
                 const focusableElements = Array.from(
                   dialogRef.current?.querySelectorAll(
-                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-                  ) || [],
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                  ) || []
                 );
 
                 if (focusableElements.length === 0) {
@@ -329,9 +332,9 @@ const Dialog: React.FC<DialogProps> = forwardRef<HTMLDivElement, DialogProps>(
           </Flex>
         </Flex>
       </Flex>,
-      document.body,
+      document.body
     );
-  },
+  }
 );
 
 Dialog.displayName = "Dialog";

@@ -154,7 +154,7 @@ export function StructuredData({
 export function extractStructuredDataFromPageConfig(
   pageConfig: PageConfig,
   siteURL: string,
-  socialLinks?: string[],
+  socialLinks?: string[]
 ): React.ReactElement | null {
   if (!pageConfig.structuredData) {
     return null;

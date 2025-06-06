@@ -20,6 +20,168 @@
 - 🛡️ **Type Safe**: Full TypeScript support
 - 🔧 **Developer Experience**: Hot reload, ESLint, and more
 
+## 🤖 GitHub Workflows & CI/CD
+
+PageForge includes a comprehensive GitHub Actions workflow system for automated testing, code quality, and deployment:
+
+### 📋 Available Workflows
+
+| Workflow | Trigger | Purpose | Status |
+|----------|---------|---------|---------|
+| **Basic CI** | Push/PR to `main`/`develop` | Type check, lint, format, build | ✅ Active |
+| **CI/CD Pipeline** | Push/PR to `main`/`develop` | Full testing matrix, security audit | ✅ Active |
+| **Code Quality** | Push/PR to `main`/`develop` | Biome linting/formatting + auto-fix | ✅ Active |
+| **Deploy Production** | Push to `main` or release | Production deployment to Vercel | ✅ Active |
+| **Auto Merge** | Manual trigger | Automated develop→main merging | 🔧 Manual |
+| **Manual Merge** | Manual trigger | Manual develop→main merging | 🔧 Manual |
+| **Test Setup** | Manual trigger | Setup test framework (Vitest) | 🔧 Manual |
+
+### 🔄 Workflow Details
+
+#### **Basic CI** (`.github/workflows/basic-ci.yml`)
+Simple, fast checks for every push/PR:
+- TypeScript type checking
+- Biome linting and formatting
+- Next.js build verification
+- Runs on Node.js 20.x
+
+#### **CI/CD Pipeline** (`.github/workflows/ci.yml`)
+Comprehensive testing pipeline:
+- **Quality Matrix**: Tests on Node.js 18.x & 20.x
+- **Security Audit**: Dependency vulnerability scanning
+- **Build & Performance**: Production build with artifacts
+- **Supabase Integration**: Database migration testing
+- **Auto-fix**: Automatic code quality fixes on develop
+- **Preview Deployment**: Vercel preview for PRs
+
+#### **Code Quality** (`.github/workflows/code-quality.yml`)
+Focused on code standards:
+- Runs comprehensive code quality checks
+- Auto-fixes issues on develop branch
+- Uses Biome for consistent formatting
+
+#### **Deploy Production** (`.github/workflows/deploy.yml`)
+Production deployment automation:
+- Quality gate before deployment
+- Automatic Vercel production deployment
+- Environment variable validation
+- Deployment status notifications
+
+#### **Auto Merge** (`.github/workflows/auto-merge.yml`)
+Automated branch management:
+- **Safe Merge**: Full CI checks before merging
+- **Quick Merge**: Fast merge without checks
+- Manual trigger with options
+- Optional release tagging
+
+#### **Manual Merge** (`.github/workflows/manual-merge.yml`)
+Manual merge control:
+- Choose merge type (safe/quick)
+- Optional pre-merge testing
+- Full build verification
+- Detailed merge summary
+
+#### **Test Setup** (`.github/workflows/test-setup.yml`)
+One-time test framework setup:
+- Installs Vitest + React Testing Library
+- Creates basic test structure
+- Configures TypeScript test environment
+- Updates package.json scripts
+
+### 🚀 Workflow Commands
+
+#### Automatic Triggers
+```bash
+# Trigger Basic CI + Code Quality
+git push origin develop
+
+# Trigger Full CI/CD Pipeline
+git push origin main
+
+# Trigger Production Deployment
+git push origin main
+git tag v1.0.0 && git push origin --tags
+```
+
+#### Manual Triggers
+```bash
+# Auto-merge develop to main (via GitHub UI)
+# Go to Actions → Auto Merge Develop to Main → Run workflow
+
+# Manual merge with options (via GitHub UI)
+# Go to Actions → Manual Merge Develop to Main → Run workflow
+
+# Setup test framework (via GitHub UI)
+# Go to Actions → Setup Tests → Run workflow
+```
+
+### 🔧 Development Scripts
+
+The workflows use these npm scripts from `package.json`:
+
+```bash
+# Code Quality (used by workflows)
+npm run code-quality          # Type check + lint + format check
+npm run code-quality:fix      # Type check + lint fix + format fix
+
+# Individual checks
+npm run type-check           # TypeScript type checking
+npm run lint                 # Biome linting
+npm run lint:fix            # Biome lint with auto-fix
+npm run format:check        # Biome format checking
+npm run format:fix          # Biome format with auto-fix
+
+# Build and test
+npm run build               # Next.js production build
+npm run test                # Run tests (placeholder)
+npm run test:watch          # Watch mode testing
+npm run test:coverage       # Test coverage report
+```
+
+### 🛡️ Quality Gates
+
+All workflows include these quality gates:
+- ✅ TypeScript type checking
+- ✅ Biome linting (ESLint rules)
+- ✅ Code formatting validation
+- ✅ Next.js build success
+- ✅ Environment variable validation
+- ⚠️ Security audit (audit-level: moderate)
+
+### 📊 Workflow Status
+
+Monitor workflow status:
+- **GitHub Actions Tab**: Real-time workflow status
+- **PR Checks**: Automated status checks on pull requests
+- **Branch Protection**: Main branch protected by required checks
+- **Auto-fix Commits**: Look for commits tagged with `🤖 Auto-fix`
+
+### 🔐 Required Secrets
+
+For full functionality, configure these GitHub secrets:
+
+```bash
+# Vercel Deployment
+VERCEL_TOKEN=your_vercel_token
+VERCEL_ORG_ID=your_org_id
+VERCEL_PROJECT_ID=your_project_id
+
+# Supabase (for build-time)
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+
+# Optional: Slack notifications
+SLACK_WEBHOOK_URL=your_slack_webhook
+```
+
+### 💡 Best Practices
+
+1. **Develop Branch**: Use for active development, auto-fixes enabled
+2. **Feature Branches**: Create PRs to develop, full CI runs
+3. **Main Branch**: Protected, only via approved merges
+4. **Release Tags**: Trigger production deployments
+5. **Manual Merges**: Use for hotfixes or when auto-merge fails
+
 ## AI-Powered Section Generation 🤖
 
 PageForge includes an advanced AI-powered section generation system that can create complex,

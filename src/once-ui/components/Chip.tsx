@@ -34,7 +34,7 @@ const Chip: React.FC<ChipProps> = forwardRef<HTMLDivElement, ChipProps>(
       iconButtonProps = {},
       ...rest
     },
-    ref,
+    ref
   ) => {
     const defaultIconButtonProps: IconButtonProps = {
       icon: "close",
@@ -102,7 +102,7 @@ const Chip: React.FC<ChipProps> = forwardRef<HTMLDivElement, ChipProps>(
         )}
       </Flex>
     );
-  },
+  }
 );
 
 Chip.displayName = "Chip";

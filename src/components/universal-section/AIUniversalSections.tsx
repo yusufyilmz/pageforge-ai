@@ -125,7 +125,7 @@ export const UniversalSections = AIUniversalSections;
 
 // Utility function to generate section from chat
 export const generateSectionFromChat = async (
-  userMessage: string,
+  userMessage: string
 ): Promise<{
   success: boolean;
   sectionType?: string;
@@ -143,7 +143,7 @@ export const generateSectionFromChat = async (
       sectionType: result.sectionType,
       message: result.message,
     };
-  } catch (error) {
+  } catch (_error) {
     return {
       success: false,
       message: "Failed to generate section from chat message",

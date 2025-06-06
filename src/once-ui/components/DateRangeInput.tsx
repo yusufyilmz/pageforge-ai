@@ -48,7 +48,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(
-    value ? formatDateRange(value) : { startDate: "", endDate: "" },
+    value ? formatDateRange(value) : { startDate: "", endDate: "" }
   );
   useEffect(() => {
     if (value) {
@@ -64,7 +64,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         setIsOpen(false);
       }
     },
-    [onChange],
+    [onChange]
   );
 
   const handleInputClick = useCallback(() => {

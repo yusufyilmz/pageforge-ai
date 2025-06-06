@@ -40,7 +40,7 @@ const StatusIndicator = forwardRef<HTMLDivElement, StatusIndicatorProps>(
       style,
       ...rest
     },
-    ref,
+    ref
   ) => {
     return (
       <Flex
@@ -52,7 +52,7 @@ const StatusIndicator = forwardRef<HTMLDivElement, StatusIndicatorProps>(
         {...rest}
       />
     );
-  },
+  }
 );
 
 StatusIndicator.displayName = "StatusIndicator";

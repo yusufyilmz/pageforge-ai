@@ -25,7 +25,7 @@ const generateId = () => `radio-${Math.random().toString(36).substring(2, 9)}`;
 const RadioButton: React.FC<RadioButtonProps> = forwardRef<HTMLInputElement, RadioButtonProps>(
   (
     { style, className, isChecked: controlledIsChecked, name, value, onToggle, disabled, ...props },
-    ref,
+    ref
   ) => {
     const [isChecked, setIsChecked] = useState(controlledIsChecked || false);
     const [radioId] = useState(generateId());
@@ -112,7 +112,7 @@ const RadioButton: React.FC<RadioButtonProps> = forwardRef<HTMLInputElement, Rad
         )}
       </Flex>
     );
-  },
+  }
 );
 
 RadioButton.displayName = "RadioButton";

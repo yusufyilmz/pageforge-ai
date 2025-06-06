@@ -245,7 +245,7 @@ Interactive mode:
     try {
       fields = JSON.parse(args[fieldsIndex + 1]);
     } catch (error) {
-      console.error("❌ Invalid JSON for fields");
+      console.error("❌ Invalid JSON for fields", { error });
       return;
     }
   }

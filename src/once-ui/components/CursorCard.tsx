@@ -49,7 +49,7 @@ const CursorCard = forwardRef<HTMLDivElement, CursorCardProps>(
           setMousePosition({ x: e.clientX, y: e.clientY });
         }
       },
-      [isHovering, isTouchDevice],
+      [isHovering, isTouchDevice]
     );
 
     useEffect(() => {
@@ -115,11 +115,11 @@ const CursorCard = forwardRef<HTMLDivElement, CursorCardProps>(
             >
               {overlay}
             </Flex>,
-            document.getElementById("cursor-card-portal") || document.body,
+            document.getElementById("cursor-card-portal") || document.body
           )}
       </>
     );
-  },
+  }
 );
 
 CursorCard.displayName = "CursorCard";

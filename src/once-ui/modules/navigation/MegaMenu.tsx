@@ -96,7 +96,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ menuGroups, className, ...re
 
   // Check if a menu item should be selected based on the current path
   const isSelected = (href?: string) => {
-    if (!href || !pathname) {
+    if (!(href && pathname)) {
       return false;
     }
     return pathname.startsWith(href);
@@ -108,6 +108,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ menuGroups, className, ...re
   // Add click handler to close dropdown when clicking on links
   const handleLinkClick = (href: string) => {
     setActiveDropdown(null);
+    console.log(`Navigating to ${href}`);
     // Let the default navigation happen
   };
 
@@ -244,7 +245,7 @@ export const MegaMenu: React.FC<MegaMenuProps> = ({ menuGroups, className, ...re
                       </Column>
                     ))}
                   </Row>
-                ),
+                )
             )}
           </Row>
         </Row>

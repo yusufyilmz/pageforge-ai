@@ -36,7 +36,7 @@ const InlineCode = forwardRef<HTMLDivElement, InlineCodeProps>(
         {children}
       </Flex>
     );
-  },
+  }
 );
 
 InlineCode.displayName = "InlineCode";

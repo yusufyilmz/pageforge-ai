@@ -1,36 +1,35 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./types", "./node_modules/@types"],
-    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
+    "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "paths": {
+      "@pageforge/components/*": ["./src/components/*"],
+      "@pageforge/hooks/*": ["./src/hooks/*"],
+      "@pageforge/lib/*": ["./src/lib/*"],
+      "@pageforge/once-ui/*": ["./src/once-ui/*"],
+      "@pageforge/pages/*": ["./src/pages/*"],
+      "@pageforge/types/*": ["./src/lib/types/*"],
+      "@pageforge/ui/*": ["./src/ui/*"],
+      "@pageforge/utils/*": ["./src/utils/*"]
+    },
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "paths": {
-      "@pageforge/once-ui/*": ["./src/once-ui/*"],
-      "@pageforge/types/*": ["./src/lib/types/*"],
-      "@pageforge/ui/*": ["./src/ui/*"],
-      "@pageforge/lib/*": ["./src/lib/*"],
-      "@pageforge/hooks/*": ["./src/hooks/*"],
-      "@pageforge/utils/*": ["./src/utils/*"],
-      "@pageforge/components/*": ["./src/components/*"],
-      "@pageforge/pages/*": ["./src/pages/*"]
-    },
-    "target": "ES2017"
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2017",
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"],
   "exclude": [
     "node_modules",
     "unused/pageold/generatePage.ts",
@@ -40,5 +39,6 @@
     "unused/**/*.tsx",
     "unused/*.ts",
     "unused/*.tsx"
-  ]
+  ],
+  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"]
 }

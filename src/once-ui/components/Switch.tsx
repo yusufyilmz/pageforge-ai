@@ -36,9 +36,8 @@ const Switch: React.FC<SwitchProps> = forwardRef<HTMLInputElement, SwitchProps>(
       disabled,
       name,
       value,
-      ...props
     },
-    ref,
+    ref
   ) => {
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (!disabled && (event.key === "Enter" || event.key === " ")) {
@@ -98,10 +97,10 @@ const Switch: React.FC<SwitchProps> = forwardRef<HTMLInputElement, SwitchProps>(
             {loading && <Spinner size="xs" />}
           </div>
         </Flex>
-        {props.label && <InteractiveDetails disabled={disabled} {...props} onClick={() => {}} />}
+        {/* {props.label && <InteractiveDetails disabled={disabled} {...props} onClick={() => {}} />} */}
       </Flex>
     );
-  },
+  }
 );
 
 Switch.displayName = "Switch";

@@ -203,7 +203,7 @@ export interface SkillsSectionContent {
     description: string | React.ReactNode;
     level?: number; // 1-5 or percentage
     category?: string;
-    images?: Array<ImageConfig>;
+    images?: ImageConfig[];
   }>;
   categories?: string[];
 }
@@ -903,7 +903,7 @@ export type AnyContentBlock = ContentBlock | CustomContentBlock;
 // Type-safe block creators
 export const createHeroBlock = (
   content: HeroSectionContent,
-  options?: { variant?: string; display?: boolean; className?: string },
+  options?: { variant?: string; display?: boolean; className?: string }
 ): ContentBlock => ({
   type: "hero",
   content,
@@ -913,7 +913,7 @@ export const createHeroBlock = (
 
 export const createFeaturesBlock = (
   content: FeaturesSectionContent,
-  options?: { variant?: string; display?: boolean; className?: string },
+  options?: { variant?: string; display?: boolean; className?: string }
 ): ContentBlock => ({
   type: "features",
   content,
@@ -923,7 +923,7 @@ export const createFeaturesBlock = (
 
 export const createExperienceBlock = (
   content: ExperienceSectionContent,
-  options?: { variant?: string; display?: boolean; className?: string },
+  options?: { variant?: string; display?: boolean; className?: string }
 ): ContentBlock => ({
   type: "experience",
   content,
@@ -933,7 +933,7 @@ export const createExperienceBlock = (
 
 export const createStudiesBlock = (
   content: StudiesSectionContent,
-  options?: { variant?: string; display?: boolean; className?: string },
+  options?: { variant?: string; display?: boolean; className?: string }
 ): ContentBlock => ({
   type: "studies",
   content,
@@ -943,7 +943,7 @@ export const createStudiesBlock = (
 
 export const createSkillsBlock = (
   content: SkillsSectionContent,
-  options?: { variant?: string; display?: boolean; className?: string },
+  options?: { variant?: string; display?: boolean; className?: string }
 ): ContentBlock => ({
   type: "skills",
   content,
@@ -953,7 +953,7 @@ export const createSkillsBlock = (
 
 export const createSocialLinksBlock = (
   content: SocialLinksSectionContent,
-  options?: { variant?: string; display?: boolean; className?: string },
+  options?: { variant?: string; display?: boolean; className?: string }
 ): ContentBlock => ({
   type: "socials",
   content,
@@ -963,7 +963,7 @@ export const createSocialLinksBlock = (
 
 export const createTextBlock = (
   content: TextSectionContent,
-  options?: { variant?: string; display?: boolean; className?: string },
+  options?: { variant?: string; display?: boolean; className?: string }
 ): ContentBlock => ({
   type: "text",
   content,
@@ -973,7 +973,7 @@ export const createTextBlock = (
 
 export const createHeadingBlock = (
   content: HeadingSectionContent,
-  options?: { variant?: string; display?: boolean; className?: string },
+  options?: { variant?: string; display?: boolean; className?: string }
 ): ContentBlock => ({
   type: "heading",
   content,
@@ -983,7 +983,7 @@ export const createHeadingBlock = (
 
 export const createShowcaseBlock = (
   content: ShowcaseSectionContent,
-  options?: { variant?: string; display?: boolean; className?: string },
+  options?: { variant?: string; display?: boolean; className?: string }
 ): ContentBlock => ({
   type: "showcase",
   content,
@@ -993,7 +993,7 @@ export const createShowcaseBlock = (
 
 export const createQuickstartBlock = (
   content: QuickstartSectionContent,
-  options?: { variant?: string; display?: boolean; className?: string },
+  options?: { variant?: string; display?: boolean; className?: string }
 ): ContentBlock => ({
   type: "quickstart",
   content,

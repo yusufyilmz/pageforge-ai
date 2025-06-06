@@ -63,7 +63,7 @@ const Toaster: React.FC<ToasterProps> = ({ toasts, removeToast }) => {
         </Flex>
       ))}
     </Flex>,
-    document.body,
+    document.body
   );
 };
 
