@@ -1,25 +1,18 @@
-'use client'
+"use client";
 
-import {
-  Column,
-  Flex,
-  Heading,
-  Text,
-  SmartImage,
-  Button
-} from '@pageforge/once-ui/components'
-import type { ContentBlock } from '@pageforge/types/page/pageTypes'
+import { Button, Column, Flex, Heading, SmartImage, Text } from "@pageforge/once-ui/components";
+import type { ContentBlock } from "@pageforge/types/page/pageTypes";
 
 interface PostsGridSectionProps {
-  block: Extract<ContentBlock, { type: 'posts-grid' }>
-  index: number
+  block: Extract<ContentBlock, { type: "posts-grid" }>;
+  index: number;
 }
 
 export const PostsGridSection = ({ block, index }: PostsGridSectionProps) => {
-  const content = block.content
+  const content = block.content;
 
   if (block.display === false) {
-    return null
+    return null;
   }
 
   const {
@@ -32,37 +25,30 @@ export const PostsGridSection = ({ block, index }: PostsGridSectionProps) => {
     showAuthor = true,
     showCategories = true,
     featuredPosts,
-    recentPosts
-  } = content
+    recentPosts,
+  } = content;
 
-  const allPosts = [
-    ...(featuredPosts?.items || []),
-    ...(recentPosts?.items || [])
-  ]
+  const allPosts = [...(featuredPosts?.items || []), ...(recentPosts?.items || [])];
 
   return (
     <Column
       key={index}
       fillWidth
-      maxWidth='xl'
-      horizontal='center'
-      gap='xl'
-      padding='xl'
+      maxWidth="xl"
+      horizontal="center"
+      gap="xl"
+      padding="xl"
       className={block.className}
     >
       {/* Header */}
-      <Column horizontal='center' align='center' gap='m' maxWidth='l'>
+      <Column horizontal="center" align="center" gap="m" maxWidth="l">
         {title && (
-          <Heading as='h2' variant='display-strong-l' wrap='balance'>
+          <Heading as="h2" variant="display-strong-l" wrap="balance">
             {title}
           </Heading>
         )}
         {subtitle && (
-          <Text
-            variant='heading-default-m'
-            onBackground='neutral-weak'
-            wrap='balance'
-          >
+          <Text variant="heading-default-m" onBackground="neutral-weak" wrap="balance">
             {subtitle}
           </Text>
         )}
@@ -72,21 +58,21 @@ export const PostsGridSection = ({ block, index }: PostsGridSectionProps) => {
       <Flex
         fillWidth
         wrap
-        gap='l'
+        gap="l"
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '1.5rem'
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+          gap: "1.5rem",
         }}
       >
         {allPosts.map((post, postIndex) => (
           <Column
             key={postIndex}
-            gap='m'
-            padding='m'
-            radius='l'
-            border='neutral-alpha-weak'
-            borderStyle='solid'
+            gap="m"
+            padding="m"
+            radius="l"
+            border="neutral-alpha-weak"
+            borderStyle="solid"
           >
             {/* Post Image */}
             {post.metadata.image && (
@@ -96,45 +82,41 @@ export const PostsGridSection = ({ block, index }: PostsGridSectionProps) => {
                 width={400}
                 height={250}
                 style={{
-                  width: '100%',
-                  height: '200px',
-                  borderRadius: '8px',
-                  objectFit: 'cover'
+                  width: "100%",
+                  height: "200px",
+                  borderRadius: "8px",
+                  objectFit: "cover",
                 }}
               />
             )}
 
             {/* Post Content */}
-            <Column gap='s'>
-              <Heading as='h3' variant='heading-strong-m'>
+            <Column gap="s">
+              <Heading as="h3" variant="heading-strong-m">
                 {post.metadata.title}
               </Heading>
 
               {showExcerpt && post.metadata.description && (
-                <Text variant='body-default-s' onBackground='neutral-weak'>
+                <Text variant="body-default-s" onBackground="neutral-weak">
                   {post.metadata.description}
                 </Text>
               )}
 
               {/* Post Meta */}
-              <Flex gap='s' wrap>
+              <Flex gap="s" wrap>
                 {showDate && (
-                  <Text variant='label-default-xs' onBackground='neutral-weak'>
+                  <Text variant="label-default-xs" onBackground="neutral-weak">
                     {new Date(post.metadata.publishedAt).toLocaleDateString()}
                   </Text>
                 )}
                 {showAuthor && post.metadata.author && (
-                  <Text variant='label-default-xs' onBackground='neutral-weak'>
+                  <Text variant="label-default-xs" onBackground="neutral-weak">
                     by {post.metadata.author}
                   </Text>
                 )}
                 {showCategories && post.metadata.tag && (
-                  <Column
-                    background='neutral-alpha-weak'
-                    padding='xs'
-                    radius='s'
-                  >
-                    <Text variant='label-default-xs'>{post.metadata.tag}</Text>
+                  <Column background="neutral-alpha-weak" padding="xs" radius="s">
+                    <Text variant="label-default-xs">{post.metadata.tag}</Text>
                   </Column>
                 )}
               </Flex>
@@ -142,9 +124,9 @@ export const PostsGridSection = ({ block, index }: PostsGridSectionProps) => {
               {/* Read More Link */}
               <Button
                 href={`/blog/${post.slug}`}
-                variant='tertiary'
-                size='s'
-                suffixIcon='arrowRight'
+                variant="tertiary"
+                size="s"
+                suffixIcon="arrowRight"
               >
                 Read More
               </Button>
@@ -153,5 +135,5 @@ export const PostsGridSection = ({ block, index }: PostsGridSectionProps) => {
         ))}
       </Flex>
     </Column>
-  )
-}
+  );
+};

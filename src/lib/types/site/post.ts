@@ -9,42 +9,42 @@ export interface PostMetadata {
   /**
    * Post title
    */
-  title: string
+  title: string;
 
   /**
    * Post description or excerpt
    */
-  description?: string
+  description?: string;
 
   /**
    * Publication date in ISO format
    */
-  publishedAt: string
+  publishedAt: string;
 
   /**
    * URL or path to the post's featured image
    */
-  image?: string
+  image?: string;
 
   /**
    * Author of the post
    */
-  author?: string
+  author?: string;
 
   /**
    * Primary tag for the post
    */
-  tag?: string
+  tag?: string;
 
   /**
    * Additional tags for the post
    */
-  tags?: string[]
+  tags?: string[];
 
   /**
    * Estimated reading time in minutes
    */
-  readingTime?: number
+  readingTime?: number;
 }
 
 /**
@@ -54,17 +54,17 @@ export interface Post {
   /**
    * Unique slug for the post URL
    */
-  slug: string
+  slug: string;
 
   /**
    * Post metadata
    */
-  metadata: PostMetadata
+  metadata: PostMetadata;
 
   /**
    * Post content (this might be HTML or Markdown)
    */
-  content?: string
+  content?: string;
 }
 
 /**
@@ -74,20 +74,20 @@ export interface PostsListingOptions {
   /**
    * Range of posts to display [start, end?]
    */
-  range?: [number] | [number, number]
+  range?: [number] | [number, number];
 
   /**
    * Number of columns for the post grid
    */
-  columns?: '1' | '2' | '3'
+  columns?: "1" | "2" | "3";
 
   /**
    * Whether to display post thumbnails
    */
-  thumbnail?: boolean
+  thumbnail?: boolean;
 
   /**
    * Layout direction for posts
    */
-  direction?: 'row' | 'column'
+  direction?: "row" | "column";
 }

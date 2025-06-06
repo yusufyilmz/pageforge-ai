@@ -1,33 +1,31 @@
-import Link from 'next/link'
-import React, { ReactNode, forwardRef } from 'react'
+import Link from "next/link";
+import type React from "react";
+import { type ReactNode, forwardRef } from "react";
 
-import { Flex } from './Flex'
+import { Flex } from "./Flex";
 
 interface ElementTypeProps {
-  href?: string
-  onClick?: () => void
-  onLinkClick?: () => void
-  children: ReactNode
-  className?: string
-  style?: React.CSSProperties
-  [key: string]: any
+  href?: string;
+  onClick?: () => void;
+  onLinkClick?: () => void;
+  children: ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+  [key: string]: any;
 }
 
-const isExternalLink = (url: string) => /^https?:\/\//.test(url)
+const isExternalLink = (url: string) => /^https?:\/\//.test(url);
 
 const ElementType = forwardRef<HTMLElement, ElementTypeProps>(
-  (
-    { href, type, onClick, onLinkClick, children, className, style, ...props },
-    ref
-  ) => {
+  ({ href, type, onClick, onLinkClick, children, className, style, ...props }, ref) => {
     if (href) {
-      const isExternal = isExternalLink(href)
+      const isExternal = isExternalLink(href);
       if (isExternal) {
         return (
           <a
             href={href}
-            target='_blank'
-            rel='noreferrer'
+            target="_blank"
+            rel="noreferrer"
             ref={ref as React.Ref<HTMLAnchorElement>}
             className={className}
             style={style}
@@ -36,7 +34,7 @@ const ElementType = forwardRef<HTMLElement, ElementTypeProps>(
           >
             {children}
           </a>
-        )
+        );
       }
       return (
         <Link
@@ -49,10 +47,10 @@ const ElementType = forwardRef<HTMLElement, ElementTypeProps>(
         >
           {children}
         </Link>
-      )
+      );
     }
 
-    if (onClick || type === 'submit' || type === 'button') {
+    if (onClick || type === "submit" || type === "button") {
       return (
         <button
           ref={ref as React.Ref<HTMLButtonElement>}
@@ -63,7 +61,7 @@ const ElementType = forwardRef<HTMLElement, ElementTypeProps>(
         >
           {children}
         </button>
-      )
+      );
     }
 
     return (
@@ -75,9 +73,9 @@ const ElementType = forwardRef<HTMLElement, ElementTypeProps>(
       >
         {children}
       </Flex>
-    )
-  }
-)
+    );
+  },
+);
 
-ElementType.displayName = 'ElementType'
-export { ElementType }
+ElementType.displayName = "ElementType";
+export { ElementType };

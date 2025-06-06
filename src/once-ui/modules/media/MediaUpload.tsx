@@ -1,29 +1,30 @@
-'use client'
+"use client";
 
-import { Flex, Icon, Media, Spinner, Text } from '@pageforge/once-ui/components'
-import Compressor from 'compressorjs'
-import React, { useRef, useState, forwardRef, useEffect } from 'react'
+import { Flex, Icon, Media, Spinner, Text } from "@pageforge/once-ui/components";
+import Compressor from "compressorjs";
+import type React from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 
-import styles from './MediaUpload.module.scss'
+import styles from "./MediaUpload.module.scss";
 
 interface MediaUploadProps extends React.ComponentProps<typeof Flex> {
-  onFileUpload?: (file: File) => Promise<void>
-  compress?: boolean
-  aspectRatio?: string
-  className?: string
-  style?: React.CSSProperties
-  initialPreviewImage?: string | null
-  emptyState?: React.ReactNode
-  quality?: number
-  sizes?: string
-  children?: React.ReactNode
-  convertTypes?: string[]
-  resizeMaxWidth?: number
-  resizeMaxHeight?: number
-  resizeWidth?: number
-  resizeHeight?: number
-  loading?: boolean
-  accept?: string
+  onFileUpload?: (file: File) => Promise<void>;
+  compress?: boolean;
+  aspectRatio?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  initialPreviewImage?: string | null;
+  emptyState?: React.ReactNode;
+  quality?: number;
+  sizes?: string;
+  children?: React.ReactNode;
+  convertTypes?: string[];
+  resizeMaxWidth?: number;
+  resizeMaxHeight?: number;
+  resizeWidth?: number;
+  resizeHeight?: number;
+  loading?: boolean;
+  accept?: string;
 }
 
 const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
@@ -31,10 +32,10 @@ const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
     {
       onFileUpload,
       compress = true,
-      aspectRatio = '16 / 9',
+      aspectRatio = "16 / 9",
       quality = 0.8,
-      convertTypes = ['image/png', 'image/webp', 'image/jpg'],
-      emptyState = 'Drag and drop or click to browse',
+      convertTypes = ["image/png", "image/webp", "image/jpg"],
+      emptyState = "Drag and drop or click to browse",
       resizeMaxWidth = 1920,
       resizeMaxHeight = 1920,
       resizeWidth = 1200,
@@ -43,70 +44,68 @@ const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
       sizes,
       children,
       initialPreviewImage = null,
-      accept = 'image/*',
+      accept = "image/*",
       ...rest
     },
-    ref
+    ref,
   ) => {
-    const [dragActive, setDragActive] = useState(false)
-    const [previewImage, setPreviewImage] = useState<string | null>(
-      initialPreviewImage
-    ) // Use prop as initial state
-    const [uploading, setUploading] = useState(false)
-    const inputRef = useRef<HTMLInputElement>(null)
+    const [dragActive, setDragActive] = useState(false);
+    const [previewImage, setPreviewImage] = useState<string | null>(initialPreviewImage); // Use prop as initial state
+    const [uploading, setUploading] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
       if (initialPreviewImage) {
-        setPreviewImage(initialPreviewImage)
+        setPreviewImage(initialPreviewImage);
       }
-    }, [initialPreviewImage])
+    }, [initialPreviewImage]);
 
     const handleDragOver = (e: React.DragEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
-      setDragActive(true)
-    }
+      e.preventDefault();
+      e.stopPropagation();
+      setDragActive(true);
+    };
 
     const handleDragLeave = (e: React.DragEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
-      setDragActive(false)
-    }
+      e.preventDefault();
+      e.stopPropagation();
+      setDragActive(false);
+    };
 
     const handleDrop = (e: React.DragEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
-      setDragActive(false)
+      e.preventDefault();
+      e.stopPropagation();
+      setDragActive(false);
 
       if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-        handleFiles(e.dataTransfer.files)
+        handleFiles(e.dataTransfer.files);
       }
-    }
+    };
 
     const handleFileSelection = () => {
       if (inputRef.current) {
-        inputRef.current.click()
+        inputRef.current.click();
       }
-    }
+    };
 
     const handleFiles = (files: FileList) => {
-      const file = files[0]
+      const file = files[0];
       if (!file) {
-        return
+        return;
       }
 
-      if (file.type.startsWith('image/')) {
-        setPreviewImage(URL.createObjectURL(file))
+      if (file.type.startsWith("image/")) {
+        setPreviewImage(URL.createObjectURL(file));
 
-        if (compress && file.type.startsWith('image/')) {
-          compressImage(file)
+        if (compress && file.type.startsWith("image/")) {
+          compressImage(file);
         } else {
-          uploadFile(file)
+          uploadFile(file);
         }
       } else {
-        console.warn('Unsupported file type:', file.type)
+        console.warn("Unsupported file type:", file.type);
       }
-    }
+    };
 
     const compressImage = (file: File) => {
       new Compressor(file, {
@@ -118,36 +117,36 @@ const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
         width: resizeWidth,
         height: resizeHeight,
         success(compressedFile) {
-          uploadFile(compressedFile as File)
+          uploadFile(compressedFile as File);
         },
         error(err) {
-          console.error('Compression error:', err)
-          uploadFile(file)
-        }
-      })
-    }
+          console.error("Compression error:", err);
+          uploadFile(file);
+        },
+      });
+    };
 
     const uploadFile = async (file: File) => {
-      setUploading(true)
+      setUploading(true);
       if (onFileUpload) {
-        await onFileUpload(file)
+        await onFileUpload(file);
       }
-      setUploading(false)
-    }
+      setUploading(false);
+    };
 
     return (
       <Flex
-        style={{ isolation: 'isolate' }}
-        transition='micro-medium'
-        overflow='hidden'
-        cursor='interactive'
+        style={{ isolation: "isolate" }}
+        transition="micro-medium"
+        overflow="hidden"
+        cursor="interactive"
         className={styles.container}
         aspectRatio={aspectRatio}
         fillWidth
-        horizontal='center'
-        vertical='center'
-        border='neutral-medium'
-        radius='l'
+        horizontal="center"
+        vertical="center"
+        border="neutral-medium"
+        radius="l"
         onClick={handleFileSelection}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -159,17 +158,17 @@ const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
             {previewImage ? (
               <Media
                 style={{
-                  cursor: 'pointer',
-                  filter: uploading ? 'grayscale(1)' : ''
+                  cursor: "pointer",
+                  filter: uploading ? "grayscale(1)" : "",
                 }}
                 sizes={sizes}
                 fill
-                src={previewImage ? previewImage : ''}
-                alt='Preview of uploaded image'
+                src={previewImage ? previewImage : ""}
+                alt="Preview of uploaded image"
               />
             ) : (
               <Flex fill center>
-                <Icon name='plus' size='l' />
+                <Icon name="plus" size="l" />
               </Flex>
             )}
           </>
@@ -178,36 +177,36 @@ const MediaUpload = forwardRef<HTMLInputElement, MediaUploadProps>(
         <Flex
           className={styles.upload}
           zIndex={1}
-          transition='micro-medium'
-          position='absolute'
+          transition="micro-medium"
+          position="absolute"
           fill
-          padding='m'
-          horizontal='center'
-          vertical='center'
+          padding="m"
+          horizontal="center"
+          vertical="center"
         >
           {uploading || loading ? (
-            <Spinner size='l' />
+            <Spinner size="l" />
           ) : (
-            <Text className={styles.text} align='center'>
+            <Text className={styles.text} align="center">
               {emptyState}
             </Text>
           )}
         </Flex>
         <input
-          type='file'
+          type="file"
           ref={inputRef}
           accept={accept}
-          style={{ display: 'none' }}
-          onChange={e => {
+          style={{ display: "none" }}
+          onChange={(e) => {
             if (e.target.files) {
-              handleFiles(e.target.files)
+              handleFiles(e.target.files);
             }
           }}
         />
       </Flex>
-    )
-  }
-)
+    );
+  },
+);
 
-MediaUpload.displayName = 'MediaUpload'
-export { MediaUpload }
+MediaUpload.displayName = "MediaUpload";
+export { MediaUpload };

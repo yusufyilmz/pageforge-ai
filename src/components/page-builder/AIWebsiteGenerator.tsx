@@ -1,29 +1,24 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
+import type React from "react";
+import { useState } from "react";
 
-import {
-  Flex,
-  Text,
-  Button,
-  Heading,
-  Input
-} from '@pageforge/once-ui/components'
+import { Button, Flex, Heading, Input, Text } from "@pageforge/once-ui/components";
 
 interface ChatMessage {
-  id: string
-  role: 'user' | 'assistant'
-  content: string
-  timestamp: number
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: number;
 }
 
 interface AIWebsiteGeneratorProps {
-  selectedTemplate: string | null
-  personData: any
-  projects: any[]
-  customConfig?: any
-  generatedConfig: any
-  onWebsiteGenerated?: (websiteData: any) => void
+  selectedTemplate: string | null;
+  personData: any;
+  projects: any[];
+  customConfig?: any;
+  generatedConfig: any;
+  onWebsiteGenerated?: (websiteData: any) => void;
 }
 
 export const AIWebsiteGenerator: React.FC<AIWebsiteGeneratorProps> = ({
@@ -31,12 +26,12 @@ export const AIWebsiteGenerator: React.FC<AIWebsiteGeneratorProps> = ({
   personData,
   projects,
   generatedConfig,
-  onWebsiteGenerated
+  onWebsiteGenerated,
 }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      id: '1',
-      role: 'assistant',
+      id: "1",
+      role: "assistant",
       content: `🎉 Great! I'll help you create your ${selectedTemplate} website.
 
 Let me ask you a few questions to make it perfect:
@@ -47,59 +42,59 @@ Let me ask you a few questions to make it perfect:
 4. Any specific features you'd like to include?
 
 Just answer naturally - I'll understand! 😊`,
-      timestamp: Date.now()
-    }
-  ])
+      timestamp: Date.now(),
+    },
+  ]);
 
-  const [currentMessage, setCurrentMessage] = useState('')
-  const [isGenerating, setIsGenerating] = useState(false)
-  const [websiteGenerated, setWebsiteGenerated] = useState(false)
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [websiteGenerated, setWebsiteGenerated] = useState(false);
 
   const handleSendMessage = async () => {
     if (!currentMessage.trim()) {
-      return
+      return;
     }
 
     // Add user message
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
-      role: 'user',
+      role: "user",
       content: currentMessage,
-      timestamp: Date.now()
-    }
-    setMessages(prev => [...prev, userMessage])
+      timestamp: Date.now(),
+    };
+    setMessages((prev) => [...prev, userMessage]);
 
-    setIsGenerating(true)
+    setIsGenerating(true);
 
     // Simulate AI processing (replace with actual ChatGPT API call)
     setTimeout(() => {
       const aiResponse = generateAIResponse(currentMessage, messages, {
         template: selectedTemplate,
         personData,
-        projects
-      })
+        projects,
+      });
 
       const responseMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
+        role: "assistant",
         content: aiResponse.content,
-        timestamp: Date.now()
-      }
+        timestamp: Date.now(),
+      };
 
-      setMessages(prev => [...prev, responseMessage])
-      setIsGenerating(false)
+      setMessages((prev) => [...prev, responseMessage]);
+      setIsGenerating(false);
 
       // Check if we have enough info to generate website
       if (aiResponse.readyToGenerate) {
-        generateWebsite()
+        generateWebsite();
       }
-    }, 1500)
+    }, 1500);
 
-    setCurrentMessage('')
-  }
+    setCurrentMessage("");
+  };
 
   const generateWebsite = async () => {
-    setIsGenerating(true)
+    setIsGenerating(true);
 
     // Simulate website generation
     setTimeout(() => {
@@ -107,15 +102,15 @@ Just answer naturally - I'll understand! 😊`,
         config: generatedConfig,
         customizations: extractCustomizationsFromChat(messages),
         domain: `${personData.name?.toLowerCase()}-${selectedTemplate}.pageforge.app`,
-        ready: true
-      }
+        ready: true,
+      };
 
-      setWebsiteGenerated(true)
-      setIsGenerating(false)
+      setWebsiteGenerated(true);
+      setIsGenerating(false);
 
       const finalMessage: ChatMessage = {
         id: Date.now().toString(),
-        role: 'assistant',
+        role: "assistant",
         content: `🚀 **Your website is ready!**
 
 ✅ **Live URL**: ${websiteData.domain}
@@ -130,65 +125,63 @@ Would you like me to:
 - Customize the design?
 - Set up analytics?
 - Help with SEO?`,
-        timestamp: Date.now()
-      }
+        timestamp: Date.now(),
+      };
 
-      setMessages(prev => [...prev, finalMessage])
+      setMessages((prev) => [...prev, finalMessage]);
 
       if (onWebsiteGenerated) {
-        onWebsiteGenerated(websiteData)
+        onWebsiteGenerated(websiteData);
       }
-    }, 3000)
-  }
+    }, 3000);
+  };
 
   const quickQuestions = [
-    'I want to showcase my portfolio and get freelance clients',
-    'I need a professional presence for job applications',
-    'I want to build my personal brand in tech',
-    'I need a landing page for my consulting services'
-  ]
+    "I want to showcase my portfolio and get freelance clients",
+    "I need a professional presence for job applications",
+    "I want to build my personal brand in tech",
+    "I need a landing page for my consulting services",
+  ];
 
   return (
-    <Flex direction='column' gap='l'>
-      <Flex direction='column' gap='m' style={{ textAlign: 'center' }}>
-        <Heading variant='display-strong-m'>
-          {websiteGenerated
-            ? '🎉 Your Website is Live!'
-            : '🤖 AI Website Generator'}
+    <Flex direction="column" gap="l">
+      <Flex direction="column" gap="m" style={{ textAlign: "center" }}>
+        <Heading variant="display-strong-m">
+          {websiteGenerated ? "🎉 Your Website is Live!" : "🤖 AI Website Generator"}
         </Heading>
-        <Text variant='body-default-l' onBackground='neutral-weak'>
+        <Text variant="body-default-l" onBackground="neutral-weak">
           {websiteGenerated
-            ? 'Your professional website has been created and deployed!'
+            ? "Your professional website has been created and deployed!"
             : "I'll ask you questions to understand exactly what you need"}
         </Text>
       </Flex>
 
       {/* Chat Interface */}
       <Flex
-        direction='column'
-        gap='m'
-        padding='l'
-        radius='m'
-        background='neutral-weak'
-        style={{ maxHeight: '500px', overflowY: 'auto' }}
+        direction="column"
+        gap="m"
+        padding="l"
+        radius="m"
+        background="neutral-weak"
+        style={{ maxHeight: "500px", overflowY: "auto" }}
       >
-        {messages.map(message => (
+        {messages.map((message) => (
           <Flex
             key={message.id}
-            direction='column'
-            gap='xs'
-            padding='m'
-            radius='s'
-            background={message.role === 'user' ? 'brand-weak' : 'neutral-weak'}
+            direction="column"
+            gap="xs"
+            padding="m"
+            radius="s"
+            background={message.role === "user" ? "brand-weak" : "neutral-weak"}
             style={{
-              alignSelf: message.role === 'user' ? 'flex-end' : 'flex-start',
-              maxWidth: '85%'
+              alignSelf: message.role === "user" ? "flex-end" : "flex-start",
+              maxWidth: "85%",
             }}
           >
-            <Text variant='label-default-xs' onBackground='neutral-medium'>
-              {message.role === 'user' ? 'You' : 'AI Assistant'}
+            <Text variant="label-default-xs" onBackground="neutral-medium">
+              {message.role === "user" ? "You" : "AI Assistant"}
             </Text>
-            <Text variant='body-default-s' style={{ whiteSpace: 'pre-line' }}>
+            <Text variant="body-default-s" style={{ whiteSpace: "pre-line" }}>
               {message.content}
             </Text>
           </Flex>
@@ -196,61 +189,59 @@ Would you like me to:
 
         {isGenerating && (
           <Flex
-            direction='column'
-            gap='xs'
-            padding='m'
-            radius='s'
-            background='neutral-weak'
-            style={{ alignSelf: 'flex-start', maxWidth: '85%' }}
+            direction="column"
+            gap="xs"
+            padding="m"
+            radius="s"
+            background="neutral-weak"
+            style={{ alignSelf: "flex-start", maxWidth: "85%" }}
           >
-            <Text variant='label-default-xs' onBackground='neutral-medium'>
+            <Text variant="label-default-xs" onBackground="neutral-medium">
               AI Assistant
             </Text>
-            <Text variant='body-default-s'>
-              🤔 Thinking... Let me analyze your requirements
-            </Text>
+            <Text variant="body-default-s">🤔 Thinking... Let me analyze your requirements</Text>
           </Flex>
         )}
       </Flex>
 
       {/* Input Area */}
       {!websiteGenerated && (
-        <Flex direction='column' gap='m'>
-          <Flex gap='s'>
+        <Flex direction="column" gap="m">
+          <Flex gap="s">
             <Input
-              id='chat-input'
+              id="chat-input"
               value={currentMessage}
-              onChange={e => setCurrentMessage(e.target.value)}
-              placeholder='Tell me about your goals, audience, or what you need...'
-              onKeyDown={e => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault()
-                  handleSendMessage()
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              placeholder="Tell me about your goals, audience, or what you need..."
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSendMessage();
                 }
               }}
             />
             <Button
-              variant='primary'
+              variant="primary"
               onClick={handleSendMessage}
               disabled={!currentMessage.trim() || isGenerating}
             >
-              {isGenerating ? '⏳' : 'Send'}
+              {isGenerating ? "⏳" : "Send"}
             </Button>
           </Flex>
 
           {/* Quick Answers */}
-          <Flex direction='column' gap='s'>
-            <Text variant='label-default-s' onBackground='neutral-medium'>
+          <Flex direction="column" gap="s">
+            <Text variant="label-default-s" onBackground="neutral-medium">
               💡 Quick answers:
             </Text>
-            <Flex direction='column' gap='xs'>
+            <Flex direction="column" gap="xs">
               {quickQuestions.map((question, index) => (
                 <Button
                   key={index}
-                  variant='tertiary'
-                  size='s'
+                  variant="tertiary"
+                  size="s"
                   onClick={() => setCurrentMessage(question)}
-                  style={{ justifyContent: 'flex-start', textAlign: 'left' }}
+                  style={{ justifyContent: "flex-start", textAlign: "left" }}
                 >
                   "{question}"
                 </Button>
@@ -262,38 +253,28 @@ Would you like me to:
 
       {/* Website Generated - Next Steps */}
       {websiteGenerated && (
-        <Flex
-          direction='column'
-          gap='m'
-          padding='l'
-          radius='m'
-          background='brand-weak'
-        >
-          <Heading variant='heading-strong-m'>🚀 What's Next?</Heading>
-          <Flex direction='column' gap='s'>
-            <Button variant='primary' size='m'>
+        <Flex direction="column" gap="m" padding="l" radius="m" background="brand-weak">
+          <Heading variant="heading-strong-m">🚀 What's Next?</Heading>
+          <Flex direction="column" gap="s">
+            <Button variant="primary" size="m">
               🌐 Visit Your Website
             </Button>
-            <Button variant='secondary' size='m'>
+            <Button variant="secondary" size="m">
               📱 Share on Social Media
             </Button>
-            <Button variant='tertiary' size='m'>
+            <Button variant="tertiary" size="m">
               ⚙️ Customize Further
             </Button>
           </Flex>
         </Flex>
       )}
     </Flex>
-  )
-}
+  );
+};
 
 // AI Response Generator (replace with actual ChatGPT API)
-function generateAIResponse(
-  userMessage: string,
-  chatHistory: ChatMessage[],
-  context: any
-) {
-  const messageCount = chatHistory.filter(m => m.role === 'user').length
+function generateAIResponse(userMessage: string, chatHistory: ChatMessage[], context: any) {
+  const messageCount = chatHistory.filter((m) => m.role === "user").length;
 
   // Simple logic - replace with ChatGPT API call
   if (messageCount === 1) {
@@ -306,8 +287,8 @@ Now, tell me:
 - Any specific colors or style preferences?
 
 This helps me customize everything perfectly for you! 🎨`,
-      readyToGenerate: false
-    }
+      readyToGenerate: false,
+    };
   }
 
   if (messageCount >= 2) {
@@ -321,25 +302,25 @@ Based on our conversation, I'm creating:
 ✅ Professional design matching your style
 
 Generating your website now... ⚡`,
-      readyToGenerate: true
-    }
+      readyToGenerate: true,
+    };
   }
 
   return {
     content: "Tell me more about what you're looking for!",
-    readyToGenerate: false
-  }
+    readyToGenerate: false,
+  };
 }
 
 // Extract customizations from chat
 function extractCustomizationsFromChat(messages: ChatMessage[]) {
-  console.log(messages)
+  console.log(messages);
   // Analyze chat messages to extract preferences
   // This would use ChatGPT to understand user preferences
   return {
-    style: 'professional',
-    audience: 'extracted from chat',
-    goals: 'extracted from chat',
-    features: ['extracted', 'from', 'chat']
-  }
+    style: "professional",
+    audience: "extracted from chat",
+    goals: "extracted from chat",
+    features: ["extracted", "from", "chat"],
+  };
 }

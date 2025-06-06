@@ -1,48 +1,48 @@
-'use client'
+"use client";
 
-import { Column, Heading, Text } from '@pageforge/once-ui/components'
-import type { ContentBlock } from '@pageforge/types/page/pageTypes'
+import { Column, Heading, Text } from "@pageforge/once-ui/components";
+import type { ContentBlock } from "@pageforge/types/page/pageTypes";
 
 interface LegalTextSectionProps {
-  block: Extract<ContentBlock, { type: 'legal-text' }>
-  index: number
+  block: Extract<ContentBlock, { type: "legal-text" }>;
+  index: number;
 }
 
 export const LegalTextSection = ({ block, index }: LegalTextSectionProps) => {
-  const content = block.content
+  const content = block.content;
 
   if (block.display === false) {
-    return null
+    return null;
   }
 
-  const { title, sections = [] } = content
+  const { title, sections = [] } = content;
 
   return (
     <Column
       key={index}
       fillWidth
-      maxWidth='l'
-      horizontal='center'
-      gap='xl'
-      padding='xl'
+      maxWidth="l"
+      horizontal="center"
+      gap="xl"
+      padding="xl"
       className={block.className}
     >
-      <Column horizontal='center' align='center' gap='m'>
+      <Column horizontal="center" align="center" gap="m">
         {title && (
-          <Heading as='h1' variant='display-strong-l'>
+          <Heading as="h1" variant="display-strong-l">
             {title}
           </Heading>
         )}
       </Column>
 
       {sections.map((section, sectionIndex) => (
-        <Column key={sectionIndex} gap='m'>
-          <Heading as='h2' variant='heading-strong-l'>
+        <Column key={sectionIndex} gap="m">
+          <Heading as="h2" variant="heading-strong-l">
             {section.title}
           </Heading>
-          <Text variant='body-default-m'>{section.content}</Text>
+          <Text variant="body-default-m">{section.content}</Text>
         </Column>
       ))}
     </Column>
-  )
-}
+  );
+};

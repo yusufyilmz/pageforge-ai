@@ -3,12 +3,12 @@ export {
   PageMeta,
   generatePageMetadata,
   extractMetadataFromPageConfig,
-  type PageMetaProps
-} from './page-metadata'
+  type PageMetaProps,
+} from "./page-metadata";
 
 export {
   PageSchema,
   StructuredData,
   extractStructuredDataFromPageConfig,
-  type StructuredDataProps
-} from './page-schema'
+  type StructuredDataProps,
+} from "./page-schema";

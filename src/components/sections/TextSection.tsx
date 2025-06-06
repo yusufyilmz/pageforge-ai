@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import { Text } from '@pageforge/once-ui/components'
-import type { ContentBlock } from '@pageforge/types/page/pageTypes'
+import { Text } from "@pageforge/once-ui/components";
+import type { ContentBlock } from "@pageforge/types/page/pageTypes";
 
 interface TextSectionProps {
-  block: Extract<ContentBlock, { type: 'text' }>
-  index: number
+  block: Extract<ContentBlock, { type: "text" }>;
+  index: number;
 }
 
 export const TextSection = ({ block, index }: TextSectionProps) => {
-  const content = block.content
+  const content = block.content;
 
   if (block.display === false) {
-    return null
+    return null;
   }
 
-  const { text, align = 'left', size = 'm' } = content
+  const { text, align = "left", size = "m" } = content;
 
   return (
     <Text
@@ -26,5 +26,5 @@ export const TextSection = ({ block, index }: TextSectionProps) => {
     >
       {text}
     </Text>
-  )
-}
+  );
+};

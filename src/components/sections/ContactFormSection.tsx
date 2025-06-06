@@ -1,82 +1,73 @@
-'use client'
+"use client";
 
 import {
   Button,
   Column,
   Flex,
   Heading,
-  Text,
   Input,
+  Select,
+  Text,
   Textarea,
-  Select
-} from '@pageforge/once-ui/components'
-import type { ContentBlock } from '@pageforge/types/page/pageTypes'
+} from "@pageforge/once-ui/components";
+import type { ContentBlock } from "@pageforge/types/page/pageTypes";
 
 interface ContactFormSectionProps {
-  block: Extract<ContentBlock, { type: 'contact-form' }>
-  index: number
+  block: Extract<ContentBlock, { type: "contact-form" }>;
+  index: number;
 }
 
-export const ContactFormSection = ({
-  block,
-  index
-}: ContactFormSectionProps) => {
-  const content = block.content
+export const ContactFormSection = ({ block, index }: ContactFormSectionProps) => {
+  const content = block.content;
 
   if (block.display === false) {
-    return null
+    return null;
   }
 
   const {
-    title = 'Contact Us',
+    title = "Contact Us",
     description,
     fields,
-    submitButton = { label: 'Send Message', variant: 'primary' },
-    endpoint
+    submitButton = { label: "Send Message", variant: "primary" },
+    endpoint,
     // successMessage = 'Thank you for your message!',
     // errorMessage = 'Something went wrong. Please try again.'
-  } = content
+  } = content;
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // Handle form submission here
-    console.log('Form submitted to:', endpoint)
-  }
+    console.log("Form submitted to:", endpoint);
+  };
 
   return (
     <Column
       key={index}
       fillWidth
-      maxWidth='m'
-      horizontal='center'
-      gap='xl'
-      padding='xl'
+      maxWidth="m"
+      horizontal="center"
+      gap="xl"
+      padding="xl"
       className={block.className}
     >
       {/* Header */}
-      <Column horizontal='center' align='center' gap='m'>
-        <Heading as='h2' variant='display-strong-l'>
+      <Column horizontal="center" align="center" gap="m">
+        <Heading as="h2" variant="display-strong-l">
           {title}
         </Heading>
         {description && (
-          <Text variant='body-default-l' onBackground='neutral-weak'>
+          <Text variant="body-default-l" onBackground="neutral-weak">
             {description}
           </Text>
         )}
       </Column>
 
       {/* Form */}
-      <Flex
-        direction='column'
-        fillWidth
-        gap='l'
-        as='form'
-        onSubmit={handleSubmit}
-      >
+      <Flex direction="column" fillWidth gap="l" as="form" onSubmit={handleSubmit}>
         {fields.map((field, fieldIndex) => (
-          <Column key={fieldIndex} gap='xs'>
-            <Text variant='label-default-s'>{field.label}</Text>
-            {field.type === 'textarea' ? (
+          <Column key={fieldIndex} gap="xs">
+            <Text variant="label-default-s">{field.label}</Text>
+            {field.type === "textarea" ? (
               <Textarea
                 id={field.name}
                 name={field.name}
@@ -84,12 +75,12 @@ export const ContactFormSection = ({
                 required={field.required}
                 rows={4}
               />
-            ) : field.type === 'select' ? (
+            ) : field.type === "select" ? (
               <Select
                 id={field.name}
                 name={field.name}
                 required={field.required}
-                placeholder={field.placeholder || 'Select an option'}
+                placeholder={field.placeholder || "Select an option"}
                 options={field.options || []}
               >
                 {field.options?.map((option, optionIndex) => (
@@ -110,10 +101,10 @@ export const ContactFormSection = ({
           </Column>
         ))}
 
-        <Button type='submit' variant={submitButton.variant} size='l' fillWidth>
+        <Button type="submit" variant={submitButton.variant} size="l" fillWidth>
           {submitButton.label}
         </Button>
       </Flex>
     </Column>
-  )
-}
+  );
+};

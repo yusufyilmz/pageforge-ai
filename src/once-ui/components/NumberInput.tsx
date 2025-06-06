@@ -1,72 +1,70 @@
-'use client'
+"use client";
 
-import classNames from 'classnames'
-import React, { forwardRef, useState } from 'react'
+import classNames from "classnames";
+import type React from "react";
+import { forwardRef, useState } from "react";
 
-import styles from './NumberInput.module.scss'
+import styles from "./NumberInput.module.scss";
 
-import { Input, Flex, IconButton } from '.'
+import { Flex, IconButton, Input } from ".";
 
 interface NumberInputProps
-  extends Omit<
-    React.ComponentProps<typeof Input>,
-    'type' | 'value' | 'onChange'
-  > {
-  value?: number
-  onChange?: (value: number) => void
-  min?: number
-  max?: number
-  step?: number
-  padStart?: number
+  extends Omit<React.ComponentProps<typeof Input>, "type" | "value" | "onChange"> {
+  value?: number;
+  onChange?: (value: number) => void;
+  min?: number;
+  max?: number;
+  step?: number;
+  padStart?: number;
 }
 
 const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
   ({ value, onChange, min, max, step = 1, padStart, ...props }, ref) => {
     const [localValue, setLocalValue] = useState<string>(
       padStart && value !== undefined
-        ? value.toString().padStart(padStart, '0')
-        : (value?.toString() ?? '')
-    )
+        ? value.toString().padStart(padStart, "0")
+        : (value?.toString() ?? ""),
+    );
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.target.value
-      setLocalValue(newValue)
+      const newValue = e.target.value;
+      setLocalValue(newValue);
 
-      const numValue = parseFloat(newValue)
+      const numValue = Number.parseFloat(newValue);
       if (!isNaN(numValue) && onChange) {
-        onChange(numValue)
+        onChange(numValue);
       }
-    }
+    };
 
     const updateValue = (newValue: number) => {
       const formattedValue = padStart
-        ? newValue.toString().padStart(padStart, '0')
-        : newValue.toString()
-      setLocalValue(formattedValue)
-      onChange?.(newValue)
-    }
+        ? newValue.toString().padStart(padStart, "0")
+        : newValue.toString();
+      setLocalValue(formattedValue);
+      onChange?.(newValue);
+    };
 
     const increment = () => {
-      const currentValue = parseFloat(localValue) || 0
-      const newValue = currentValue + step
+      const currentValue = Number.parseFloat(localValue) || 0;
+      const newValue = currentValue + step;
       if (max === undefined || newValue <= max) {
-        updateValue(newValue)
+        updateValue(newValue);
       }
-    }
+    };
 
     const decrement = () => {
-      const currentValue = parseFloat(localValue) || 0
-      const newValue = currentValue - step
+      const currentValue = Number.parseFloat(localValue) || 0;
+      const newValue = currentValue - step;
       if (min === undefined || newValue >= min) {
-        updateValue(newValue)
+        updateValue(newValue);
       }
-    }
+    };
 
     return (
       <Input
         {...props}
         ref={ref}
-        type='number'
+        type="number"
         value={localValue}
         onChange={handleChange}
         min={min}
@@ -74,49 +72,43 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         step={step}
         hasSuffix={
           <>
-            <Flex position='static' minWidth={1.25}></Flex>
+            <Flex position="static" minWidth={1.25}></Flex>
             <Flex
-              position='absolute'
-              right='0'
-              top='0'
-              direction='column'
-              borderLeft='neutral-medium'
+              position="absolute"
+              right="0"
+              top="0"
+              direction="column"
+              borderLeft="neutral-medium"
               fillHeight
-              background='neutral-alpha-weak'
+              background="neutral-alpha-weak"
             >
               <Flex
                 fillHeight
-                position='static'
-                borderBottom='neutral-medium'
-                paddingX='4'
-                className={classNames(
-                  styles.stepper,
-                  'transition-micro-medium'
-                )}
+                position="static"
+                borderBottom="neutral-medium"
+                paddingX="4"
+                className={classNames(styles.stepper, "transition-micro-medium")}
               >
                 <IconButton
-                  icon='chevronUp'
-                  variant='ghost'
-                  size='s'
+                  icon="chevronUp"
+                  variant="ghost"
+                  size="s"
                   onClick={increment}
-                  aria-label='Increment value'
+                  aria-label="Increment value"
                 />
               </Flex>
               <Flex
                 fillHeight
-                position='static'
-                paddingX='4'
-                className={classNames(
-                  styles.stepper,
-                  'transition-micro-medium'
-                )}
+                position="static"
+                paddingX="4"
+                className={classNames(styles.stepper, "transition-micro-medium")}
               >
                 <IconButton
-                  icon='chevronDown'
-                  variant='ghost'
-                  size='s'
+                  icon="chevronDown"
+                  variant="ghost"
+                  size="s"
                   onClick={decrement}
-                  aria-label='Decrement value'
+                  aria-label="Decrement value"
                 />
               </Flex>
             </Flex>
@@ -124,9 +116,9 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         }
         className={styles.numberInput}
       />
-    )
-  }
-)
+    );
+  },
+);
 
-NumberInput.displayName = 'NumberInput'
-export { NumberInput }
+NumberInput.displayName = "NumberInput";
+export { NumberInput };

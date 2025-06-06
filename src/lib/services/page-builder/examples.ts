@@ -1,6 +1,6 @@
-import { PageType } from '../../types/page/pageTypes'
+import { PageType } from "../../types/page/pageTypes";
 
-import { PageBuilder, createAboutPage } from './PageBuilder'
+import { PageBuilder, createAboutPage } from "./PageBuilder";
 
 // ============================================================================
 // BEFORE: Verbose PageConfig (200+ lines of boilerplate)
@@ -84,98 +84,98 @@ const oldWay: PageConfig = {
 // ============================================================================
 
 export const aboutPageSimple = createAboutPage()
-  .withTitle('About Me')
-  .withDescription('Learn more about my background and experience')
-  .withAuthor('John Doe')
-  .withKeywords(['about', 'developer', 'experience'])
-  .withImage('/images/profile.jpg', 'John Doe Profile')
+  .withTitle("About Me")
+  .withDescription("Learn more about my background and experience")
+  .withAuthor("John Doe")
+  .withKeywords(["about", "developer", "experience"])
+  .withImage("/images/profile.jpg", "John Doe Profile")
   .addHero({
     title: "Hi, I'm John",
-    subtitle: 'Software Developer',
-    description: 'I build amazing web applications'
+    subtitle: "Software Developer",
+    description: "I build amazing web applications",
   })
   .addExperience([
     {
-      company: 'Tech Corp',
-      role: 'Senior Developer',
-      timeframe: '2020-Present',
-      achievements: ['Built scalable apps', 'Led team of 5']
-    }
+      company: "Tech Corp",
+      role: "Senior Developer",
+      timeframe: "2020-Present",
+      achievements: ["Built scalable apps", "Led team of 5"],
+    },
   ])
   .addSkills([
-    { name: 'React', level: 'expert', category: 'Frontend' },
-    { name: 'Node.js', level: 'advanced', category: 'Backend' }
+    { name: "React", level: "expert", category: "Frontend" },
+    { name: "Node.js", level: "advanced", category: "Backend" },
   ])
-  .withNavigation('About', 'person', 1)
-  .build()
+  .withNavigation("About", "person", 1)
+  .build();
 
 // ============================================================================
 // Advanced Example: Custom Blog Page
 // ============================================================================
 
-export const customBlogPage = PageBuilder.create(PageType.BLOG, '/blog')
-  .withTitle('My Tech Blog')
-  .withDescription('Thoughts on web development and technology')
-  .withAuthor('John Doe')
-  .withKeywords(['blog', 'tech', 'development', 'tutorials'])
-  .withLayout('with-sidebar')
-  .withSidebar('right', '300px')
-  .addSection('posts-grid', {
-    layout: 'grid',
+export const customBlogPage = PageBuilder.create(PageType.BLOG, "/blog")
+  .withTitle("My Tech Blog")
+  .withDescription("Thoughts on web development and technology")
+  .withAuthor("John Doe")
+  .withKeywords(["blog", "tech", "development", "tutorials"])
+  .withLayout("with-sidebar")
+  .withSidebar("right", "300px")
+  .addSection("posts-grid", {
+    layout: "grid",
     columns: 2,
     showExcerpt: true,
-    showDate: true
+    showDate: true,
   })
-  .withStructuredData('Blog', {
-    name: 'My Tech Blog',
-    description: 'Thoughts on web development and technology',
+  .withStructuredData("Blog", {
+    name: "My Tech Blog",
+    description: "Thoughts on web development and technology",
     author: {
-      '@type': 'Person',
-      name: 'John Doe'
-    }
+      "@type": "Person",
+      name: "John Doe",
+    },
   })
   .withSEO({
     sitemap: {
       priority: 0.9,
-      changeFreq: 'weekly'
-    }
+      changeFreq: "weekly",
+    },
   })
-  .build()
+  .build();
 
 // ============================================================================
 // Quick Portfolio Page
 // ============================================================================
 
-export const portfolioPage = PageBuilder.create(PageType.WORK, '/portfolio')
-  .withTitle('My Portfolio')
-  .withDescription('Check out my latest projects and work')
+export const portfolioPage = PageBuilder.create(PageType.WORK, "/portfolio")
+  .withTitle("My Portfolio")
+  .withDescription("Check out my latest projects and work")
   .addHero({
-    title: 'My Work',
-    description: "A collection of projects I've worked on"
+    title: "My Work",
+    description: "A collection of projects I've worked on",
   })
-  .addSection('projects', {
-    layout: 'grid',
+  .addSection("projects", {
+    layout: "grid",
     columns: 3,
     projects: [
       {
-        title: 'E-commerce App',
-        description: 'Modern shopping experience',
-        technologies: ['React', 'Node.js', 'PostgreSQL'],
-        featured: true
-      }
-    ]
+        title: "E-commerce App",
+        description: "Modern shopping experience",
+        technologies: ["React", "Node.js", "PostgreSQL"],
+        featured: true,
+      },
+    ],
   })
-  .withMaxWidth('xl')
-  .build()
+  .withMaxWidth("xl")
+  .build();
 
 // ============================================================================
 // Advanced Customization
 // ============================================================================
 
-export const advancedPage = createAboutPage('/custom-about')
-  .withTitle('Advanced About Page')
-  .withDescription('A more complex example')
-  .customize(config => {
+export const advancedPage = createAboutPage("/custom-about")
+  .withTitle("Advanced About Page")
+  .withDescription("A more complex example")
+  .customize((config) => {
     // Direct access to config for complex customizations
     config.effects = {
       mask: { cursor: true, x: 25, y: 75, radius: 150 },
@@ -186,14 +186,14 @@ export const advancedPage = createAboutPage('/custom-about')
         width: 100,
         height: 100,
         tilt: 45,
-        colorStart: 'blue',
-        colorEnd: 'purple',
-        opacity: 0.3
+        colorStart: "blue",
+        colorEnd: "purple",
+        opacity: 0.3,
       },
-      dots: { display: true, size: 3, color: 'brand', opacity: 0.4 }
-    }
+      dots: { display: true, size: 3, color: "brand", opacity: 0.4 },
+    };
   })
-  .build()
+  .build();
 
 // ============================================================================
 // COMPARISON: Lines of Code

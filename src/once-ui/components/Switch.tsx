@@ -1,26 +1,27 @@
-'use client'
+"use client";
 
-import classNames from 'classnames'
-import React, { forwardRef } from 'react'
+import classNames from "classnames";
+import type React from "react";
+import { forwardRef } from "react";
 
-import commonStyles from './SharedInteractiveStyles.module.scss'
-import styles from './Switch.module.scss'
+import commonStyles from "./SharedInteractiveStyles.module.scss";
+import styles from "./Switch.module.scss";
 
-import { Flex, InteractiveDetails, InteractiveDetailsProps, Spinner } from '.'
+import { Flex, InteractiveDetails, type InteractiveDetailsProps, Spinner } from ".";
 
 interface SwitchProps
-  extends Omit<InteractiveDetailsProps, 'onClick'>,
+  extends Omit<InteractiveDetailsProps, "onClick">,
     React.InputHTMLAttributes<HTMLInputElement> {
-  style?: React.CSSProperties
-  className?: string
-  isChecked: boolean
-  loading?: boolean
-  name?: string
-  value?: string
-  disabled?: boolean
-  reverse?: boolean
-  ariaLabel?: string
-  onToggle: () => void
+  style?: React.CSSProperties;
+  className?: string;
+  isChecked: boolean;
+  loading?: boolean;
+  name?: string;
+  value?: string;
+  disabled?: boolean;
+  reverse?: boolean;
+  ariaLabel?: string;
+  onToggle: () => void;
 }
 
 const Switch: React.FC<SwitchProps> = forwardRef<HTMLInputElement, SwitchProps>(
@@ -31,39 +32,39 @@ const Switch: React.FC<SwitchProps> = forwardRef<HTMLInputElement, SwitchProps>(
       reverse = false,
       loading = false,
       onToggle,
-      ariaLabel = 'Toggle switch',
+      ariaLabel = "Toggle switch",
       disabled,
       name,
       value,
       ...props
     },
-    ref
+    ref,
   ) => {
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (!disabled && (event.key === 'Enter' || event.key === ' ')) {
-        event.preventDefault()
-        onToggle()
+      if (!disabled && (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault();
+        onToggle();
       }
-    }
+    };
 
     const handleClick = () => {
       if (!disabled) {
-        onToggle()
+        onToggle();
       }
-    }
+    };
 
     return (
       <Flex
-        gap='16'
-        vertical='center'
-        horizontal={reverse ? 'space-between' : undefined}
+        gap="16"
+        vertical="center"
+        horizontal={reverse ? "space-between" : undefined}
         fillWidth={reverse}
         className={classNames(styles.container, className, {
           [styles.reverse]: reverse,
-          [styles.disabled]: disabled
+          [styles.disabled]: disabled,
         })}
         onClick={handleClick}
-        role='switch'
+        role="switch"
         aria-checked={isChecked}
         aria-label={ariaLabel}
         aria-disabled={disabled}
@@ -71,7 +72,7 @@ const Switch: React.FC<SwitchProps> = forwardRef<HTMLInputElement, SwitchProps>(
       >
         <input
           ref={ref}
-          type='checkbox'
+          type="checkbox"
           name={name}
           value={value}
           checked={isChecked}
@@ -80,10 +81,10 @@ const Switch: React.FC<SwitchProps> = forwardRef<HTMLInputElement, SwitchProps>(
           tabIndex={-1}
         />
         <Flex
-          cursor={disabled ? 'not-allowed' : undefined}
+          cursor={disabled ? "not-allowed" : undefined}
           className={classNames(styles.switch, {
             [styles.checked]: isChecked,
-            [styles.disabled]: disabled
+            [styles.disabled]: disabled,
           })}
         >
           <div
@@ -91,24 +92,18 @@ const Switch: React.FC<SwitchProps> = forwardRef<HTMLInputElement, SwitchProps>(
             tabIndex={disabled ? -1 : 0}
             className={classNames(styles.element, {
               [styles.checked]: isChecked,
-              [styles.disabled]: disabled
+              [styles.disabled]: disabled,
             })}
           >
-            {loading && <Spinner size='xs' />}
+            {loading && <Spinner size="xs" />}
           </div>
         </Flex>
-        {props.label && (
-          <InteractiveDetails
-            disabled={disabled}
-            {...props}
-            onClick={() => {}}
-          />
-        )}
+        {props.label && <InteractiveDetails disabled={disabled} {...props} onClick={() => {}} />}
       </Flex>
-    )
-  }
-)
+    );
+  },
+);
 
-Switch.displayName = 'Switch'
+Switch.displayName = "Switch";
 
-export { Switch }
+export { Switch };

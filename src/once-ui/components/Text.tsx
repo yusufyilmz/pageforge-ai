@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import classNames from 'classnames'
-import React, { ElementType, ComponentPropsWithoutRef } from 'react'
+import classNames from "classnames";
+import React, { type ElementType, type ComponentPropsWithoutRef } from "react";
 
-import { TextProps, CommonProps, SpacingProps } from '../interfaces'
-import { ColorScheme, ColorWeight, TextVariant, SpacingToken } from '../types'
+import type { CommonProps, SpacingProps, TextProps } from "../interfaces";
+import type { ColorScheme, ColorWeight, SpacingToken, TextVariant } from "../types";
 
 type TypeProps<T extends ElementType> = TextProps<T> &
   CommonProps &
   SpacingProps &
-  ComponentPropsWithoutRef<T>
+  ComponentPropsWithoutRef<T>;
 
-const Text = <T extends ElementType = 'span'>({
+const Text = <T extends ElementType = "span">({
   as,
   variant,
   size,
@@ -39,68 +39,60 @@ const Text = <T extends ElementType = 'span'>({
   className,
   ...props
 }: TypeProps<T>) => {
-  const Component = as || 'span'
+  const Component = as || "span";
 
   if (variant && (size || weight)) {
-    console.warn("When 'variant' is set, 'size' and 'weight' are ignored.")
+    console.warn("When 'variant' is set, 'size' and 'weight' are ignored.");
   }
 
   if (onBackground && onSolid) {
     console.warn(
-      "You cannot use both 'onBackground' and 'onSolid' props simultaneously. Only one will be applied."
-    )
+      "You cannot use both 'onBackground' and 'onSolid' props simultaneously. Only one will be applied.",
+    );
   }
 
   const getVariantClasses = (variant: TextVariant) => {
-    const [fontType, weight, size] = variant.split('-')
-    return [`font-${fontType}`, `font-${weight}`, `font-${size}`]
-  }
+    const [fontType, weight, size] = variant.split("-");
+    return [`font-${fontType}`, `font-${weight}`, `font-${size}`];
+  };
 
-  const sizeClass = size ? `font-${size}` : ''
-  const weightClass = weight ? `font-${weight}` : ''
+  const sizeClass = size ? `font-${size}` : "";
+  const weightClass = weight ? `font-${weight}` : "";
 
-  const classes = variant
-    ? getVariantClasses(variant)
-    : [sizeClass, weightClass]
+  const classes = variant ? getVariantClasses(variant) : [sizeClass, weightClass];
 
-  let colorClass = ''
+  let colorClass = "";
   if (onBackground) {
-    const [scheme, weight] = onBackground.split('-') as [
-      ColorScheme,
-      ColorWeight
-    ]
-    colorClass = `${scheme}-on-background-${weight}`
+    const [scheme, weight] = onBackground.split("-") as [ColorScheme, ColorWeight];
+    colorClass = `${scheme}-on-background-${weight}`;
   } else if (onSolid) {
-    const [scheme, weight] = onSolid.split('-') as [ColorScheme, ColorWeight]
-    colorClass = `${scheme}-on-solid-${weight}`
+    const [scheme, weight] = onSolid.split("-") as [ColorScheme, ColorWeight];
+    colorClass = `${scheme}-on-solid-${weight}`;
   }
 
-  const generateClassName = (
-    prefix: string,
-    token: SpacingToken | undefined
-  ) => {
-    return token ? `${prefix}-${token}` : undefined
-  }
+  const generateClassName = (prefix: string, token: SpacingToken | undefined) => {
+    return token ? `${prefix}-${token}` : undefined;
+  };
 
   const combinedClasses = classNames(
     ...classes,
     colorClass,
     className,
-    generateClassName('p', padding),
-    generateClassName('pl', paddingLeft),
-    generateClassName('pr', paddingRight),
-    generateClassName('pt', paddingTop),
-    generateClassName('pb', paddingBottom),
-    generateClassName('px', paddingX),
-    generateClassName('py', paddingY),
-    generateClassName('m', margin),
-    generateClassName('ml', marginLeft),
-    generateClassName('mr', marginRight),
-    generateClassName('mt', marginTop),
-    generateClassName('mb', marginBottom),
-    generateClassName('mx', marginX),
-    generateClassName('my', marginY)
-  )
+    generateClassName("p", padding),
+    generateClassName("pl", paddingLeft),
+    generateClassName("pr", paddingRight),
+    generateClassName("pt", paddingTop),
+    generateClassName("pb", paddingBottom),
+    generateClassName("px", paddingX),
+    generateClassName("py", paddingY),
+    generateClassName("m", margin),
+    generateClassName("ml", marginLeft),
+    generateClassName("mr", marginRight),
+    generateClassName("mt", marginTop),
+    generateClassName("mb", marginBottom),
+    generateClassName("mx", marginX),
+    generateClassName("my", marginY),
+  );
 
   return (
     <Component
@@ -108,15 +100,15 @@ const Text = <T extends ElementType = 'span'>({
       style={{
         textAlign: align,
         textWrap: wrap,
-        ...style
+        ...style,
       }}
       {...props}
     >
       {children}
     </Component>
-  )
-}
+  );
+};
 
-Text.displayName = 'Text'
+Text.displayName = "Text";
 
-export { Text }
+export { Text };

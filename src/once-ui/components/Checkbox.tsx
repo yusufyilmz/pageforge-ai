@@ -1,27 +1,24 @@
-'use client'
+"use client";
 
-import classNames from 'classnames'
-import React, { useState, useEffect, forwardRef } from 'react'
+import classNames from "classnames";
+import type React from "react";
+import { forwardRef, useEffect, useState } from "react";
 
-import styles from './SharedInteractiveStyles.module.scss'
+import styles from "./SharedInteractiveStyles.module.scss";
 
-import { Flex, Icon, InteractiveDetails, InteractiveDetailsProps } from '.'
+import { Flex, Icon, InteractiveDetails, type InteractiveDetailsProps } from ".";
 
 interface CheckboxProps
-  extends Omit<InteractiveDetailsProps, 'onClick'>,
+  extends Omit<InteractiveDetailsProps, "onClick">,
     React.InputHTMLAttributes<HTMLInputElement> {
-  isChecked?: boolean
-  isIndeterminate?: boolean
-  onToggle?: () => void
+  isChecked?: boolean;
+  isIndeterminate?: boolean;
+  onToggle?: () => void;
 }
 
-const generateId = () =>
-  `checkbox-${Math.random().toString(36).substring(2, 9)}`
+const generateId = () => `checkbox-${Math.random().toString(36).substring(2, 9)}`;
 
-const Checkbox: React.FC<CheckboxProps> = forwardRef<
-  HTMLInputElement,
-  CheckboxProps
->(
+const Checkbox: React.FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
       style,
@@ -32,60 +29,58 @@ const Checkbox: React.FC<CheckboxProps> = forwardRef<
       disabled,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const [isChecked, setIsChecked] = useState(controlledIsChecked || false)
-    const [checkboxId] = useState(generateId())
+    const [isChecked, setIsChecked] = useState(controlledIsChecked || false);
+    const [checkboxId] = useState(generateId());
 
     useEffect(() => {
       if (controlledIsChecked !== undefined) {
-        setIsChecked(controlledIsChecked)
+        setIsChecked(controlledIsChecked);
       }
-    }, [controlledIsChecked])
+    }, [controlledIsChecked]);
 
     const toggleItem = () => {
       if (disabled) {
-        return
+        return;
       }
       if (onToggle) {
-        onToggle()
+        onToggle();
       } else {
-        setIsChecked(!isChecked)
+        setIsChecked(!isChecked);
       }
-    }
+    };
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
       if (disabled) {
-        return
+        return;
       }
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault()
-        toggleItem()
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggleItem();
       }
-    }
+    };
 
     return (
       <Flex
-        vertical='center'
-        gap='16'
+        vertical="center"
+        gap="16"
         className={classNames(styles.container, className, {
-          [styles.disabled]: disabled
+          [styles.disabled]: disabled,
         })}
         style={style}
       >
         <input
-          type='checkbox'
+          type="checkbox"
           ref={ref}
           aria-checked={
             isIndeterminate
-              ? 'mixed'
+              ? "mixed"
               : controlledIsChecked !== undefined
                 ? controlledIsChecked
                 : isChecked
           }
-          checked={
-            controlledIsChecked !== undefined ? controlledIsChecked : isChecked
-          }
+          checked={controlledIsChecked !== undefined ? controlledIsChecked : isChecked}
           onChange={toggleItem}
           disabled={disabled}
           className={styles.hidden}
@@ -93,17 +88,17 @@ const Checkbox: React.FC<CheckboxProps> = forwardRef<
         />
         <Flex
           style={{
-            borderRadius: 'min(var(--static-space-4), var(--radius-xs))'
+            borderRadius: "min(var(--static-space-4), var(--radius-xs))",
           }}
-          role='checkbox'
+          role="checkbox"
           tabIndex={0}
-          cursor={disabled ? 'not-allowed' : undefined}
-          horizontal='center'
-          vertical='center'
-          radius='xs'
+          cursor={disabled ? "not-allowed" : undefined}
+          horizontal="center"
+          vertical="center"
+          radius="xs"
           aria-checked={
             isIndeterminate
-              ? 'mixed'
+              ? "mixed"
               : controlledIsChecked !== undefined
                 ? controlledIsChecked
                 : isChecked
@@ -116,37 +111,30 @@ const Checkbox: React.FC<CheckboxProps> = forwardRef<
               controlledIsChecked !== undefined
                 ? controlledIsChecked || isIndeterminate
                 : isChecked,
-            [styles.disabled]: disabled
+            [styles.disabled]: disabled,
           })}
         >
-          {(controlledIsChecked !== undefined
-            ? controlledIsChecked
-            : isChecked) &&
+          {(controlledIsChecked !== undefined ? controlledIsChecked : isChecked) &&
             !isIndeterminate && (
               <Flex className={styles.icon}>
-                <Icon onSolid='brand-strong' name='checkbox' size='xs' />
+                <Icon onSolid="brand-strong" name="checkbox" size="xs" />
               </Flex>
             )}
           {isIndeterminate && (
             <Flex className={styles.icon}>
-              <Icon onSolid='brand-strong' name='minus' size='xs' />
+              <Icon onSolid="brand-strong" name="minus" size="xs" />
             </Flex>
           )}
         </Flex>
         {props.label && (
-          <InteractiveDetails
-            disabled={disabled}
-            id={checkboxId}
-            {...props}
-            onClick={toggleItem}
-          />
+          <InteractiveDetails disabled={disabled} id={checkboxId} {...props} onClick={toggleItem} />
         )}
       </Flex>
-    )
-  }
-)
+    );
+  },
+);
 
-Checkbox.displayName = 'Checkbox'
+Checkbox.displayName = "Checkbox";
 
-export { Checkbox }
-export type { CheckboxProps }
+export { Checkbox };
+export type { CheckboxProps };

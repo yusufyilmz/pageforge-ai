@@ -1,51 +1,51 @@
-'use client'
+"use client";
 
 import React, {
   useState,
-  KeyboardEventHandler,
-  ChangeEventHandler,
-  FocusEventHandler,
-  forwardRef
-} from 'react'
+  type KeyboardEventHandler,
+  type ChangeEventHandler,
+  type FocusEventHandler,
+  forwardRef,
+} from "react";
 
-import { Flex, Chip, Input, InputProps } from '.'
+import { Chip, Flex, Input, type InputProps } from ".";
 
-interface TagInputProps extends Omit<InputProps, 'onChange' | 'value'> {
-  value: string[]
-  onChange: (value: string[]) => void
+interface TagInputProps extends Omit<InputProps, "onChange" | "value"> {
+  value: string[];
+  onChange: (value: string[]) => void;
 }
 
 const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
   ({ value, onChange, label, placeholder, ...inputProps }, ref) => {
-    const [inputValue, setInputValue] = useState('')
-    const [isFocused, setIsFocused] = useState(false)
+    const [inputValue, setInputValue] = useState("");
+    const [isFocused, setIsFocused] = useState(false);
 
-    const handleInputChange: ChangeEventHandler<HTMLInputElement> = e => {
-      setInputValue(e.target.value)
-    }
+    const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+      setInputValue(e.target.value);
+    };
 
-    const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-      if (e.key === 'Enter' || e.key === ',') {
-        e.preventDefault()
+    const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+      if (e.key === "Enter" || e.key === ",") {
+        e.preventDefault();
         if (inputValue.trim()) {
-          onChange([...value, inputValue.trim()])
-          setInputValue('')
+          onChange([...value, inputValue.trim()]);
+          setInputValue("");
         }
       }
-    }
+    };
 
     const handleRemoveTag = (index: number) => {
-      const newValue = value.filter((_, i) => i !== index)
-      onChange(newValue)
-    }
+      const newValue = value.filter((_, i) => i !== index);
+      onChange(newValue);
+    };
 
     const handleFocus: FocusEventHandler<HTMLInputElement> = () => {
-      setIsFocused(true)
-    }
+      setIsFocused(true);
+    };
 
-    const handleBlur: FocusEventHandler<HTMLInputElement> = e => {
-      setIsFocused(false)
-    }
+    const handleBlur: FocusEventHandler<HTMLInputElement> = (e) => {
+      setIsFocused(false);
+    };
 
     return (
       <Input
@@ -57,20 +57,20 @@ const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
         onKeyDown={handleKeyDown}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        aria-haspopup='listbox'
+        aria-haspopup="listbox"
         aria-expanded={isFocused}
         {...inputProps}
       >
         {value.length > 0 && (
           <Flex
             style={{
-              margin: 'calc(-1 * var(--static-space-8)) var(--static-space-8)'
+              margin: "calc(-1 * var(--static-space-8)) var(--static-space-8)",
             }}
-            direction='row'
-            gap='4'
-            vertical='center'
+            direction="row"
+            gap="4"
+            vertical="center"
             wrap
-            paddingY='16'
+            paddingY="16"
           >
             {value.map((tag, index) => (
               <Chip
@@ -83,11 +83,11 @@ const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
           </Flex>
         )}
       </Input>
-    )
-  }
-)
+    );
+  },
+);
 
-TagInput.displayName = 'TagInput'
+TagInput.displayName = "TagInput";
 
-export { TagInput }
-export type { TagInputProps }
+export { TagInput };
+export type { TagInputProps };

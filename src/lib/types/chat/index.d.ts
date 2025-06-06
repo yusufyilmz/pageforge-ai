@@ -1,14 +1,14 @@
 export declare enum ChatRole {
-  Assistant = 'assistant',
-  User = 'user',
-  System = 'system'
+  Assistant = "assistant",
+  User = "user",
+  System = "system",
 }
 export type ChatMessage = {
-  role: ChatRole
-  content: string
-  title?: string
-  error?: string
-  timestamp?: number
-}
-export * from './questions'
+  role: ChatRole;
+  content: string;
+  title?: string;
+  error?: string;
+  timestamp?: number;
+};
+export * from "./questions";
 //# sourceMappingURL=index.d.ts.map

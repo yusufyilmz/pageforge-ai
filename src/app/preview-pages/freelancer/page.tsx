@@ -1,19 +1,19 @@
-'use client'
+"use client";
 
-import { UniversalPage } from '@pageforge/components/universal-page/UniversalPage'
+import { UniversalPage } from "@pageforge/components/universal-page/UniversalPage";
 
-import { GenericLayout } from '../../../components/layout/Layout'
-import { freelancerTemplate } from '../../../lib/services/page-builder'
+import { GenericLayout } from "../../../components/layout/Layout";
+import { freelancerTemplate } from "../../../lib/services/page-builder";
 
 const FreelancerPreview = () => {
   // Generate the freelancer template configuration
-  const pageConfig = freelancerTemplate()
+  const pageConfig = freelancerTemplate();
 
   return (
-    <GenericLayout theme='natural'>
+    <GenericLayout theme="natural">
       <UniversalPage config={pageConfig} />
     </GenericLayout>
-  )
-}
+  );
+};
 
-export default FreelancerPreview
+export default FreelancerPreview;

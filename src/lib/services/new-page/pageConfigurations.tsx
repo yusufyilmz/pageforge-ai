@@ -7,17 +7,13 @@
 // import createContentConfig, { ContentConfig } from './content'
 
 import {
+  type AboutPageConfig,
   OpenGraphType,
   PageType,
   SchemaType,
-  type AboutPageConfig
-} from '@pageforge/types/page/pageTypes'
+} from "@pageforge/types/page/pageTypes";
 
-import {
-  createContentConfig,
-  ContentConfig,
-  createContentTemplate
-} from './content'
+import { type ContentConfig, createContentConfig, createContentTemplate } from "./content";
 
 // IMPORTANT: The functions below will use example data if called without parameters.
 // To use real content, pass a ContentConfig object with your actual data:
@@ -785,30 +781,23 @@ import {
 // }
 
 export const createComprehensiveAboutPageConfig = (
-  contentConfig?: Partial<ContentConfig>
+  contentConfig?: Partial<ContentConfig>,
 ): AboutPageConfig => {
-  const content = createContentConfig(contentConfig)
-  const { person, about, social } = content
+  const content = createContentConfig(contentConfig);
+  const { person, about, social } = content;
 
   return {
     pageType: PageType.ABOUT,
-    slug: '/about',
+    slug: "/about",
     metadata: {
       basic: {
         title: about.title,
         description: about.description,
-        keywords: [
-          'about',
-          person.name,
-          person.role,
-          'portfolio',
-          'biography',
-          'developer'
-        ],
+        keywords: ["about", person.name, person.role, "portfolio", "biography", "developer"],
         author: `${person.name} ${person.lastName}`,
         publishDate: new Date().toISOString(),
         modifiedDate: new Date().toISOString(),
-        canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://localhost:3000'}/about`
+        canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://localhost:3000"}/about`,
       },
       openGraph: {
         type: OpenGraphType.PROFILE,
@@ -816,191 +805,191 @@ export const createComprehensiveAboutPageConfig = (
         description: about.description,
         image: person.avatar,
         alt: `${person.name} ${person.lastName}`,
-        url: '/about'
+        url: "/about",
       },
       twitter: {
-        card: 'summary_large_image',
+        card: "summary_large_image",
         title: about.title,
         description: about.description,
-        image: person.avatar
-      }
+        image: person.avatar,
+      },
     },
     structuredData: {
-      '@context': 'https://schema.org',
-      '@type': SchemaType.PERSON,
-      '@id': '/about',
+      "@context": "https://schema.org",
+      "@type": SchemaType.PERSON,
+      "@id": "/about",
       name: `${person.name} ${person.lastName}`,
       givenName: person.name,
       familyName: person.lastName,
       jobTitle: person.role,
       description: about.intro.description,
       image: person.avatar,
-      url: '/about',
+      url: "/about",
       location: {
-        '@type': 'Place',
-        name: person.location
+        "@type": "Place",
+        name: person.location,
       },
       knowsLanguage: person.languages,
       sameAs: social
-        .filter(item => item.link && !item.link.startsWith('mailto:'))
-        .map(item => item.link),
+        .filter((item) => item.link && !item.link.startsWith("mailto:"))
+        .map((item) => item.link),
       alumniOf:
         about.studies?.institutions?.map((inst: any) => ({
-          '@type': 'EducationalOrganization',
-          name: inst.name
+          "@type": "EducationalOrganization",
+          name: inst.name,
         })) || [],
       worksFor:
         about.work?.experiences?.map((exp: any) => ({
-          '@type': 'Organization',
-          name: exp.company
-        })) || []
+          "@type": "Organization",
+          name: exp.company,
+        })) || [],
     },
     content: {
       sidebar: {
-        id: 'table-of-contents',
-        title: 'Table of Contents',
+        id: "table-of-contents",
+        title: "Table of Contents",
         blocks: [
           {
-            type: 'table-of-contents',
+            type: "table-of-contents",
             content: {
               items: [
                 {
                   title: about.intro.title,
-                  display: about.intro.display
+                  display: about.intro.display,
                 },
                 {
-                  title: about.work?.title || 'Work Experience',
-                  display: about.work?.display || true
+                  title: about.work?.title || "Work Experience",
+                  display: about.work?.display || true,
                 },
                 {
-                  title: about.studies?.title || 'Education',
-                  display: about.studies?.display || true
+                  title: about.studies?.title || "Education",
+                  display: about.studies?.display || true,
                 },
                 {
-                  title: about.technical?.title || 'Technical Skills',
-                  display: about.technical?.display || true
-                }
-              ]
-            }
-          }
+                  title: about.technical?.title || "Technical Skills",
+                  display: about.technical?.display || true,
+                },
+              ],
+            },
+          },
         ],
-        display: true
+        display: true,
       },
       main: [
         {
-          id: 'about-hero',
+          id: "about-hero",
           blocks: [
             {
-              type: 'about-hero',
+              type: "about-hero",
               content: {
                 avatar: {
                   display: about.avatar?.display || true,
-                  src: '/images/avatar.jpg'
+                  src: "/images/avatar.jpg",
                 },
                 intro: {
                   display: about.intro.display,
                   title: about.intro.title,
-                  description: about.intro.description
-                }
-              }
-            }
-          ],
-          display: true
-        },
-        {
-          id: 'calendar-link',
-          blocks: [
-            {
-              type: 'calendar-link',
-              content: {
-                text: 'Schedule a call',
-                description: "Let's discuss your project or just have a chat",
-                link: about.calendar?.link || '#',
-                icon: 'calendar'
+                  description: about.intro.description,
+                },
               },
-              display: about.calendar?.display || false
-            }
+            },
           ],
-          display: about.calendar?.display || false
+          display: true,
         },
         {
-          id: 'introduction',
+          id: "calendar-link",
+          blocks: [
+            {
+              type: "calendar-link",
+              content: {
+                text: "Schedule a call",
+                description: "Let's discuss your project or just have a chat",
+                link: about.calendar?.link || "#",
+                icon: "calendar",
+              },
+              display: about.calendar?.display || false,
+            },
+          ],
+          display: about.calendar?.display || false,
+        },
+        {
+          id: "introduction",
           title: about.intro.title,
-          description: 'Get to know me better',
+          description: "Get to know me better",
           blocks: [
             {
-              type: 'text',
+              type: "text",
               content: {
-                text: about.intro.description
-              }
-            }
+                text: about.intro.description,
+              },
+            },
           ],
           layout: {
-            marginBottom: 'xxl'
+            marginBottom: "xxl",
           },
-          display: about.intro.display
+          display: about.intro.display,
         },
         {
-          id: 'experience',
-          title: about.work?.title || 'Work Experience',
-          description: 'My professional journey and achievements',
+          id: "experience",
+          title: about.work?.title || "Work Experience",
+          description: "My professional journey and achievements",
           blocks: [
             {
-              type: 'experience',
+              type: "experience",
               content: {
-                title: about.work?.title || 'Work Experience',
-                experiences: about.work?.experiences || []
-              }
-            }
+                title: about.work?.title || "Work Experience",
+                experiences: about.work?.experiences || [],
+              },
+            },
           ],
           layout: {
-            marginBottom: 'xxl'
+            marginBottom: "xxl",
           },
-          display: about.work?.display || true
+          display: about.work?.display || true,
         },
         {
-          id: 'education',
-          title: about.studies?.title || 'Education',
-          description: 'My academic background and certifications',
+          id: "education",
+          title: about.studies?.title || "Education",
+          description: "My academic background and certifications",
           blocks: [
             {
-              type: 'studies',
+              type: "studies",
               content: {
-                title: about.studies?.title || 'Education',
-                institutions: about.studies?.institutions || []
-              }
-            }
+                title: about.studies?.title || "Education",
+                institutions: about.studies?.institutions || [],
+              },
+            },
           ],
           layout: {
-            marginBottom: 'xxl'
+            marginBottom: "xxl",
           },
-          display: about.studies?.display || true
+          display: about.studies?.display || true,
         },
         {
-          id: 'skills',
-          title: about.technical?.title || 'Technical Skills',
-          description: 'Technologies and tools I work with',
+          id: "skills",
+          title: about.technical?.title || "Technical Skills",
+          description: "Technologies and tools I work with",
           blocks: [
             {
-              type: 'skills',
+              type: "skills",
               content: {
-                title: about.technical?.title || 'Technical Skills',
+                title: about.technical?.title || "Technical Skills",
                 skills: about.technical?.skills || [],
                 categories: [
-                  'Frontend Development',
-                  'Backend Development',
-                  'DevOps & Cloud',
-                  'Design & UX',
-                  'Mobile Development'
-                ]
-              }
-            }
+                  "Frontend Development",
+                  "Backend Development",
+                  "DevOps & Cloud",
+                  "Design & UX",
+                  "Mobile Development",
+                ],
+              },
+            },
           ],
           layout: {
-            marginBottom: 'xxl'
+            marginBottom: "xxl",
           },
-          display: about.technical?.display || true
-        }
+          display: about.technical?.display || true,
+        },
         // {
         //   id: 'personal-interests',
         //   title: 'Beyond Code',
@@ -1040,11 +1029,11 @@ export const createComprehensiveAboutPageConfig = (
         //   },
         //   display: true
         // }
-      ]
+      ],
     },
     layout: {
-      template: 'with-sidebar',
-      maxWidth: 'm'
+      template: "with-sidebar",
+      maxWidth: "m",
       // sidebar: {
       //   position: 'left',
       //   width: '240px',
@@ -1057,17 +1046,17 @@ export const createComprehensiveAboutPageConfig = (
     },
     navigation: {
       label: about.label,
-      icon: 'person',
-      href: '/about',
+      icon: "person",
+      href: "/about",
       enabled: true,
-      order: 1
+      order: 1,
     },
     effects: {
       mask: {
         cursor: true,
         x: 0,
         y: 0,
-        radius: 150
+        radius: 150,
       },
       gradient: {
         display: true,
@@ -1076,27 +1065,27 @@ export const createComprehensiveAboutPageConfig = (
         width: 100,
         height: 100,
         tilt: 45,
-        colorStart: '#3b82f6',
-        colorEnd: '#8b5cf6',
-        opacity: 0.1
+        colorStart: "#3b82f6",
+        colorEnd: "#8b5cf6",
+        opacity: 0.1,
       },
       dots: {
         display: true,
         size: 2,
-        color: '#6b7280',
-        opacity: 0.3
-      }
+        color: "#6b7280",
+        opacity: 0.3,
+      },
     },
     seo: {
       noIndex: false,
       noFollow: false,
       sitemap: {
         priority: 0.8,
-        changeFreq: 'monthly'
-      }
-    }
-  }
-}
+        changeFreq: "monthly",
+      },
+    },
+  };
+};
 
 // New comprehensive configurations
 // export const createComprehensivePageConfigurations = (
@@ -1126,8 +1115,8 @@ export const createComprehensiveAboutPageConfig = (
 export const pageConfigurations = {
   gallery: null,
   blog: null,
-  about: createComprehensiveAboutPageConfig
-}
+  about: createComprehensiveAboutPageConfig,
+};
 
 // Export helper function for creating content templates
-export { createContentTemplate }
+export { createContentTemplate };

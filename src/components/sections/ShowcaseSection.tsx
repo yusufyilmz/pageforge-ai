@@ -1,63 +1,57 @@
-'use client'
+"use client";
 
 import {
+  Badge,
   Button,
   Column,
   Flex,
   Heading,
-  Text,
   SmartImage,
-  Badge
-} from '@pageforge/once-ui/components'
-import type {
-  ContentBlock,
-  ShowcaseSectionContent
-} from '@pageforge/types/page/pageTypes'
+  Text,
+} from "@pageforge/once-ui/components";
+import type { ContentBlock, ShowcaseSectionContent } from "@pageforge/types/page/pageTypes";
 
 interface ShowcaseSectionProps {
-  block: Extract<ContentBlock, { type: 'showcase' }>
-  index: number
+  block: Extract<ContentBlock, { type: "showcase" }>;
+  index: number;
 }
 
 export const ShowcaseSection = ({ block, index }: ShowcaseSectionProps) => {
-  const content = block.content
+  const content = block.content;
 
   if (block.display === false) {
-    return null
+    return null;
   }
 
   const {
     title,
     subtitle,
     description,
-    layout = 'grid',
+    layout = "grid",
     columns = 3,
     items,
     categories = [],
     showFilter = false,
     showCategories = true,
-    showStats = true
-  } = content
+    showStats = true,
+  } = content;
 
-  const renderShowcaseItem = (
-    item: ShowcaseSectionContent['items'][0],
-    itemIndex: number
-  ) => (
+  const renderShowcaseItem = (item: ShowcaseSectionContent["items"][0], itemIndex: number) => (
     <Column
       key={itemIndex}
-      gap='m'
-      padding='l'
-      background='neutral-alpha-weak'
-      radius='l'
-      border='neutral-alpha-weak'
-      borderStyle='solid'
+      gap="m"
+      padding="l"
+      background="neutral-alpha-weak"
+      radius="l"
+      border="neutral-alpha-weak"
+      borderStyle="solid"
       style={{
-        transition: 'all 0.2s ease',
-        cursor: item.link ? 'pointer' : 'default'
+        transition: "all 0.2s ease",
+        cursor: item.link ? "pointer" : "default",
       }}
       onClick={() => {
         if (item.link) {
-          window.open(item.link.href, item.link.external ? '_blank' : '_self')
+          window.open(item.link.href, item.link.external ? "_blank" : "_self");
         }
       }}
     >
@@ -67,18 +61,18 @@ export const ShowcaseSection = ({ block, index }: ShowcaseSectionProps) => {
         alt={item.image.alt}
         width={item.image.width || 400}
         height={item.image.height || 300}
-        radius='m'
+        radius="m"
         style={{
-          aspectRatio: '4/3',
-          objectFit: 'cover'
+          aspectRatio: "4/3",
+          objectFit: "cover",
         }}
       />
 
       {/* Content */}
-      <Column gap='s'>
+      <Column gap="s">
         {/* Category & Tags */}
         {showCategories && (item.category || item.tags) && (
-          <Flex gap='xs' wrap>
+          <Flex gap="xs" wrap>
             {item.category && <Badge>{item.category}</Badge>}
             {item.tags?.map((tag, tagIndex) => (
               <Badge key={tagIndex}>{tag}</Badge>
@@ -87,22 +81,22 @@ export const ShowcaseSection = ({ block, index }: ShowcaseSectionProps) => {
         )}
 
         {/* Title & Description */}
-        <Heading as='h3' variant='heading-strong-m'>
+        <Heading as="h3" variant="heading-strong-m">
           {item.title}
         </Heading>
-        <Text variant='body-default-s' onBackground='neutral-weak'>
+        <Text variant="body-default-s" onBackground="neutral-weak">
           {item.description}
         </Text>
 
         {/* Stats */}
         {showStats && item.stats && item.stats.length > 0 && (
-          <Flex gap='s' wrap>
+          <Flex gap="s" wrap>
             {item.stats.map((stat, statIndex) => (
-              <Column key={statIndex} gap='xs' align='center'>
-                <Text variant='body-strong-s' onBackground='accent-strong'>
+              <Column key={statIndex} gap="xs" align="center">
+                <Text variant="body-strong-s" onBackground="accent-strong">
                   {stat.value}
                 </Text>
-                <Text variant='body-default-xs' onBackground='neutral-weak'>
+                <Text variant="body-default-xs" onBackground="neutral-weak">
                   {stat.label}
                 </Text>
               </Column>
@@ -112,54 +106,46 @@ export const ShowcaseSection = ({ block, index }: ShowcaseSectionProps) => {
 
         {/* Link Button */}
         {item.link && (
-          <Button variant='secondary' size='s' href={item.link.href}>
-            {item.link.label || 'View Details'}
+          <Button variant="secondary" size="s" href={item.link.href}>
+            {item.link.label || "View Details"}
           </Button>
         )}
       </Column>
     </Column>
-  )
+  );
 
   const gridColumns = {
-    2: 'repeat(2, 1fr)',
-    3: 'repeat(3, 1fr)',
-    4: 'repeat(4, 1fr)'
-  }
+    2: "repeat(2, 1fr)",
+    3: "repeat(3, 1fr)",
+    4: "repeat(4, 1fr)",
+  };
 
   return (
     <Column
       key={index}
       fillWidth
-      maxWidth='xl'
-      horizontal='center'
-      gap='xl'
-      padding='xl'
+      maxWidth="xl"
+      horizontal="center"
+      gap="xl"
+      padding="xl"
       className={block.className}
     >
       {/* Section Header */}
-      <Column horizontal='center' align='center' gap='m' maxWidth='l'>
+      <Column horizontal="center" align="center" gap="m" maxWidth="l">
         {title && (
-          <Heading as='h2' variant='display-strong-l' wrap='balance'>
+          <Heading as="h2" variant="display-strong-l" wrap="balance">
             {title}
           </Heading>
         )}
 
         {subtitle && (
-          <Text
-            variant='heading-default-m'
-            onBackground='neutral-weak'
-            wrap='balance'
-          >
+          <Text variant="heading-default-m" onBackground="neutral-weak" wrap="balance">
             {subtitle}
           </Text>
         )}
 
         {description && (
-          <Text
-            variant='body-default-l'
-            onBackground='neutral-weak'
-            wrap='balance'
-          >
+          <Text variant="body-default-l" onBackground="neutral-weak" wrap="balance">
             {description}
           </Text>
         )}
@@ -167,7 +153,7 @@ export const ShowcaseSection = ({ block, index }: ShowcaseSectionProps) => {
 
       {/* Filter (if enabled) */}
       {showFilter && categories.length > 0 && (
-        <Flex gap='s' wrap horizontal='center'>
+        <Flex gap="s" wrap horizontal="center">
           <Badge>All</Badge>
           {categories.map((category, categoryIndex) => (
             <Badge key={categoryIndex}>{category}</Badge>
@@ -176,37 +162,37 @@ export const ShowcaseSection = ({ block, index }: ShowcaseSectionProps) => {
       )}
 
       {/* Showcase Content */}
-      {layout === 'grid' && (
+      {layout === "grid" && (
         <Flex
           fillWidth
-          gap='l'
+          gap="l"
           wrap
           style={{
-            display: 'grid',
+            display: "grid",
             gridTemplateColumns: `${gridColumns[columns]}`,
-            gap: 'var(--static-space-l)'
+            gap: "var(--static-space-l)",
           }}
         >
           {items.map((item, itemIndex) => renderShowcaseItem(item, itemIndex))}
         </Flex>
       )}
 
-      {layout === 'masonry' && (
+      {layout === "masonry" && (
         <Flex
           fillWidth
-          gap='l'
+          gap="l"
           wrap
           style={{
             columns,
-            columnGap: 'var(--static-space-l)'
+            columnGap: "var(--static-space-l)",
           }}
         >
           {items.map((item, itemIndex) => (
             <div
               key={itemIndex}
               style={{
-                breakInside: 'avoid',
-                marginBottom: 'var(--static-space-l)'
+                breakInside: "avoid",
+                marginBottom: "var(--static-space-l)",
               }}
             >
               {renderShowcaseItem(item, itemIndex)}
@@ -215,38 +201,38 @@ export const ShowcaseSection = ({ block, index }: ShowcaseSectionProps) => {
         </Flex>
       )}
 
-      {layout === 'featured' && (
-        <Column fillWidth gap='l'>
+      {layout === "featured" && (
+        <Column fillWidth gap="l">
           {/* Featured Items */}
           {items
-            .filter(item => item.featured)
+            .filter((item) => item.featured)
             .map((item, itemIndex) => (
               <Flex
                 key={`featured-${itemIndex}`}
                 fillWidth
-                gap='xl'
-                padding='xl'
-                background='brand-alpha-weak'
-                radius='l'
-                align='center'
+                gap="xl"
+                padding="xl"
+                background="brand-alpha-weak"
+                radius="l"
+                align="center"
               >
                 <SmartImage
                   src={item.image.src}
                   alt={item.image.alt}
                   width={600}
                   height={400}
-                  radius='m'
-                  style={{ flex: 1, maxWidth: '50%' }}
+                  radius="m"
+                  style={{ flex: 1, maxWidth: "50%" }}
                 />
-                <Column gap='m' style={{ flex: 1 }}>
+                <Column gap="m" style={{ flex: 1 }}>
                   <Badge>Featured</Badge>
-                  <Heading as='h3' variant='display-strong-m'>
+                  <Heading as="h3" variant="display-strong-m">
                     {item.title}
                   </Heading>
-                  <Text variant='body-default-l'>{item.description}</Text>
+                  <Text variant="body-default-l">{item.description}</Text>
                   {item.link && (
-                    <Button variant='primary' href={item.link.href}>
-                      {item.link.label || 'Learn More'}
+                    <Button variant="primary" href={item.link.href}>
+                      {item.link.label || "Learn More"}
                     </Button>
                   )}
                 </Column>
@@ -256,34 +242,30 @@ export const ShowcaseSection = ({ block, index }: ShowcaseSectionProps) => {
           {/* Regular Items in Grid */}
           <Flex
             fillWidth
-            gap='l'
+            gap="l"
             wrap
             style={{
-              display: 'grid',
+              display: "grid",
               gridTemplateColumns: `${gridColumns[columns]}`,
-              gap: 'var(--static-space-l)'
+              gap: "var(--static-space-l)",
             }}
           >
             {items
-              .filter(item => !item.featured)
+              .filter((item) => !item.featured)
               .map((item, itemIndex) => renderShowcaseItem(item, itemIndex))}
           </Flex>
         </Column>
       )}
 
-      {layout === 'carousel' && (
-        <Flex
-          fillWidth
-          gap='l'
-          style={{ overflowX: 'auto', padding: '0 20px' }}
-        >
+      {layout === "carousel" && (
+        <Flex fillWidth gap="l" style={{ overflowX: "auto", padding: "0 20px" }}>
           {items.map((item, itemIndex) => (
             <div
               key={itemIndex}
               style={{
-                minWidth: '300px',
-                maxWidth: '400px',
-                flex: '0 0 auto'
+                minWidth: "300px",
+                maxWidth: "400px",
+                flex: "0 0 auto",
               }}
             >
               {renderShowcaseItem(item, itemIndex)}
@@ -292,5 +274,5 @@ export const ShowcaseSection = ({ block, index }: ShowcaseSectionProps) => {
         </Flex>
       )}
     </Column>
-  )
-}
+  );
+};

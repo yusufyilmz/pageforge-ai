@@ -18,11 +18,3 @@
   "include": ["src", "next-env.d.ts"],
   "exclude": ["node_modules"]
 }
-
-// "skipLibCheck": true,
-// "noEmit": true,
-// "esModuleInterop": true,
-// "moduleResolution": "bundler",
-// "isolatedModules": true,
-
-// "target": "ES2017"

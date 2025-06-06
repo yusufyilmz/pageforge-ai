@@ -1,239 +1,218 @@
-'use client'
+"use client";
 
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  type ReactNode
-} from 'react'
+import React, { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 
-import type { SiteThemeType } from '../lib/types/site/siteThemes'
+import type { SiteThemeType } from "../lib/types/site/siteThemes";
 import {
-  ThemeConfig,
-  ThemeMode,
-  NeutralColor,
-  BrandColor,
-  AccentColor,
-  SolidType,
-  SolidStyle,
-  BorderStyle,
-  SurfaceStyle,
-  TransitionStyle,
+  type AccentColor,
+  type BorderStyle,
+  type BrandColor,
+  type NeutralColor,
+  type SolidStyle,
+  type SolidType,
+  type SurfaceStyle,
+  type ThemeConfig,
+  type ThemeMode,
+  type TransitionStyle,
+  getAvailableThemes,
   getThemeConfig,
-  getAvailableThemes
-} from '../lib/types/site/themeConfigs'
+} from "../lib/types/site/themeConfigs";
 
-import { useUserProfile } from './UserContext'
+import { useUserProfile } from "./UserContext";
 
 // ============================================================================
 // THEME CONTEXT TYPES
 // ============================================================================
 
 export interface PageThemeOverride {
-  siteTheme?: SiteThemeType
+  siteTheme?: SiteThemeType;
   customOverrides?: {
-    mode?: ThemeMode
-    neutral?: NeutralColor
-    brand?: BrandColor
-    accent?: AccentColor
-    solid?: SolidType
-    solidStyle?: SolidStyle
-    border?: BorderStyle
-    surface?: SurfaceStyle
-    transition?: TransitionStyle
-    scaling?: '90' | '95' | '100' | '105' | '110'
-  }
+    mode?: ThemeMode;
+    neutral?: NeutralColor;
+    brand?: BrandColor;
+    accent?: AccentColor;
+    solid?: SolidType;
+    solidStyle?: SolidStyle;
+    border?: BorderStyle;
+    surface?: SurfaceStyle;
+    transition?: TransitionStyle;
+    scaling?: "90" | "95" | "100" | "105" | "110";
+  };
 }
 
 export interface UserThemePreferences {
-  siteTheme: SiteThemeType
+  siteTheme: SiteThemeType;
   customOverrides?: {
-    mode?: ThemeMode
-    neutral?: NeutralColor
-    brand?: BrandColor
-    accent?: AccentColor
-  }
+    mode?: ThemeMode;
+    neutral?: NeutralColor;
+    brand?: BrandColor;
+    accent?: AccentColor;
+  };
 }
 
 interface ThemeContextType {
   // Current active theme (resolved from all sources)
-  currentTheme: ThemeConfig
-  currentSiteTheme: SiteThemeType
+  currentTheme: ThemeConfig;
+  currentSiteTheme: SiteThemeType;
 
   // Theme sources
-  userTheme: UserThemePreferences | null
-  pageTheme: PageThemeOverride | null
-  systemTheme: SiteThemeType
+  userTheme: UserThemePreferences | null;
+  pageTheme: PageThemeOverride | null;
+  systemTheme: SiteThemeType;
 
   // Theme management
-  setPageTheme: (theme: PageThemeOverride | null) => void
-  updateUserTheme: (theme: Partial<UserThemePreferences>) => void
-  resetToUserTheme: () => void
-  resetToSystemTheme: () => void
+  setPageTheme: (theme: PageThemeOverride | null) => void;
+  updateUserTheme: (theme: Partial<UserThemePreferences>) => void;
+  resetToUserTheme: () => void;
+  resetToSystemTheme: () => void;
 
   // Theme application
-  applyThemeToBody: (theme: ThemeConfig) => void
-  getThemeClass: () => string
+  applyThemeToBody: (theme: ThemeConfig) => void;
+  getThemeClass: () => string;
 
   // Theme detection
-  preferredColorScheme: 'light' | 'dark'
-  isSystemDarkMode: boolean
+  preferredColorScheme: "light" | "dark";
+  isSystemDarkMode: boolean;
 
   // Available options
-  availableThemes: SiteThemeType[]
+  availableThemes: SiteThemeType[];
 }
 
 // ============================================================================
 // DEFAULT THEMES
 // ============================================================================
 
-const defaultSystemTheme: SiteThemeType = 'minimal'
+const defaultSystemTheme: SiteThemeType = "minimal";
 
 // ============================================================================
 // THEME UTILITIES
 // ============================================================================
 
-function resolveThemeMode(
-  mode: ThemeMode,
-  isSystemDark: boolean
-): 'light' | 'dark' {
-  if (mode === 'light' || mode === 'dark') {
-    return mode
+function resolveThemeMode(mode: ThemeMode, isSystemDark: boolean): "light" | "dark" {
+  if (mode === "light" || mode === "dark") {
+    return mode;
   }
   // Default to light if not explicitly set
-  return isSystemDark ? 'dark' : 'light'
+  return isSystemDark ? "dark" : "light";
 }
 
 function mergeThemeConfig(
   baseConfig: ThemeConfig,
-  overrides?: PageThemeOverride['customOverrides']
+  overrides?: PageThemeOverride["customOverrides"],
 ): ThemeConfig {
   if (!overrides) {
-    return baseConfig
+    return baseConfig;
   }
 
   const mergedStyle = {
     ...baseConfig.style,
-    ...overrides
-  }
+    ...overrides,
+  };
 
   return {
     ...baseConfig,
-    style: mergedStyle
-  }
+    style: mergedStyle,
+  };
 }
 
-function getThemeFromUserPreferences(
-  userPreferences: any
-): UserThemePreferences | null {
+function getThemeFromUserPreferences(userPreferences: any): UserThemePreferences | null {
   if (!userPreferences?.siteTheme) {
-    return null
+    return null;
   }
 
   return {
     siteTheme: userPreferences.siteTheme || defaultSystemTheme,
-    customOverrides: userPreferences.themeOverrides
-  }
+    customOverrides: userPreferences.themeOverrides,
+  };
 }
 
 // ============================================================================
 // THEME CONTEXT
 // ============================================================================
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 interface ThemeProviderProps {
-  children: ReactNode
-  defaultTheme?: SiteThemeType
+  children: ReactNode;
+  defaultTheme?: SiteThemeType;
 }
 
 export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
   // System theme detection
-  const [isSystemDarkMode, setIsSystemDarkMode] = useState(false)
-  const [pageTheme, setPageTheme] = useState<PageThemeOverride | null>(null)
+  const [isSystemDarkMode, setIsSystemDarkMode] = useState(false);
+  const [pageTheme, setPageTheme] = useState<PageThemeOverride | null>(null);
 
   // Get user theme preferences from user context
-  const userProfile = useUserProfile()
-  const userTheme = getThemeFromUserPreferences(userProfile.preferences)
+  const userProfile = useUserProfile();
+  const userTheme = getThemeFromUserPreferences(userProfile.preferences);
 
   // Create system theme with any defaults
-  const systemTheme: SiteThemeType = defaultTheme || defaultSystemTheme
+  const systemTheme: SiteThemeType = defaultTheme || defaultSystemTheme;
 
   // Resolve current theme with priority: Page > User > System
   const resolveCurrentTheme = (): {
-    theme: ThemeConfig
-    siteTheme: SiteThemeType
+    theme: ThemeConfig;
+    siteTheme: SiteThemeType;
   } => {
-    let activeSiteTheme = systemTheme
+    let activeSiteTheme = systemTheme;
 
     // Apply user theme if available
     if (userTheme) {
-      activeSiteTheme = userTheme.siteTheme
+      activeSiteTheme = userTheme.siteTheme;
     }
 
     // Apply page theme override if available
     if (pageTheme?.siteTheme) {
-      activeSiteTheme = pageTheme.siteTheme
+      activeSiteTheme = pageTheme.siteTheme;
     }
 
     // Get the base theme configuration
-    let baseThemeConfig = getThemeConfig(activeSiteTheme)
+    let baseThemeConfig = getThemeConfig(activeSiteTheme);
 
     // Apply user custom overrides
     if (userTheme?.customOverrides) {
-      baseThemeConfig = mergeThemeConfig(
-        baseThemeConfig,
-        userTheme.customOverrides
-      )
+      baseThemeConfig = mergeThemeConfig(baseThemeConfig, userTheme.customOverrides);
     }
 
     // Apply page custom overrides
     if (pageTheme?.customOverrides) {
-      baseThemeConfig = mergeThemeConfig(
-        baseThemeConfig,
-        pageTheme.customOverrides
-      )
+      baseThemeConfig = mergeThemeConfig(baseThemeConfig, pageTheme.customOverrides);
     }
 
     return {
       theme: baseThemeConfig,
-      siteTheme: activeSiteTheme
-    }
-  }
+      siteTheme: activeSiteTheme,
+    };
+  };
 
-  const { theme: currentTheme, siteTheme: currentSiteTheme } =
-    resolveCurrentTheme()
-  const preferredColorScheme = resolveThemeMode(
-    currentTheme.style.theme,
-    isSystemDarkMode
-  )
+  const { theme: currentTheme, siteTheme: currentSiteTheme } = resolveCurrentTheme();
+  const preferredColorScheme = resolveThemeMode(currentTheme.style.theme, isSystemDarkMode);
 
   // Detect system dark mode preference
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    setIsSystemDarkMode(mediaQuery.matches)
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    setIsSystemDarkMode(mediaQuery.matches);
 
     const handleChange = (e: MediaQueryListEvent) => {
-      setIsSystemDarkMode(e.matches)
-    }
+      setIsSystemDarkMode(e.matches);
+    };
 
-    mediaQuery.addEventListener('change', handleChange)
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [])
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   // Apply theme to document
   const applyThemeToBody = (theme: ThemeConfig) => {
-    const resolvedMode = resolveThemeMode(theme.style.theme, isSystemDarkMode)
+    const resolvedMode = resolveThemeMode(theme.style.theme, isSystemDarkMode);
 
     // Apply theme classes
     document.body.className = document.body.className
-      .replace(/theme-\w+/g, '')
-      .replace(/neutral-\w+/g, '')
-      .replace(/brand-\w+/g, '')
-      .replace(/accent-\w+/g, '')
-      .replace(/border-\w+/g, '')
-      .replace(/surface-\w+/g, '')
+      .replace(/theme-\w+/g, "")
+      .replace(/neutral-\w+/g, "")
+      .replace(/brand-\w+/g, "")
+      .replace(/accent-\w+/g, "")
+      .replace(/border-\w+/g, "")
+      .replace(/surface-\w+/g, "");
 
     document.body.classList.add(
       `theme-${resolvedMode}`,
@@ -241,35 +220,32 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
       `brand-${theme.style.brand}`,
       `accent-${theme.style.accent}`,
       `border-${theme.style.border}`,
-      `surface-${theme.style.surface}`
-    )
+      `surface-${theme.style.surface}`,
+    );
 
     // Apply font variables
-    document.body.className += ` ${theme.font.primary.variable} ${theme.font.code.variable}`
+    document.body.className += ` ${theme.font.primary.variable} ${theme.font.code.variable}`;
 
     // Set data attributes for CSS selectors
-    document.documentElement.setAttribute('data-theme', resolvedMode)
-    document.documentElement.setAttribute('data-neutral', theme.style.neutral)
-    document.documentElement.setAttribute('data-brand', theme.style.brand)
-    document.documentElement.setAttribute('data-accent', theme.style.accent)
-  }
+    document.documentElement.setAttribute("data-theme", resolvedMode);
+    document.documentElement.setAttribute("data-neutral", theme.style.neutral);
+    document.documentElement.setAttribute("data-brand", theme.style.brand);
+    document.documentElement.setAttribute("data-accent", theme.style.accent);
+  };
 
   // Apply current theme when it changes
   useEffect(() => {
-    applyThemeToBody(currentTheme)
-  }, [currentTheme, isSystemDarkMode])
+    applyThemeToBody(currentTheme);
+  }, [currentTheme, isSystemDarkMode]);
 
   const getThemeClass = (): string => {
-    const resolvedMode = resolveThemeMode(
-      currentTheme.style.theme,
-      isSystemDarkMode
-    )
-    return `theme-${resolvedMode} neutral-${currentTheme.style.neutral} brand-${currentTheme.style.brand} accent-${currentTheme.style.accent}`
-  }
+    const resolvedMode = resolveThemeMode(currentTheme.style.theme, isSystemDarkMode);
+    return `theme-${resolvedMode} neutral-${currentTheme.style.neutral} brand-${currentTheme.style.brand} accent-${currentTheme.style.accent}`;
+  };
 
   const updateUserTheme = (themeUpdate: Partial<UserThemePreferences>) => {
     // This would typically update the user preferences in the UserContext
-    console.log('Update user theme:', themeUpdate)
+    console.log("Update user theme:", themeUpdate);
     // You would call something like:
     // updateProfile({
     //   preferences: {
@@ -278,16 +254,16 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     //     themeOverrides: themeUpdate.customOverrides
     //   }
     // })
-  }
+  };
 
   const resetToUserTheme = () => {
-    setPageTheme(null)
-  }
+    setPageTheme(null);
+  };
 
   const resetToSystemTheme = () => {
-    setPageTheme(null)
+    setPageTheme(null);
     // Also would reset user theme preferences
-  }
+  };
 
   const contextValue: ThemeContextType = {
     currentTheme,
@@ -303,14 +279,10 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     getThemeClass,
     preferredColorScheme,
     isSystemDarkMode,
-    availableThemes: getAvailableThemes()
-  }
+    availableThemes: getAvailableThemes(),
+  };
 
-  return (
-    <ThemeContext.Provider value={contextValue}>
-      {children}
-    </ThemeContext.Provider>
-  )
+  return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
 }
 
 // ============================================================================
@@ -318,44 +290,43 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
 // ============================================================================
 
 export function useTheme() {
-  const context = useContext(ThemeContext)
+  const context = useContext(ThemeContext);
   if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider')
+    throw new Error("useTheme must be used within a ThemeProvider");
   }
-  return context
+  return context;
 }
 
 // Hook for page-level theme management
 export function usePageTheme() {
-  const { setPageTheme, pageTheme, resetToUserTheme } = useTheme()
+  const { setPageTheme, pageTheme, resetToUserTheme } = useTheme();
 
   const setTheme = (theme: PageThemeOverride | null) => {
-    setPageTheme(theme)
-  }
+    setPageTheme(theme);
+  };
 
   const resetTheme = () => {
-    resetToUserTheme()
-  }
+    resetToUserTheme();
+  };
 
   return {
     pageTheme,
     setTheme,
-    resetTheme
-  }
+    resetTheme,
+  };
 }
 
 // Hook for user theme preferences
 export function useUserTheme() {
-  const { userTheme, updateUserTheme, currentTheme, currentSiteTheme } =
-    useTheme()
+  const { userTheme, updateUserTheme, currentTheme, currentSiteTheme } = useTheme();
 
   return {
     userTheme,
     updateUserTheme,
     isUsingUserTheme: userTheme !== null,
     effectiveTheme: currentTheme,
-    effectiveSiteTheme: currentSiteTheme
-  }
+    effectiveSiteTheme: currentSiteTheme,
+  };
 }
 
 // Hook for theme utilities
@@ -366,19 +337,19 @@ export function useThemeUtils() {
     preferredColorScheme,
     isSystemDarkMode,
     availableThemes,
-    currentTheme
-  } = useTheme()
+    currentTheme,
+  } = useTheme();
 
   return {
     getThemeClass,
     applyThemeToBody,
     preferredColorScheme,
     isSystemDarkMode,
-    isDark: preferredColorScheme === 'dark',
-    isLight: preferredColorScheme === 'light',
+    isDark: preferredColorScheme === "dark",
+    isLight: preferredColorScheme === "light",
     availableThemes,
-    currentTheme
-  }
+    currentTheme,
+  };
 }
 
 // Re-export types for convenience
@@ -393,5 +364,5 @@ export type {
   SolidStyle,
   BorderStyle,
   SurfaceStyle,
-  TransitionStyle
-}
+  TransitionStyle,
+};

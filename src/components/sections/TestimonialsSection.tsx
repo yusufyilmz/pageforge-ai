@@ -1,63 +1,51 @@
-'use client'
+"use client";
 
-import {
-  Column,
-  Flex,
-  Heading,
-  Text,
-  Media
-} from '@pageforge/once-ui/components'
-import type {
-  ContentBlock,
-  TestimonialsSectionContent
-} from '@pageforge/types/page/pageTypes'
+import { Column, Flex, Heading, Media, Text } from "@pageforge/once-ui/components";
+import type { ContentBlock, TestimonialsSectionContent } from "@pageforge/types/page/pageTypes";
 
 interface TestimonialsSectionProps {
-  block: Extract<ContentBlock, { type: 'testimonials' }>
-  index: number
+  block: Extract<ContentBlock, { type: "testimonials" }>;
+  index: number;
 }
 
-export const TestimonialsSection = ({
-  block,
-  index
-}: TestimonialsSectionProps) => {
-  const content = block.content
+export const TestimonialsSection = ({ block, index }: TestimonialsSectionProps) => {
+  const content = block.content;
 
   if (block.display === false) {
-    return null
+    return null;
   }
 
   const {
-    title = 'What People Say',
+    title = "What People Say",
     subtitle,
-    layout = 'grid',
+    layout = "grid",
     // columns = 2,
-    testimonials
-  } = content
+    testimonials,
+  } = content;
 
   const renderTestimonial = (
-    testimonial: TestimonialsSectionContent['testimonials'][0],
-    testimonialIndex: number
+    testimonial: TestimonialsSectionContent["testimonials"][0],
+    testimonialIndex: number,
   ) => (
     <Column
       key={testimonialIndex}
-      gap='m'
-      padding='l'
-      background='neutral-alpha-weak'
-      radius='l'
-      border='neutral-alpha-weak'
-      borderStyle='solid'
-      vertical='space-between'
+      gap="m"
+      padding="l"
+      background="neutral-alpha-weak"
+      radius="l"
+      border="neutral-alpha-weak"
+      borderStyle="solid"
+      vertical="space-between"
     >
-      <Column gap='s'>
+      <Column gap="s">
         {/* Rating */}
         {testimonial.rating && (
-          <Flex gap='xs'>
+          <Flex gap="xs">
             {[...Array(5)].map((_, starIndex) => (
               <Text
                 key={starIndex}
                 style={{
-                  color: starIndex < testimonial.rating! ? '#fbbf24' : '#d1d5db'
+                  color: starIndex < testimonial.rating! ? "#fbbf24" : "#d1d5db",
                 }}
               >
                 ★
@@ -65,88 +53,80 @@ export const TestimonialsSection = ({
             ))}
           </Flex>
         )}
-        <Text variant='body-default-l'>{testimonial.content}</Text>
+        <Text variant="body-default-l">{testimonial.content}</Text>
       </Column>
 
       {/* Content */}
 
       {/* Author */}
-      <Flex
-        gap='m'
-        vertical='center'
-        position='relative'
-        fillWidth
-        paddingY='12'
-        paddingX='16'
-      >
+      <Flex gap="m" vertical="center" position="relative" fillWidth paddingY="12" paddingX="16">
         {testimonial.author.avatar && (
           <Media
             priority
-            border='neutral-alpha-weak'
-            cursor='interactive'
-            radius='m'
+            border="neutral-alpha-weak"
+            cursor="interactive"
+            radius="m"
             src={testimonial.author.avatar}
             alt={testimonial.author.name}
-            aspectRatio='1 / 1'
-            sizes='120px'
-            transition='macro-medium'
+            aspectRatio="1 / 1"
+            sizes="120px"
+            transition="macro-medium"
           />
         )}
-        <Column gap='xs'>
-          <Text variant='label-strong-s'>{testimonial.author.name}</Text>
+        <Column gap="xs">
+          <Text variant="label-strong-s">{testimonial.author.name}</Text>
           {testimonial.author.role && (
-            <Text variant='label-default-xs' onBackground='neutral-weak'>
+            <Text variant="label-default-xs" onBackground="neutral-weak">
               {testimonial.author.role}
-              {testimonial.author.company &&
-                ` at ${testimonial.author.company}`}
+              {testimonial.author.company && ` at ${testimonial.author.company}`}
             </Text>
           )}
         </Column>
       </Flex>
     </Column>
-  )
+  );
 
   return (
     <Column
       key={index}
       fillWidth
-      maxWidth='xl'
-      horizontal='center'
-      gap='xl'
-      padding='xl'
+      maxWidth="xl"
+      horizontal="center"
+      gap="xl"
+      padding="xl"
       className={block.className}
     >
       {/* Header */}
-      <Column horizontal='center' align='center' gap='m' maxWidth='l'>
-        <Heading as='h2' variant='display-strong-l'>
+      <Column horizontal="center" align="center" gap="m" maxWidth="l">
+        <Heading as="h2" variant="display-strong-l">
           {title}
         </Heading>
         {subtitle && (
-          <Text variant='body-default-l' onBackground='neutral-weak'>
+          <Text variant="body-default-l" onBackground="neutral-weak">
             {subtitle}
           </Text>
         )}
       </Column>
 
       {/* Testimonials */}
-      {layout === 'grid' && (
+      {layout === "grid" && (
         <Flex
           fillWidth
           wrap
-          gap='l'
+          gap="l"
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))'
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
           }}
         >
           {testimonials.map((testimonial, testimonialIndex) =>
-            renderTestimonial(testimonial, testimonialIndex)
+            renderTestimonial(testimonial, testimonialIndex),
           )}
         </Flex>
       )}
 
-      {layout === 'carousel' && (
-        <Flex fillWidth gap='l' style={{ overflowX: 'auto' }}>
+      {layout === "carousel" && (
+        <Flex fillWidth gap="l" style={{ overflowX: "auto" }}>
           {testimonials.map((testimonial, testimonialIndex) => (
             <Column key={testimonialIndex} minWidth={300}>
               {renderTestimonial(testimonial, testimonialIndex)}
@@ -155,13 +135,13 @@ export const TestimonialsSection = ({
         </Flex>
       )}
 
-      {layout === 'masonry' && (
-        <Column fillWidth gap='l'>
+      {layout === "masonry" && (
+        <Column fillWidth gap="l">
           {testimonials.map((testimonial, testimonialIndex) =>
-            renderTestimonial(testimonial, testimonialIndex)
+            renderTestimonial(testimonial, testimonialIndex),
           )}
         </Column>
       )}
     </Column>
-  )
-}
+  );
+};

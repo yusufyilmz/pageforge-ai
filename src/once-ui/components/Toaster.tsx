@@ -1,54 +1,55 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react'
-import { createPortal } from 'react-dom'
+import type React from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
-import styles from './Toaster.module.scss'
+import styles from "./Toaster.module.scss";
 
-import { Flex, Toast } from '.'
+import { Flex, Toast } from ".";
 
 interface ToasterProps {
   toasts: {
-    id: string
-    variant: 'success' | 'danger'
-    message: React.ReactNode
-    action?: React.ReactNode
-  }[]
-  removeToast: (id: string) => void
+    id: string;
+    variant: "success" | "danger";
+    message: React.ReactNode;
+    action?: React.ReactNode;
+  }[];
+  removeToast: (id: string) => void;
 }
 
 const Toaster: React.FC<ToasterProps> = ({ toasts, removeToast }) => {
-  const [mounted, setMounted] = useState(false)
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-    return () => setMounted(false)
-  }, [])
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   if (!mounted) {
-    return null
+    return null;
   }
 
   return createPortal(
     <Flex
       zIndex={10}
       fillWidth
-      direction='column'
+      direction="column"
       maxWidth={32}
-      position='fixed'
+      position="fixed"
       className={styles.toastContainer}
     >
       {toasts.map((toast, index, array) => (
         <Flex
-          padding='4'
+          padding="4"
           fillWidth
-          position='absolute'
+          position="absolute"
           key={toast.id}
           className={styles.toastWrapper}
           style={{
-            transformOrigin: 'bottom center',
+            transformOrigin: "bottom center",
             transform: `scale(${1 - (array.length - 1 - index) * 0.05}) translateY(${1 - (array.length - 1 - index) * 10}%)`,
-            opacity: array.length - 1 - index === 0 ? 1 : 0.9
+            opacity: array.length - 1 - index === 0 ? 1 : 0.9,
           }}
         >
           <Toast
@@ -62,9 +63,9 @@ const Toaster: React.FC<ToasterProps> = ({ toasts, removeToast }) => {
         </Flex>
       ))}
     </Flex>,
-    document.body
-  )
-}
+    document.body,
+  );
+};
 
-Toaster.displayName = 'Toaster'
-export { Toaster }
+Toaster.displayName = "Toaster";
+export { Toaster };

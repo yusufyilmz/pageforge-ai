@@ -1,20 +1,20 @@
-'use client'
+"use client";
 
-import { Placement } from '@floating-ui/react-dom'
-import classNames from 'classnames'
+import type { Placement } from "@floating-ui/react-dom";
+import classNames from "classnames";
 
-import styles from './UserMenu.module.scss'
+import styles from "./UserMenu.module.scss";
 
-import { Flex, DropdownWrapper, User, UserProps, DropdownWrapperProps } from '.'
+import { DropdownWrapper, type DropdownWrapperProps, Flex, User, type UserProps } from ".";
 
 interface UserMenuProps
   extends UserProps,
-    Pick<DropdownWrapperProps, 'minHeight' | 'minWidth' | 'maxWidth'> {
-  selected?: boolean
-  placement?: Placement
-  dropdown?: React.ReactNode
-  className?: string
-  style?: React.CSSProperties
+    Pick<DropdownWrapperProps, "minHeight" | "minWidth" | "maxWidth"> {
+  selected?: boolean;
+  placement?: Placement;
+  dropdown?: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({
@@ -35,22 +35,18 @@ const UserMenu: React.FC<UserMenuProps> = ({
       minHeight={minHeight}
       floatingPlacement={placement}
       style={{
-        borderRadius: 'var(--radius-full)'
+        borderRadius: "var(--radius-full)",
       }}
       trigger={
         <Flex
           tabIndex={0}
-          direction='column'
-          padding='4'
-          radius='full'
-          cursor='interactive'
-          border={selected ? 'neutral-medium' : 'transparent'}
-          background={selected ? 'neutral-strong' : 'transparent'}
-          className={classNames(
-            className || '',
-            selected ? styles.selected : '',
-            styles.wrapper
-          )}
+          direction="column"
+          padding="4"
+          radius="full"
+          cursor="interactive"
+          border={selected ? "neutral-medium" : "transparent"}
+          background={selected ? "neutral-strong" : "transparent"}
+          className={classNames(className || "", selected ? styles.selected : "", styles.wrapper)}
           style={style}
         >
           <User {...userProps} />
@@ -58,8 +54,8 @@ const UserMenu: React.FC<UserMenuProps> = ({
       }
       dropdown={dropdown}
     />
-  )
-}
+  );
+};
 
-UserMenu.displayName = 'UserMenu'
-export { UserMenu }
+UserMenu.displayName = "UserMenu";
+export { UserMenu };

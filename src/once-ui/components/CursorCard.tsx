@@ -1,89 +1,87 @@
-'use client'
+"use client";
 
-import { Placement } from '@floating-ui/react-dom'
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  ReactNode,
+import type { Placement } from "@floating-ui/react-dom";
+import type React from "react";
+import {
+  type ReactNode,
   forwardRef,
+  useCallback,
+  useEffect,
   useImperativeHandle,
-  useCallback
-} from 'react'
-import { createPortal } from 'react-dom'
+  useRef,
+  useState,
+} from "react";
+import { createPortal } from "react-dom";
 
-import styles from './CursorCard.module.scss'
+import styles from "./CursorCard.module.scss";
 
-import { Flex } from '.'
+import { Flex } from ".";
 
 export interface CursorCardProps extends React.ComponentProps<typeof Flex> {
-  trigger?: ReactNode
-  overlay?: ReactNode
-  placement?: Placement
-  className?: string
-  style?: React.CSSProperties
+  trigger?: ReactNode;
+  overlay?: ReactNode;
+  placement?: Placement;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 const CursorCard = forwardRef<HTMLDivElement, CursorCardProps>(
-  (
-    { trigger, overlay, placement = 'bottom-left', className, style, ...flex },
-    ref
-  ) => {
-    const [isHovering, setIsHovering] = useState(false)
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-    const [isTouchDevice, setIsTouchDevice] = useState(false)
-    const cardRef = useRef<HTMLDivElement | null>(null)
-    const triggerRef = useRef<HTMLDivElement | null>(null)
+  ({ trigger, overlay, placement = "bottom-left", className, style, ...flex }, ref) => {
+    const [isHovering, setIsHovering] = useState(false);
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
+    const cardRef = useRef<HTMLDivElement | null>(null);
+    const triggerRef = useRef<HTMLDivElement | null>(null);
 
-    useImperativeHandle(ref, () => cardRef.current as HTMLDivElement)
+    useImperativeHandle(ref, () => cardRef.current as HTMLDivElement);
 
     useEffect(() => {
       const checkTouchDevice = () => {
-        return 'ontouchstart' in window || navigator.maxTouchPoints > 0
-      }
+        return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      };
 
-      setIsTouchDevice(checkTouchDevice())
-    }, [])
+      setIsTouchDevice(checkTouchDevice());
+    }, []);
 
     const handleMouseMove = useCallback(
       (e: MouseEvent) => {
         if (isHovering && !isTouchDevice) {
-          setMousePosition({ x: e.clientX, y: e.clientY })
+          setMousePosition({ x: e.clientX, y: e.clientY });
         }
       },
-      [isHovering, isTouchDevice]
-    )
+      [isHovering, isTouchDevice],
+    );
 
     useEffect(() => {
       if (!isTouchDevice) {
-        document.addEventListener('mousemove', handleMouseMove)
+        document.addEventListener("mousemove", handleMouseMove);
 
         return () => {
-          document.removeEventListener('mousemove', handleMouseMove)
-        }
+          document.removeEventListener("mousemove", handleMouseMove);
+        };
       }
-    }, [handleMouseMove, isTouchDevice])
+    }, [handleMouseMove, isTouchDevice]);
 
     // Create a portal container if it doesn't exist
     useEffect(() => {
-      if (typeof document !== 'undefined') {
-        let portalContainer = document.getElementById('cursor-card-portal')
+      if (typeof document !== "undefined") {
+        let portalContainer = document.getElementById("cursor-card-portal");
         if (!portalContainer) {
-          portalContainer = document.createElement('div')
-          portalContainer.id = 'cursor-card-portal'
-          document.body.appendChild(portalContainer)
+          portalContainer = document.createElement("div");
+          portalContainer.id = "cursor-card-portal";
+          document.body.appendChild(portalContainer);
         }
       }
 
       return () => {
-        if (typeof document !== 'undefined') {
-          const portalContainer = document.getElementById('cursor-card-portal')
+        if (typeof document !== "undefined") {
+          const portalContainer = document.getElementById("cursor-card-portal");
           if (portalContainer && portalContainer.childNodes.length === 0) {
-            document.body.removeChild(portalContainer)
+            document.body.removeChild(portalContainer);
           }
         }
-      }
-    }, [])
+      };
+    }, []);
 
     return (
       <>
@@ -98,32 +96,32 @@ const CursorCard = forwardRef<HTMLDivElement, CursorCardProps>(
         )}
         {isHovering &&
           !isTouchDevice &&
-          typeof document !== 'undefined' &&
+          typeof document !== "undefined" &&
           createPortal(
             <Flex
               zIndex={10}
-              position='fixed'
-              top='0'
-              left='0'
-              pointerEvents='none'
+              position="fixed"
+              top="0"
+              left="0"
+              pointerEvents="none"
               ref={cardRef}
-              className={`${styles.fadeIn} ${className || ''}`}
+              className={`${styles.fadeIn} ${className || ""}`}
               style={{
-                isolation: 'isolate',
-                transform: `translate(calc(${mousePosition.x}px ${placement.includes('left') ? '- 100%' : placement.includes('right') ? '' : '- 50%'}), calc(${mousePosition.y}px ${placement.includes('top') ? '- 100%' : placement.includes('bottom') ? '' : '- 50%'}))`,
-                ...style
+                isolation: "isolate",
+                transform: `translate(calc(${mousePosition.x}px ${placement.includes("left") ? "- 100%" : placement.includes("right") ? "" : "- 50%"}), calc(${mousePosition.y}px ${placement.includes("top") ? "- 100%" : placement.includes("bottom") ? "" : "- 50%"}))`,
+                ...style,
               }}
               {...flex}
             >
               {overlay}
             </Flex>,
-            document.getElementById('cursor-card-portal') || document.body
+            document.getElementById("cursor-card-portal") || document.body,
           )}
       </>
-    )
-  }
-)
+    );
+  },
+);
 
-CursorCard.displayName = 'CursorCard'
+CursorCard.displayName = "CursorCard";
 
-export { CursorCard }
+export { CursorCard };

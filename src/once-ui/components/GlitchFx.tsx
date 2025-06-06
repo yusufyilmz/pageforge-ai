@@ -1,69 +1,68 @@
-'use client'
+"use client";
 
-import classNames from 'classnames'
-import React, { useEffect, useState, forwardRef, useCallback } from 'react'
+import classNames from "classnames";
+import type React from "react";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 
-import styles from './GlitchFx.module.scss'
+import styles from "./GlitchFx.module.scss";
 
-import { Flex } from '.'
+import { Flex } from ".";
 
 interface GlitchFxProps extends React.ComponentProps<typeof Flex> {
-  children: React.ReactNode
-  speed?: 'slow' | 'medium' | 'fast'
-  interval?: number
-  trigger?: 'instant' | 'hover' | 'custom'
-  continuous?: boolean
+  children: React.ReactNode;
+  speed?: "slow" | "medium" | "fast";
+  interval?: number;
+  trigger?: "instant" | "hover" | "custom";
+  continuous?: boolean;
 }
 
 const GlitchFx = forwardRef<HTMLDivElement, GlitchFxProps>(
   (
     {
       children,
-      speed = 'medium',
+      speed = "medium",
       interval = 2500,
-      trigger = 'instant',
+      trigger = "instant",
       continuous = true,
       ...rest
     },
-    ref
+    ref,
   ) => {
-    const [isGlitching, setIsGlitching] = useState(
-      continuous || trigger === 'instant'
-    )
+    const [isGlitching, setIsGlitching] = useState(continuous || trigger === "instant");
 
     useEffect(() => {
-      if (continuous || trigger === 'instant') {
-        setIsGlitching(true)
+      if (continuous || trigger === "instant") {
+        setIsGlitching(true);
       }
-    }, [continuous, trigger])
+    }, [continuous, trigger]);
 
     const handleMouseEnter = () => {
-      if (trigger === 'hover') {
-        setIsGlitching(true)
+      if (trigger === "hover") {
+        setIsGlitching(true);
       }
-    }
+    };
 
     const handleMouseLeave = () => {
-      if (trigger === 'hover') {
-        setIsGlitching(false)
+      if (trigger === "hover") {
+        setIsGlitching(false);
       }
-    }
+    };
 
     const triggerGlitch = useCallback(() => {
-      if (trigger === 'custom') {
-        setIsGlitching(true)
-        setTimeout(() => setIsGlitching(false), 500)
+      if (trigger === "custom") {
+        setIsGlitching(true);
+        setTimeout(() => setIsGlitching(false), 500);
       }
-    }, [trigger])
+    }, [trigger]);
 
     useEffect(() => {
-      if (trigger === 'custom') {
-        const glitchInterval = setInterval(triggerGlitch, interval)
-        return () => clearInterval(glitchInterval)
+      if (trigger === "custom") {
+        const glitchInterval = setInterval(triggerGlitch, interval);
+        return () => clearInterval(glitchInterval);
       }
-    }, [trigger, interval, triggerGlitch])
+    }, [trigger, interval, triggerGlitch]);
 
-    const speedClass = styles[speed]
+    const speedClass = styles[speed];
 
     return (
       <Flex
@@ -81,9 +80,9 @@ const GlitchFx = forwardRef<HTMLDivElement, GlitchFxProps>(
 
         <Flex
           inline
-          position='absolute'
-          top='0'
-          left='0'
+          position="absolute"
+          top="0"
+          left="0"
           fill
           zIndex={0}
           opacity={50}
@@ -94,9 +93,9 @@ const GlitchFx = forwardRef<HTMLDivElement, GlitchFxProps>(
 
         <Flex
           inline
-          position='absolute'
-          top='0'
-          left='0'
+          position="absolute"
+          top="0"
+          left="0"
           fill
           zIndex={0}
           opacity={50}
@@ -105,9 +104,9 @@ const GlitchFx = forwardRef<HTMLDivElement, GlitchFxProps>(
           {children}
         </Flex>
       </Flex>
-    )
-  }
-)
+    );
+  },
+);
 
-GlitchFx.displayName = 'GlitchFx'
-export { GlitchFx }
+GlitchFx.displayName = "GlitchFx";
+export { GlitchFx };

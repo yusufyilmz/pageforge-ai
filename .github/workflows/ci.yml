@@ -34,10 +34,10 @@ jobs:
       - name: Run type checking
         run: npm run type-check
 
-      - name: Run ESLint
+      - name: Run Biome linting
         run: npm run lint
 
-      - name: Run Prettier check
+      - name: Run Biome formatting check
         run: npm run format:check
 
       - name: Run tests

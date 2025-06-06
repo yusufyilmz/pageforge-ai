@@ -7,7 +7,20 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": []
+    "ignore": [
+      ".next/**",
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      "out/**",
+      ".vercel/**",
+      ".turbo/**",
+      "coverage/**",
+      "*.config.js",
+      "*.config.mjs",
+      "public/**",
+      "supabase/migrations/**"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -20,11 +33,18 @@
   },
   "linter": {
     "enabled": true,
-    "rules": { "recommended": true }
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noArrayIndexKey": "off"
+      }
+    }
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double"
+      "quoteStyle": "double",
+      "semicolons": "always"
     }
   }
 }

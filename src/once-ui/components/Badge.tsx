@@ -1,24 +1,24 @@
-'use client'
+"use client";
 
-import classNames from 'classnames'
-import React, { forwardRef } from 'react'
+import classNames from "classnames";
+import React, { forwardRef } from "react";
 
-import { IconName } from '../icons'
+import type { IconName } from "../icons";
 
-import styles from './Badge.module.scss'
+import styles from "./Badge.module.scss";
 
-import { Arrow, Flex, Icon, SmartLink } from '.'
+import { Arrow, Flex, Icon, SmartLink } from ".";
 
 interface BadgeProps extends React.ComponentProps<typeof Flex> {
-  title?: string
-  icon?: IconName
-  arrow?: boolean
-  children?: React.ReactNode
-  href?: string
-  effect?: boolean
-  className?: string
-  style?: React.CSSProperties
-  id?: string
+  title?: string;
+  icon?: IconName;
+  arrow?: boolean;
+  children?: React.ReactNode;
+  href?: string;
+  effect?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  id?: string;
 }
 
 const Badge = forwardRef<HTMLDivElement | HTMLAnchorElement, BadgeProps>(
@@ -35,38 +35,31 @@ const Badge = forwardRef<HTMLDivElement | HTMLAnchorElement, BadgeProps>(
       id,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const content = (
       <Flex
-        id={id || 'badge'}
-        paddingX='20'
-        paddingY='12'
+        id={id || "badge"}
+        paddingX="20"
+        paddingY="12"
         fitWidth
         className={classNames(effect ? styles.animation : undefined, className)}
         style={style}
-        vertical='center'
-        radius='full'
-        background='neutral-weak'
-        onBackground='brand-strong'
-        border='brand-alpha-medium'
-        textVariant='label-strong-s'
-        shadow='l'
+        vertical="center"
+        radius="full"
+        background="neutral-weak"
+        onBackground="brand-strong"
+        border="brand-alpha-medium"
+        textVariant="label-strong-s"
+        shadow="l"
         {...rest}
       >
-        {icon && (
-          <Icon
-            marginRight='8'
-            size='s'
-            name={icon}
-            onBackground='brand-medium'
-          />
-        )}
+        {icon && <Icon marginRight="8" size="s" name={icon} onBackground="brand-medium" />}
         {title}
         {children}
-        {arrow && <Arrow trigger={`#${id || 'badge'}`} />}
+        {arrow && <Arrow trigger={`#${id || "badge"}`} />}
       </Flex>
-    )
+    );
 
     if (href) {
       return (
@@ -74,22 +67,22 @@ const Badge = forwardRef<HTMLDivElement | HTMLAnchorElement, BadgeProps>(
           unstyled
           className={className}
           style={{
-            borderRadius: 'var(--radius-full)',
-            ...style
+            borderRadius: "var(--radius-full)",
+            ...style,
           }}
           href={href}
           ref={ref as React.Ref<HTMLAnchorElement>}
         >
           {content}
         </SmartLink>
-      )
+      );
     }
 
     return React.cloneElement(content, {
-      ref: ref as React.Ref<HTMLDivElement>
-    })
-  }
-)
+      ref: ref as React.Ref<HTMLDivElement>,
+    });
+  },
+);
 
-Badge.displayName = 'Badge'
-export { Badge }
+Badge.displayName = "Badge";
+export { Badge };

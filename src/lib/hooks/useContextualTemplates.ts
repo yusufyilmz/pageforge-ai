@@ -1,14 +1,14 @@
-import { useMemo } from 'react'
+import { useMemo } from "react";
 
 import {
-  developerTemplate,
+  type PersonData,
+  type ProjectData,
   designerTemplate,
+  developerTemplate,
   freelancerTemplate,
   profileTemplate,
-  type PersonData,
-  type ProjectData
-} from '../services/page-builder'
-import type { PageConfig } from '../types/page/pageTypes'
+} from "../services/page-builder";
+import type { PageConfig } from "../types/page/pageTypes";
 
 // ============================================================================
 // SIMPLIFIED CONTEXTUAL TEMPLATES 🎯
@@ -24,13 +24,13 @@ export const useContextualTemplates = (
   userExperiences: any[] = [],
   userSkills: any[] = [],
   socialLinks: any[] = [],
-  currentTheme?: string
+  currentTheme?: string,
 ) => {
   return useMemo(() => {
     // Transform user context data to template format
     const getPersonData = (): Partial<PersonData> | undefined => {
       if (!userProfile) {
-        return undefined
+        return undefined;
       }
 
       return {
@@ -42,26 +42,24 @@ export const useContextualTemplates = (
         location: userProfile.location || userProfile.city,
         bio: userProfile.bio || userProfile.description || userProfile.summary,
         website: userProfile.website || userProfile.url,
-        phone: userProfile.phone || userProfile.phoneNumber
-      }
-    }
+        phone: userProfile.phone || userProfile.phoneNumber,
+      };
+    };
 
     const getProjectData = (): ProjectData[] => {
-      return userProjects.map(project => ({
-        title: project.title || project.name || '',
-        description: project.description || project.summary || '',
-        image: project.image || project.thumbnail || project.cover || '',
-        url: project.url || project.liveUrl || project.demo || '',
-        githubUrl:
-          project.githubUrl || project.github || project.repository || '',
-        technologies:
-          project.technologies || project.tech || project.stack || [],
-        featured: project.featured || project.highlight || false
-      }))
-    }
+      return userProjects.map((project) => ({
+        title: project.title || project.name || "",
+        description: project.description || project.summary || "",
+        image: project.image || project.thumbnail || project.cover || "",
+        url: project.url || project.liveUrl || project.demo || "",
+        githubUrl: project.githubUrl || project.github || project.repository || "",
+        technologies: project.technologies || project.tech || project.stack || [],
+        featured: project.featured || project.highlight || false,
+      }));
+    };
 
-    const personData = getPersonData()
-    const projectData = getProjectData()
+    const personData = getPersonData();
+    const projectData = getProjectData();
 
     return {
       // Main template functions
@@ -76,54 +74,41 @@ export const useContextualTemplates = (
 
       // Convenience getters
       hasUserData: !!userProfile,
-      hasProjects: projectData.length > 0
-    }
-  }, [
-    userProfile,
-    userProjects,
-    userExperiences,
-    userSkills,
-    socialLinks,
-    currentTheme
-  ])
-}
+      hasProjects: projectData.length > 0,
+    };
+  }, [userProfile, userProjects, userExperiences, userSkills, socialLinks, currentTheme]);
+};
 
 /**
  * Hook for quick developer template with user context
  */
-export const useDeveloperTemplate = (
-  userProfile?: any,
-  userProjects: any[] = []
-): PageConfig => {
-  const { developer } = useContextualTemplates(userProfile, userProjects)
-  return useMemo(() => developer(), [developer])
-}
+export const useDeveloperTemplate = (userProfile?: any, userProjects: any[] = []): PageConfig => {
+  const { developer } = useContextualTemplates(userProfile, userProjects);
+  return useMemo(() => developer(), [developer]);
+};
 
 /**
  * Hook for quick designer template with user context
  */
-export const useDesignerTemplate = (
-  userProfile?: any,
-  userProjects: any[] = []
-): PageConfig => {
-  const { designer } = useContextualTemplates(userProfile, userProjects)
-  return useMemo(() => designer(), [designer])
-}
+export const useDesignerTemplate = (userProfile?: any, userProjects: any[] = []): PageConfig => {
+  const { designer } = useContextualTemplates(userProfile, userProjects);
+  return useMemo(() => designer(), [designer]);
+};
 
 /**
  * Hook for quick freelancer template with user context
  */
 export const useFreelancerTemplate = (userProfile?: any): PageConfig => {
-  const { freelancer } = useContextualTemplates(userProfile)
-  return useMemo(() => freelancer(), [freelancer])
-}
+  const { freelancer } = useContextualTemplates(userProfile);
+  return useMemo(() => freelancer(), [freelancer]);
+};
 
 /**
  * Hook for profile template (works with UserContext)
  */
 export const useProfileTemplate = (): PageConfig => {
-  return useMemo(() => profileTemplate(), [])
-}
+  return useMemo(() => profileTemplate(), []);
+};
 
 // ============================================================================
 // EXAMPLE USAGE IN COMPONENTS

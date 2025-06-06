@@ -1,37 +1,38 @@
-'use client'
+"use client";
 
-import classNames from 'classnames'
-import Image from 'next/image'
-import Link from 'next/link'
-import React, { useEffect } from 'react'
+import classNames from "classnames";
+import Image from "next/image";
+import Link from "next/link";
+import type React from "react";
+import { useEffect } from "react";
 
-import { SpacingToken } from '../types'
+import type { SpacingToken } from "../types";
 
-import styles from './Logo.module.scss'
+import styles from "./Logo.module.scss";
 
-import { Flex } from '.'
+import { Flex } from ".";
 
 const sizeMap: Record<string, SpacingToken> = {
-  xs: '20',
-  s: '24',
-  m: '32',
-  l: '40',
-  xl: '48'
-}
+  xs: "20",
+  s: "24",
+  m: "32",
+  l: "40",
+  xl: "48",
+};
 
 interface LogoProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  className?: string
-  size?: 'xs' | 's' | 'm' | 'l' | 'xl'
-  style?: React.CSSProperties
-  wordmark?: boolean
-  icon?: boolean
-  iconSrc?: string
-  wordmarkSrc?: string
-  href?: string
+  className?: string;
+  size?: "xs" | "s" | "m" | "l" | "xl";
+  style?: React.CSSProperties;
+  wordmark?: boolean;
+  icon?: boolean;
+  iconSrc?: string;
+  wordmarkSrc?: string;
+  href?: string;
 }
 
 const Logo: React.FC<LogoProps> = ({
-  size = 'm',
+  size = "m",
   wordmark = true,
   icon = true,
   href,
@@ -44,17 +45,17 @@ const Logo: React.FC<LogoProps> = ({
   useEffect(() => {
     if (!icon && !wordmark) {
       console.warn(
-        "Both 'icon' and 'wordmark' props are set to false. The logo will not render any content."
-      )
+        "Both 'icon' and 'wordmark' props are set to false. The logo will not render any content.",
+      );
     }
-  }, [icon, wordmark])
+  }, [icon, wordmark]);
 
   const content = (
     <>
       {icon && !iconSrc && (
         <div
           style={{
-            height: `var(--static-space-${sizeMap[size]})`
+            height: `var(--static-space-${sizeMap[size]})`,
           }}
           className={styles.icon}
         />
@@ -64,16 +65,16 @@ const Logo: React.FC<LogoProps> = ({
         <Image
           style={{
             height: `var(--static-space-${sizeMap[size]})`,
-            width: 'auto'
+            width: "auto",
           }}
-          alt='Trademark'
+          alt="Trademark"
           src={iconSrc}
         />
       )}
       {wordmark && !wordmarkSrc && (
         <div
           style={{
-            height: `var(--static-space-${sizeMap[size]})`
+            height: `var(--static-space-${sizeMap[size]})`,
           }}
           className={styles.type}
         />
@@ -83,26 +84,21 @@ const Logo: React.FC<LogoProps> = ({
         <Image
           style={{
             height: `var(--static-space-${sizeMap[size]})`,
-            width: 'auto'
+            width: "auto",
           }}
-          alt='Trademark'
+          alt="Trademark"
           src={wordmarkSrc}
         />
       )}
     </>
-  )
+  );
 
   return href ? (
     <Link
-      className={classNames(
-        'radius-l',
-        'display-flex',
-        'fit-height',
-        className
-      )}
+      className={classNames("radius-l", "display-flex", "fit-height", className)}
       style={style}
       href={href}
-      aria-label='Trademark'
+      aria-label="Trademark"
       {...props}
     >
       {content}
@@ -110,15 +106,15 @@ const Logo: React.FC<LogoProps> = ({
   ) : (
     <Flex
       className={classNames(className)}
-      radius='l'
+      radius="l"
       fitHeight
       style={style}
-      aria-label='Trademark'
+      aria-label="Trademark"
     >
       {content}
     </Flex>
-  )
-}
+  );
+};
 
-Logo.displayName = 'Logo'
-export { Logo }
+Logo.displayName = "Logo";
+export { Logo };

@@ -3,8 +3,8 @@ export {
   createAboutPage,
   createBlogPage,
   createWorkPage,
-  createGalleryPage
-} from './PageBuilder'
+  createGalleryPage,
+} from "./PageBuilder";
 
 export {
   // Template creation functions
@@ -12,13 +12,11 @@ export {
   createBlogPageFromTemplate,
   createPortfolioPageFromTemplate,
   createLandingPageFromTemplate,
-
   // Main template functions (enhanced versions)
   developerTemplate,
   designerTemplate,
   freelancerTemplate,
   profileTemplate,
-
   // Types
   type PersonData,
   type ExperienceData,
@@ -28,5 +26,5 @@ export {
   type AboutPageTemplate,
   type BlogPageTemplate,
   type PortfolioPageTemplate,
-  type LandingPageTemplate
-} from './templates'
+  type LandingPageTemplate,
+} from "./templates";
