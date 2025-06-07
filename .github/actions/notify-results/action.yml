@@ -1,0 +1,43 @@
+name: 'Notify Results'
+description: 'Sends notifications about CI pipeline results'
+
+inputs:
+  quality-result:
+    description: 'Result of quality job'
+    required: true
+  security-result:
+    description: 'Result of security job'
+    required: false
+    default: 'skipped'
+  performance-result:
+    description: 'Result of performance job'
+    required: false
+    default: 'skipped'
+  supabase-result:
+    description: 'Result of supabase job'
+    required: false
+    default: 'skipped'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Notify on success
+      if: inputs.quality-result == 'success'
+      run: |
+        echo "✅ CI Pipeline completed successfully!"
+        echo "- Code quality: ✅"
+        echo "- Security: ${{ inputs.security-result }}"
+        echo "- Performance: ${{ inputs.performance-result }}"
+        echo "- Supabase: ${{ inputs.supabase-result }}"
+      shell: bash
+
+    - name: Notify on failure
+      if: inputs.quality-result == 'failure'
+      run: |
+        echo "❌ CI Pipeline failed!"
+        echo "- Quality result: ${{ inputs.quality-result }}"
+        echo "- Security result: ${{ inputs.security-result }}"
+        echo "- Performance result: ${{ inputs.performance-result }}"
+        echo "- Supabase result: ${{ inputs.supabase-result }}"
+        exit 1
+      shell: bash

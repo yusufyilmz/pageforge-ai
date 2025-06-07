@@ -1,0 +1,26 @@
+name: 'Auto-fix Code Issues'
+description: 'Automatically fixes code quality issues and commits changes'
+
+inputs:
+  github-token:
+    description: 'GitHub token for committing changes'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run auto-fixes
+      run: npm run code-quality:fix
+      shell: bash
+
+    - name: Commit changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git diff --staged --quiet || git commit -m "🤖 Auto-fix code issues [skip ci]"
+        git push
+      shell: bash
+      continue-on-error: true
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}

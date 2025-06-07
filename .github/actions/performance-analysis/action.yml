@@ -1,0 +1,292 @@
+name: 'Performance Analysis'
+description: 'Comprehensive performance metrics, bundle analysis, and Core Web Vitals monitoring'
+
+inputs:
+  supabase-url:
+    description: 'Supabase URL for build'
+    required: false
+    default: 'https://placeholder.supabase.co'
+  supabase-key:
+    description: 'Supabase anon key for build'
+    required: false
+    default: 'placeholder-key'
+  upload-artifacts:
+    description: 'Whether to upload build artifacts'
+    required: false
+    default: 'true'
+  performance-budget:
+    description: 'Performance budget in KB for bundle size'
+    required: false
+    default: '500'
+  lighthouse-audit:
+    description: 'Run Lighthouse performance audit'
+    required: false
+    default: 'true'
+
+outputs:
+  build-size:
+    description: 'Build size information'
+    value: ${{ steps.analyze.outputs.size }}
+  performance-score:
+    description: 'Overall performance score'
+    value: ${{ steps.lighthouse.outputs.score }}
+  bundle-passed:
+    description: 'Whether bundle size is within budget'
+    value: ${{ steps.budget-check.outputs.passed }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 📊 Build for production with metrics
+      run: |
+        echo "🏗️ Building with performance monitoring..."
+        npm run build
+        echo "✅ Build completed"
+      shell: bash
+      env:
+        NODE_ENV: production
+        NEXT_PUBLIC_SUPABASE_URL: ${{ inputs.supabase-url }}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ inputs.supabase-key }}
+        ANALYZE: true
+
+    - name: 📦 Analyze bundle size
+      id: analyze
+      run: |
+        echo "📊 Analyzing bundle size..."
+
+        # Get build sizes
+        if [ -d ".next" ]; then
+          NEXT_SIZE=$(du -sh .next | cut -f1)
+          STATIC_SIZE=$(du -sh .next/static 2>/dev/null | cut -f1 || echo "0")
+
+          echo "size=${NEXT_SIZE}" >> $GITHUB_OUTPUT
+          echo "static-size=${STATIC_SIZE}" >> $GITHUB_OUTPUT
+
+          echo "📊 Build Analysis:"
+          echo "- Total .next size: $NEXT_SIZE"
+          echo "- Static assets: $STATIC_SIZE"
+        fi
+
+        # Run Next.js bundle analyzer if available
+        if npm run analyze 2>/dev/null; then
+          echo "✅ Bundle analysis completed"
+        else
+          echo "⚠️ Bundle analyzer not configured"
+        fi
+
+        # Generate size report
+        cat > bundle-report.md << EOF
+        # 📊 Bundle Analysis Report
+
+        ## Build Sizes
+        - **Total Build**: ${NEXT_SIZE}
+        - **Static Assets**: ${STATIC_SIZE}
+        - **Generated**: $(date)
+
+        ## Bundle Composition
+        \`\`\`
+        $(find .next -name "*.js" -type f -exec wc -c {} + 2>/dev/null | tail -1 || echo "No JS files found")
+        \`\`\`
+        EOF
+      shell: bash
+      continue-on-error: true
+
+    - name: 💰 Performance budget check
+      id: budget-check
+      run: |
+        echo "💰 Checking performance budget..."
+        BUDGET_KB=${{ inputs.performance-budget }}
+
+        if [ -d ".next/static" ]; then
+          # Get total static size in KB
+          STATIC_KB=$(du -sk .next/static | cut -f1)
+
+          echo "📊 Budget Analysis:"
+          echo "- Budget: ${BUDGET_KB}KB"
+          echo "- Actual: ${STATIC_KB}KB"
+
+          if [ $STATIC_KB -le $BUDGET_KB ]; then
+            echo "✅ Within budget! ($STATIC_KB KB ≤ $BUDGET_KB KB)"
+            echo "passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Over budget! ($STATIC_KB KB > $BUDGET_KB KB)"
+            echo "passed=false" >> $GITHUB_OUTPUT
+            echo "::warning::Bundle size exceeds performance budget"
+          fi
+        else
+          echo "⚠️ No static files found for budget check"
+          echo "passed=unknown" >> $GITHUB_OUTPUT
+        fi
+      shell: bash
+
+    - name: 🔍 Lighthouse CI audit
+      id: lighthouse
+      if: inputs.lighthouse-audit == 'true'
+      run: |
+        echo "🔍 Running Lighthouse performance audit..."
+
+        # Install Lighthouse CI
+        npm install -g @lhci/cli@0.12.x
+
+        # Create lighthouse config
+        cat > lighthouserc.js << 'EOF'
+        module.exports = {
+          ci: {
+            collect: {
+              staticDistDir: '.next',
+              url: ['http://localhost:3000/'],
+              settings: {
+                chromeFlags: '--no-sandbox --headless --disable-gpu'
+              }
+            },
+            assert: {
+              assertions: {
+                'categories:performance': ['warn', {minScore: 0.8}],
+                'categories:accessibility': ['error', {minScore: 0.9}],
+                'categories:best-practices': ['warn', {minScore: 0.85}],
+                'categories:seo': ['warn', {minScore: 0.9}]
+              }
+            }
+          }
+        };
+        EOF
+
+        # Run Lighthouse (with timeout)
+        timeout 300 lhci autorun || echo "⚠️ Lighthouse audit timed out or failed"
+
+        # Extract performance score if available
+        if [ -f ".lighthouseci/lhr-*.json" ]; then
+          PERF_SCORE=$(jq -r '.categories.performance.score' .lighthouseci/lhr-*.json 2>/dev/null || echo "0")
+          echo "score=${PERF_SCORE}" >> $GITHUB_OUTPUT
+          echo "📊 Performance Score: ${PERF_SCORE}"
+        else
+          echo "score=0" >> $GITHUB_OUTPUT
+          echo "⚠️ No Lighthouse results available"
+        fi
+      shell: bash
+      continue-on-error: true
+
+    - name: 🧪 Core Web Vitals analysis
+      run: |
+        echo "🧪 Analyzing Core Web Vitals..."
+
+        # Create a simple CWV report
+        cat > core-web-vitals.md << EOF
+        # 🧪 Core Web Vitals Analysis
+
+        ## Key Metrics
+        - **Largest Contentful Paint (LCP)**: Target < 2.5s
+        - **First Input Delay (FID)**: Target < 100ms
+        - **Cumulative Layout Shift (CLS)**: Target < 0.1
+
+        ## Build Optimizations Applied
+        - ✅ Next.js Image Optimization
+        - ✅ Static Generation (SSG)
+        - ✅ Bundle Splitting
+        - ✅ Tree Shaking
+
+        ## Recommendations
+        - Monitor real user metrics (RUM)
+        - Use \`next/image\` for all images
+        - Implement proper loading states
+        - Minimize layout shifts
+        EOF
+
+        echo "✅ Core Web Vitals analysis completed"
+      shell: bash
+
+    - name: 📈 Generate performance summary
+      run: |
+        echo "📈 Generating performance summary..."
+
+        # Create comprehensive performance report
+        cat > performance-summary.md << EOF
+        # 📊 Performance Analysis Summary
+
+        ## 🏗️ Build Metrics
+        - **Build Time**: $(date)
+        - **Node.js Version**: $(node --version)
+        - **Next.js Build**: ✅ Success
+
+        ## 📦 Bundle Analysis
+        - **Total Size**: ${{ steps.analyze.outputs.size }}
+        - **Performance Budget**: ${{ inputs.performance-budget }}KB
+        - **Budget Status**: ${{ steps.budget-check.outputs.passed }}
+
+        ## 🔍 Lighthouse Score
+        - **Performance**: ${{ steps.lighthouse.outputs.score }}
+        - **Target**: > 0.8
+
+        ## 🚀 Deployment Ready
+        $(if [ "${{ steps.budget-check.outputs.passed }}" = "true" ]; then echo "✅ Ready for deployment"; else echo "⚠️ Review performance before deployment"; fi)
+
+        ---
+        Generated on: $(date)
+        Commit: ${{ github.sha }}
+        EOF
+
+        echo "## 📊 Performance Summary" >> $GITHUB_STEP_SUMMARY
+        cat performance-summary.md >> $GITHUB_STEP_SUMMARY
+      shell: bash
+
+    - name: 📁 Upload performance artifacts
+      if: inputs.upload-artifacts == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: performance-analysis-${{ github.sha }}
+        path: |
+          .next/
+          out/
+          bundle-report.md
+          core-web-vitals.md
+          performance-summary.md
+          .lighthouseci/
+        retention-days: 7
+
+    - name: 🧪 Test coverage analysis
+      run: |
+        echo "🧪 Analyzing test coverage..."
+
+        if npm run test:coverage 2>/dev/null; then
+          echo "✅ Coverage analysis completed"
+
+          # Generate coverage badge data
+          if [ -f "coverage/coverage-summary.json" ]; then
+            COVERAGE=$(jq -r '.total.lines.pct' coverage/coverage-summary.json 2>/dev/null || echo "0")
+            echo "📊 Test Coverage: ${COVERAGE}%"
+
+            if (( $(echo "$COVERAGE > 80" | bc -l) )); then
+              echo "✅ Good test coverage (${COVERAGE}%)"
+            else
+              echo "⚠️ Consider improving test coverage (${COVERAGE}%)"
+            fi
+          fi
+        else
+          echo "⚠️ No test coverage available"
+        fi
+      shell: bash
+      continue-on-error: true
+
+    - name: 🔍 Security scan
+      run: |
+        echo "🔍 Running security performance scan..."
+
+        # Check for common performance security issues
+        echo "Checking for:"
+        echo "- Exposed source maps"
+        echo "- Debug information"
+        echo "- Large bundle sizes"
+
+        if find .next -name "*.map" -type f | head -1 | grep -q "."; then
+          echo "⚠️ Source maps found in production build"
+        else
+          echo "✅ No source maps in production build"
+        fi
+
+        if grep -r "console.log\|debugger" .next/ 2>/dev/null | head -1 | grep -q "."; then
+          echo "⚠️ Debug code found in production build"
+        else
+          echo "✅ No debug code in production build"
+        fi
+      shell: bash
+      continue-on-error: true

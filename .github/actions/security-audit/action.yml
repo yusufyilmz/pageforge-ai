@@ -1,0 +1,14 @@
+name: 'Security Audit'
+description: 'Runs security audit and dependency checks'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run security audit
+      run: npm audit --audit-level=moderate
+      shell: bash
+
+    - name: Check for outdated dependencies
+      run: npm outdated
+      shell: bash
+      continue-on-error: true

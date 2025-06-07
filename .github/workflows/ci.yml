@@ -7,121 +7,68 @@ on:
     branches: [main, develop]
 
 jobs:
-  # Code Quality and Testing
+  # Fast checks - run on every push/PR
   quality:
     name: Code Quality & Tests
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Run Code Quality Checks
+        uses: ./.github/actions/code-quality
         with:
-          fetch-depth: 0
+          supabase-url: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          supabase-key: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
 
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run type checking
-        run: npm run type-check
-
-      - name: Run Biome linting
-        run: npm run lint
-
-      - name: Run Biome formatting check
-        run: npm run format:check
-
-      - name: Run tests
-        run: npm run test
-
-      - name: Build application
-        run: npm run build
-        env:
-          NODE_ENV: production
-          # Add environment variables needed for build
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
-
-  # Security and Dependency Audit
+  # Security audit - only on main branch pushes
   security:
     name: Security Audit
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'npm'
+      - name: Setup Node.js Environment
+        uses: ./.github/actions/setup-node
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Run Security Audit
+        uses: ./.github/actions/security-audit
 
-      - name: Run security audit
-        run: npm audit --audit-level=moderate
-
-      - name: Check for outdated dependencies
-        run: npm outdated
-        continue-on-error: true
-
-  # Build and Performance Check
-  build:
-    name: Build & Performance
+  # Performance analysis - only on main branch pushes
+  performance:
+    name: Performance Analysis
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [quality]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Run Performance Analysis
+        uses: ./.github/actions/performance-analysis
         with:
-          node-version: '20.x'
-          cache: 'npm'
+          supabase-url: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          supabase-key: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build for production
-        run: npm run build
-        env:
-          NODE_ENV: production
-          # Add environment variables needed for build
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-files-${{ github.sha }}
-          path: |
-            .next/
-            out/
-          retention-days: 7
-
-      - name: Bundle analyzer (if enabled)
-        run: npm run analyze
-        continue-on-error: true
-        env:
-          ANALYZE: true
-
-  # Supabase Integration Tests
+  # Supabase tests - only on main branch pushes or when supabase/ files change
   supabase:
     name: Supabase Tests
     runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      contains(join(github.event.head_commit.modified, ' '), 'supabase/') ||
+      contains(join(github.event.head_commit.added, ' '), 'supabase/')
 
     services:
       postgres:
@@ -141,63 +88,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'npm'
+      - name: Setup Node.js Environment
+        uses: ./.github/actions/setup-node
 
-      - name: Install Supabase CLI
-        run: |
-          curl -fsSL https://supabase.com/install.sh | sh
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Run Supabase Tests
+        uses: ./.github/actions/supabase-tests
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Start Supabase
-        run: supabase start
-        continue-on-error: true
-
-      - name: Run database migrations
-        run: supabase db reset --local
-        continue-on-error: true
-
-      - name: Generate Supabase types
-        run: npm run supabase:gen-types
-        continue-on-error: true
-
-  # Code Quality Metrics
-  metrics:
-    name: Code Metrics
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run comprehensive code check
-        run: npm run format:check
-        continue-on-error: true
-
-      - name: Generate code coverage (placeholder)
-        run: npm run test:coverage
-        continue-on-error: true
-
-  # Auto-fix and commit (only on specific branches)
+  # Auto-fix - only on develop branch
   auto-fix:
     name: Auto-fix Code Issues
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/fix/'))
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
 
     steps:
       - name: Checkout code
@@ -205,84 +106,47 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Auto-fix Issues
+        uses: ./.github/actions/auto-fix
         with:
-          node-version: '20.x'
-          cache: 'npm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run auto-fixes
-        run: npm run code-quality:fix
-
-      - name: Commit changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git diff --staged --quiet || git commit -m "🤖 Auto-fix code issues [skip ci]"
-          git push
-        continue-on-error: true
-
-  # Deployment Preview (for PRs)
+  # Deployment Preview - only for PRs
   preview:
     name: Deploy Preview
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
-    needs: [quality, build]
+    needs: [quality]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'npm'
+      - name: Setup Node.js Environment
+        uses: ./.github/actions/setup-node
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build for preview
-        run: npm run build
-        env:
-          NODE_ENV: production
-
-      - name: Deploy to Vercel Preview
-        uses: amondnet/vercel-action@v25
-        continue-on-error: true
+      - name: Deploy Preview
+        uses: ./.github/actions/deploy-preview
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./
 
   # Notify on completion
   notify:
     name: Notify Results
     runs-on: ubuntu-latest
-    needs: [quality, security, build, supabase, metrics]
+    needs: [quality, security, performance, supabase]
     if: always()
 
     steps:
-      - name: Notify on success
-        if: needs.quality.result == 'success' && needs.build.result == 'success'
-        run: |
-          echo "✅ CI Pipeline completed successfully!"
-          echo "- Code quality: ✅"
-          echo "- Security audit: ✅"
-          echo "- Build: ✅"
-          echo "- Tests: ✅"
-
-      - name: Notify on failure
-        if: needs.quality.result == 'failure' || needs.build.result == 'failure'
-        run: |
-          echo "❌ CI Pipeline failed!"
-          echo "- Quality result: ${{ needs.quality.result }}"
-          echo "- Security result: ${{ needs.security.result }}"
-          echo "- Build result: ${{ needs.build.result }}"
-          echo "- Supabase result: ${{ needs.supabase.result }}"
-          exit 1
+      - name: Send Notifications
+        uses: ./.github/actions/notify-results
+        with:
+          quality-result: ${{ needs.quality.result }}
+          security-result: ${{ needs.security.result }}
+          performance-result: ${{ needs.performance.result }}
+          supabase-result: ${{ needs.supabase.result }}

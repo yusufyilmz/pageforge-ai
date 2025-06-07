@@ -1,0 +1,49 @@
+name: 'Code Quality Check'
+description: 'Runs type checking, linting, formatting, and tests'
+
+inputs:
+  run-tests:
+    description: 'Whether to run tests'
+    required: false
+    default: 'true'
+  run-build:
+    description: 'Whether to run build'
+    required: false
+    default: 'true'
+  supabase-url:
+    description: 'Supabase URL for build'
+    required: false
+    default: 'https://placeholder.supabase.co'
+  supabase-key:
+    description: 'Supabase anon key for build'
+    required: false
+    default: 'placeholder-key'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run type checking
+      run: npm run type-check
+      shell: bash
+
+    - name: Run Biome linting
+      run: npm run lint
+      shell: bash
+
+    - name: Run Biome formatting check
+      run: npm run format:check
+      shell: bash
+
+    - name: Run tests
+      if: inputs.run-tests == 'true'
+      run: npm run test
+      shell: bash
+
+    - name: Build application
+      if: inputs.run-build == 'true'
+      run: npm run build
+      shell: bash
+      env:
+        NODE_ENV: production
+        NEXT_PUBLIC_SUPABASE_URL: ${{ inputs.supabase-url }}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ inputs.supabase-key }}
