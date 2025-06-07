@@ -1,0 +1,93 @@
+version: 2
+
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+    open-pull-requests-limit: 10
+    reviewers:
+      - 'yusufyilmaz'
+    assignees:
+      - 'yusufyilmaz'
+    commit-message:
+      prefix: '⬆️'
+      prefix-development: '⬆️ dev'
+      include: 'scope'
+    labels:
+      - 'dependencies'
+      - 'automated'
+
+    # Group updates by dependency type
+    groups:
+      # Production dependencies
+      production-dependencies:
+        patterns:
+          - '@supabase/*'
+          - 'next'
+          - 'react'
+          - 'react-dom'
+
+      # Development dependencies
+      development-dependencies:
+        patterns:
+          - '@types/*'
+          - 'eslint*'
+          - 'prettier'
+          - '@biomejs/*'
+          - 'typescript'
+
+      # Once UI components
+      once-ui:
+        patterns:
+          - '@pageforge/once-ui*'
+
+    # Ignore specific packages that require manual updates
+    ignore:
+      - dependency-name: 'react'
+        versions: ['18.x']
+      - dependency-name: 'next'
+        versions: ['< 15.0']
+      - dependency-name: 'typescript'
+        versions: ['< 5.0']
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+    open-pull-requests-limit: 5
+    reviewers:
+      - 'yusufyilmaz'
+    assignees:
+      - 'yusufyilmaz'
+    commit-message:
+      prefix: '🔧'
+      include: 'scope'
+    labels:
+      - 'github-actions'
+      - 'automated'
+
+  # Enable version updates for Docker
+  - package-ecosystem: 'docker'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+    open-pull-requests-limit: 5
+    reviewers:
+      - 'yusufyilmaz'
+    assignees:
+      - 'yusufyilmaz'
+    commit-message:
+      prefix: '🐳'
+      include: 'scope'
+    labels:
+      - 'docker'
+      - 'automated'

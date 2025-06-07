@@ -32,7 +32,7 @@ Available sections and fields:
 - about: { title, description, bodyText, imageUrl }
 - header: { title, description, layout, siteName }
 - legal_text: { title, description, body }
-`
+`;
 
 export const GPT_PROMPT_CHAT = `You are a smart onboarding assistant for a no-code website builder. Your goal is to help the user define their homepage using questions.
 
@@ -43,4 +43,4 @@ ${sectionSchema}
 Only generate JSON when enough information is collected for each selected section. Otherwise, ask the next relevant question.
 
 If the user asks for additional pages, respond: "Creating additional pages like Blog, About, or Services is a premium feature. Please upgrade your plan to continue."
-`
+`;

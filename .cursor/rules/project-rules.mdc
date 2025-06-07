@@ -15,12 +15,12 @@ alwaysApply: false
 ### Key Types to Know
 ```typescript
 // NEW (use this)
-PageConfig<T> - Main interface with nested metadata
+PageConfig - Main interface with nested metadata
 PageMetadataConfig - { basic, openGraph, twitter }
 ContentBlock - Discriminated union for content
 
 // LEGACY (for compatibility only)
-ContentPageConfig<T> - Old flat structure
+ContentPageConfig - Old flat structure
 ```
 
 ### Code Patterns
@@ -52,17 +52,17 @@ const config: ContentPageConfig = {
 ### Import Patterns
 ```typescript
 // Page utilities
-import { PageMeta, PageSchema } from '@/components/utils'
+import { PageMeta, PageSchema } from '@pageforge/components/utils'
 
 // Types
-import { PageConfig, PageType, ContentBlock } from '@/lib/types/page/pageTypes'
+import { PageConfig, PageType, ContentBlock } from '@pageforge/lib/types/page/pageTypes'
 
 // Content system
-import { createContentConfig, createComprehensiveAboutPageConfig } from '@/lib/services/new-page'
+import { createContentConfig, createComprehensiveAboutPageConfig } from '@pageforge/lib/services/new-page'
 ```
 
 ### Common AI Tasks
-1. **Creating page configs** - Use PageConfig<T> with nested metadata
+1. **Creating page configs** - Use PageConfig with nested metadata
 2. **Adding content blocks** - Use discriminated ContentBlock union
 3. **Generating utilities** - Reference page-metadata.ts and page-schema.tsx patterns
 4. **Type safety** - Leverage discriminated unions and utility types

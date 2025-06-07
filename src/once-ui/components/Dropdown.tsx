@@ -1,27 +1,25 @@
-'use client'
+"use client";
 
-import React, { ReactNode, forwardRef, SyntheticEvent } from 'react'
-import { Flex } from '.'
+import type React from "react";
+import { type ReactNode, type SyntheticEvent, forwardRef } from "react";
 
-interface DropdownProps
-  extends Omit<React.ComponentProps<typeof Flex>, 'onSelect'> {
-  selectedOption?: string
-  children?: ReactNode
-  onEscape?: () => void
-  onSelect?: (event: string) => void
+import { Flex } from ".";
+
+interface DropdownProps extends Omit<React.ComponentProps<typeof Flex>, "onSelect"> {
+  selectedOption?: string;
+  children?: ReactNode;
+  onEscape?: () => void;
+  onSelect?: (event: string) => void;
 }
 
 const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
-  (
-    { selectedOption, className, children, onEscape, onSelect, ...rest },
-    ref
-  ) => {
+  ({ selectedOption, className, children, onEscape, onSelect, ...rest }, ref) => {
     const handleSelect = (event: SyntheticEvent<HTMLDivElement>) => {
-      const value = event.currentTarget.getAttribute('data-value')
+      const value = event.currentTarget.getAttribute("data-value");
       if (onSelect && value) {
-        onSelect(value)
+        onSelect(value);
       }
-    }
+    };
 
     return (
       <Flex
@@ -38,11 +36,11 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           {children}
         </Flex>
       </Flex>
-    )
+    );
   }
-)
+);
 
-Dropdown.displayName = 'Dropdown'
+Dropdown.displayName = "Dropdown";
 
-export { Dropdown }
-export type { DropdownProps }
+export { Dropdown };
+export type { DropdownProps };

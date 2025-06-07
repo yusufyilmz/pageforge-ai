@@ -1,0 +1,456 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# PageForge Type System Guide
+
+## 🎯 Type Architecture
+
+### Core Structure
+**Location**: `src/lib/types/page/`
+
+The type system is built on a comprehensive set of interfaces and types:
+```typescript
+// Main page configuration
+interface PageConfig<T extends PageType = PageType> {
+  pageType: T
+  metadata: PageMetadataConfig
+  content: ContentBlock[]
+  theme?: SiteThemeType
+}
+
+// Nested metadata structure
+interface PageMetadataConfig {
+  basic: PageMetadata
+  openGraph: OpenGraphMetadata
+  twitter: TwitterMetadata
+}
+
+// Content block discriminated union
+type ContentBlock =
+  | { type: 'hero', content: HeroSectionContent }
+  | { type: 'features', content: FeaturesSectionContent }
+  | { type: 'projects', content: ProjectsSectionContent }
+  // ... 30+ more section types
+```
+
+## 📦 Type Categories
+
+### 1. Page Types
+```typescript
+enum PageType {
+  ABOUT = 'about',
+  BLOG = 'blog',
+  PORTFOLIO = 'portfolio',
+  LANDING = 'landing',
+  CONTACT = 'contact'
+}
+
+// Type-safe page creation
+const aboutPage: PageConfig<PageType.ABOUT> = {
+  pageType: PageType.ABOUT,
+  metadata: {
+    basic: { title: "About" },
+    openGraph: { type: OpenGraphType.PROFILE },
+    twitter: { card: 'summary' }
+  }
+}
+```
+
+### 2. Section Types
+```typescript
+// Section content interfaces
+interface HeroSectionContent {
+  title: string
+  subtitle?: string
+  description?: string
+  buttons?: ButtonConfig[]
+}
+
+interface FeaturesSectionContent {
+  title?: string
+  features: FeatureConfig[]
+  layout?: 'grid' | 'list'
+}
+
+// Type-safe section creation
+const heroBlock: ContentBlock = {
+  type: 'hero',
+  content: {
+    title: "Welcome",
+    subtitle: "Get Started"
+  }
+}
+```
+
+### 3. Metadata Types
+```typescript
+interface PageMetadata {
+  title: string
+  description?: string
+  keywords?: string[]
+}
+
+interface OpenGraphMetadata {
+  type: OpenGraphType
+  title?: string
+  description?: string
+  image?: string
+}
+
+interface TwitterMetadata {
+  card: 'summary' | 'summary_large_image'
+  title?: string
+  description?: string
+  image?: string
+}
+```
+
+## 🎭 Type Usage Patterns
+
+### 1. Type-Safe Page Creation
+```typescript
+// ✅ Use PageConfig with proper typing
+const page: PageConfig = {
+  pageType: PageType.ABOUT,
+  metadata: {
+    basic: {
+      title: "About Us",
+      description: "Learn more about our company"
+    },
+    openGraph: {
+      type: OpenGraphType.WEBSITE,
+      image: "/og-image.jpg"
+    },
+    twitter: {
+      card: 'summary_large_image'
+    }
+  },
+  content: [
+    {
+      type: 'hero',
+      content: {
+        title: "About Us",
+        description: "Our story"
+      }
+    }
+  ]
+}
+```
+
+### 2. Type-Safe Section Creation
+```typescript
+// ✅ Use discriminated unions for sections
+const section: ContentBlock = {
+  type: 'features',
+  content: {
+    title: "Features",
+    features: [
+      {
+        title: "Feature 1",
+        description: "Description 1",
+        icon: "star"
+      }
+    ]
+  }
+}
+
+// ✅ Type-safe section props
+interface SectionProps {
+  block: Extract<ContentBlock, { type: 'features' }>
+  index: number
+}
+
+const FeaturesSection = ({ block, index }: SectionProps) => {
+  const { content } = block
+  return (
+    <div>
+      <h2>{content.title}</h2>
+      {content.features.map(feature => (
+        <div key={feature.title}>{feature.title}</div>
+      ))}
+    </div>
+  )
+}
+```
+
+### 3. Type-Safe Metadata
+```typescript
+// ✅ Use nested metadata structure
+const metadata: PageMetadataConfig = {
+  basic: {
+    title: "Page Title",
+    description: "Page description",
+    keywords: ["keyword1", "keyword2"]
+  },
+  openGraph: {
+    type: OpenGraphType.WEBSITE,
+    title: "OG Title",
+    image: "/og-image.jpg"
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Twitter Title"
+  }
+}
+```
+
+## 🛡️ Type Safety Patterns
+
+### 1. Type Guards
+```typescript
+// ✅ Use type guards for runtime checks
+function isHeroBlock(block: ContentBlock): block is Extract<ContentBlock, { type: 'hero' }> {
+  return block.type === 'hero'
+}
+
+const renderBlock = (block: ContentBlock) => {
+  if (isHeroBlock(block)) {
+    return <HeroSection content={block.content} />
+  }
+  // TypeScript knows block is not a hero block here
+}
+```
+
+### 2. Type Assertions
+```typescript
+// ✅ Use type assertions carefully
+const block = content[0] as Extract<ContentBlock, { type: 'hero' }>
+
+// ✅ Better: Use type guards
+const block = content[0]
+if (isHeroBlock(block)) {
+  // TypeScript knows block is a hero block
+}
+```
+
+### 3. Type Utilities
+```typescript
+// ✅ Use utility types
+type HeroContent = Extract<ContentBlock, { type: 'hero' }>['content']
+type FeatureContent = Extract<ContentBlock, { type: 'features' }>['content']
+
+// ✅ Use mapped types
+type SectionTypes = ContentBlock['type']
+type SectionContents = ContentBlock['content']
+```
+
+## 🚫 Type Anti-Patterns
+
+### ❌ Don't Use Any
+```typescript
+// ❌ Avoid using any
+const block: any = content[0]
+
+// ✅ Use proper types
+const block: ContentBlock = content[0]
+```
+
+### ❌ Don't Ignore Type Safety
+```typescript
+// ❌ Avoid type assertions without checks
+const heroBlock = block as HeroBlock
+
+// ✅ Use type guards
+if (isHeroBlock(block)) {
+  const heroBlock = block
+}
+```
+
+### ❌ Don't Use Legacy Types
+```typescript
+// ❌ Avoid legacy types
+interface OldPageConfig {
+  metadata: {
+    title: string
+    openGraph: any
+  }
+}
+
+// ✅ Use new nested structure
+interface PageConfig {
+  metadata: {
+    basic: PageMetadata
+    openGraph: OpenGraphMetadata
+  }
+}
+```
+
+## 🎯 Type Examples
+
+### 1. Complete Page Configuration
+```typescript
+const page: PageConfig = {
+  pageType: PageType.ABOUT,
+  metadata: {
+    basic: {
+      title: "About Us",
+      description: "Learn more about our company",
+      keywords: ["company", "about", "team"]
+    },
+    openGraph: {
+      type: OpenGraphType.WEBSITE,
+      title: "About Our Company",
+      description: "Discover our story",
+      image: "/og-image.jpg"
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: "About Our Company",
+      description: "Discover our story",
+      image: "/twitter-image.jpg"
+    }
+  },
+  content: [
+    {
+      type: 'hero',
+      content: {
+        title: "About Us",
+        subtitle: "Our Story",
+        description: "Learn about our journey",
+        buttons: [
+          {
+            label: "Learn More",
+            href: "/about",
+            variant: "primary"
+          }
+        ]
+      }
+    },
+    {
+      type: 'features',
+      content: {
+        title: "Our Values",
+        features: [
+          {
+            title: "Innovation",
+            description: "We push boundaries",
+            icon: "lightbulb"
+          }
+        ]
+      }
+    }
+  ],
+  theme: 'minimal'
+}
+```
+
+### 2. Section Type Definitions
+```typescript
+// Hero section
+interface HeroSectionContent {
+  title: string
+  subtitle?: string
+  description?: string
+  buttons?: Array<{
+    label: string
+    href: string
+    variant?: 'primary' | 'secondary' | 'tertiary'
+    icon?: string
+    showArrow?: boolean
+  }>
+  badge?: {
+    label: string
+    icon?: string
+    href?: string
+    arrow?: boolean
+  }
+  backgroundImage?: string
+  alignment?: 'left' | 'center' | 'right'
+  height?: 'small' | 'medium' | 'large' | 'full'
+}
+
+// Features section
+interface FeaturesSectionContent {
+  title?: string
+  subtitle?: string
+  description?: string
+  layout?: 'grid' | 'list'
+  columns?: 2 | 3 | 4
+  features: Array<{
+    icon?: string
+    image?: {
+      src: string
+      alt: string
+      width?: number
+      height?: number
+    }
+    title: string
+    description: string
+    link?: {
+      href: string
+      label?: string
+    }
+  }>
+}
+
+// Projects section
+interface ProjectsSectionContent {
+  title?: string
+  subtitle?: string
+  layout?: 'grid' | 'masonry'
+  columns?: 2 | 3 | 4
+  showDescription?: boolean
+  showTechnology?: boolean
+  projects: Array<{
+    title: string
+    description?: string
+    image?: string
+    technologies?: string[]
+    link?: string
+    github?: string
+    featured?: boolean
+  }>
+  range?: [number, number] // For pagination
+}
+```
+
+### 3. Type-Safe Component Props
+```typescript
+// Section component props
+interface SectionProps<T extends ContentBlock['type']> {
+  block: Extract<ContentBlock, { type: T }>
+  index: number
+}
+
+// Hero section component
+const HeroSection = ({ block, index }: SectionProps<'hero'>) => {
+  const { content } = block
+  return (
+    <section>
+      <h1>{content.title}</h1>
+      {content.subtitle && <h2>{content.subtitle}</h2>}
+      {content.description && <p>{content.description}</p>}
+      {content.buttons?.map(button => (
+        <Button
+          key={button.label}
+          href={button.href}
+          variant={button.variant}
+        >
+          {button.label}
+        </Button>
+      ))}
+    </section>
+  )
+}
+
+// Features section component
+const FeaturesSection = ({ block, index }: SectionProps<'features'>) => {
+  const { content } = block
+  return (
+    <section>
+      {content.title && <h2>{content.title}</h2>}
+      <div className={`grid grid-cols-${content.columns || 3}`}>
+        {content.features.map(feature => (
+          <div key={feature.title}>
+            {feature.icon && <Icon name={feature.icon} />}
+            <h3>{feature.title}</h3>
+            <p>{feature.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+```

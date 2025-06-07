@@ -1,36 +1,36 @@
-import { IconType } from 'react-icons'
-
+import type { IconType } from "react-icons";
 import {
-  HiChevronUp,
-  HiChevronDown,
-  HiChevronRight,
-  HiChevronLeft,
-  HiOutlineArrowPath,
-  HiOutlineSun,
-  HiOutlineMoon,
-  HiOutlineEye,
-  HiOutlineEyeSlash,
-  HiOutlineClipboard,
-  HiOutlineMagnifyingGlass,
-  HiOutlineLink,
+  HiArrowLeft,
   HiArrowUpRight,
-  HiOutlineShieldCheck,
-  HiOutlineSparkles,
-  HiOutlineComputerDesktop,
-  HiOutlineQuestionMarkCircle,
-  HiOutlineInformationCircle,
-  HiOutlineExclamationTriangle,
-  HiOutlineExclamationCircle,
+  HiChevronDown,
+  HiChevronLeft,
+  HiChevronRight,
+  HiChevronUp,
+  HiOutlineArrowPath,
+  HiOutlineCalendar,
   HiOutlineCheckBadge,
   HiOutlineCheckCircle,
-  HiOutlineXMark,
-  HiOutlineUser,
+  HiOutlineClipboard,
+  HiOutlineComputerDesktop,
+  HiOutlineDocumentDuplicate,
+  HiOutlineExclamationCircle,
+  HiOutlineExclamationTriangle,
+  HiOutlineEye,
   HiOutlineEyeDropper,
+  HiOutlineEyeSlash,
+  HiOutlineInformationCircle,
+  HiOutlineLink,
+  HiOutlineMagnifyingGlass,
   HiOutlineMinus,
+  HiOutlineMoon,
   HiOutlinePlus,
-  HiOutlineCalendar,
-  HiOutlineDocumentDuplicate
-} from 'react-icons/hi2'
+  HiOutlineQuestionMarkCircle,
+  HiOutlineShieldCheck,
+  HiOutlineSparkles,
+  HiOutlineSun,
+  HiOutlineUser,
+  HiOutlineXMark,
+} from "react-icons/hi2";
 
 export const iconLibrary: Record<string, IconType> = {
   chevronUp: HiChevronUp,
@@ -53,6 +53,7 @@ export const iconLibrary: Record<string, IconType> = {
   close: HiOutlineXMark,
   openLink: HiOutlineLink,
   arrowUpRight: HiArrowUpRight,
+  arrowLeft: HiArrowLeft,
   minus: HiOutlineMinus,
   plus: HiOutlinePlus,
   calendar: HiOutlineCalendar,
@@ -61,8 +62,8 @@ export const iconLibrary: Record<string, IconType> = {
   search: HiOutlineMagnifyingGlass,
   security: HiOutlineShieldCheck,
   sparkle: HiOutlineSparkles,
-  computer: HiOutlineComputerDesktop
-}
+  computer: HiOutlineComputerDesktop,
+};
 
-export type IconLibrary = typeof iconLibrary
-export type IconName = keyof IconLibrary
+export type IconLibrary = typeof iconLibrary;
+export type IconName = keyof IconLibrary;

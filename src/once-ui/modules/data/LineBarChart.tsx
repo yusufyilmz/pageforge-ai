@@ -1,49 +1,52 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect, useMemo } from 'react'
-import { isWithinInterval, parseISO } from 'date-fns'
-import { formatDate } from './utils/formatDate'
+import { isWithinInterval, parseISO } from "date-fns";
+import React, { useState, useEffect, useMemo } from "react";
 import {
-  ComposedChart as RechartsComposedChart,
+  Area as RechartsArea,
   Bar as RechartsBar,
+  CartesianGrid as RechartsCartesianGrid,
+  ComposedChart as RechartsComposedChart,
+  Legend as RechartsLegend,
+  ResponsiveContainer as RechartsResponsiveContainer,
+  Tooltip as RechartsTooltip,
   XAxis as RechartsXAxis,
   YAxis as RechartsYAxis,
-  CartesianGrid as RechartsCartesianGrid,
-  Tooltip as RechartsTooltip,
-  ResponsiveContainer as RechartsResponsiveContainer,
-  Legend as RechartsLegend,
-  Area as RechartsArea
-} from 'recharts'
-import { Column, Row, DateRange } from '../../components'
+} from "recharts";
+
+import { Column, type DateRange, Row } from "../../components";
+
+import { formatDate } from "./utils/formatDate";
+
 import {
-  LinearGradient,
   ChartHeader,
-  Tooltip,
-  Legend,
+  type ChartProps,
   ChartStatus,
-  ChartProps,
-  SeriesConfig,
-  ChartStyles,
-  barWidth,
-  curveType
-} from '.'
+  type ChartStyles,
+  Legend,
+  LinearGradient,
+  type SeriesConfig,
+  Tooltip,
+  type barWidth,
+  type curveType,
+} from ".";
 
 const chart = {
-  variant: 'gradient', // flat | gradient | outline
-  mode: 'categorical', // categorical | divergent | sequential
+  variant: "gradient", // flat | gradient | outline
+  mode: "categorical", // categorical | divergent | sequential
   height: 24, // default chart height
   axisLine: {
-    stroke: 'var(--neutral-alpha-weak)'
+    stroke: "var(--neutral-alpha-weak)",
   },
   tick: {
-    fill: 'var(--neutral-on-background-weak)',
-    fontSize: 11
+    fill: "var(--neutral-on-background-weak)",
+    fontSize: 11,
   },
-  tickLine: false
-}
+  tickLine: false,
+};
 interface LineBarChartProps extends ChartProps {
-  barWidth?: barWidth
-  curve?: curveType
+  barWidth?: barWidth;
+  curve?: curveType;
 }
 
 const LineBarChart: React.FC<LineBarChartProps> = ({
@@ -55,117 +58,95 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
   emptyState,
   loading = false,
   legend: legendProp = {},
-  axis = 'both',
-  border = 'neutral-medium',
+  axis = "both",
+  border = "neutral-medium",
   variant = chart.variant,
-  barWidth = 'fill',
-  curve = 'natural',
+  barWidth = "fill",
+  curve = "natural",
   ...flex
 }) => {
   const legend = {
     display: legendProp.display !== undefined ? legendProp.display : true,
-    position: legendProp.position || 'top-left',
-    direction: legendProp.direction
-  }
-  const [selectedDateRange, setSelectedDateRange] = useState<
-    DateRange | undefined
-  >(
+    position: legendProp.position || "top-left",
+    direction: legendProp.direction,
+  };
+  const [selectedDateRange, setSelectedDateRange] = useState<DateRange | undefined>(
     date?.start && date?.end
       ? {
           startDate: date.start,
-          endDate: date.end
+          endDate: date.end,
         }
       : undefined
-  )
+  );
 
   useEffect(() => {
     if (date?.start && date?.end) {
       setSelectedDateRange({
         startDate: date.start,
-        endDate: date.end
-      })
+        endDate: date.end,
+      });
     }
-  }, [date?.start, date?.end])
+  }, [date?.start, date?.end]);
 
-  const allSeriesArray = Array.isArray(series) ? series : series ? [series] : []
-  const seriesKeys = allSeriesArray.map((s: SeriesConfig) => s.key)
+  const allSeriesArray = Array.isArray(series) ? series : series ? [series] : [];
+  const seriesKeys = allSeriesArray.map((s: SeriesConfig) => s.key);
 
-  const xAxisKey =
-    Object.keys(data[0] || {}).find(key => !seriesKeys.includes(key)) || 'name'
+  const xAxisKey = Object.keys(data[0] || {}).find((key) => !seriesKeys.includes(key)) || "name";
 
   const filteredData = React.useMemo(() => {
-    if (
-      selectedDateRange?.startDate &&
-      selectedDateRange?.endDate &&
-      xAxisKey
-    ) {
-      const startDate = selectedDateRange.startDate
-      const endDate = selectedDateRange.endDate
+    if (selectedDateRange?.startDate && selectedDateRange?.endDate && xAxisKey) {
+      const startDate = selectedDateRange.startDate;
+      const endDate = selectedDateRange.endDate;
 
       if (startDate instanceof Date && endDate instanceof Date) {
-        return data.filter(item => {
+        return data.filter((item) => {
           try {
-            const itemDateValue = item[xAxisKey]
-            if (!itemDateValue) return false
+            const itemDateValue = item[xAxisKey];
+            if (!itemDateValue) {
+              return false;
+            }
 
             const itemDate =
-              typeof itemDateValue === 'string'
-                ? parseISO(itemDateValue)
-                : (itemDateValue as Date)
+              typeof itemDateValue === "string" ? parseISO(itemDateValue) : (itemDateValue as Date);
 
             return isWithinInterval(itemDate, {
               start: startDate,
-              end: endDate
-            })
-          } catch (error) {
-            return false
+              end: endDate,
+            });
+          } catch (_error) {
+            return false;
           }
-        })
+        });
       }
     }
-    return data
-  }, [data, selectedDateRange, xAxisKey])
+    return data;
+  }, [data, selectedDateRange, xAxisKey]);
 
   const handleDateRangeChange = (newRange: DateRange) => {
-    setSelectedDateRange(newRange)
+    setSelectedDateRange(newRange);
     if (date?.onChange) {
-      date.onChange(newRange)
+      date.onChange(newRange);
     }
-  }
+  };
 
-  const chartSeriesArray = Array.isArray(series)
-    ? series
-    : series
-      ? [series]
-      : []
+  const chartSeriesArray = Array.isArray(series) ? series : series ? [series] : [];
   if (chartSeriesArray.length < 2) {
-    console.warn(
-      'LineBarChart requires at least 2 series (one for line, one for bar)'
-    )
+    console.warn("LineBarChart requires at least 2 series (one for line, one for bar)");
   }
 
-  const lineSeries = chartSeriesArray[0] || { key: 'value1', color: 'blue' }
-  const barSeries = chartSeriesArray[1] || { key: 'value2', color: 'green' }
+  const lineSeries = chartSeriesArray[0] || { key: "value1", color: "blue" };
+  const barSeries = chartSeriesArray[1] || { key: "value2", color: "green" };
 
-  const lineColor = lineSeries.color || 'blue'
-  const barColor = barSeries.color || 'green'
+  const lineColor = lineSeries.color || "blue";
+  const barColor = barSeries.color || "green";
 
-  const finalLineColor = `var(--data-${lineColor})`
-  const finalBarColor = `var(--data-${barColor})`
+  const finalLineColor = `var(--data-${lineColor})`;
+  const finalBarColor = `var(--data-${barColor})`;
 
-  const chartId = React.useMemo(
-    () => Math.random().toString(36).substring(2, 9),
-    []
-  )
+  const chartId = React.useMemo(() => Math.random().toString(36).substring(2, 9), []);
 
   return (
-    <Column
-      fillWidth
-      height={chart.height}
-      border={border}
-      radius="l"
-      {...flex}
-    >
+    <Column fillWidth height={chart.height} border={border} radius="l" {...flex}>
       <ChartHeader
         title={title}
         description={description}
@@ -218,39 +199,37 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
                     />
                   }
                   wrapperStyle={{
-                    position: 'absolute',
+                    position: "absolute",
                     top:
-                      legend.position === 'top-center' ||
-                      legend.position === 'top-left' ||
-                      legend.position === 'top-right'
+                      legend.position === "top-center" ||
+                      legend.position === "top-left" ||
+                      legend.position === "top-right"
                         ? 0
                         : undefined,
                     bottom:
-                      legend.position === 'bottom-center' ||
-                      legend.position === 'bottom-left' ||
-                      legend.position === 'bottom-right'
+                      legend.position === "bottom-center" ||
+                      legend.position === "bottom-left" ||
+                      legend.position === "bottom-right"
                         ? 0
                         : undefined,
                     paddingBottom:
-                      legend.position === 'bottom-center' ||
-                      legend.position === 'bottom-left' ||
-                      legend.position === 'bottom-right'
-                        ? 'var(--static-space-40)'
+                      legend.position === "bottom-center" ||
+                      legend.position === "bottom-left" ||
+                      legend.position === "bottom-right"
+                        ? "var(--static-space-40)"
                         : undefined,
                     left:
-                      (axis === 'y' || axis === 'both') &&
-                      (legend.position === 'top-center' ||
-                        legend.position === 'bottom-center')
-                        ? 'var(--static-space-64)'
+                      (axis === "y" || axis === "both") &&
+                      (legend.position === "top-center" || legend.position === "bottom-center")
+                        ? "var(--static-space-64)"
                         : 0,
                     width:
-                      (axis === 'y' || axis === 'both') &&
-                      (legend.position === 'top-center' ||
-                        legend.position === 'bottom-center')
-                        ? 'calc(100% - var(--static-space-64))'
-                        : '100%',
+                      (axis === "y" || axis === "both") &&
+                      (legend.position === "top-center" || legend.position === "bottom-center")
+                        ? "calc(100% - var(--static-space-64))"
+                        : "100%",
                     right: 0,
-                    margin: 0
+                    margin: 0,
                   }}
                 />
               )}
@@ -258,21 +237,21 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
                 height={32}
                 tickMargin={6}
                 dataKey={xAxisKey}
-                hide={!(axis === 'x' || axis === 'both')}
+                hide={!(axis === "x" || axis === "both")}
                 axisLine={{
-                  stroke: chart.axisLine.stroke
+                  stroke: chart.axisLine.stroke,
                 }}
                 tickLine={chart.tickLine}
                 tick={{
                   fill: chart.tick.fill,
-                  fontSize: chart.tick.fontSize
+                  fontSize: chart.tick.fontSize,
                 }}
-                tickFormatter={value => {
-                  const dataPoint = data.find(item => item[xAxisKey] === value)
-                  return formatDate(value, date, dataPoint)
+                tickFormatter={(value) => {
+                  const dataPoint = data.find((item) => item[xAxisKey] === value);
+                  return formatDate(value, date, dataPoint);
                 }}
               />
-              {(axis === 'y' || axis === 'both') && (
+              {(axis === "y" || axis === "both") && (
                 <RechartsYAxis
                   width={64}
                   padding={{ top: 40 }}
@@ -280,19 +259,19 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
                   tickLine={chart.tickLine}
                   tick={{
                     fill: chart.tick.fill,
-                    fontSize: chart.tick.fontSize
+                    fontSize: chart.tick.fontSize,
                   }}
                   axisLine={{
-                    stroke: chart.axisLine.stroke
+                    stroke: chart.axisLine.stroke,
                   }}
                 />
               )}
               <RechartsTooltip
                 cursor={{
-                  stroke: 'var(--neutral-border-strong)',
-                  strokeWidth: 1
+                  stroke: "var(--neutral-border-strong)",
+                  strokeWidth: 1,
                 }}
-                content={props => (
+                content={(props) => (
                   <Tooltip
                     {...props}
                     variant={variant as ChartStyles}
@@ -311,8 +290,8 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
                 activeDot={{
                   r: 4,
                   fill: finalLineColor,
-                  stroke: 'var(--background)',
-                  strokeWidth: 0
+                  stroke: "var(--background)",
+                  strokeWidth: 0,
                 }}
               />
               <RechartsBar
@@ -324,17 +303,17 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
                 transform="translate(0, -1)"
                 radius={[4, 4, 4, 4]}
                 barSize={
-                  barWidth === 'fill'
-                    ? '100%'
-                    : barWidth === 'xs'
+                  barWidth === "fill"
+                    ? "100%"
+                    : barWidth === "xs"
                       ? 6
-                      : barWidth === 's'
+                      : barWidth === "s"
                         ? 12
-                        : barWidth === 'm'
+                        : barWidth === "m"
                           ? 20
-                          : barWidth === 'l'
+                          : barWidth === "l"
                             ? 40
-                            : barWidth === 'xl'
+                            : barWidth === "xl"
                               ? 50
                               : barWidth
                 }
@@ -344,10 +323,10 @@ const LineBarChart: React.FC<LineBarChartProps> = ({
         )}
       </Row>
     </Column>
-  )
-}
+  );
+};
 
-LineBarChart.displayName = 'LineBarChart'
+LineBarChart.displayName = "LineBarChart";
 
-export { LineBarChart }
-export type { LineBarChartProps }
+export { LineBarChart };
+export type { LineBarChartProps };

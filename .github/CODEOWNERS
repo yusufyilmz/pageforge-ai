@@ -1,0 +1,21 @@
+# PageForge Code Owners
+# These users will be requested for review when PRs are opened
+
+# Global owners (for all files)
+* @yusufyilmz
+
+# Critical files require explicit approval
+package.json @yusufyilmz
+package-lock.json @yusufyilmz
+tsconfig.json @yusufyilmz
+next.config.mjs @yusufyilmz
+
+# CI/CD workflows
+.github/ @yusufyilmz
+
+# Database migrations
+supabase/migrations/ @yusufyilmz
+
+# Core services
+src/lib/services/ @yusufyilmz
+src/contexts/ @yusufyilmz

@@ -11,6 +11,5 @@
 
 .fadeIn {
   transform-origin: top right;
-  animation: fadeIn var(--transition-duration-micro-medium)
-    var(--transition-eased);
+  animation: fadeIn var(--transition-duration-micro-medium) var(--transition-eased);
 }

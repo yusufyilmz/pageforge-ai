@@ -1,34 +1,26 @@
-'use client'
+"use client";
 
-import React from 'react'
-import {
-  Column,
-  Row,
-  Text,
-  Heading,
-  Avatar,
-  Badge,
-  Flex
-} from '@pageforge/once-ui/components'
-import { useUserProfile, useUserStats } from '../../contexts/UserContext'
+import { Avatar, Badge, Column, Heading, Row, Text } from "@pageforge/once-ui/components";
+
+import { useUserProfile, useUserStats } from "../../contexts/UserContext";
 
 interface UserProfileCardProps {
-  variant?: 'compact' | 'full'
-  showStats?: boolean
-  showContact?: boolean
-  className?: string
+  variant?: "compact" | "full";
+  showStats?: boolean;
+  showContact?: boolean;
+  className?: string;
 }
 
 export function UserProfileCard({
-  variant = 'full',
+  variant = "full",
   showStats = true,
   showContact = true,
-  className
+  className,
 }: UserProfileCardProps) {
-  const profile = useUserProfile()
-  const stats = useUserStats()
+  const profile = useUserProfile();
+  const stats = useUserStats();
 
-  if (variant === 'compact') {
+  if (variant === "compact") {
     return (
       <Row gap="m" vertical="center" className={className}>
         <Avatar src={profile.avatar} size="m" />
@@ -41,17 +33,11 @@ export function UserProfileCard({
           </Text>
         </Column>
       </Row>
-    )
+    );
   }
 
   return (
-    <Column
-      gap="l"
-      padding="l"
-      border="neutral-alpha-weak"
-      radius="m"
-      className={className}
-    >
+    <Column gap="l" padding="l" border="neutral-alpha-weak" radius="m" className={className}>
       {/* Header */}
       <Row gap="m" vertical="center">
         <Avatar src={profile.avatar} size="l" />
@@ -93,7 +79,7 @@ export function UserProfileCard({
           <Text variant="label-default-xs" onBackground="neutral-weak">
             Languages:
           </Text>
-          {profile.languages.map((language, index) => (
+          {profile.languages.map((language) => (
             <Badge key={language}>{language}</Badge>
           ))}
         </Row>
@@ -159,5 +145,5 @@ export function UserProfileCard({
         </Row>
       )}
     </Column>
-  )
+  );
 }

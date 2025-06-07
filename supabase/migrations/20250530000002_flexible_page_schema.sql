@@ -141,7 +141,7 @@ CREATE TRIGGER update_pages_updated_at BEFORE UPDATE ON pages
 --       }
 --     },
 --     {
---       "type": "technical-skills",
+--       "type": "skills",
 --       "content": {
 --         "skills": [
 --           { "title": "JavaScript", "description": "Expert level" }

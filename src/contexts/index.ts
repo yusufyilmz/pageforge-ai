@@ -8,8 +8,8 @@ export {
   useUserSkills,
   useUserSocialLinks,
   useUserExperience,
-  useUserEducation
-} from './UserContext'
+  useUserEducation,
+} from "./UserContext";
 
 // Theme context exports
 export {
@@ -17,8 +17,8 @@ export {
   useTheme,
   usePageTheme,
   useUserTheme,
-  useThemeUtils
-} from './ThemeContext'
+  useThemeUtils,
+} from "./ThemeContext";
 
 // Type exports
 export type {
@@ -30,8 +30,8 @@ export type {
   UserSkill,
   UserProject,
   UserStats,
-  UserInfo
-} from './UserContext'
+  UserInfo,
+} from "./UserContext";
 
 // Theme type exports (from the correct sources)
 export type {
@@ -45,10 +45,7 @@ export type {
   SolidStyle,
   BorderStyle,
   SurfaceStyle,
-  TransitionStyle
-} from './ThemeContext'
+  TransitionStyle,
+} from "./ThemeContext";
 
-export type {
-  PageThemeOverride,
-  UserThemePreferences
-} from './ThemeContext'
+export type { PageThemeOverride, UserThemePreferences } from "./ThemeContext";

@@ -1,14 +1,14 @@
-import '@pageforge/once-ui/styles/index.scss'
-import '@pageforge/once-ui/tokens/index.scss'
+import "@pageforge/once-ui/styles/index.scss";
+import "@pageforge/once-ui/tokens/index.scss";
 
-import { GenericLayout } from '@pageforge/components/layout/Layout'
-import { UserProvider } from '../contexts/UserContext'
-import { ThemeProvider } from '../contexts/ThemeContext'
+import { GenericLayout } from "@pageforge/components/layout/Layout";
+
+import { UserProvider } from "../contexts/UserContext";
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <UserProvider>
@@ -16,5 +16,5 @@ export default function RootLayout({
       <GenericLayout theme="dark">{children}</GenericLayout>
       {/* </ThemeProvider> */}
     </UserProvider>
-  )
+  );
 }

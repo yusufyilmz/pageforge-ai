@@ -1,34 +1,35 @@
-'use client'
+"use client";
 
-import React, { forwardRef, ReactNode } from 'react'
-import { IconButton, Button, Icon, Flex, Text, Column } from '.'
+import type React from "react";
+import { type ReactNode, forwardRef } from "react";
 
-interface FeedbackProps
-  extends Omit<React.ComponentProps<typeof Flex>, 'title'> {
-  variant?: 'info' | 'danger' | 'warning' | 'success'
-  icon?: boolean
-  title?: string
-  description?: string
-  showCloseButton?: boolean
-  onClose?: () => void
-  className?: string
-  style?: React.CSSProperties
-  children?: ReactNode
+import { Button, Column, Flex, Icon, IconButton, Text } from ".";
+
+interface FeedbackProps extends Omit<React.ComponentProps<typeof Flex>, "title"> {
+  variant?: "info" | "danger" | "warning" | "success";
+  icon?: boolean;
+  title?: string;
+  description?: string;
+  showCloseButton?: boolean;
+  onClose?: () => void;
+  className?: string;
+  style?: React.CSSProperties;
+  children?: ReactNode;
 }
 
 const variantIconMap: {
-  [key in 'info' | 'danger' | 'warning' | 'success']: string
+  [key in "info" | "danger" | "warning" | "success"]: string;
 } = {
-  info: 'info',
-  danger: 'danger',
-  warning: 'warning',
-  success: 'check'
-}
+  info: "info",
+  danger: "danger",
+  warning: "warning",
+  success: "check",
+};
 
 const Feedback = forwardRef<HTMLDivElement, FeedbackProps>(
   (
     {
-      variant = 'info',
+      variant = "info",
       icon = true,
       title,
       description,
@@ -96,10 +97,7 @@ const Feedback = forwardRef<HTMLDivElement, FeedbackProps>(
                 </Flex>
               )}
               {description && (
-                <Text
-                  variant="body-default-s"
-                  onBackground={`${variant}-strong`}
-                >
+                <Text variant="body-default-s" onBackground={`${variant}-strong`}>
                   {description}
                 </Text>
               )}
@@ -108,9 +106,9 @@ const Feedback = forwardRef<HTMLDivElement, FeedbackProps>(
           {children}
         </Column>
       </Flex>
-    )
+    );
   }
-)
+);
 
-Feedback.displayName = 'Feedback'
-export { Feedback }
+Feedback.displayName = "Feedback";
+export { Feedback };

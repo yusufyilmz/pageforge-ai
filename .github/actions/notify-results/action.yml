@@ -1,0 +1,103 @@
+name: 'Notify Results'
+description: 'Send notifications about CI/CD workflow results'
+
+inputs:
+  workflow-name:
+    description: 'Name of the workflow'
+    required: false
+    default: 'CI/CD Pipeline'
+  quality-result:
+    description: 'Quality job result (success/failure)'
+    required: false
+    default: 'success'
+  security-result:
+    description: 'Security job result (success/failure)'
+    required: false
+    default: 'success'
+  performance-result:
+    description: 'Performance job result (success/failure)'
+    required: false
+    default: 'success'
+  supabase-result:
+    description: 'Supabase job result (success/failure)'
+    required: false
+    default: 'success'
+  deployment-url:
+    description: 'Deployment URL if available'
+    required: false
+    default: ''
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 📊 Generate Results Summary
+      shell: bash
+      run: |
+        echo "📊 Generating workflow results summary..."
+
+        WORKFLOW_NAME="${{ inputs.workflow-name }}"
+        QUALITY="${{ inputs.quality-result }}"
+        SECURITY="${{ inputs.security-result }}"
+        PERFORMANCE="${{ inputs.performance-result }}"
+        SUPABASE="${{ inputs.supabase-result }}"
+        DEPLOY_URL="${{ inputs.deployment-url }}"
+
+        # Generate status icons
+        get_status_icon() {
+          case $1 in
+            "success") echo "✅" ;;
+            "failure") echo "❌" ;;
+            "cancelled") echo "⏹️" ;;
+            "skipped") echo "⏭️" ;;
+            *) echo "❓" ;;
+          esac
+        }
+
+        # Create summary
+        cat > workflow-summary.md << EOF
+        # 🚀 $WORKFLOW_NAME Results
+
+        ## 📊 Job Status Overview
+
+        | Job | Status | Result |
+        |-----|--------|--------|
+        | **Quality** | $(get_status_icon $QUALITY) | $QUALITY |
+        | **Security** | $(get_status_icon $SECURITY) | $SECURITY |
+        | **Performance** | $(get_status_icon $PERFORMANCE) | $PERFORMANCE |
+        | **Supabase** | $(get_status_icon $SUPABASE) | $SUPABASE |
+
+        ## 📈 Summary
+        - **Workflow**: $WORKFLOW_NAME
+        - **Completed**: $(date)
+        - **Commit**: ${{ github.sha }}
+        $(if [ -n "$DEPLOY_URL" ]; then echo "- **Deployment**: $DEPLOY_URL"; fi)
+
+        ## 🎯 Next Steps
+        - Review any failed jobs above
+        - Check PageForge template usage patterns
+        - Validate Once UI component integration
+        - Ensure no example data in production
+        EOF
+
+    - name: 📢 Output Summary
+      shell: bash
+      run: |
+        echo "📢 Workflow Results Summary:"
+        cat workflow-summary.md
+
+    - name: 📝 Add to Job Summary
+      shell: bash
+      run: |
+        echo "📝 Adding results to GitHub job summary..."
+        cat workflow-summary.md >> $GITHUB_STEP_SUMMARY
+
+    - name: 🎉 Success Celebration
+      if: inputs.quality-result == 'success' && inputs.security-result == 'success' && inputs.performance-result == 'success' && inputs.supabase-result == 'success'
+      shell: bash
+      run: |
+        echo "🎉 All checks passed! PageForge CI/CD pipeline completed successfully!"
+        echo "✨ Ready for deployment with:"
+        echo "   - Quality: ✅ Passed"
+        echo "   - Security: ✅ Passed"
+        echo "   - Performance: ✅ Passed"
+        echo "   - Supabase: ✅ Passed"

@@ -9,7 +9,7 @@ Transform from 200+ lines of complex configuration to just 3-5 lines of simple, 
 ### 1. Ultra-Simple Templates (Recommended) ⭐
 
 ```typescript
-import { developerTemplate, createAboutPageFromTemplate } from '@/lib/services/page-builder'
+import { developerTemplate, createAboutPageFromTemplate } from '@pageforge/lib/services/page-builder'
 
 // Complete professional portfolio in 1 line!
 const portfolio = developerTemplate(
@@ -28,10 +28,9 @@ const aboutPage = createAboutPageFromTemplate({
 ### 2. PageBuilder for Custom Pages
 
 ```typescript
-import { PageBuilder, PageType } from '@/lib/services/page-builder'
+import { PageBuilder, PageType } from '@pageforge/lib/services/page-builder'
 
-const customPage = PageBuilder
-  .create(PageType.ABOUT, '/about')
+const customPage = PageBuilder.create(PageType.ABOUT, '/about')
   .withTitle('About Me')
   .withDescription('Learn more about my background')
   .addHero({ title: "Hi, I'm John", subtitle: 'Developer' })
@@ -99,7 +98,7 @@ const landingPage = createLandingPageFromTemplate({
 ### Creating a Page
 
 ```typescript
-import { PageBuilder, PageType } from '@/lib/services/page-builder'
+import { PageBuilder, PageType } from '@pageforge/lib/services/page-builder'
 
 const page = PageBuilder.create(PageType.ABOUT, '/about')
 ```
@@ -197,6 +196,7 @@ const page = PageBuilder.create(PageType.ABOUT, '/about')
 ## Data Types
 
 ### PersonData
+
 ```typescript
 interface PersonData {
   name: string
@@ -212,6 +212,7 @@ interface PersonData {
 ```
 
 ### ProjectData
+
 ```typescript
 interface ProjectData {
   title: string
@@ -225,6 +226,7 @@ interface ProjectData {
 ```
 
 ### ExperienceData
+
 ```typescript
 interface ExperienceData {
   company: string
@@ -237,6 +239,7 @@ interface ExperienceData {
 ```
 
 ### SkillData
+
 ```typescript
 interface SkillData {
   name: string
@@ -297,8 +300,7 @@ const site = {
 ### Custom Service Page
 
 ```typescript
-const servicesPage = PageBuilder
-  .create('services', '/services')
+const servicesPage = PageBuilder.create('services', '/services')
   .withTitle('My Services')
   .withDescription('Professional development services')
   .addHero({
@@ -377,14 +379,16 @@ const oldConfig: PageConfig = {
     main: [
       {
         id: 'hero',
-        blocks: [{
-          type: 'hero',
-          content: {
-            title: 'Hi, I\'m John',
-            subtitle: 'Developer'
-          },
-          display: true
-        }]
+        blocks: [
+          {
+            type: 'hero',
+            content: {
+              title: "Hi, I'm John",
+              subtitle: 'Developer'
+            },
+            display: true
+          }
+        ]
       }
       // ... 150+ more lines
     ]
@@ -412,10 +416,7 @@ const oldConfig: PageConfig = {
 
 ```typescript
 // Same result with 98% less code!
-const newConfig = developerTemplate(
-  { name: 'John', lastName: 'Doe', role: 'Developer' },
-  projects
-)
+const newConfig = developerTemplate({ name: 'John', lastName: 'Doe', role: 'Developer' }, projects)
 ```
 
 ## Benefits
@@ -431,18 +432,21 @@ const newConfig = developerTemplate(
 ## When to Use What
 
 ### Use Templates When:
+
 - Creating standard pages (about, portfolio, blog, landing)
 - You want the fastest development
 - You need professional, proven layouts
 - Starting new projects
 
 ### Use PageBuilder When:
+
 - Creating custom page types
 - Need specific layout control
 - Templates don't fit your needs
 - Building unique experiences
 
 ### Use Raw PageConfig When:
+
 - Templates and PageBuilder can't achieve your goal
 - Very specific, complex requirements
 - Integrating with existing legacy code
@@ -451,4 +455,5 @@ const newConfig = developerTemplate(
 
 **Happy Building! 🚀**
 
-*Transform your development workflow from hours to minutes with PageForge's revolutionary PageBuilder system.*
+_Transform your development workflow from hours to minutes with PageForge's revolutionary
+PageBuilder system._

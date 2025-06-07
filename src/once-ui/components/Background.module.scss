@@ -9,8 +9,7 @@
 
 .gradient {
   background: radial-gradient(
-    ellipse var(--gradient-width) var(--gradient-height) at
-      var(--gradient-position-x) var(--gradient-position-y),
+    ellipse var(--gradient-width) var(--gradient-height) at var(--gradient-position-x) var(--gradient-position-y),
     var(--gradient-color-start),
     var(--gradient-color-end)
   );
@@ -28,9 +27,6 @@
 }
 
 .dots {
-  background-image: radial-gradient(
-    var(--dots-color) 1px,
-    var(--static-transparent) 1px
-  );
+  background-image: radial-gradient(var(--dots-color) 1px, var(--static-transparent) 1px);
   background-size: var(--dots-size) var(--dots-size);
 }

@@ -1,14 +1,15 @@
-'use client'
+"use client";
 
-import React, { ReactNode, forwardRef } from 'react'
+import type React from "react";
+import { type ReactNode, forwardRef } from "react";
 
-import { Flex, Text } from '.'
+import { Flex, Text } from ".";
 
 interface KbdProps extends React.ComponentProps<typeof Flex> {
-  label?: string
-  children?: ReactNode
-  className?: string
-  style?: React.CSSProperties
+  label?: string;
+  children?: ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 const Kbd = forwardRef<HTMLDivElement, KbdProps>(
@@ -33,9 +34,9 @@ const Kbd = forwardRef<HTMLDivElement, KbdProps>(
       </Text>
     </Flex>
   )
-)
+);
 
-Kbd.displayName = 'Kbd'
+Kbd.displayName = "Kbd";
 
-export { Kbd }
-export type { KbdProps }
+export { Kbd };
+export type { KbdProps };

@@ -66,17 +66,7 @@
 //   );
 // }
 
-import {
-  Heading,
-  Text,
-  Button,
-  Column,
-  Badge,
-  Logo,
-  Line,
-  LetterFx,
-  Flex
-} from '@pageforge/once-ui/components'
+import { Column, Flex, Heading } from "@pageforge/once-ui/components";
 
 export default function Home() {
   return (
@@ -89,10 +79,10 @@ export default function Home() {
                 Latest from the blog
               </Heading>
             </Flex>
-            <Flex flex={3} paddingX="20"></Flex>
+            <Flex flex={3} paddingX="20" />
           </Flex>
         </Column>
       </Column>
     </Column>
-  )
+  );
 }

@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🎯 PageForge Pre-push Validation..."
+
+# TypeScript type checking
+echo "🔧 Running TypeScript type check..."
+npm run type-check
+
+# PageForge hierarchy validation
+echo "🎯 Validating PageForge development hierarchy..."
+TEMPLATE_USAGE=$(grep -r "developerTemplate\|designerTemplate\|freelancerTemplate" src/ --exclude-dir=node_modules 2>/dev/null | wc -l)
+PAGEBUILDER_USAGE=$(grep -r "PageBuilder\.create" src/ --exclude-dir=node_modules 2>/dev/null | wc -l)
+LEGACY_USAGE=$(grep -r "pageConfigurations\.tsx" src/ --exclude-dir=node_modules 2>/dev/null | wc -l)
+
+if [ "$LEGACY_USAGE" -gt 0 ]; then
+  echo "⚠️ Warning: Legacy pageConfigurations.tsx usage detected"
+  echo "Consider migrating to Templates → TemplateBuilder → PageBuilder hierarchy"
+fi
+
+if [ "$PAGEBUILDER_USAGE" -gt "$TEMPLATE_USAGE" ]; then
+  echo "💡 Suggestion: More PageBuilder than Template usage detected"
+  echo "Consider using Templates first for 98% code reduction"
+fi
+
+# Once UI compliance check
+CUSTOM_BASIC_UI=$(grep -r "const.*Button.*=.*button\|const.*Flex.*=.*div" src/components/ --exclude-dir=node_modules 2>/dev/null | wc -l)
+if [ "$CUSTOM_BASIC_UI" -gt 0 ]; then
+  echo "⚠️ Warning: Custom basic UI components found"
+  echo "Consider using Once UI components instead"
+fi
+
+echo "✅ PageForge pre-push validation completed"

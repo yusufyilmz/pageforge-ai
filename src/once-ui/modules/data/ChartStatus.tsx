@@ -1,21 +1,20 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Column, Text, Spinner } from '../../components'
+import { Column, Spinner, Text } from "../../components";
 
 export interface ChartStatusProps {
-  loading?: boolean
-  isEmpty?: boolean
-  emptyState?: React.ReactNode
+  loading?: boolean;
+  isEmpty?: boolean;
+  emptyState?: React.ReactNode;
 }
 
 export const ChartStatus: React.FC<ChartStatusProps> = ({
   loading = false,
   isEmpty = false,
-  emptyState = 'No data available for the selected period'
+  emptyState = "No data available for the selected period",
 }) => {
   if (!loading && !isEmpty) {
-    return null
+    return null;
   }
 
   return (
@@ -30,5 +29,5 @@ export const ChartStatus: React.FC<ChartStatusProps> = ({
         )
       )}
     </Column>
-  )
-}
+  );
+};

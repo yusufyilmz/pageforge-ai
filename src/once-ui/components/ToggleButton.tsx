@@ -1,52 +1,55 @@
-'use client'
+"use client";
 
-import React, { forwardRef, ReactNode } from 'react'
-import classNames from 'classnames'
-import { Flex, Icon, ElementType } from '.'
-import styles from './ToggleButton.module.scss'
-import { IconName } from '../icons'
+import classNames from "classnames";
+import type React from "react";
+import { type ReactNode, forwardRef } from "react";
+
+import type { IconName } from "../icons";
+
+import styles from "./ToggleButton.module.scss";
+
+import { ElementType, Flex, Icon } from ".";
 
 interface CommonProps {
-  label?: ReactNode
-  selected?: boolean
-  variant?: 'ghost' | 'outline'
-  size?: 's' | 'm' | 'l'
+  label?: ReactNode;
+  selected?: boolean;
+  variant?: "ghost" | "outline";
+  size?: "s" | "m" | "l";
   radius?:
-    | 'none'
-    | 'top'
-    | 'right'
-    | 'bottom'
-    | 'left'
-    | 'top-left'
-    | 'top-right'
-    | 'bottom-right'
-    | 'bottom-left'
-  horizontal?: 'start' | 'center' | 'end' | 'space-between'
-  fillWidth?: boolean
-  weight?: 'default' | 'strong'
-  truncate?: boolean
-  prefixIcon?: IconName
-  suffixIcon?: IconName
-  className?: string
-  style?: React.CSSProperties
-  children?: ReactNode
-  href?: string
+    | "none"
+    | "top"
+    | "right"
+    | "bottom"
+    | "left"
+    | "top-left"
+    | "top-right"
+    | "bottom-right"
+    | "bottom-left";
+  horizontal?: "start" | "center" | "end" | "space-between";
+  fillWidth?: boolean;
+  weight?: "default" | "strong";
+  truncate?: boolean;
+  prefixIcon?: IconName;
+  suffixIcon?: IconName;
+  className?: string;
+  style?: React.CSSProperties;
+  children?: ReactNode;
+  href?: string;
 }
 
-export type ToggleButtonProps = CommonProps &
-  React.ButtonHTMLAttributes<HTMLButtonElement>
+export type ToggleButtonProps = CommonProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const ToggleButton = forwardRef<HTMLElement, ToggleButtonProps>(
   (
     {
       label,
       selected = false,
-      variant = 'ghost',
-      size = 'm',
+      variant = "ghost",
+      size = "m",
       radius,
-      horizontal = 'center',
+      horizontal = "center",
       fillWidth = false,
-      weight = 'default',
+      weight = "default",
       truncate = false,
       prefixIcon,
       suffixIcon,
@@ -67,47 +70,43 @@ const ToggleButton = forwardRef<HTMLElement, ToggleButtonProps>(
           styles[variant],
           styles[size],
           selected && styles.selected,
-          radius === 'none'
-            ? 'radius-none'
+          radius === "none"
+            ? "radius-none"
             : radius
               ? `radius-${size}-${radius}`
               : `radius-${size}`,
-          'text-decoration-none',
-          'button',
-          'cursor-interactive',
+          "text-decoration-none",
+          "button",
+          "cursor-interactive",
           {
-            ['fill-width']: fillWidth,
-            ['fit-width']: !fillWidth,
-            ['justify-' + horizontal]: horizontal
+            ["fill-width"]: fillWidth,
+            ["fit-width"]: !fillWidth,
+            [`justify-${horizontal}`]: horizontal,
           },
           className
         )}
         style={style}
         {...props}
       >
-        {prefixIcon && (
-          <Icon name={prefixIcon} size={size === 'l' ? 's' : 'xs'} />
-        )}
+        {prefixIcon && <Icon name={prefixIcon} size={size === "l" ? "s" : "xs"} />}
         {(label || children) && (
           <Flex
             fillWidth={fillWidth}
             horizontal={horizontal}
-            padding={size === 's' ? '2' : '4'}
+            padding={size === "s" ? "2" : "4"}
             textWeight={weight}
-            textSize={size === 'l' ? 'm' : 's'}
+            textSize={size === "l" ? "m" : "s"}
             className="font-label"
             position="static"
           >
             {label || children}
           </Flex>
         )}
-        {suffixIcon && (
-          <Icon name={suffixIcon} size={size === 'l' ? 's' : 'xs'} />
-        )}
+        {suffixIcon && <Icon name={suffixIcon} size={size === "l" ? "s" : "xs"} />}
       </ElementType>
-    )
+    );
   }
-)
+);
 
-ToggleButton.displayName = 'ToggleButton'
-export { ToggleButton }
+ToggleButton.displayName = "ToggleButton";
+export { ToggleButton };

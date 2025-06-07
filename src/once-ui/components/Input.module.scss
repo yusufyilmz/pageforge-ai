@@ -15,7 +15,7 @@
 .textareaBase {
   &::after {
     pointer-events: none;
-    content: "";
+    content: '';
     position: absolute;
     right: 0;
     bottom: 0;
@@ -119,8 +119,7 @@
   &:autofill,
   &:-webkit-autofill {
     background-color: var(--static-transparent) !important;
-    -webkit-box-shadow: 0 0 0 var(--static-space-32)
-      var(--neutral-background-medium) inset !important;
+    -webkit-box-shadow: 0 0 0 var(--static-space-32) var(--neutral-background-medium) inset !important;
     -webkit-text-fill-color: var(--neutral-on-background-strong) !important;
   }
 }
@@ -147,6 +146,6 @@
   align-self: center;
 }
 
-.input[type="color"] {
+.input[type='color'] {
   opacity: 0;
 }

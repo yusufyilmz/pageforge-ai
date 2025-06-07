@@ -1,14 +1,4 @@
 {
-  "name": "@pageforge/eslint-config",
-  "version": "0.0.0",
-  "type": "module",
-  "private": true,
-  "exports": {
-    "./base": "./base.js",
-    "./next-js": "./next.js",
-    "./react-internal": "./react-internal.js",
-    "./library": "./library.js"
-  },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@next/eslint-plugin-next": "^15.2.1",
@@ -21,5 +11,15 @@
     "globals": "^16.0.0",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.29.0"
-  }
+  },
+  "exports": {
+    "./base": "./base.js",
+    "./library": "./library.js",
+    "./next-js": "./next.js",
+    "./react-internal": "./react-internal.js"
+  },
+  "name": "@pageforge/eslint-config",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0"
 }

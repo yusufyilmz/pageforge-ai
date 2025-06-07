@@ -1,44 +1,32 @@
-'use client'
+"use client";
 
-import React, { forwardRef } from 'react'
-import classNames from 'classnames'
+import classNames from "classnames";
+import type React from "react";
+import { forwardRef } from "react";
 
-import { Flex, Text, Skeleton, Tag, TagProps, Avatar, AvatarProps } from '.'
+import { Avatar, type AvatarProps, Flex, Skeleton, Tag, type TagProps, Text } from ".";
 
 interface UserProps {
-  name?: string
-  children?: React.ReactNode
-  subline?: React.ReactNode
-  tag?: string
-  tagProps?: TagProps
-  loading?: boolean
-  avatarProps?: AvatarProps
-  className?: string
+  name?: string;
+  children?: React.ReactNode;
+  subline?: React.ReactNode;
+  tag?: string;
+  tagProps?: TagProps;
+  loading?: boolean;
+  avatarProps?: AvatarProps;
+  className?: string;
 }
 
 const User = forwardRef<HTMLDivElement, UserProps>(
   (
-    {
-      name,
-      children,
-      subline,
-      tagProps = {},
-      loading = false,
-      avatarProps = {},
-      className
-    },
+    { name, children, subline, tagProps = {}, loading = false, avatarProps = {}, className },
     ref
   ) => {
-    const { src, value, empty, ...restAvatarProps } = avatarProps
-    const isEmpty = empty || (!src && !value)
+    const { src, value, empty, ...restAvatarProps } = avatarProps;
+    const isEmpty = empty || (!src && !value);
 
     return (
-      <Flex
-        ref={ref}
-        vertical="center"
-        gap="8"
-        className={classNames(className)}
-      >
+      <Flex ref={ref} vertical="center" gap="8" className={classNames(className)}>
         <Avatar
           size="m"
           src={src}
@@ -52,12 +40,7 @@ const User = forwardRef<HTMLDivElement, UserProps>(
           <Flex direction="column" paddingLeft="4" paddingRight="12">
             {loading ? (
               <Flex minWidth={6} paddingY="4">
-                <Skeleton
-                  width="xl"
-                  height="m"
-                  shape="line"
-                  aria-label="Loading name"
-                />
+                <Skeleton width="xl" height="m" shape="line" aria-label="Loading name" />
               </Flex>
             ) : (
               <Flex gap="8" vertical="center">
@@ -73,30 +56,21 @@ const User = forwardRef<HTMLDivElement, UserProps>(
             )}
             {loading ? (
               <Flex paddingY="2">
-                <Skeleton
-                  width="l"
-                  height="xs"
-                  shape="line"
-                  aria-label="Loading subline"
-                />
+                <Skeleton width="l" height="xs" shape="line" aria-label="Loading subline" />
               </Flex>
             ) : (
-              <Text
-                wrap="nowrap"
-                variant="body-default-xs"
-                onBackground="neutral-weak"
-              >
+              <Text wrap="nowrap" variant="body-default-xs" onBackground="neutral-weak">
                 {subline}
               </Text>
             )}
           </Flex>
         )}
       </Flex>
-    )
+    );
   }
-)
+);
 
-User.displayName = 'User'
+User.displayName = "User";
 
-export { User }
-export type { UserProps }
+export { User };
+export type { UserProps };

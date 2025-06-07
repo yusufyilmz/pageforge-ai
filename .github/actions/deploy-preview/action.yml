@@ -1,0 +1,47 @@
+name: 'Deploy Preview'
+description: 'Deploys preview to Vercel for pull requests'
+
+inputs:
+  vercel-token:
+    description: 'Vercel deployment token'
+    required: true
+  vercel-org-id:
+    description: 'Vercel organization ID'
+    required: true
+  vercel-project-id:
+    description: 'Vercel project ID'
+    required: true
+  supabase-url:
+    description: 'Supabase URL for build'
+    required: false
+    default: 'https://placeholder.supabase.co'
+  supabase-key:
+    description: 'Supabase anon key for build'
+    required: false
+    default: 'placeholder-key'
+
+outputs:
+  preview-url:
+    description: 'URL of the deployed preview'
+    value: ${{ steps.deploy.outputs.preview-url }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Build for preview
+      run: npm run build
+      shell: bash
+      env:
+        NODE_ENV: production
+        NEXT_PUBLIC_SUPABASE_URL: ${{ inputs.supabase-url }}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ inputs.supabase-key }}
+
+    - name: Deploy to Vercel Preview
+      id: deploy
+      uses: amondnet/vercel-action@v25
+      continue-on-error: true
+      with:
+        vercel-token: ${{ inputs.vercel-token }}
+        vercel-org-id: ${{ inputs.vercel-org-id }}
+        vercel-project-id: ${{ inputs.vercel-project-id }}
+        working-directory: ./

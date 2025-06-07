@@ -1,88 +1,91 @@
-'use client'
+"use client";
 
-import { Column, Media, Text, Row, Card } from '.'
-import { useOgData } from '../hooks/useFetchOg'
-import { useMemo } from 'react'
+import { useMemo } from "react";
+
+import { useOgData } from "../hooks/useFetchOg";
+
+import { Card, Column, Media, Row, Text } from ".";
 
 export interface OgData {
-  title: string
-  description: string
-  faviconUrl: string
-  image: string
-  url: string
+  title: string;
+  description: string;
+  faviconUrl: string;
+  image: string;
+  url: string;
 }
 
 interface OgCardProps extends React.ComponentProps<typeof Card> {
-  url?: string
-  ogData?: Partial<OgData> | null
-  direction?: 'column' | 'row' | 'column-reverse' | 'row-reverse'
+  url?: string;
+  ogData?: Partial<OgData> | null;
+  direction?: "column" | "row" | "column-reverse" | "row-reverse";
 }
 
 const getProxiedImageUrl = (imageUrl: string | undefined): string => {
-  if (!imageUrl) return ''
-
-  if (imageUrl.startsWith('/')) {
-    return imageUrl
+  if (!imageUrl) {
+    return "";
   }
 
-  return `/api/og/proxy?url=${encodeURIComponent(imageUrl)}`
-}
+  if (imageUrl.startsWith("/")) {
+    return imageUrl;
+  }
+
+  return `/api/og/proxy?url=${encodeURIComponent(imageUrl)}`;
+};
 
 const formatDisplayUrl = (url: string | undefined): string => {
-  if (!url) return ''
+  if (!url) {
+    return "";
+  }
 
   try {
-    const urlObj = new URL(url)
+    const urlObj = new URL(url);
 
-    let domain = urlObj.hostname
+    let domain = urlObj.hostname;
 
-    domain = domain.replace(/^www\./, '')
+    domain = domain.replace(/^www\./, "");
 
-    return domain
-  } catch (error) {
-    let formattedUrl = url.replace(/^https?:\/\//, '')
-    formattedUrl = formattedUrl.replace(/^www\./, '')
+    return domain;
+  } catch (_error) {
+    let formattedUrl = url.replace(/^https?:\/\//, "");
+    formattedUrl = formattedUrl.replace(/^www\./, "");
 
-    formattedUrl = formattedUrl.split('/')[0]
+    formattedUrl = formattedUrl.split("/")[0];
 
-    return formattedUrl
+    return formattedUrl;
   }
-}
+};
 
 const getFaviconUrl = (url: string | undefined): string => {
-  if (!url) return ''
+  if (!url) {
+    return "";
+  }
 
   try {
-    const urlObj = new URL(url)
-    const domain = urlObj.hostname
+    const urlObj = new URL(url);
+    const domain = urlObj.hostname;
 
-    const faviconSourceUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`
+    const faviconSourceUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 
-    return `/api/og/proxy?url=${encodeURIComponent(faviconSourceUrl)}`
-  } catch (error) {
-    return ''
+    return `/api/og/proxy?url=${encodeURIComponent(faviconSourceUrl)}`;
+  } catch (_error) {
+    return "";
   }
-}
+};
 
-const OgCard = ({
-  url,
-  ogData: providedOgData,
-  direction = 'column',
-  ...card
-}: OgCardProps) => {
-  const { ogData: fetchedOgData, loading } = useOgData(url || null)
-  const data = providedOgData || fetchedOgData
+const OgCard = ({ url, ogData: providedOgData, direction = "column", ...card }: OgCardProps) => {
+  const { ogData: fetchedOgData, loading } = useOgData(url || null);
+  const data = providedOgData || fetchedOgData;
 
   const proxiedImageUrl = useMemo(() => {
-    return getProxiedImageUrl(data?.image)
-  }, [data?.image])
+    return getProxiedImageUrl(data?.image);
+  }, [data?.image]);
 
   const faviconUrl = useMemo(() => {
-    return data?.faviconUrl || getFaviconUrl(data?.url)
-  }, [data?.faviconUrl, data?.url])
+    return data?.faviconUrl || getFaviconUrl(data?.url);
+  }, [data?.faviconUrl, data?.url]);
 
   if (!data || (!data.image && !data.title)) {
-    return null
+    return null;
   }
 
   return (
@@ -90,11 +93,7 @@ const OgCard = ({
       href={data.url}
       direction={direction}
       fillWidth
-      vertical={
-        direction === 'row' || direction === 'row-reverse'
-          ? 'center'
-          : undefined
-      }
+      vertical={direction === "row" || direction === "row-reverse" ? "center" : undefined}
       gap="4"
       radius="l"
       background="surface"
@@ -103,12 +102,8 @@ const OgCard = ({
     >
       {(proxiedImageUrl || loading) && (
         <Media
-          minWidth={
-            direction === 'row' || direction === 'row-reverse' ? 16 : undefined
-          }
-          maxWidth={
-            direction === 'row' || direction === 'row-reverse' ? 24 : undefined
-          }
+          minWidth={direction === "row" || direction === "row-reverse" ? 16 : undefined}
+          maxWidth={direction === "row" || direction === "row-reverse" ? 24 : undefined}
           loading={loading}
           radius="l"
           sizes="320px"
@@ -147,8 +142,8 @@ const OgCard = ({
         </Column>
       </Column>
     </Card>
-  )
-}
+  );
+};
 
-OgCard.displayName = 'OgCard'
-export { OgCard }
+OgCard.displayName = "OgCard";
+export { OgCard };

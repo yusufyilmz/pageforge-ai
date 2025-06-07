@@ -28,7 +28,7 @@ CREATE TABLE sites (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- PAGES table - Flexible schema to support all ContentPageConfig<T> types
+-- PAGES table - Flexible schema to support all ContentPageConfig types
 CREATE TABLE pages (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   site_id UUID REFERENCES sites(id) ON DELETE CASCADE,
@@ -181,7 +181,7 @@ LEFT JOIN pages p ON s.id = p.site_id
 GROUP BY s.id, s.user_id, s.name, s.slug, s.domain, s.description, s.theme_style, s.created_at, s.updated_at;
 
 -- Comments explaining the schema structure
-COMMENT ON TABLE pages IS 'Flexible pages table that stores all ContentPageConfig<T> data as JSONB';
+COMMENT ON TABLE pages IS 'Flexible pages table that stores all ContentPageConfig data as JSONB';
 COMMENT ON COLUMN pages.metadata IS 'Stores metadata object: title, description, keywords, author, openGraph, twitter, etc.';
 COMMENT ON COLUMN pages.content IS 'Stores content object: header, hero, main sections, sidebar, footer with ContentBlocks';
 COMMENT ON COLUMN pages.layout_config IS 'Stores layout object: template, maxWidth, sidebar configuration, navigation settings';

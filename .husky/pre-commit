@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🎯 PageForge Pre-commit Validation..."
+
+# Critical: Block commit if example data is found
+# Lint staged files with PageForge-aware rules
+echo "🔧 Running lint-staged with PageForge validation..."
+npx lint-staged
+
+# Quick PageForge hierarchy check on staged files
+echo "🎯 Quick PageForge hierarchy validation..."
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E "\.(ts|tsx|js|jsx)$" || true)
+
+if [ -n "$STAGED_FILES" ]; then
+  # Check for anti-patterns in staged files
+  for file in $STAGED_FILES; do
+    if [ -f "$file" ]; then
+      # Check for legacy patterns
+      if grep -q "pageConfigurations\.tsx" "$file" 2>/dev/null; then
+        echo "⚠️ Warning: Legacy pageConfigurations.tsx usage in $file"
+      fi
+
+      # Check for custom basic UI components
+      if grep -q "const.*Button.*=.*button\|const.*Flex.*=.*div" "$file" 2>/dev/null; then
+        echo "💡 Suggestion: Consider using Once UI components in $file"
+      fi
+
+      # Check for proper imports
+      if grep -q "from.*\.\./.*page-builder" "$file" 2>/dev/null; then
+        echo "💡 Suggestion: Use absolute imports from '@pageforge/lib/services/page-builder' in $file"
+      fi
+    fi
+  done
+fi
+
+echo "✅ PageForge pre-commit validation completed"

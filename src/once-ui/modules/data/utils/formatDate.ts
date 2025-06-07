@@ -1,5 +1,6 @@
-import { format, parseISO } from 'date-fns'
-import { DateConfig } from '../interfaces'
+import { format, parseISO } from "date-fns";
+
+import type { DateConfig } from "../interfaces";
 
 /**
  * Formats a value as a date if it's a valid date and a format is provided
@@ -16,22 +17,27 @@ export function formatDate(
   dataPoint?: Record<string, any>
 ): string {
   if (dataPoint?.label) {
-    return dataPoint.label
+    return dataPoint.label;
   }
 
   if (dateConfig?.format) {
     try {
       // Check if it's already a Date object
       if (value instanceof Date) {
-        return format(value, dateConfig.format)
+        return format(value, dateConfig.format);
       }
 
       // Check if it's an ISO date string
-      if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}/.test(value)) {
-        return format(parseISO(value), dateConfig.format)
+      if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}/.test(value)) {
+        return format(parseISO(value), dateConfig.format);
       }
-    } catch (error) {}
+    } catch (error) {
+      // If formatting fails, return the original value
+      console.warn("Failed to format date:", value, "with format:", dateConfig.format, {
+        error: error,
+      });
+    }
   }
 
-  return value
+  return value;
 }

@@ -12,7 +12,7 @@ alwaysApply: false
 
 ```typescript
 // ✅ BEST: Complete professional pages in 1-3 lines
-import { developerTemplate, createAboutPageFromTemplate } from '@/lib/services/page-builder'
+import { developerTemplate, createAboutPageFromTemplate } from '@pageforge/lib/services/page-builder'
 
 // Developer portfolio (1 line!)
 const portfolio = developerTemplate(person, projects)
@@ -30,7 +30,7 @@ const about = createAboutPageFromTemplate({
 
 ```typescript
 // ✅ GOOD: Custom pages with fluent API
-import { PageBuilder, PageType } from '@/lib/services/page-builder'
+import { PageBuilder, PageType } from '@pageforge/lib/services/page-builder'
 
 const customPage = PageBuilder
   .create(PageType.ABOUT, '/about')
@@ -45,7 +45,7 @@ const customPage = PageBuilder
 
 ```typescript
 // ⚠️ ONLY when templates/builder don't work
-import { PageConfig, PageType } from '@/lib/types/page/pageTypes'
+import { PageConfig, PageType } from '@pageforge/lib/types/page/pageTypes'
 
 const config: PageConfig = {
   pageType: PageType.ABOUT,
@@ -80,7 +80,7 @@ import { MyButton } from '../ui/MyButton'
 ### Theme Management
 ```typescript
 // ✅ Use theme context for dynamic styling
-import { useTheme, useThemeUtils } from '@/contexts/ThemeContext'
+import { useTheme, useThemeUtils } from '@pageforge/contexts/ThemeContext'
 
 const MyComponent = () => {
   const { currentTheme, setPageTheme } = useTheme()
@@ -93,7 +93,7 @@ const MyComponent = () => {
 ### User Data Access
 ```typescript
 // ✅ Access user data through context
-import { useUser, useUserProfile, useUserProjects } from '@/contexts/UserContext'
+import { useUser, useUserProfile, useUserProjects } from '@pageforge/contexts/UserContext'
 
 const MyComponent = () => {
   const { userInfo, updateProfile } = useUser()
@@ -126,13 +126,13 @@ import {
   // Type definitions
   type PersonData,
   type ProjectData
-} from '@/lib/services/page-builder'
+} from '@pageforge/lib/services/page-builder'
 ```
 
 ### Page Utilities
 ```typescript
 // ✅ Use utility functions
-import { PageMeta, PageSchema } from '@/components/utils'
+import { PageMeta, PageSchema } from '@pageforge/components/utils'
 
 const metadata = PageMeta.fromConfig(pageConfig, siteURL)
 const schema = PageSchema.fromConfig(pageConfig, siteURL)
@@ -146,7 +146,7 @@ import {
   ContentBlock,
   PageType,
   SchemaType
-} from '@/lib/types/page/pageTypes'
+} from '@pageforge/lib/types/page/pageTypes'
 ```
 
 ## 🛡️ Content Safety Patterns
@@ -154,7 +154,7 @@ import {
 ### Example Data Detection
 ```typescript
 // ✅ Always use real data, detect examples
-import { createContentConfig } from '@/lib/services/new-page/content'
+import { createContentConfig } from '@pageforge/lib/services/new-page/content'
 
 const content = createContentConfig(userContent)
 // This warns if example data like "Selene Yu" is detected
@@ -203,7 +203,7 @@ export const MySection = ({ content }: { content: MySectionContent }) => (
 ### ❌ Using Legacy Page Configs for New Pages
 ```typescript
 // ❌ DON'T: Use old verbose approach for new pages
-import { createComprehensiveAboutPageConfig } from '@/lib/services/new-page/pageConfigurations'
+import { createComprehensiveAboutPageConfig } from '@pageforge/lib/services/new-page/pageConfigurations'
 ```
 
 ### ❌ Ignoring Templates

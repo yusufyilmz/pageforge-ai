@@ -1,0 +1,156 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # Fast checks - run on every push/PR
+  quality:
+    name: Code Quality & Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Run Code Quality Checks
+        uses: ./.github/actions/code-quality
+        with:
+          supabase-url: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          supabase-key: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+
+  # Security audit - only on main branch pushes
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Run Security Audit
+        uses: ./.github/actions/security-audit
+
+  # Performance analysis - enhanced for PageForge
+  performance:
+    name: Performance Analysis
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [quality]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Run Performance Analysis
+        uses: ./.github/actions/performance-analysis
+        with:
+          supabase-url: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          supabase-key: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+          performance-budget: '750'
+          lighthouse-audit: 'true'
+
+  # Supabase tests - only on main branch pushes or when supabase/ files change
+  supabase:
+    name: Supabase Tests
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      contains(join(github.event.head_commit.modified, ' '), 'supabase/') ||
+      contains(join(github.event.head_commit.added, ' '), 'supabase/')
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Run Supabase Tests
+        uses: ./.github/actions/supabase-tests
+        with:
+          postgres-host: localhost
+          postgres-port: 5432
+          postgres-db: postgres
+          postgres-user: postgres
+          postgres-password: postgres
+
+  # Auto-fix issues when possible
+  auto-fix:
+    name: Auto-fix Issues
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && needs.quality.result == 'failure'
+    needs: [quality]
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Run Auto-fix
+        uses: ./.github/actions/auto-fix
+
+      - name: Commit auto-fixes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🤖 Auto-fix: Apply code quality improvements"
+            git push
+          fi
+
+  # Notification job - runs after all other jobs complete
+  notify-results:
+    name: Notify Results
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [quality, security, performance, supabase, auto-fix]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Notify CI Results
+        uses: ./.github/actions/notify-results
+        with:
+          quality-result: ${{ needs.quality.result }}
+          security-result: ${{ needs.security.result }}
+          performance-result: ${{ needs.performance.result }}
+          supabase-result: ${{ needs.supabase.result }}
+          auto-fix-result: ${{ needs.auto-fix.result }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}

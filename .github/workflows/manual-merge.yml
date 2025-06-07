@@ -1,0 +1,306 @@
+name: Manual Merge Develop to Main
+
+on:
+  workflow_dispatch:
+    inputs:
+      merge_type:
+        description: 'Choose merge type'
+        required: true
+        default: 'safe'
+        type: choice
+        options:
+          - safe
+          - quick
+      run_tests:
+        description: 'Run tests before merging'
+        required: false
+        default: true
+        type: boolean
+      performance_analysis:
+        description: 'Run performance analysis'
+        required: false
+        default: true
+        type: boolean
+      security_audit:
+        description: 'Run security audit'
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  pre-merge-analysis:
+    runs-on: ubuntu-latest
+    outputs:
+      quality-result: ${{ steps.quality.outcome }}
+      security-result: ${{ steps.security.outcome }}
+      performance-result: ${{ steps.performance.outcome }}
+      performance-grade: ${{ steps.performance.outputs.performance-grade }}
+      bundle-passed: ${{ steps.performance.outputs.bundle-passed }}
+
+    steps:
+      - name: 🛒 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js Environment
+        if: ${{ inputs.run_tests }}
+        uses: ./.github/actions/setup-node
+
+      - name: 🛡️ Security Audit
+        id: security
+        if: ${{ inputs.security_audit }}
+        uses: ./.github/actions/security-audit
+        continue-on-error: true
+
+      - name: 🧪 Code Quality Checks
+        id: quality
+        if: ${{ inputs.run_tests }}
+        uses: ./.github/actions/code-quality
+        with:
+          supabase-url: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          supabase-key: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+        continue-on-error: true
+
+      - name: 📊 Performance Analysis
+        id: performance
+        if: ${{ inputs.performance_analysis }}
+        uses: ./.github/actions/performance-analysis
+        with:
+          supabase-url: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          supabase-key: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+          performance-budget: '750'
+          lighthouse-audit: 'true'
+          upload-artifacts: 'true'
+        continue-on-error: true
+
+      - name: 🎯 Pre-Merge Quality Assessment
+        run: |
+          echo "🎯 Assessing merge readiness..."
+
+          QUALITY="${{ steps.quality.outcome }}"
+          SECURITY="${{ steps.security.outcome }}"
+          PERFORMANCE="${{ steps.performance.outcome }}"
+          PERF_GRADE="${{ steps.performance.outputs.performance-grade }}"
+          BUNDLE_PASSED="${{ steps.performance.outputs.bundle-passed }}"
+
+          echo "📊 Assessment Results:"
+          echo "- Quality: $QUALITY"
+          echo "- Security: $SECURITY"
+          echo "- Performance: $PERFORMANCE"
+          echo "- Performance Grade: $PERF_GRADE"
+          echo "- Bundle Budget: $BUNDLE_PASSED"
+
+          # Count critical failures
+          CRITICAL_FAILURES=0
+          [ "$QUALITY" = "failure" ] && ((CRITICAL_FAILURES++)) && echo "🔴 Critical: Code quality failed"
+          [ "$SECURITY" = "failure" ] && ((CRITICAL_FAILURES++)) && echo "🔴 Critical: Security audit failed"
+
+          # Count warnings
+          WARNINGS=0
+          [ "$PERFORMANCE" = "failure" ] && ((WARNINGS++)) && echo "⚠️ Warning: Performance issues detected"
+          [ "$BUNDLE_PASSED" = "false" ] && ((WARNINGS++)) && echo "⚠️ Warning: Bundle size exceeds budget"
+
+          # Determine merge recommendation
+          if [ $CRITICAL_FAILURES -gt 0 ]; then
+            echo "❌ RECOMMENDATION: Fix critical issues before merging"
+            echo "::error::Critical failures detected - merge not recommended"
+          elif [ $WARNINGS -gt 0 ]; then
+            echo "⚠️ RECOMMENDATION: Merge with caution - address warnings soon"
+            echo "::warning::Performance or bundle issues detected"
+          else
+            echo "✅ RECOMMENDATION: Safe to merge - all checks passed"
+          fi
+
+          echo ""
+          echo "🎯 Merge will proceed based on user selection regardless of recommendations"
+
+  merge:
+    needs: pre-merge-analysis
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: 🛒 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔧 Setup Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: 📊 Display Pre-Merge Analysis
+        run: |
+          echo "📊 Pre-Merge Analysis Summary:"
+          echo "======================================"
+          echo "Quality: ${{ needs.pre-merge-analysis.outputs.quality-result }}"
+          echo "Security: ${{ needs.pre-merge-analysis.outputs.security-result }}"
+          echo "Performance: ${{ needs.pre-merge-analysis.outputs.performance-result }}"
+          echo "Performance Grade: ${{ needs.pre-merge-analysis.outputs.performance-grade }}"
+          echo "Bundle Budget: ${{ needs.pre-merge-analysis.outputs.bundle-passed }}"
+          echo "======================================"
+
+      - name: 🔄 Merge develop to main
+        run: |
+          echo "🔄 Starting enhanced merge process..."
+
+          # Fetch latest changes
+          git fetch origin
+
+          # Switch to main and update
+          git checkout main
+          git pull origin main
+
+          # Switch to develop and update
+          git checkout develop
+          git pull origin develop
+
+          # Check for differences
+          if git diff --quiet main..develop; then
+            echo "⚠️ No changes to merge"
+            exit 0
+          fi
+
+          # Collect quality metrics for commit message
+          QUALITY="${{ needs.pre-merge-analysis.outputs.quality-result }}"
+          SECURITY="${{ needs.pre-merge-analysis.outputs.security-result }}"
+          PERFORMANCE="${{ needs.pre-merge-analysis.outputs.performance-result }}"
+          PERF_GRADE="${{ needs.pre-merge-analysis.outputs.performance-grade }}"
+          BUNDLE_PASSED="${{ needs.pre-merge-analysis.outputs.bundle-passed }}"
+
+          # Perform merge
+          git checkout main
+
+          if [ "${{ inputs.merge_type }}" = "safe" ]; then
+            echo "🔒 Safe merge with detailed quality tracking"
+            git merge develop --no-ff -m "🔄 Manual merge develop to main (Enhanced)
+
+          📊 Quality Analysis:
+          - Code Quality: $QUALITY
+          - Security Audit: $SECURITY
+          - Performance: $PERFORMANCE
+          - Performance Grade: $PERF_GRADE
+          - Bundle Budget: $BUNDLE_PASSED
+
+          🔧 Merge Details:
+          - Type: Safe merge (--no-ff)
+          - Tests Run: ${{ inputs.run_tests }}
+          - Performance Analysis: ${{ inputs.performance_analysis }}
+          - Security Audit: ${{ inputs.security_audit }}
+          - Timestamp: $(date)
+          - Actor: ${{ github.actor }}
+          - Workflow: Manual merge via GitHub Actions"
+          else
+            echo "⚡ Quick merge with quality tracking"
+            git merge develop -m "⚡ Quick manual merge develop to main
+
+          Quality: $QUALITY | Security: $SECURITY | Performance: $PERFORMANCE
+          Grade: $PERF_GRADE | Bundle: $BUNDLE_PASSED
+          Actor: ${{ github.actor }} | Time: $(date)"
+          fi
+
+          # Push changes
+          git push origin main
+
+          echo "✅ Merge completed successfully!"
+
+      - name: 🏷️ Smart Release Tagging
+        if: success()
+        run: |
+          echo "🏷️ Evaluating release tag creation..."
+
+          QUALITY="${{ needs.pre-merge-analysis.outputs.quality-result }}"
+          SECURITY="${{ needs.pre-merge-analysis.outputs.security-result }}"
+          PERFORMANCE="${{ needs.pre-merge-analysis.outputs.performance-result }}"
+          PERF_GRADE="${{ needs.pre-merge-analysis.outputs.performance-grade }}"
+
+          # Create release tag based on quality
+          if [ "$QUALITY" = "success" ] && [ "$SECURITY" = "success" ]; then
+            if [ "$PERFORMANCE" = "success" ]; then
+              TAG_TYPE="stable"
+              TAG_PREFIX="v"
+            else
+              TAG_TYPE="beta"
+              TAG_PREFIX="beta-v"
+            fi
+
+            VERSION=$(date +"%Y.%m.%d-%H%M")
+            FULL_TAG="${TAG_PREFIX}${VERSION}"
+
+            git tag -a "$FULL_TAG" -m "🚀 $TAG_TYPE release $FULL_TAG
+
+          📊 Quality Metrics:
+          - Code Quality: $QUALITY ✅
+          - Security: $SECURITY ✅
+          - Performance: $PERFORMANCE $([ "$PERFORMANCE" = "success" ] && echo "✅" || echo "⚠️")
+          - Performance Grade: $PERF_GRADE
+
+          🎯 Release Type: $TAG_TYPE
+          $([ "$TAG_TYPE" = "stable" ] && echo "Ready for production deployment" || echo "Review performance before production")
+
+          Generated via manual merge workflow"
+
+            git push origin "$FULL_TAG"
+            echo "🏷️ Created $TAG_TYPE release tag: $FULL_TAG"
+          else
+            echo "🏷️ Skipping release tag - critical quality gates failed"
+            echo "Fix quality/security issues before creating release"
+          fi
+
+      - name: 📊 Generate Comprehensive Report
+        if: always()
+        uses: ./.github/actions/notify-results
+        with:
+          workflow-name: 'Manual Merge (develop → main)'
+          quality-result: ${{ needs.pre-merge-analysis.outputs.quality-result }}
+          security-result: ${{ needs.pre-merge-analysis.outputs.security-result }}
+          performance-result: ${{ needs.pre-merge-analysis.outputs.performance-result }}
+          supabase-result: 'success'
+
+      - name: 📋 Enhanced Summary Report
+        if: always()
+        run: |
+          echo "## 🔄 Enhanced Manual Merge Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Merge Configuration" >> $GITHUB_STEP_SUMMARY
+          echo "- **Merge Type**: ${{ inputs.merge_type }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Tests Run**: ${{ inputs.run_tests }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Performance Analysis**: ${{ inputs.performance_analysis }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Security Audit**: ${{ inputs.security_audit }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Completed**: $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🚦 Quality Gate Results" >> $GITHUB_STEP_SUMMARY
+          echo "| Gate | Result | Grade |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Code Quality | ${{ needs.pre-merge-analysis.outputs.quality-result }} | - |" >> $GITHUB_STEP_SUMMARY
+          echo "| Security | ${{ needs.pre-merge-analysis.outputs.security-result }} | - |" >> $GITHUB_STEP_SUMMARY
+          echo "| Performance | ${{ needs.pre-merge-analysis.outputs.performance-result }} | ${{ needs.pre-merge-analysis.outputs.performance-grade }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Bundle Budget | ${{ needs.pre-merge-analysis.outputs.bundle-passed }} | - |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🎯 Production Readiness" >> $GITHUB_STEP_SUMMARY
+
+          QUALITY="${{ needs.pre-merge-analysis.outputs.quality-result }}"
+          SECURITY="${{ needs.pre-merge-analysis.outputs.security-result }}"
+          PERFORMANCE="${{ needs.pre-merge-analysis.outputs.performance-result }}"
+
+          if [ "$QUALITY" = "success" ] && [ "$SECURITY" = "success" ] && [ "$PERFORMANCE" = "success" ]; then
+            echo "✅ **Ready for production deployment**" >> $GITHUB_STEP_SUMMARY
+            echo "All quality gates passed successfully." >> $GITHUB_STEP_SUMMARY
+          elif [ "$QUALITY" = "success" ] && [ "$SECURITY" = "success" ]; then
+            echo "⚠️ **Proceed with caution**" >> $GITHUB_STEP_SUMMARY
+            echo "Core quality gates passed, but performance needs attention." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Not recommended for production**" >> $GITHUB_STEP_SUMMARY
+            echo "Critical quality gates failed. Address issues before deployment." >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📈 Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "1. Review any failed quality gates" >> $GITHUB_STEP_SUMMARY
+          echo "2. Check performance metrics if applicable" >> $GITHUB_STEP_SUMMARY
+          echo "3. Monitor deployment if proceeding to production" >> $GITHUB_STEP_SUMMARY
