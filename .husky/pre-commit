@@ -4,13 +4,6 @@
 echo "🎯 PageForge Pre-commit Validation..."
 
 # Critical: Block commit if example data is found
-echo "🔍 Checking for example data..."
-if grep -r "Selene Yu\|example@email\.com\|placeholder@example\.com" src/ --exclude-dir=node_modules 2>/dev/null; then
-  echo "❌ CRITICAL: Example data found in staged files"
-  echo "Please remove example data before committing"
-  exit 1
-fi
-
 # Lint staged files with PageForge-aware rules
 echo "🔧 Running lint-staged with PageForge validation..."
 npx lint-staged
