@@ -31,7 +31,7 @@ export function getResponsiveTheme(
   baseTheme: PageThemeConfig,
   breakpoint: "mobile" | "tablet" | "desktop"
 ): PageThemeOverride | null {
-  if (!baseTheme.enabled || !baseTheme.responsive?.[breakpoint]) {
+  if (!(baseTheme.enabled && baseTheme.responsive?.[breakpoint])) {
     return null;
   }
 

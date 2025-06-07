@@ -11,15 +11,15 @@
     "noEmit": true,
     "paths": {
       "@pageforge/components/*": ["./src/components/*"],
+      "@pageforge/contexts/*": ["./src/contexts/*"],
       "@pageforge/hooks/*": ["./src/hooks/*"],
       "@pageforge/lib/*": ["./src/lib/*"],
       "@pageforge/once-ui/*": ["./src/once-ui/*"],
       "@pageforge/pages/*": ["./src/pages/*"],
+      "@pageforge/test/*": ["./src/test/*"],
       "@pageforge/types/*": ["./src/lib/types/*"],
       "@pageforge/ui/*": ["./src/ui/*"],
-      "@pageforge/utils/*": ["./src/utils/*"],
-      "@pageforge/contexts/*": ["./src/contexts/*"],
-      "@pageforge/test/*": ["./src/test/*"]
+      "@pageforge/utils/*": ["./src/utils/*"]
     },
     "plugins": [
       {
