@@ -48,12 +48,6 @@
     "node": ">=20.0.0",
     "npm": ">=9.0.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run type-check"
-    }
-  },
   "keywords": [
     "nextjs",
     "react",
@@ -88,7 +82,7 @@
     "build": "next build",
     "clean": "rm -rf .next out dist build coverage .turbo",
     "clean:all": "npm run clean && rm -rf node_modules package-lock.json",
-    "code-quality": "npm run type-check && npm run lint && npm run format:check",
+    "code-quality": "npm run type-check && npm run lint:ci && npm run format:ci",
     "code-quality:fix": "npm run type-check && npm run lint:fix && npm run format:fix",
     "deploy": "npm run build && npm run export",
     "deploy:netlify": "netlify deploy --prod",
@@ -99,22 +93,19 @@
     "format": "npx @biomejs/biome format --write .",
     "format:check": "npx @biomejs/biome format .",
     "format:check-errors": "npx @biomejs/biome check --diagnostic-level=error .",
+    "format:ci": "npx @biomejs/biome format --ci .",
     "format:fix": "npx @biomejs/biome format --write .",
+    "git-workflow": "./scripts/git-workflow.sh",
     "lint": "npx @biomejs/biome lint .",
+    "lint:ci": "npx @biomejs/biome lint --ci .",
     "lint:errors": "npx @biomejs/biome lint --diagnostic-level=error .",
     "lint:errors-fix": "npx @biomejs/biome lint --write --diagnostic-level=error .",
     "lint:fix": "npx @biomejs/biome lint --write .",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage",
-    "test:watch": "vitest --watch",
-    "test:ui": "vitest --ui",
-    "test:run": "vitest run",
-    "git-workflow": "./scripts/git-workflow.sh",
     "merge": "git checkout main && git pull origin main && git merge develop && git push origin main",
     "merge-to-main": "./scripts/merge-to-main.sh",
     "outdated": "npm outdated",
     "pre-commit": "lint-staged",
-    "prepare": "husky install",
+    "prepare": "husky",
     "quick-merge": "./scripts/quick-merge.sh",
     "reset": "npm run clean:all && npm install",
     "setup-branch-protection": "./scripts/setup-branch-protection.sh",
@@ -124,7 +115,11 @@
     "supabase:start": "supabase start",
     "supabase:status": "supabase status",
     "supabase:stop": "supabase stop",
-
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest --watch",
     "type-check": "tsc --noEmit --skipLibCheck",
     "type-check:watch": "tsc --noEmit --skipLibCheck --watch",
     "update:deps": "npm update"

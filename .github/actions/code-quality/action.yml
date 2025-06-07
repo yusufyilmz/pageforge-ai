@@ -1,5 +1,5 @@
 name: 'Code Quality Check'
-description: 'Runs type checking, linting, formatting, and tests'
+description: 'Runs type checking, linting, formatting, and tests with CI-optimized Biome commands'
 
 inputs:
   run-tests:
@@ -22,24 +22,24 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Run type checking
+    - name: 🔍 TypeScript Type Checking
       run: npm run type-check
       shell: bash
 
-    - name: Run Biome linting
-      run: npm run lint
+    - name: 🧹 Biome Linting (CI Mode)
+      run: npm run lint:ci
       shell: bash
 
-    - name: Run Biome formatting check
-      run: npm run format:check
+    - name: 🎨 Biome Formatting Check (CI Mode)
+      run: npm run format:ci
       shell: bash
 
-    - name: Run tests
+    - name: 🧪 Run Tests
       if: inputs.run-tests == 'true'
-      run: npm run test
+      run: npm run test:run
       shell: bash
 
-    - name: Build application
+    - name: 🏗️ Build Application
       if: inputs.run-build == 'true'
       run: npm run build
       shell: bash
@@ -47,3 +47,16 @@ runs:
         NODE_ENV: production
         NEXT_PUBLIC_SUPABASE_URL: ${{ inputs.supabase-url }}
         NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ inputs.supabase-key }}
+
+    - name: 📊 Generate Quality Report
+      if: always()
+      shell: bash
+      run: |
+        echo "## 🔍 Code Quality Results" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### ✅ Completed Checks" >> $GITHUB_STEP_SUMMARY
+        echo "- TypeScript type checking" >> $GITHUB_STEP_SUMMARY
+        echo "- Biome linting (CI mode)" >> $GITHUB_STEP_SUMMARY
+        echo "- Biome formatting (CI mode)" >> $GITHUB_STEP_SUMMARY
+        echo "- Tests: ${{ inputs.run-tests }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Build: ${{ inputs.run-build }}" >> $GITHUB_STEP_SUMMARY
