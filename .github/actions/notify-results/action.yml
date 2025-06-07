@@ -1,43 +1,171 @@
 name: 'Notify Results'
-description: 'Sends notifications about CI pipeline results'
+description: 'Send notifications about CI/CD workflow results'
 
 inputs:
+  workflow-name:
+    description: 'Name of the workflow'
+    required: false
+    default: 'CI/CD Pipeline'
   quality-result:
-    description: 'Result of quality job'
-    required: true
+    description: 'Quality job result (success/failure)'
+    required: false
+    default: 'success'
   security-result:
-    description: 'Result of security job'
+    description: 'Security job result (success/failure)'
     required: false
-    default: 'skipped'
+    default: 'success'
   performance-result:
-    description: 'Result of performance job'
+    description: 'Performance job result (success/failure)'
     required: false
-    default: 'skipped'
+    default: 'success'
   supabase-result:
-    description: 'Result of supabase job'
+    description: 'Supabase job result (success/failure)'
     required: false
-    default: 'skipped'
+    default: 'success'
+  deployment-url:
+    description: 'Deployment URL if available'
+    required: false
+    default: ''
 
 runs:
   using: 'composite'
   steps:
-    - name: Notify on success
-      if: inputs.quality-result == 'success'
-      run: |
-        echo "✅ CI Pipeline completed successfully!"
-        echo "- Code quality: ✅"
-        echo "- Security: ${{ inputs.security-result }}"
-        echo "- Performance: ${{ inputs.performance-result }}"
-        echo "- Supabase: ${{ inputs.supabase-result }}"
+    - name: 📊 Generate Results Summary
       shell: bash
+      run: |
+        echo "📊 Generating workflow results summary..."
 
-    - name: Notify on failure
-      if: inputs.quality-result == 'failure'
-      run: |
-        echo "❌ CI Pipeline failed!"
-        echo "- Quality result: ${{ inputs.quality-result }}"
-        echo "- Security result: ${{ inputs.security-result }}"
-        echo "- Performance result: ${{ inputs.performance-result }}"
-        echo "- Supabase result: ${{ inputs.supabase-result }}"
-        exit 1
+        WORKFLOW_NAME="${{ inputs.workflow-name }}"
+        QUALITY="${{ inputs.quality-result }}"
+        SECURITY="${{ inputs.security-result }}"
+        PERFORMANCE="${{ inputs.performance-result }}"
+        SUPABASE="${{ inputs.supabase-result }}"
+        DEPLOY_URL="${{ inputs.deployment-url }}"
+
+        # Generate status icons
+        get_status_icon() {
+          case $1 in
+            "success") echo "✅" ;;
+            "failure") echo "❌" ;;
+            "cancelled") echo "⏹️" ;;
+            "skipped") echo "⏭️" ;;
+            *) echo "❓" ;;
+          esac
+        }
+
+        # Create summary
+        cat > workflow-summary.md << EOF
+        # 🚀 $WORKFLOW_NAME Results
+
+        ## 📊 Job Status Overview
+
+        | Job | Status | Result |
+        |-----|--------|--------|
+        | **Quality** | $(get_status_icon $QUALITY) | $QUALITY |
+        | **Security** | $(get_status_icon $SECURITY) | $SECURITY |
+        | **Performance** | $(get_status_icon $PERFORMANCE) | $PERFORMANCE |
+        | **Supabase** | $(get_status_icon $SUPABASE) | $SUPABASE |
+
+        ## 📈 Summary
+        - **Workflow**: $WORKFLOW_NAME
+        - **Completed**: $(date)
+        - **Commit**: ${{ github.sha }}
+        $(if [ -n "$DEPLOY_URL" ]; then echo "- **Deployment**: $DEPLOY_URL"; fi)
+
+        ## 🎯 Next Steps
+        $(if [ "$QUALITY" = "success" ] && [ "$SECURITY" = "success" ]; then
+          echo "✅ All checks passed - Ready for deployment"
+        else
+          echo "⚠️ Some checks failed - Review results before proceeding"
+        fi)
+        EOF
+
+        echo "✅ Results summary generated"
+
+    - name: 📢 Log Detailed Results
       shell: bash
+      run: |
+        echo "📢 Detailed Workflow Results:"
+        echo "================================"
+        echo "Workflow: ${{ inputs.workflow-name }}"
+        echo "Quality: ${{ inputs.quality-result }}"
+        echo "Security: ${{ inputs.security-result }}"
+        echo "Performance: ${{ inputs.performance-result }}"
+        echo "Supabase: ${{ inputs.supabase-result }}"
+        echo "Timestamp: $(date)"
+        echo "Commit: ${{ github.sha }}"
+        echo "Actor: ${{ github.actor }}"
+        echo "Repository: ${{ github.repository }}"
+        echo "================================"
+
+    - name: 📋 Add to Step Summary
+      shell: bash
+      run: |
+        echo "📋 Adding results to GitHub Actions summary..."
+
+        if [ -f "workflow-summary.md" ]; then
+          cat workflow-summary.md >> $GITHUB_STEP_SUMMARY
+        else
+          echo "## 📊 Workflow Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Quality: ${{ inputs.quality-result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Security: ${{ inputs.security-result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Performance: ${{ inputs.performance-result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Supabase: ${{ inputs.supabase-result }}" >> $GITHUB_STEP_SUMMARY
+        fi
+
+    - name: 🎯 Determine Overall Status
+      shell: bash
+      run: |
+        echo "🎯 Determining overall workflow status..."
+
+        QUALITY="${{ inputs.quality-result }}"
+        SECURITY="${{ inputs.security-result }}"
+        PERFORMANCE="${{ inputs.performance-result }}"
+        SUPABASE="${{ inputs.supabase-result }}"
+
+        FAILED_COUNT=0
+
+        [ "$QUALITY" = "failure" ] && ((FAILED_COUNT++))
+        [ "$SECURITY" = "failure" ] && ((FAILED_COUNT++))
+        [ "$PERFORMANCE" = "failure" ] && ((FAILED_COUNT++))
+        [ "$SUPABASE" = "failure" ] && ((FAILED_COUNT++))
+
+        if [ $FAILED_COUNT -eq 0 ]; then
+          echo "🎉 All workflow jobs completed successfully!"
+          echo "Status: SUCCESS"
+        elif [ $FAILED_COUNT -eq 1 ]; then
+          echo "⚠️ One job failed - review and address issues"
+          echo "Status: PARTIAL_FAILURE"
+        else
+          echo "❌ Multiple jobs failed - immediate attention required"
+          echo "Status: MULTIPLE_FAILURES"
+        fi
+
+        echo "Failed job count: $FAILED_COUNT"
+
+    - name: 🔔 Performance Alerts
+      if: inputs.performance-result == 'failure'
+      shell: bash
+      run: |
+        echo "🔔 Performance Alert Triggered!"
+        echo "::warning::Performance job failed - check bundle size and optimization"
+        echo ""
+        echo "📊 Performance Failure Detected:"
+        echo "- Review bundle analysis reports"
+        echo "- Check Lighthouse scores"
+        echo "- Verify Core Web Vitals"
+        echo "- Consider performance optimizations"
+
+    - name: 🛡️ Security Alerts
+      if: inputs.security-result == 'failure'
+      shell: bash
+      run: |
+        echo "🛡️ Security Alert Triggered!"
+        echo "::error::Security audit failed - vulnerabilities detected"
+        echo ""
+        echo "🚨 Security Failure Detected:"
+        echo "- Review npm audit results"
+        echo "- Update vulnerable dependencies"
+        echo "- Check for security advisories"
+        echo "- Address high/critical vulnerabilities immediately"
