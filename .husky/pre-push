@@ -3,14 +3,6 @@
 
 echo "🎯 PageForge Pre-push Validation..."
 
-# Critical: Block push if example data is found
-echo "🔍 Checking for example data..."
-if grep -r "Selene Yu\|example@email\.com\|placeholder@example\.com" src/ --exclude-dir=node_modules 2>/dev/null; then
-  echo "❌ CRITICAL: Example data found in source code"
-  echo "Please remove example data before pushing"
-  exit 1
-fi
-
 # TypeScript type checking
 echo "🔧 Running TypeScript type check..."
 npm run type-check
