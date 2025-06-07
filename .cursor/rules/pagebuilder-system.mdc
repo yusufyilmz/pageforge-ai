@@ -63,7 +63,7 @@ import {
   // PageBuilder for custom pages
   PageBuilder,
   PageType
-} from '@/lib/services/page-builder'
+} from '@pageforge/lib/services/page-builder'
 ```
 
 ## Development Priority

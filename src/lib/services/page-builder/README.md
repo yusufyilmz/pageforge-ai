@@ -9,7 +9,7 @@ Transform from 200+ lines of complex configuration to just 3-5 lines of simple, 
 ### 1. Ultra-Simple Templates (Recommended) ⭐
 
 ```typescript
-import { developerTemplate, createAboutPageFromTemplate } from '@/lib/services/page-builder'
+import { developerTemplate, createAboutPageFromTemplate } from '@pageforge/lib/services/page-builder'
 
 // Complete professional portfolio in 1 line!
 const portfolio = developerTemplate(
@@ -28,7 +28,7 @@ const aboutPage = createAboutPageFromTemplate({
 ### 2. PageBuilder for Custom Pages
 
 ```typescript
-import { PageBuilder, PageType } from '@/lib/services/page-builder'
+import { PageBuilder, PageType } from '@pageforge/lib/services/page-builder'
 
 const customPage = PageBuilder.create(PageType.ABOUT, '/about')
   .withTitle('About Me')
@@ -98,7 +98,7 @@ const landingPage = createLandingPageFromTemplate({
 ### Creating a Page
 
 ```typescript
-import { PageBuilder, PageType } from '@/lib/services/page-builder'
+import { PageBuilder, PageType } from '@pageforge/lib/services/page-builder'
 
 const page = PageBuilder.create(PageType.ABOUT, '/about')
 ```

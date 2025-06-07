@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import { Button, Card, Flex, Grid, Heading, Input, Text } from "@pageforge/once-ui/components";
 
-import { useContextualTemplates } from "../../../lib/hooks/useContextualTemplates";
+import { useContextualTemplates } from "../../../hooks/useContextualTemplates";
 
 // ============================================================================
 // QUICK TEMPLATE GENERATOR 🚀

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import { Button, Flex, Grid, Heading, Text } from "@pageforge/once-ui/components";
 
-import { useContextualTemplates } from "../../../lib/hooks/useContextualTemplates";
+import { useContextualTemplates } from "../../../hooks/useContextualTemplates";
 import {
   designerTemplate,
   developerTemplate,
@@ -214,7 +214,7 @@ const EnhancedTemplatesDemo = () => {
               fontSize: "12px",
             }}
           >
-            {`import { developerTemplate, designerTemplate } from '@/lib/services/page-builder'
+            {`import { developerTemplate, designerTemplate } from '@pageforge/lib/services/page-builder'
 
 // Simple usage
 const config = developerTemplate()
@@ -234,7 +234,7 @@ const designConfig = designerTemplate(userProfile, userProjects)`}
               fontSize: "12px",
             }}
           >
-            {`import { useContextualTemplates } from '@/lib/hooks/useContextualTemplates'
+            {`import { useContextualTemplates } from '@pageforge/lib/hooks/useContextualTemplates'
 
 const templates = useContextualTemplates(userProfile, userProjects)
 const config = templates.developer() // Uses user data automatically`}

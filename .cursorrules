@@ -300,7 +300,7 @@ import {
   FeaturesSection,
   ProjectsSection,
   ContactFormSection
-} from '@/components/sections'
+} from '@pageforge/components/sections'
 
 // ✅ DO - Use section type extraction for props
 interface HeroSectionProps {

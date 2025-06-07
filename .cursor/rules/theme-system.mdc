@@ -63,7 +63,7 @@ interface ThemeConfig {
 ### 1. Theme Management
 ```typescript
 // ✅ Use theme context for dynamic styling
-import { useTheme, useThemeUtils } from '@/contexts/ThemeContext'
+import { useTheme, useThemeUtils } from '@pageforge/contexts/ThemeContext'
 
 const MyComponent = () => {
   const { currentTheme, setPageTheme } = useTheme()

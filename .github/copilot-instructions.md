@@ -18,7 +18,7 @@ import {
   developerTemplate,
   designerTemplate,
   freelancerTemplate
-} from '@/lib/services/page-builder'
+} from '@pageforge/lib/services/page-builder'
 
 // Developer portfolio (1 line!)
 const portfolio = developerTemplate(person, projects)
@@ -42,7 +42,7 @@ const about = createAboutPageFromTemplate({
 Use fluent API for discoverable template building:
 
 ```typescript
-import { TemplateBuilder, Template } from '@/lib/services/page-builder'
+import { TemplateBuilder, Template } from '@pageforge/lib/services/page-builder'
 
 // Fluent API for templates - Best of both worlds!
 const customPage = TemplateBuilder.developer(person, projects)
@@ -59,7 +59,7 @@ const portfolio = Template.about(person).withProjects(projects).withExperience(e
 Use fluent API for unique requirements:
 
 ```typescript
-import { PageBuilder, PageType } from '@/lib/services/page-builder'
+import { PageBuilder, PageType } from '@pageforge/lib/services/page-builder'
 
 const customPage = PageBuilder.create(PageType.ABOUT, '/about')
   .withTitle('About Me')
@@ -73,7 +73,7 @@ const customPage = PageBuilder.create(PageType.ABOUT, '/about')
 Only for very specific complex requirements:
 
 ```typescript
-import { PageConfig, PageType } from '@/lib/types/page/pageTypes'
+import { PageConfig, PageType } from '@pageforge/lib/types/page/pageTypes'
 
 const config: PageConfig = {
   pageType: PageType.ABOUT,
@@ -114,7 +114,7 @@ import {
   type ExperienceData,
   type SkillData,
   type SocialLinkData
-} from '@/lib/services/page-builder'
+} from '@pageforge/lib/services/page-builder'
 ```
 
 ### Contextual Templates (Advanced)
@@ -125,13 +125,13 @@ import {
   useContextualTemplates,
   useDeveloperTemplate,
   useAboutTemplate
-} from '@/lib/hooks/useContextualTemplates'
+} from '@pageforge/lib/hooks/useContextualTemplates'
 
 // Contextual builders
 import {
   ContextualTemplateBuilder,
   ContextualPageBuilder
-} from '@/lib/services/page-builder/ContextualTemplateBuilder'
+} from '@pageforge/lib/services/page-builder/ContextualTemplateBuilder'
 ```
 
 ### UI Components (Use Once UI)
@@ -147,16 +147,16 @@ import { Flex, Column, Text, Button, Heading, Grid, Input } from '@pageforge/onc
 
 ```typescript
 // Theme management
-import { useTheme, useThemeUtils, usePageTheme, useUserTheme } from '@/contexts/ThemeContext'
+import { useTheme, useThemeUtils, usePageTheme, useUserTheme } from '@pageforge/contexts/ThemeContext'
 
 // User data access
-import { useUser, useUserProfile, useUserProjects } from '@/contexts/UserContext'
+import { useUser, useUserProfile, useUserProjects } from '@pageforge/contexts/UserContext'
 
 // Page utilities
-import { PageMeta, PageSchema } from '@/components/utils'
+import { PageMeta, PageSchema } from '@pageforge/components/utils'
 
 // Types
-import { PageConfig, ContentBlock, PageType } from '@/lib/types/page/pageTypes'
+import { PageConfig, ContentBlock, PageType } from '@pageforge/lib/types/page/pageTypes'
 ```
 
 ## 🎨 UI Component Patterns
@@ -244,7 +244,7 @@ const person: PersonData = {
 ### Example Data Detection
 
 ```typescript
-import { createContentConfig } from '@/lib/services/new-page/content'
+import { createContentConfig } from '@pageforge/lib/services/new-page/content'
 
 const content = createContentConfig(userContent)
 // This warns if example data like "Selene Yu" is detected
@@ -348,7 +348,7 @@ PageForge includes advanced AI-powered section generation:
 ### Usage Pattern
 
 ```typescript
-import { AISectionFactory } from '@/components/universal-section/AISectionFactory'
+import { AISectionFactory } from '@pageforge/components/universal-section/AISectionFactory'
 
 // Generate sections from natural language
 const section = await AISectionFactory.generateSection({

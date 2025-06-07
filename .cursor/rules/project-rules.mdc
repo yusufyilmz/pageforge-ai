@@ -52,13 +52,13 @@ const config: ContentPageConfig = {
 ### Import Patterns
 ```typescript
 // Page utilities
-import { PageMeta, PageSchema } from '@/components/utils'
+import { PageMeta, PageSchema } from '@pageforge/components/utils'
 
 // Types
-import { PageConfig, PageType, ContentBlock } from '@/lib/types/page/pageTypes'
+import { PageConfig, PageType, ContentBlock } from '@pageforge/lib/types/page/pageTypes'
 
 // Content system
-import { createContentConfig, createComprehensiveAboutPageConfig } from '@/lib/services/new-page'
+import { createContentConfig, createComprehensiveAboutPageConfig } from '@pageforge/lib/services/new-page'
 ```
 
 ### Common AI Tasks

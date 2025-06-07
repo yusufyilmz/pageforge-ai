@@ -17,7 +17,9 @@
       "@pageforge/pages/*": ["./src/pages/*"],
       "@pageforge/types/*": ["./src/lib/types/*"],
       "@pageforge/ui/*": ["./src/ui/*"],
-      "@pageforge/utils/*": ["./src/utils/*"]
+      "@pageforge/utils/*": ["./src/utils/*"],
+      "@pageforge/contexts/*": ["./src/contexts/*"],
+      "@pageforge/test/*": ["./src/test/*"]
     },
     "plugins": [
       {

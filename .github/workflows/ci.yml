@@ -42,7 +42,6 @@ jobs:
 
       - name: Run tests
         run: npm run test
-        continue-on-error: true # Tests output "No tests specified yet"
 
       - name: Build application
         run: npm run build

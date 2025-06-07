@@ -264,7 +264,7 @@ const PreviewCenter = () => {
                 margin: 0,
               }}
             >
-              {`import { developerTemplate } from '@/lib/services/page-builder'
+              {`import { developerTemplate } from '@pageforge/lib/services/page-builder'
 
 const config = developerTemplate()
 // Ready to use!`}
@@ -285,7 +285,7 @@ const config = developerTemplate()
                 margin: 0,
               }}
             >
-              {`import { useContextualTemplates } from '@/lib/hooks/useContextualTemplates'
+              {`import { useContextualTemplates } from '@pageforge/lib/hooks/useContextualTemplates'
 
 const templates = useContextualTemplates(user, projects)
 const config = templates.developer()`}
@@ -307,7 +307,7 @@ const config = templates.developer()`}
               margin: 0,
             }}
           >
-            {`import { PageBuilder } from '@/lib/services/page-builder'
+            {`import { PageBuilder } from '@pageforge/lib/services/page-builder'
 
 const config = new PageBuilder()
   .addHero({ title: "Custom Page" })

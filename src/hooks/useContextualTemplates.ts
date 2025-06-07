@@ -7,8 +7,8 @@ import {
   developerTemplate,
   freelancerTemplate,
   profileTemplate,
-} from "../services/page-builder";
-import type { PageConfig } from "../types/page/pageTypes";
+} from "../lib/services/page-builder";
+import type { PageConfig } from "../lib/types/page/pageTypes";
 
 // ============================================================================
 // SIMPLIFIED CONTEXTUAL TEMPLATES 🎯
@@ -117,10 +117,10 @@ export const useProfileTemplate = (): PageConfig => {
 /*
 // Example component using the hooks:
 
-import { useUser } from '@/contexts/UserContext'
-import { useTheme } from '@/contexts/ThemeContext'
-import { useContextualTemplates } from '@/lib/hooks/useContextualTemplates'
-import { UniversalPage } from '@/components/universal-page/UniversalPage'
+import { useUser } from '@pageforge/contexts/UserContext'
+import { useTheme } from '@pageforge/contexts/ThemeContext'
+import { useContextualTemplates } from '@pageforge/lib/hooks/useContextualTemplates'
+import { UniversalPage } from '@pageforge/components/universal-page/UniversalPage'
 
 export default function MyPage() {
   // Get data from contexts

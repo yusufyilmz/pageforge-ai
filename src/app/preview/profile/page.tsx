@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import { Button, Card, Flex, Grid, Heading, Text } from "@pageforge/once-ui/components";
 
-import { useContextualTemplates } from "../../../lib/hooks/useContextualTemplates";
+import { useContextualTemplates } from "../../../hooks/useContextualTemplates";
 import { profileTemplate } from "../../../lib/services/page-builder";
 
 // ============================================================================
@@ -112,7 +112,7 @@ const ProfileDemo = () => {
                     overflow: "auto",
                   }}
                 >
-                  {`import { profileTemplate } from '@/lib/services/page-builder'
+                  {`import { profileTemplate } from '@pageforge/lib/services/page-builder'
 
 // Creates a profile page that works with UserContext
 const config = profileTemplate()
@@ -151,7 +151,7 @@ const config = profileTemplate()
                     overflow: "auto",
                   }}
                 >
-                  {`import { useContextualTemplates } from '@/lib/hooks/useContextualTemplates'
+                  {`import { useContextualTemplates } from '@pageforge/lib/hooks/useContextualTemplates'
 
 const templates = useContextualTemplates(userProfile, userProjects)
 const config = templates.profile()
