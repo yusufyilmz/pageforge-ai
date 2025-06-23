@@ -42,7 +42,7 @@
     "postcss-flexbugs-fixes": "^5.0.2",
     "tailwind-merge": "^3.3.0",
     "typescript": "^5.8.3",
-    "vitest": "^3.2.2"
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=20.0.0",
